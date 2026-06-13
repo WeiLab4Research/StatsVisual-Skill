@@ -109,6 +109,10 @@ Rscript skills/r-medical-graphics/scripts/validate_r_plot.R demo/figures
 
 即使用户直接提出绘图请求，第一次回复也应先检查数据，确认请求图形是否合适，推荐最佳单图和可选组图，然后等待用户确认再生成 R 代码。
 
+## 致谢
+
+本项目灵感来源于 [Yuan1z0825/nature-skills](https://github.com/Yuan1z0825/nature-skills)。
+
 ## 许可证
 
 请见 [LICENSE](LICENSE)。

@@ -1,6 +1,6 @@
 interface:
   display_name: "R Medical Graphics"
-  short_description: "Medical R figures; Nature style inspired by $nature-figure."
+  short_description: "Publication-ready medical R figures."
   icon_small: "./assets/brand/r-medical-graphics-mark.svg"
   icon_large: "./assets/brand/r-medical-graphics-logo.svg"
   brand_color: "#0f766e"

@@ -109,6 +109,10 @@ Use $r-journal-style-calibrator to add a JAMA-style visual profile to r-medical-
 
 Even for direct drawing requests, the first response should inspect the data, confirm whether the requested chart is suitable, recommend the best single figure and any optional multi-panel figure, then ask for confirmation before generating R code.
 
+## Acknowledgements
+
+This project was inspired by [Yuan1z0825/nature-skills](https://github.com/Yuan1z0825/nature-skills).
+
 ## License
 
 See [LICENSE](LICENSE).
