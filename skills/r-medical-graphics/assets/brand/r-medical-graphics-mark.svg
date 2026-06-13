@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">R Medical Graphics mark</title>
+  <desc id="desc">Square icon mark for R Medical Graphics, combining R, medical charting, and calibration cues.</desc>
+  <defs>
+    <style>
+      .line { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+      .axis { stroke: #334155; stroke-width: 13; }
+      .tick { stroke: #94a3b8; stroke-width: 7; }
+      .wordmark { font-family: Inter, Segoe UI, Arial, Helvetica, sans-serif; }
+    </style>
+  </defs>
+
+  <rect x="36" y="36" width="440" height="440" rx="86" fill="#f8fafc" stroke="#d7dee8" stroke-width="7"/>
+  <circle cx="256" cy="256" r="166" fill="none" stroke="#dbe4ef" stroke-width="20"/>
+  <circle cx="256" cy="256" r="166" fill="none" stroke="#334155" stroke-width="7"/>
+
+  <g transform="translate(256 256)">
+    <line class="tick" x1="0" y1="-194" x2="0" y2="-168"/>
+    <line class="tick" x1="97" y1="-168.01" x2="84" y2="-145.49"/>
+    <line class="tick" x1="168.01" y1="-97" x2="145.49" y2="-84"/>
+    <line class="tick" x1="194" y1="0" x2="168" y2="0"/>
+    <line class="tick" x1="168.01" y1="97" x2="145.49" y2="84"/>
+    <line class="tick" x1="97" y1="168.01" x2="84" y2="145.49"/>
+    <line class="tick" x1="0" y1="194" x2="0" y2="168"/>
+    <line class="tick" x1="-97" y1="168.01" x2="-84" y2="145.49"/>
+    <line class="tick" x1="-168.01" y1="97" x2="-145.49" y2="84"/>
+    <line class="tick" x1="-194" y1="0" x2="-168" y2="0"/>
+    <line class="tick" x1="-168.01" y1="-97" x2="-145.49" y2="-84"/>
+    <line class="tick" x1="-97" y1="-168.01" x2="-84" y2="-145.49"/>
+  </g>
+
+  <path class="line axis" d="M154 370V174M154 370h232"/>
+  <rect x="226" y="296" width="28" height="74" rx="6" fill="#8dd3c7" opacity=".78"/>
+  <rect x="274" y="242" width="28" height="128" rx="6" fill="#f6b4ae" opacity=".74"/>
+  <rect x="322" y="272" width="28" height="98" rx="6" fill="#f8d27a" opacity=".82"/>
+
+  <text class="wordmark" x="176" y="312" fill="#0f172a" font-size="178" font-weight="800" letter-spacing="0">R</text>
+  <path class="line" d="M184 336C228 299 254 300 285 253C318 202 348 204 384 151" stroke="#0f766e" stroke-width="17"/>
+  <circle cx="184" cy="336" r="12" fill="#0f766e"/>
+  <circle cx="285" cy="253" r="12" fill="#0f766e"/>
+  <circle cx="384" cy="151" r="12" fill="#0f766e"/>
+
+  <g transform="translate(366 121)">
+    <circle cx="0" cy="0" r="38" fill="#fff7ed" stroke="#f2c078" stroke-width="7"/>
+    <path class="line" d="M-19 0h38M0-19v38" stroke="#e45757" stroke-width="12"/>
+  </g>
+
+  <g transform="translate(411 372)">
+    <circle cx="0" cy="0" r="29" fill="#fff" stroke="#d97706" stroke-width="10"/>
+    <path class="line" d="M-13 13L13-13" stroke="#d97706" stroke-width="8"/>
+  </g>
+</svg>

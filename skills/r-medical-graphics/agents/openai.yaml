@@ -1,4 +1,7 @@
 interface:
   display_name: "R Medical Graphics"
   short_description: "Create publication-ready medical statistics figures in R with general, Nature, Lancet, or NEJM styles."
+  icon_small: "./assets/brand/r-medical-graphics-mark.svg"
+  icon_large: "./assets/brand/r-medical-graphics-logo.svg"
+  brand_color: "#0f766e"
   default_prompt: "Use $r-medical-graphics with a hard first-turn gate: when I first provide or point to data, only create/copy/profile the data, summarize the data profile, recommend one single figure plus any suitable evidence-chain multi-panel option, and ask which option and style to generate. Offer general, Nature, Lancet, and NEJM styles. If a categorical numeric/count/rate/proportion/SHAP/model-contribution variable has >=20 categories and a vertical chart would be too tall, prioritize polar plot or rose chart in the recommendation unless exact thresholds or confidence intervals are the main evidence; for signed positive/negative biomarker SHAP distributions, choose signed polar plot first and reserve rose chart for non-negative or absolute summaries. Do not write R plotting scripts, copy templates, install plotting packages, export figures, validate figures, or choose automatically until I send a follow-up message selecting a concrete chart option. After I choose, write and run R code to export PDF, SVG, 700 dpi TIFF, and a web image under 1 MB."

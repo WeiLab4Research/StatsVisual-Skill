@@ -1,5 +1,7 @@
 # R-plot-skill / R 医学统计绘图 Skill
 
+![R Medical Graphics](assets/brand/r-medical-graphics-logo.svg)
+
 This repository contains two Codex skills for R-based medical and biostatistical figure work:
 
 本仓库包含两个面向 R 医学统计绘图工作的 Codex skills：
