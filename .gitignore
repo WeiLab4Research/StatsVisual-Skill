@@ -1,0 +1,53 @@
+.Rhistory
+.RData
+.Ruserdata
+.Renviron
+
+.DS_Store
+Thumbs.db
+
+# Local R package libraries and install logs
+.r-medical-graphics-library/
+R-library/
+*.log
+
+# Per-request generated workspaces
+data/
+figures/
+output/
+outputs/
+demo/
+runs/
+projects/
+plot_projects/
+r_medical_graphics_projects/
+rmg_projects/
+tmp_skill_review/
+
+# Private source and generated binary artifacts
+0614分享/
+Example_Figure/
+Guidelines/
+*.doc
+*.docx
+*.pdf
+*.zip
+*.7z
+*.rar
+*.ppt
+*.pptx
+*.xls
+*.xlsx
+*.tiff
+*.tif
+*.png
+*.jpg
+*.jpeg
+
+# Keep small, intentional public skill assets.
+!skills/r-medical-graphics/assets/example_data/*.csv
+!skills/r-medical-graphics/assets/*.R
+!skills/r-medical-graphics/assets/*.md
+!skills/r-medical-graphics/assets/templates/*.R
+!skills/r-medical-graphics/assets/styles/*.R
+!assets/brand/*.svg
