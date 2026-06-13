@@ -48,7 +48,7 @@ theme_egraphics <- function(base_family = "Arial") {
 theme_set(theme_egraphics())
 ```
 
-If `ggpubr` is unavailable, use `theme_medical_graphics()` from `scripts/r_medical_graphics_helpers.R`; it follows the same axis, legend, and margin contract with a `theme_classic()` fallback.
+If `ggpubr` is unavailable, use `theme_medical_graphics()` from `scripts/r_medical_graphics_helpers.R`; it follows the same axis, legend, and margin behavior with a `theme_classic()` fallback.
 
 ## Top-Journal Color Palettes
 

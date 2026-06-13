@@ -42,6 +42,6 @@ When image viewing is available, inspect the final web PNG or TIFF preview direc
 - the smallest panel is not visually dominated by empty space;
 - labels, legends, and annotations do not overlap;
 - grouped or faceted subplots are not misleading because of shared scales;
-- the visual hierarchy matches the figure contract.
+- the visual hierarchy matches the figure plan.
 
 The scripted validator catches repeatable failures. Visual review catches human readability problems that metrics may miss.

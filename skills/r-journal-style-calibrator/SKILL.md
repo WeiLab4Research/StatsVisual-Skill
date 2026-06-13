@@ -27,7 +27,7 @@ Use this skill to add a new journal style to `r-medical-graphics` from evidence:
 
 ## Expected Output
 
-For planning-only turns, return a concise implementation plan covering evidence sources, style contract, integration points, tests, and assumptions.
+For planning-only turns, return a concise implementation plan covering evidence sources, style profile, integration points, tests, and assumptions.
 
 For implementation turns, update the target `r-medical-graphics` skill, run the planned tests, and report changed files plus validation results. Include unresolved source or guideline gaps instead of guessing silently.
 

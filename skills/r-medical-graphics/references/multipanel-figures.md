@@ -1,30 +1,30 @@
 # Multi-Panel Medical Figures
 
-Use this reference when one publication figure must combine multiple panels into a clinical or statistical evidence chain. A multi-panel figure is not a collage and not a default `patchwork` grid. It is a designed page: the scientific hierarchy, panel geometry, legends, tables, whitespace, and export format must be specified before plotting.
+Use this reference when one publication figure must combine multiple panels into a coherent clinical or statistical result. A multi-panel figure is not a collage and not a default `patchwork` grid. It is a planned figure: the result hierarchy, panel geometry, legends, tables, whitespace, and export format must be specified before plotting.
 
 This is an extended publication workflow built on the manuscript-derived plotting style; it is not a separate RawText chapter. Keep the book-style foundation first: `theme_pubr`/`theme_egraphics`, `ggsci`-style restrained palettes, medical examples, clear axes, concise legends, and explicit statistical interpretation.
 
-For high-stakes manuscript figures, the target style is a restrained research figure: asymmetric when needed, editable, and built around a clear evidence hierarchy rather than equal-sized chart tiles.
+For high-stakes manuscript figures, the target style is a restrained research figure: asymmetric when needed, editable, and built around a clear result hierarchy rather than equal-sized chart tiles.
 
-## First Define The Figure Specification
+## First Define The Figure Plan
 
 Before writing code, define:
 
-- **Core conclusion**: the single message the full figure supports.
-- **Primary evidence**: the panel that carries the main result.
-- **Supporting evidence**: model adjustment, subgroup analysis, sensitivity analysis, diagnostics, image quantification, or risk context.
-- **Reviewer risk**: the most likely challenge a reviewer would raise.
-- **Panel map**: `A`, `B`, `C`, etc., with one sentence per scientific panel.
+- **Main message**: the single message the full figure supports.
+- **Primary result**: the panel that carries the main result.
+- **Supporting analyses**: model adjustment, subgroup analysis, sensitivity analysis, diagnostics, image quantification, or risk context.
+- **Interpretation risk**: the most likely limitation or challenge in interpreting the figure.
+- **Panel roles**: `A`, `B`, `C`, etc., with one sentence per scientific panel.
 - **Dependent elements**: risk tables, legends, color keys, scale bars, inset plots, or annotation strips that belong to a panel and must not receive their own panel letter.
 - **Shared encodings**: group colors, line types, symbols, time units, axis scales, transformations, and denominators.
 - **Layout specification**: final width/height, panel coordinates or relative widths/heights, dominant panel, legend axis, gutters, and reserved margins.
 - **Output specification**: editable SVG plus PDF, 700 dpi TIFF, web PNG, rationale, session info, and whether panels need independent source files.
 
-Remove a panel if it does not make the conclusion more defensible. Remove a legend, table, or annotation if it repeats information without improving interpretation.
+Remove a panel if it does not make the main message more defensible. Remove a legend, table, or annotation if it repeats information without improving interpretation.
 
 ## Recommendation After Data Profiling
 
-Keep the original skill path: inspect data first, recommend a single figure first, then offer a multi-panel option only when the profile supports complementary evidence. Do not recommend a multi-panel figure just because several plot types are possible.
+Keep the original skill path: inspect data first, recommend a single figure first, then offer a multi-panel option only when the profile supports complementary analyses. Do not recommend a multi-panel figure just because several plot types are possible.
 
 In the recommendation reply, use this structure:
 
@@ -32,10 +32,10 @@ In the recommendation reply, use this structure:
 Recommended single figure: <chart>, because <data-profile reason>.
 Alternatives: <up to two single figures, or none>.
 Optional multi-panel figure: <yes/no>.
-Core conclusion: <one sentence>.
-Panel map: A <primary evidence>; B <supporting evidence>; C <validation/robustness>, if available.
+Main message: <one sentence>.
+Panel roles: A <primary result>; B <supporting analysis>; C <validation/robustness>, if available.
 Dependent elements: <risk table/legend/inset/scale bar belongs to which panel>.
-Evidence chain: <why these panels together are stronger than one plot>.
+Support logic: <why these panels together are stronger than one plot>.
 Use when: <manuscript need>.
 Limitation: <missing field, weak sample size, unavailable statistic, or interpretation caveat>.
 Expected outputs: SVG, PDF, 700 dpi TIFF, web PNG, rationale, session info.
@@ -56,7 +56,7 @@ Use these profile patterns to decide whether to offer a multi-panel option:
 
 Do not offer a multi-panel figure when all proposed panels would show the same evidence in different styles. Replace redundant panels with effect size, uncertainty, sensitivity, validation, or drop the multi-panel option.
 
-## Evidence Patterns
+## Support Patterns
 
 ### Primary Outcome Plus Support
 
@@ -78,7 +78,7 @@ Rules:
 - Use the same group colors across all panels.
 - Do not use A, B, and C as three visual styles of the same result unless each panel answers a different scientific question.
 
-### Survival Evidence Chain
+### Survival Support
 
 Use when Kaplan-Meier output alone is not enough.
 
@@ -100,7 +100,7 @@ Rules:
 - State censoring, log-rank test if used, CI bands, and Cox covariates in the rationale.
 - If event rates are low, prefer cumulative incidence/event probability over survival probability when it improves visual discrimination.
 
-### Biomarker Or Omics Evidence Chain
+### Biomarker Or Omics Support
 
 Use when a high-dimensional pattern needs focused validation.
 
@@ -159,16 +159,16 @@ Rules:
 - Pair representative images with quantitative evidence whenever possible.
 - Use dark backgrounds only inside image panels, not across the entire figure.
 
-## Publication Layout Specification
+## Publication Layout Plan
 
-Before coding a multi-panel figure, write a layout specification. This is separate from the scientific figure specification.
+Before coding a multi-panel figure, write a layout plan. This is separate from the scientific figure plan.
 
 Required fields:
 
 - **Canvas**: width, height, unit, target journal orientation, and whether supplementary versions are needed.
 - **Panel geometry**: explicit coordinates or relative areas for every scientific panel.
 - **Dominant panel**: which panel gets the largest visual area and why.
-- **Nature page archetype**: for Nature-style figures, declare whether the page is a clinical triptych, image plate plus quantification, schematic-led composite, asymmetric mixed-modality figure, dense categorical panel, or balanced quantitative grid.
+- **Nature-style layout pattern**: for Nature-style figures, declare whether the figure uses a parallel clinical layout, image plus measurement layout, workflow-led layout, dominant-result layout, dense categorical layout, or balanced comparison layout.
 - **Dependent elements**: risk tables, legends, scale bars, insets, and annotation strips with their parent panel.
 - **Gutters**: horizontal and vertical spacing, kept smaller inside panel groups and larger between evidence stages.
 - **Typography**: base font size, axis font size, panel tag size, title size, and whether fonts must remain editable in SVG.
@@ -187,9 +187,9 @@ Typography: 7 pt axis text, 8 pt axis titles, 10 pt panel tags, editable SVG tex
 Color system: fixed group palette used for curves, risk table labels, and forest plot exposure terms.
 ```
 
-## Layout Archetypes
+## Layout Patterns
 
-Use archetypes as starting points, then convert them into an explicit layout specification.
+Use layout patterns as starting points, then convert them into an explicit layout plan.
 
 ### Asymmetric Primary Result
 
@@ -228,7 +228,7 @@ Bottom row: response, safety, or summary proportions
 
 Keep columns semantically parallel. Legends should be shared by row or by entire figure, not repeated in every panel.
 
-### Schematic-Led Composite
+### Workflow-Led Layout
 
 Use when a study design, cohort flow, workflow, mechanism, or model pipeline must be understood first.
 
@@ -264,7 +264,7 @@ AABB
 AACC
 ```
 
-`L` is a legend strip or annotation strip, not a panel. It should use less space than a scientific panel and should not interrupt the evidence chain.
+`L` is a legend strip or annotation strip, not a panel. It should use less space than a scientific panel and should not interrupt the support sequence.
 
 ### Dense Categorical Panel
 
@@ -280,9 +280,9 @@ Rules:
 - Direct-label regions or stable categories when a detached mega-legend would force excessive lookup.
 - Reuse the exact same axis limits, panel geometry, category order, and denominator across the full grid.
 - Use hatching, texture, line type, or boundary marks when adjacent fills are close in luminance or must survive grayscale printing.
-- Use this archetype only when each panel represents a comparable categorical landscape. If one result is primary, switch to an asymmetric layout instead.
+- Use this pattern only when each panel represents a comparable categorical landscape. If one result is primary, switch to an asymmetric layout instead.
 
-### Nature-Style Asymmetric Mixed-Modality
+### Nature-Style Dominant-Result Layout
 
 Use when the figure combines a biologically or clinically central panel with smaller supporting plots, for example a circular genomics panel with validation plots, a representative image with quantification and model estimates, or a study schema with outcome summaries.
 
@@ -295,14 +295,14 @@ D   | E
 Rules:
 
 - Do not force equal panel sizes. Let the biologically or clinically central panel dominate.
-- Place smaller panels around the hero panel to answer narrower support questions.
+- Place smaller panels around the dominant panel to answer narrower support questions.
 - Keep a tight reused color mapping across modalities, such as `baseline / follow-up / highlight / neutral`, `wave 1 / wave 2 / wave 3`, or `case / control / reference`.
 - Use whitespace and alignment to signal grouping. Do not add decorative frames just to separate modalities.
 - Keep axis-heavy plots visually quieter than schematics, image plates, or the central biological panel.
 
 ## Nature-Style Modality Rules
 
-Use these rules only when the selected style is `nature` or when the user asks for a Nature-family / high-impact journal main figure. They refine the layout archetypes above; they do not replace the figure specification.
+Use these rules only when the selected style is `nature` or when the user asks for a Nature-family / high-impact journal main figure. They refine the layout patterns above; they do not replace the figure plan.
 
 ### Clinical Quantitative Figures
 
@@ -345,8 +345,8 @@ Use these rules only when the selected style is `nature` or when the user asks f
 
 ### Preferred Build Strategy
 
-- Build the figure from a layout specification, not from the number of plots.
-- Prefer explicit coordinate control for high-stakes multi-panel figures: `cowplot::ggdraw()` with `draw_plot()`, `patchwork` with a custom design and fixed widths/heights, `grid`/`gtable`, or a Python/matplotlib GridSpec workflow when exact axes are needed.
+- Build the figure from a layout plan, not from the number of plots.
+- Prefer explicit coordinate control for high-stakes multi-panel figures: `cowplot::ggdraw()` with `draw_plot()`, `patchwork` with a custom design and fixed widths/heights, or R `grid`/`gtable` when exact axes are needed.
 - Use `patchwork::wrap_plots()` only for balanced grids where all panels have equal status.
 - Use `cowplot` or `grid` when a survival curve and risk table must be treated as one panel group.
 - Use a dedicated legend grob or legend strip instead of collecting legends automatically when placement matters.
@@ -391,7 +391,7 @@ Use these rules only when the selected style is `nature` or when the user asks f
 
 ## R Template Guidance
 
-Use `assets/templates/multipanel_helpers.R` and `assets/templates/multipanel_figure.R` only as starting points. Before adapting either template, write the layout specification and decide whether automatic `patchwork` composition is sufficient.
+Use `assets/templates/multipanel_helpers.R` and `assets/templates/multipanel_figure.R` only as starting points. Before adapting either template, write the layout plan and decide whether automatic `patchwork` composition is sufficient.
 
 For publication figures:
 
@@ -405,12 +405,12 @@ Key helpers in the template:
 
 - `make_medical_multipanel()` for ordinary grids or custom patchwork designs.
 - `make_quantitative_grid()` for balanced 2x2 or 3-column grids.
-- `make_clinical_triptych()` for parallel clinical evidence rows.
-- `make_schematic_led_composite()` for workflow-led figures.
+- `make_clinical_triptych()` for parallel clinical support rows.
+- `make_workflow_led_layout()` for workflow-led figures.
 - `make_image_quant_layout()` for image plus quantification figures.
-- `make_asymmetric_hero()` for one dominant panel plus support.
+- `make_dominant_result_layout()` for one dominant panel plus support.
 
-If the requested figure is a main manuscript figure, do not use the default balanced grid unless the layout specification explicitly says all panels have equal evidence weight.
+If the requested figure is a main manuscript figure, do not use the default balanced grid unless the layout plan explicitly says all panels have equal evidence weight.
 
 ## Output And Editable Vector Rules
 
@@ -419,15 +419,15 @@ If the requested figure is a main manuscript figure, do not use the default bala
 - Use final journal dimensions when exporting; do not design at one size and scale later.
 - Keep web PNG under 1 MB when feasible, but never let the web preview drive the print layout.
 - For complex figures, optionally export separate panel source files in addition to the combined figure.
-- Write `output/figure_rationale.md` with the figure specification, layout specification, panel roles, model/statistical definitions, limitations, and output paths.
+- Write `output/figure_rationale.md` with the figure plan, layout plan, panel roles, model/statistical definitions, limitations, and output paths.
 
 ## QA Checklist
 
 Before delivery, verify:
 
-- The full figure has one clear conclusion.
+- The full figure has one clear main message.
 - Every tagged panel answers a distinct question.
-- The dominant panel matches the evidence hierarchy.
+- The dominant panel matches the result hierarchy.
 - Dependent elements are attached to their parent panels and are not incorrectly tagged.
 - Panel tags are present, manually checked, aligned, and referenced in the rationale.
 - Legends do not split or compress scientific panels.

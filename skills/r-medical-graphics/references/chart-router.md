@@ -47,7 +47,7 @@ The first user-facing response after inspecting data must be a recommendation re
 
 1. A compact data profile: rows, columns, key variable roles, missingness highlights, and matched chart families.
 2. One recommended single-figure chart and up to two single-figure alternatives.
-3. An `Optional multi-panel figure` note when the data can support complementary evidence such as distribution plus effect estimate, trend plus subgroup summary, survival curve plus risk table/forest plot, heatmap plus validation plot, or model fit plus diagnostics. Include the core conclusion, A/B/C panel roles, evidence-chain logic, use case, limitation, and expected outputs.
+3. An `Optional multi-panel figure` note when the data can support complementary analyses such as distribution plus effect estimate, trend plus subgroup summary, survival curve plus risk table/forest plot, heatmap plus validation plot, or model fit plus diagnostics. Include the main message, A/B/C panel roles, support logic, use case, limitation, and expected outputs.
 4. A `Multi-panel not recommended` note when the data profile lacks enough complementary evidence; name the missing field or statistic.
 5. `Style options` with `general`, `nature`, `lancet`, and `nejm`.
 6. A direct choice question asking which chart option and style to generate.
@@ -65,10 +65,10 @@ Why: better if distribution shape is the main message.
 Alternative: Mean dot-whisker plot
 Why: better if the manuscript focuses on estimated mean differences.
 
-Optional multi-panel figure: A two-panel evidence-chain figure.
-Core conclusion: treatment groups differ in both observed distribution and estimated effect size.
-Panel map: A: boxplot + raw points; B: mean difference with 95% CI.
-Evidence chain: Panel A shows data distribution; Panel B provides the manuscript-ready effect estimate.
+Optional multi-panel figure: A two-panel support figure.
+Main message: treatment groups differ in both observed distribution and estimated effect size.
+Panels: A: boxplot + raw points; B: mean difference with 95% CI.
+Support logic: Panel A shows data distribution; Panel B provides the manuscript-ready effect estimate.
 Use when: the manuscript needs both distribution and effect-size evidence.
 Limitation: this requires a defensible CI/test definition and enough observations per group.
 Expected outputs: PDF, SVG, 700 dpi TIFF, web PNG, rationale, session info.

@@ -34,7 +34,7 @@ Use `assets/plot_template.R` as the default starting point for a new figure scri
 - `assets/templates/scatter_association.R` for continuous-continuous association with optional grouping and smoothing.
 - `assets/templates/model_diagnostics.R` for linear model diagnostic panels.
 - `assets/templates/multipanel_helpers.R` for reusable patchwork/cowplot layout helpers.
-- `assets/templates/multipanel_figure.R` for evidence-chain multi-panel script scaffolds.
+- `assets/templates/multipanel_figure.R` for planned multi-panel script scaffolds.
 
 Before adapting a template, read `references/chart-index.md`, `references/design-rules.md`, the selected style reference, and the selected chart family's detailed reference so the copied script reflects the right variant, layers, packages, style, and QA notes.
 For multi-panel figures, also read `references/multipanel-figures.md` before coding the layout, because panel order, relative size, and shared legends should follow the evidence hierarchy.
@@ -86,7 +86,7 @@ Template package notes:
 - Model diagnostics use `broom` and `patchwork`; coefficient or forest variants may also need `forestplot`.
 - Multi-panel figures use `patchwork`; mixed image/table/legend assemblies may also need `cowplot`, `grid`, or `gridExtra`.
 
-If package installation fails because of network, repository, compiler, or file permission problems, stop and report the exact failure. Do not substitute a different charting backend without user approval.
+If package installation fails because of network, repository, compiler, or file permission problems, stop and report the exact failure. Do not substitute a lower-quality or non-R plotting route without user approval.
 
 If Windows reports `740` or "requested operation requires elevation", treat it as a library path or process elevation problem, not a CRAN mirror problem. First use the repository-local `.r-medical-graphics-library/`, then fall back to `<project_dir>/R-library`. Do not request administrator elevation unless the user explicitly wants system-wide installation.
 
@@ -97,7 +97,7 @@ In Codex or CI environments, CRAN/Bioconductor access may be blocked until the a
 1. Retry the same install command with the environment's approved network/escalation mechanism.
 2. Keep the intended package set unchanged.
 3. If approval is denied or the install still fails, stop and report the exact error.
-4. Do not generate base R, lower-resolution, or alternate-backend output as a substitute for the requested publication figure.
+4. Do not generate base R, lower-resolution, or non-R output as a substitute for the requested publication figure.
 
 ## Robustness
 

@@ -20,7 +20,7 @@ Use aliases for journal name, abbreviation, journal-family phrasing, English sty
 Create `references/styles/<style>.md` with this structure:
 
 - Use case.
-- Visual contract.
+- Visual profile.
 - Typography and numeric/statistical text.
 - Palette.
 - Multi-panel rules.

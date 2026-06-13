@@ -1,6 +1,6 @@
 # Output Rules
 
-## Folder Contract
+## Folder Rules
 
 Default output locations inside the project:
 

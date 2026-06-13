@@ -15,9 +15,9 @@ Use this workflow to turn a journal's examples and guidelines into a reusable R 
 - Inspect example figures one by one. Record repeated visual patterns rather than overfitting to a single chart.
 - Separate chart-specific mechanics from journal-wide style rules.
 
-## 3. Extract The Style Contract
+## 3. Extract The Style Profile
 
-Build a concise style contract with these dimensions:
+Build a concise style profile with these dimensions:
 
 - Use cases and aliases.
 - Typography: figure-internal font, submission/document font, text sizes, bolding, panel labels.
@@ -25,7 +25,7 @@ Build a concise style contract with these dimensions:
 - Backgrounds and rules: white or shaded body, grid visibility, table rules, panel dividers, axis lines, ticks.
 - Palette: default discrete order, semantic colours, grayscale rules, fill/outline contrast.
 - Legends and direct labels: allowed positions, when to prefer inline labels.
-- Multi-panel logic: panel labels, shared scales, dependent tables, legends, and figure contracts.
+- Multi-panel logic: panel labels, shared scales, dependent tables, legends, and figure plans.
 - Chart-specific overrides: forest plots, survival curves, trial profiles, table-like displays, heatmaps, and other repeated patterns.
 - Official submission rules: vector formats, editability, DPI, dimensions, font requirements, and prohibited practices.
 - QA reject conditions: concrete failures that should not pass validation.

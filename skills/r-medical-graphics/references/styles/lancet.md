@@ -4,7 +4,7 @@ Use this style when the user asks for `lancet`, The Lancet, 柳叶刀, Lancet-fa
 
 This guidance is distilled from Lancet example figures and official author/artwork guidance provided during style calibration. Keep the implementation concise and R/ggplot2-focused. Do not copy official PDFs, source images, or private examples into generated project folders or public skill references.
 
-## Visual Contract
+## Visual Rules
 
 - Use a white background, strong black or near-black axes, visible ticks, readable labels, and minimal decoration.
 - Prefer solid contrasting coloured lines. Avoid multiple dotted or dashed line styles; use dashed lines only for a reference line or a clearly meaningful comparator.

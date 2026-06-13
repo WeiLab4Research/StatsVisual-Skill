@@ -1,12 +1,10 @@
 # Nature Style
 
-Use this style when the user asks for `nature`, Nature-family presentation, high-impact journal figures, compact manuscript figures, or a restrained multi-panel figure with a strong evidence hierarchy.
+Use this style when the user asks for `nature`, Nature-family presentation, high-impact journal figures, compact manuscript figures, or a restrained multi-panel figure with a clear result hierarchy.
 
-This guidance is adapted from public Nature-style skill patterns in `Yuan1z0825/nature-skills`, especially its short skill entrypoint, figure contract, stance, R backend fragment, design-theory, workflow, and QA contract ideas. Keep the local implementation R/ggplot2-focused.
+## Visual Rules
 
-## Visual Contract
-
-- Make the primary evidence visually dominant; supporting panels should be quieter.
+- Make the primary result visually dominant; supporting panels should be quieter.
 - Use compact typography and tight but readable spacing. Do not fill the canvas with explanatory titles.
 - Prefer lowercase panel labels `a`, `b`, `c`, placed consistently and outside the plotting region when possible.
 - Keep SVG text editable. Avoid rasterizing text or flattening vector marks unless the data layer is genuinely raster-like.
@@ -30,8 +28,8 @@ Recommended order for discrete groups:
 
 ## Multi-Panel Rules
 
-- Write or save a figure contract before coding any multi-panel Nature-style figure.
-- The contract must state core conclusion, primary evidence, supporting evidence, reviewer risk, panel map, shared encodings, final dimensions, and export formats.
+- Write or save a concise figure plan before coding any multi-panel Nature-style figure.
+- The plan must state the main message, primary result, supporting analyses, interpretation risk, panel roles, shared encodings, final dimensions, and export formats.
 - Do not create a multi-panel figure by placing several redundant chart types together. Each panel must answer a distinct scientific question.
 - Attach dependent elements to their parent panel: risk tables, scale bars, inset labels, legend strips, and color bars should not receive separate panel labels unless they are scientific panels.
 - Use asymmetric layouts when one result is primary. Avoid equal tiled grids unless the panels have equal evidential weight.

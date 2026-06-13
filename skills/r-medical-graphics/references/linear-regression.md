@@ -178,6 +178,6 @@ Include:
 ## QA
 
 - Check linearity, independence, normality, and equal variance assumptions.
-- Inspect residuals and influence before presenting a fitted line as primary evidence.
+- Inspect residuals and influence before presenting a fitted line as the main result.
 - Do not confuse correlation, unadjusted regression, and adjusted regression.
 

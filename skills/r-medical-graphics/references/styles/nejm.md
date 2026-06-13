@@ -4,7 +4,7 @@ Use this style when the user asks for `nejm`, NEJM, New England Journal of Medic
 
 This guidance is distilled from NEJM-style example figures provided during style calibration. No official NEJM artwork or author guideline is bundled with this public skill, so treat this as an example-derived production style rather than an official submission specification.
 
-## Visual Contract
+## Visual Rules
 
 - Use a white background, strong black or near-black axes, visible ticks, and no decorative grid.
 - Use larger, highly readable clinical typography than compact Nature-style panels. Axis titles and panel headings are usually bold.
@@ -75,7 +75,7 @@ Use blue for a primary intervention or highlighted treatment, orange for a secon
 
 - No official local NEJM guideline files are currently available.
 - Do not invent official font, file-format, dimension, or DPI requirements for NEJM.
-- Continue to follow the skill's general export contract: editable PDF/SVG, high-resolution TIFF, web image under 1 MB, and final dimensions chosen before export.
+- Continue to follow the skill's general export requirements: editable PDF/SVG, high-resolution TIFF, web image under 1 MB, and final dimensions chosen before export.
 - If official NEJM guidance is provided later, revise this section to separate official submission constraints from example-derived production style.
 
 ## QA

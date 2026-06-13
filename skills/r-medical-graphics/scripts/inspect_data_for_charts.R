@@ -107,7 +107,7 @@ if (all(c("b", "se", "pval") %in% names(data)) && any(grepl("method", names(data
   )
   multi_panel_notes <- c(
     multi_panel_notes,
-    "Optional multi-panel figure: Core conclusion: MR effects are supported by estimate size, method robustness, and screening context. Panel map: A: MR forest plot with 95% CI; B: method-sensitivity plot; C: volcano-style screening plot. Evidence chain: primary estimate plus robustness plus high-throughput context. Use when: reporting primary MR results. Limitation: MR assumptions and heterogeneity still need textual/statistical support."
+    "Optional multi-panel figure: Main message: MR effects are supported by estimate size, method robustness, and screening context. Panels: A: MR forest plot with 95% CI; B: method-sensitivity plot; C: volcano-style screening plot. Support logic: primary estimate plus robustness plus high-throughput context. Use when: reporting primary MR results. Limitation: MR assumptions and heterogeneity still need textual/statistical support."
   )
 }
 if (length(continuous) >= 2) {
@@ -124,12 +124,12 @@ if (length(continuous) >= 2) {
   if (length(categorical) >= 1) {
     multi_panel_notes <- c(
       multi_panel_notes,
-      "Optional multi-panel figure: Core conclusion: the association is interpretable alongside group distributions. Panel map: A: grouped distribution for the key continuous outcome; B: scatter/regression or smooth curve; C: effect-size or subgroup summary if a research grouping variable is selected. Evidence chain: distribution plus association plus subgroup/effect context. Use when: both comparison and association matter. Limitation: causal interpretation depends on study design/model support."
+      "Optional multi-panel figure: Main message: the association is interpretable alongside group distributions. Panels: A: grouped distribution for the key continuous outcome; B: scatter/regression or smooth curve; C: effect-size or subgroup summary if a research grouping variable is selected. Support logic: distribution plus association plus subgroup/effect context. Use when: both comparison and association matter. Limitation: causal interpretation depends on study design/model support."
     )
   } else {
     multi_panel_notes <- c(
       multi_panel_notes,
-      "Optional multi-panel figure: Core conclusion: the continuous association remains interpretable after checking distribution/model context. Panel map: A: scatter/regression plot; B: residual or distribution check; C: density or marginal distribution panel. Evidence chain: relationship plus assumption context. Use when: model fit or nonlinearity may be questioned. Limitation: this needs a chosen model or smoothing rule."
+      "Optional multi-panel figure: Main message: the continuous association remains interpretable after checking distribution/model context. Panels: A: scatter/regression plot; B: residual or distribution check; C: density or marginal distribution panel. Support logic: relationship plus assumption context. Use when: model fit or nonlinearity may be questioned. Limitation: this needs a chosen model or smoothing rule."
     )
   }
 }
@@ -146,7 +146,7 @@ if (length(continuous) >= 1 && length(categorical) >= 1) {
   ))
   multi_panel_notes <- c(
     multi_panel_notes,
-    "Optional multi-panel figure: Core conclusion: groups differ in both observed distribution and estimated effect size. Panel map: A: box/violin plot with raw points; B: mean/median difference or model-adjusted effect with confidence interval; C: subgroup or sensitivity panel if another grouping variable is meaningful. Evidence chain: raw distribution plus manuscript-ready effect estimate. Use when: the paper needs both visual distribution and inferential summary. Limitation: CI/test/model definition must be chosen."
+    "Optional multi-panel figure: Main message: groups differ in both observed distribution and estimated effect size. Panels: A: box/violin plot with raw points; B: mean/median difference or model-adjusted effect with confidence interval; C: subgroup or sensitivity panel if another grouping variable is meaningful. Support logic: raw distribution plus manuscript-ready effect estimate. Use when: the paper needs both visual distribution and inferential summary. Limitation: CI/test/model definition must be chosen."
   )
 }
 if (length(categorical) >= 2) {
@@ -162,7 +162,7 @@ if (length(categorical) >= 2) {
   ))
   multi_panel_notes <- c(
     multi_panel_notes,
-    "Optional multi-panel figure: Core conclusion: categorical differences are supported by counts, denominators, and subgroup/composition context. Panel map: A: counts or proportions by group; B: denominator-aware percentage summary; C: subgroup or composition panel when categories have a meaningful hierarchy. Evidence chain: absolute counts plus normalized rates plus subgroup structure. Use when: rates could be misleading without denominators. Limitation: small cells may require collapsing or exact methods."
+    "Optional multi-panel figure: Main message: categorical differences are supported by counts, denominators, and subgroup/composition context. Panels: A: counts or proportions by group; B: denominator-aware percentage summary; C: subgroup or composition panel when categories have a meaningful hierarchy. Support logic: absolute counts plus normalized rates plus subgroup structure. Use when: rates could be misleading without denominators. Limitation: small cells may require collapsing or exact methods."
   )
 }
 if (length(time_cols) >= 1 && length(continuous) >= 1) {
@@ -178,7 +178,7 @@ if (length(time_cols) >= 1 && length(continuous) >= 1) {
   ))
   multi_panel_notes <- c(
     multi_panel_notes,
-    "Optional multi-panel figure: Core conclusion: longitudinal change is supported by trend and endpoint/effect evidence. Panel map: A: longitudinal trend; B: group difference or model-estimated effect; C: response, safety, or distribution summary at a clinically important time point. Evidence chain: trajectory plus effect estimate plus clinical endpoint context. Use when: time course and endpoint evidence both matter. Limitation: repeated-measure structure and irregular timing must be handled explicitly."
+    "Optional multi-panel figure: Main message: longitudinal change is supported by trend and endpoint/effect evidence. Panels: A: longitudinal trend; B: group difference or model-estimated effect; C: response, safety, or distribution summary at a clinically important time point. Support logic: trajectory plus effect estimate plus clinical endpoint context. Use when: time course and endpoint evidence both matter. Limitation: repeated-measure structure and irregular timing must be handled explicitly."
   )
 }
 if (length(time_cols) >= 1 && length(event_cols) >= 1) {
@@ -194,7 +194,7 @@ if (length(time_cols) >= 1 && length(event_cols) >= 1) {
   ))
   multi_panel_notes <- c(
     multi_panel_notes,
-    "Optional multi-panel figure: Core conclusion: survival differences are supported by time-to-event curves, risk-set context, and adjusted effects. Panel map: A: Kaplan-Meier or cumulative hazard curve; B: number-at-risk table or compact risk summary; C: Cox forest plot or adjusted effect estimate after event coding is verified. Evidence chain: survival pattern plus risk-set transparency plus adjusted estimate. Use when: survival curve alone is not enough for the manuscript. Limitation: event/censor coding and Cox covariates must be verified."
+    "Optional multi-panel figure: Main message: survival differences are supported by time-to-event curves, risk-set context, and adjusted effects. Panels: A: Kaplan-Meier or cumulative hazard curve; B: number-at-risk table or compact risk summary; C: Cox forest plot or adjusted effect estimate after event coding is verified. Support logic: survival pattern plus risk-set transparency plus adjusted estimate. Use when: survival curve alone is not enough for the manuscript. Limitation: event/censor coding and Cox covariates must be verified."
   )
 }
 if (length(continuous) >= 5 && nrow(data) >= 3) {
@@ -210,14 +210,14 @@ if (length(continuous) >= 5 && nrow(data) >= 3) {
   ))
   multi_panel_notes <- c(
     multi_panel_notes,
-    "Optional multi-panel figure: Core conclusion: high-dimensional patterns are supported by focused feature-level validation. Panel map: A: heatmap or correlation heatmap; B: highlighted-feature distribution or scatter plot; C: validation or model-adjusted effect panel for selected features. Evidence chain: overview pattern plus selected-feature evidence plus validation/model context. Use when: a heatmap alone would be too exploratory. Limitation: scaling, clustering, and feature-selection rules must be declared."
+    "Optional multi-panel figure: Main message: high-dimensional patterns are supported by focused feature-level validation. Panels: A: heatmap or correlation heatmap; B: highlighted-feature distribution or scatter plot; C: validation or model-adjusted effect panel for selected features. Support logic: overview pattern plus selected-feature evidence plus validation/model context. Use when: a heatmap alone would be too exploratory. Limitation: scaling, clustering, and feature-selection rules must be declared."
   )
 }
 if (length(suggestions) == 0) {
   suggestions <- "Need research question or clearer variable roles before recommending a chart"
   book_basis <- "No book-derived family matched confidently yet."
   choice_menu <- "- **Need clarification**: I need the outcome, grouping variable, or research question before recommending a chart."
-  multi_panel_notes <- "Multi-panel not recommended: I need the outcome, grouping variable, or research question before deciding whether panels should form an evidence chain."
+  multi_panel_notes <- "Multi-panel not recommended: I need the outcome, grouping variable, or research question before deciding whether panels would add complementary support."
 }
 choice_menu <- unique(choice_menu)
 heads <- grep("^### ", choice_menu)

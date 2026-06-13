@@ -14,7 +14,7 @@ R-plot-skill provides Codex skills for publication-ready medical and biostatisti
 ## What It Does
 
 - Profiles CSV, TSV, XLSX, and RDS datasets before plotting.
-- Recommends a primary single figure, up to two alternatives, and an optional evidence-chain multi-panel figure when appropriate.
+- Recommends a primary single figure, up to two alternatives, and an optional multi-panel figure when complementary analyses are useful.
 - Uses a first-turn gate: when data are first provided, the assistant profiles and recommends before writing plotting code.
 - Supports `general`, `nature`, `lancet`, and `nejm` figure styles.
 - Prioritizes polar plots or rose charts for dense categorical numeric summaries with 20 or more categories when a vertical layout would be too tall or label-heavy.

@@ -62,7 +62,7 @@ make_clinical_triptych <- function(
     )
 }
 
-make_schematic_led_composite <- function(
+make_workflow_led_layout <- function(
   p_schematic,
   p_b,
   p_c,
@@ -118,12 +118,12 @@ make_image_quant_layout <- function(
     )
 }
 
-make_asymmetric_hero <- function(
+make_dominant_result_layout <- function(
   p_a,
   p_b,
   p_c,
   p_d,
-  p_hero,
+  p_main,
   p_f,
   legend_position = "bottom"
 ) {
@@ -133,7 +133,7 @@ make_asymmetric_hero <- function(
   FFE
   "
 
-  p_a + p_b + p_c + p_d + p_hero + p_f +
+  p_a + p_b + p_c + p_d + p_main + p_f +
     patchwork::plot_layout(design = design, widths = c(1, 1, 1.2), guides = "collect") +
     patchwork::plot_annotation(tag_levels = "A") &
     ggplot2::theme(

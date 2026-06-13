@@ -57,7 +57,7 @@ read_table_auto <- function(path) {
 
 data <- read_table_auto(data_file)
 
-# Replace these placeholder mappings after writing the figure contract.
+# Replace these placeholder mappings after writing the figure plan.
 group_col <- "REPLACE_WITH_GROUP_COLUMN"
 value_col <- "REPLACE_WITH_VALUE_COLUMN"
 estimate_col <- "REPLACE_WITH_ESTIMATE_COLUMN"
@@ -112,27 +112,27 @@ p_effect <- ggplot2::ggplot(effect_data, ggplot2::aes(y = stats::reorder(.data[[
 
 fig <- switch(
   layout,
-  "asymmetric-hero" = make_asymmetric_hero(p_distribution, p_effect, p_distribution, p_effect, p_distribution, p_effect),
+  "dominant-result" = make_dominant_result_layout(p_distribution, p_effect, p_distribution, p_effect, p_distribution, p_effect),
   make_quantitative_grid(list(p_distribution, p_effect), ncol = 2)
 )
 
 rds_file <- file.path(output_dir, paste0(figure_name, ".rds"))
 saveRDS(fig, rds_file)
 
-contract_file <- file.path(output_dir, "figure_contract.md")
-if (!file.exists(contract_file)) {
+plan_file <- file.path(output_dir, "figure_plan.md")
+if (!file.exists(plan_file)) {
   writeLines(c(
-    "# Figure Contract",
+    "# Figure Plan",
     "",
-    "- Core conclusion: TODO replace with one sentence from the recommendation stage.",
-    "- Primary evidence: Panel A.",
-    "- Supporting evidence: Panel B.",
-    "- Reviewer risk: TODO state the most likely challenge.",
-    "- Panel map: A distribution; B effect estimate. Replace if the final panels differ.",
+    "- Main message: TODO replace with one sentence from the recommendation stage.",
+    "- Primary result: Panel A.",
+    "- Supporting analyses: Panel B.",
+    "- Interpretation risk: TODO state the most likely limitation.",
+    "- Panel roles: A distribution; B effect estimate. Replace if the final panels differ.",
     "- Shared encodings: TODO state group colors, units, scales, transformations, and denominators.",
     paste0("- Style: ", rmg_style_label(style), "."),
-    "- Output contract: PDF, SVG, 700 dpi TIFF, and web PNG at the selected final size."
-  ), contract_file)
+    "- Output set: PDF, SVG, 700 dpi TIFF, and web PNG at the selected final size."
+  ), plan_file)
 }
 
 export_script <- file.path(skill_dir, "scripts", "export_publication_figures.R")
@@ -152,8 +152,8 @@ writeLines(c(
   "",
   paste0("- Layout: ", layout),
   paste0("- Style: ", rmg_style_label(style)),
-  "- Figure contract: see output/figure_contract.md.",
-  "- Panel map: replace scaffold text with task-specific A/B/C panel descriptions.",
+  "- Figure plan: see output/figure_plan.md.",
+  "- Panel roles: replace scaffold text with task-specific A/B/C panel descriptions.",
   "- Shared encodings: keep group colors, units, scales, transformations, and denominators consistent across panels.",
   "- Limitations: replace scaffold text with data-quality, model, or interpretation limits."
 ), file.path(output_dir, "figure_rationale.md"))

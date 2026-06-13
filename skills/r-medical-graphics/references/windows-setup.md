@@ -18,7 +18,7 @@ This installs common plotting packages into the repository-local library by defa
 .r-medical-graphics-library/
 ```
 
-This is preferred for Codex desktop because future conversations can usually read it from the workspace. The directory is ignored by Git and should not be uploaded.
+This is preferred for Codex desktop because future conversations can usually read it from the workspace. Git excludes this local dependency directory from version control.
 
 The bootstrap writes a log file in the repository root:
 
