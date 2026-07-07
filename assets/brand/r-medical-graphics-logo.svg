@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 360" role="img" aria-labelledby="title desc">
-  <title id="title">R Medical Graphics logo</title>
-  <desc id="desc">Horizontal logo for the R Medical Graphics skill, with a secondary journal style calibrator cue.</desc>
+  <title id="title">StatsVisual-Skill logo</title>
+  <desc id="desc">Horizontal logo for the StatsVisual-Skill skill, with a secondary journal style calibrator cue.</desc>
   <defs>
     <style>
       .ink { fill: #0f172a; }
@@ -58,7 +58,7 @@
   </g>
 
   <g class="wordmark" transform="translate(378 103)">
-    <text class="ink" x="0" y="0" font-size="62" font-weight="800" letter-spacing="0">R Medical Graphics</text>
+    <text class="ink" x="0" y="0" font-size="62" font-weight="800" letter-spacing="0">StatsVisual-Skill</text>
     <text class="muted" x="2" y="49" font-size="28" font-weight="500" letter-spacing="0">Publication-ready medical figures in R</text>
 
     <g transform="translate(4 111)">
