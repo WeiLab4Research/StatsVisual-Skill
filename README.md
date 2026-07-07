@@ -5,9 +5,9 @@
 </p>
 
 Team:  
-开发人员（Developer）：江昊天，杜文晓，王邦宇  
+开发人员（Developer）：Haotian Jiang, Wenxiao Du, Bangyu Wang  
 指导老师（Supervisor and Sponsor）：Prof. Yongyue Wei, Peking University  
-内部测试：Graduate students on the team including: 崔淼、魏翘楚、奚梓玮
+内部测试：Graduate students on the team including: Miao Cui, Qiaochu Wei, Ziwei Xi
 
 **Language:** English | [简体中文](README.zh-CN.md)
 
@@ -253,7 +253,10 @@ We welcome researchers, developers, and students to co-build, test, and share im
 
 ## Acknowledgements
 
-This project was inspired by [Yuan1z0825/nature-skills](https://github.com/Yuan1z0825/nature-skills).
+This project was inspired by [Yuan1z0825/nature-skills](https://github.com/Yuan1z0825/nature-skills),but follows a different focus. It centers on medical statistical visualization principles from four leading medical journals—The Lancet, NEJM, JAMA, and BMJ—and is structured around the framework of Statistical Graphics and Art. It covers a broader range of chart types and helps users choose suitable visualizations based on their data structure and statistical intent.
+
+## Recruitment Notice
+The research group is seeking postdoctoral researchers. Applicants with relevant research backgrounds are encouraged to apply. For details, please visit: http://phepr.pku.edu.cn/info/1038/2521.htm
 
 ## References
 

@@ -253,7 +253,10 @@ Rscript skills/StatsVisual-Skill/scripts/validate_r_plot.R demo/figures
 
 ## 致谢
 
-本项目灵感亦参考 [Yuan1z0825/nature-skills](https://github.com/Yuan1z0825/nature-skills)。
+本项目灵感亦参考 [Yuan1z0825/nature-skills](https://github.com/Yuan1z0825/nature-skills)，但定位有所不同。本项目主要聚焦四大医学期刊（The Lancet、NEJM、JAMA、BMJ）的医学统计绘图原则，并结合《统计图形与艺术》的知识框架，覆盖更丰富的图形类型。同时，在用户初次绘图时，可根据数据结构与统计意图推荐合适的图形方案。
+
+## 招聘启事
+课题组现诚聘博士后研究员，欢迎有相关研究背景者申请。详情请见：http://phepr.pku.edu.cn/info/1038/2521.htm。
 
 ## Reference
 
