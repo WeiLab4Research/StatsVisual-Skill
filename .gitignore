@@ -51,3 +51,5 @@ Guidelines/
 !skills/r-medical-graphics/assets/templates/*.R
 !skills/r-medical-graphics/assets/styles/*.R
 !assets/brand/*.svg
+!assets/gallery/
+!assets/gallery/*.png
