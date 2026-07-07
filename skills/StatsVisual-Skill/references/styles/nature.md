@@ -12,6 +12,7 @@ Use this style when the user asks for `nature`, Nature-family presentation, high
 - Use direct labels or one shared legend when they reduce lookup. Avoid repeating legends across panels.
 - Use thin axes and ticks. Keep grid lines absent or very pale.
 - Use concise axis labels with units and explicit interval/test definitions.
+- Axis titles should be bold relative to tick labels.
 
 ## Palette
 
@@ -33,6 +34,37 @@ Recommended order for discrete groups:
 - Do not create a multi-panel figure by placing several redundant chart types together. Each panel must answer a distinct scientific question.
 - Attach dependent elements to their parent panel: risk tables, scale bars, inset labels, legend strips, and color bars should not receive separate panel labels unless they are scientific panels.
 - Use asymmetric layouts when one result is primary. Avoid equal tiled grids unless the panels have equal evidential weight.
+
+## Kaplan-Meier Curve Rules
+
+- Place a number-at-risk table directly below every KM curve.
+- Align each number-at-risk value to the center of the corresponding x-axis tick/time point.
+- Right-align and bold the `Number at risk` label and the risk-table group names.
+- Use black risk-table text by default unless colour has a stated encoding purpose.
+
+## Forest Plot Rules
+
+Reference image: `references/styles/examples/nature-forest-plot.png`. Use it only as a visual reference; do not copy its data, labels, or exact column order blindly.
+
+- Use a forest plot only when effect estimates and uncertainty intervals are present or can be computed from a declared model.
+- Keep Nature-style forest plots compact, column-aligned, and evidence-first; avoid oversized titles or explanatory text inside the plot.
+- Use descriptor columns only when needed: subgroup/level labels, counts, study weights, estimate with CI, and P for interaction are optional analysis-dependent fields.
+- Prefer a single integrated table-and-forest layout. The forest axis, text columns, and row labels should share one row coordinate system.
+- Use thin CI lines, modest square or point markers, and a pale or absent grid. Use blue or muted journal palette colours only when colour carries meaning.
+- Keep forest-plot column headers the same font size as the body category labels; use bold weight for headers if needed.
+- Use shallow row bands or fine column guides sparingly to support tracking; they should not dominate the CI marks.
+- Place favour labels and axis ticks close to the forest axis, and keep the effect-measure label explicit.
+- Reject Nature-style forest plots that are too wide, rely on a detached legend, use heavy table rules, or rasterize editable text.
+- For example,the plot should be arranged as follows:
+| **Subgroup / level** | **Treatment** | **Comparator** | **HR (95% CI)** | **HR (95% CI)** | **P interaction** |
+|---|---:|---:|:---:|---:|---:|
+| **Age** |  |  |  |  | 0·48 |
+| &nbsp;&nbsp;<65 years | 86/742 | 112/736 | ───■──── | 0·76 (0·58–0·99) |  |
+| &nbsp;&nbsp;≥65 years | 74/658 | 89/662 | ─────■── | 0·84 (0·62–1·13) |  |
+| **Sex** |  |  |  |  | 0·71 |
+| &nbsp;&nbsp;Male | 96/812 | 121/806 | ───■──── | 0·79 (0·61–1·02) |  |
+| &nbsp;&nbsp;Female | 64/588 | 80/592 | ─────■── | 0·81 (0·58–1·12) |  |
+|  |  |  | └──0·5──1·0──2·0──┘ |  |  |
 
 ## R Implementation
 

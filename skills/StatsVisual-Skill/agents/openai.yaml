@@ -1,0 +1,7 @@
+interface:
+  display_name: "R Medical Graphics"
+  short_description: "Publication-ready medical R figures."
+  icon_small: "./assets/brand/r-medical-graphics-mark.svg"
+  icon_large: "./assets/brand/r-medical-graphics-logo.svg"
+  brand_color: "#0f766e"
+  default_prompt: "Use $r-medical-graphics with a hard first-turn gate: when I first provide or point to data, only create/copy/profile the data, summarize the data profile, recommend one single figure plus any suitable coherent multi-panel option, and ask which option and style to generate. Offer general, Nature, Lancet, NEJM, JAMA, and BMJ styles. If a categorical numeric variable has >25 categories and the goal is frequency, proportion, composition, absolute contribution, burden, or overview ranking, prioritize rose chart or polar plot. If the goal is significance-value or correlation-coefficient precision, threshold judgment, P value, CI, significance marking, or adjusted-versus-unadjusted differences, do not prioritize rose chart or polar plot even when category count is >25. Do not write R plotting scripts, copy templates, install plotting packages, export figures, validate figures, or choose automatically until I send a follow-up message selecting a concrete chart option. After I choose, write and run R code to export PDF, SVG, 700 dpi TIFF, and a web image under 1 MB."

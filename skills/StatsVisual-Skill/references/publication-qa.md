@@ -20,7 +20,8 @@ Run this checklist before final delivery. Use it together with `readability-qa.m
 - Statistical annotations contradict computed/provided values.
 - Survival event coding, censoring, or time unit is unverified for survival graphics.
 - A multi-panel figure is only a collage and does not match the figure plan.
-- A categorical numeric/count/rate/proportion/SHAP/model-contribution summary with `>=20` categories uses a bar, dot, or beeswarm layout as the primary figure without a clear precision reason such as exact thresholds, confidence intervals, or reviewer-facing value lookup, when a polar plot or rose chart would be more legible.
+- A categorical numeric summary with `>25` categories and a frequency, proportion, composition, absolute contribution, burden, or overview-ranking message uses a tall bar/dot layout when a polar plot or rose chart would be more legible.
+- A categorical numeric summary uses a rose chart or polar plot as the primary figure for significance-value precision, correlation-coefficient precision, threshold judgment, P values, CIs, significance marks, or adjusted-versus-unadjusted differences.
 
 ## Warnings To Resolve Or Report
 

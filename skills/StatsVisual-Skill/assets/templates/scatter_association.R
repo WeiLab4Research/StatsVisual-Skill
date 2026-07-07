@@ -2,16 +2,17 @@
 
 args <- commandArgs(trailingOnly = TRUE)
 if (length(args) < 5) {
-  stop("Usage: Rscript distribution_compare.R <project_dir> <data_file> <figure_name> <group_col> <value_col> [subgroup_col] [style]", call. = FALSE)
+  stop("Usage: Rscript scatter_association.R <project_dir> <data_file> <figure_name> <x_col> <y_col> [group_col] [smooth_method] [style]", call. = FALSE)
 }
 
 project_dir <- normalizePath(args[[1]], winslash = "/", mustWork = TRUE)
 data_file <- normalizePath(args[[2]], winslash = "/", mustWork = TRUE)
 figure_name <- args[[3]]
-group_col <- args[[4]]
-value_col <- args[[5]]
+x_col <- args[[4]]
+y_col <- args[[5]]
 arg6 <- if (length(args) >= 6 && nzchar(args[[6]])) args[[6]] else NA_character_
 arg7 <- if (length(args) >= 7 && nzchar(args[[7]])) args[[7]] else NA_character_
+arg8 <- if (length(args) >= 8 && nzchar(args[[8]])) args[[8]] else NA_character_
 
 figures_dir <- file.path(project_dir, "figures")
 output_dir <- file.path(project_dir, "output")
@@ -38,66 +39,62 @@ source(file.path(skill_dir, "scripts", "setup_r_library.R"), local = TRUE)
 rmg_ensure_packages(c("ggplot2", "dplyr", "readr", "forcats", "ragg"), project_dir = project_dir, skill_dir = skill_dir)
 source(file.path(skill_dir, "assets", "theme_medical_graphics.R"), local = TRUE)
 
-known_styles <- c("general", "default", "general-style", "通用", "通用风格", "nature", "nature-style", "nature family", "nature-family", "nature风格", "lancet", "lancet-style", "the lancet", "lancet journal", "lancet风格", "柳叶刀", "柳叶刀风格", "nejm", "nejm-style", "new england journal of medicine", "nejm journal", "nejm风格", "新英格兰医学杂志", "新英格兰医学杂志风格")
+known_styles <- c("general", "default", "general-style", "通用", "通用风格", "nature", "nature-style", "nature family", "nature-family", "nature风格", "lancet", "lancet-style", "the lancet", "lancet journal", "lancet风格", "柳叶刀", "柳叶刀风格", "nejm", "nejm-style", "new england journal of medicine", "nejm journal", "nejm风格", "新英格兰医学杂志", "新英格兰医学杂志风格", "jama", "jama-style", "jama network", "jama journal", "journal of the american medical association", "jama风格", "美国医学会杂志", "美国医学会杂志风格", "bmj", "bmj-style", "the bmj", "bmj journal", "british medical journal", "bmj风格", "英国医学杂志", "英国医学杂志风格")
+known_smoothers <- c("lm", "loess", "gam", "glm")
 if (!is.na(arg6) && tolower(trimws(arg6)) %in% known_styles && is.na(arg7)) {
-  subgroup_col <- NA_character_
+  group_col <- NA_character_
+  smooth_method <- "lm"
   style <- arg6
-} else {
-  subgroup_col <- arg6
+} else if (!is.na(arg6) && tolower(trimws(arg6)) %in% known_smoothers) {
+  group_col <- NA_character_
+  smooth_method <- arg6
   style <- if (!is.na(arg7)) arg7 else "general"
+} else {
+  group_col <- arg6
+  smooth_method <- if (!is.na(arg7)) arg7 else "lm"
+  style <- if (!is.na(arg8)) arg8 else "general"
 }
 style <- rmg_normalize_style(style)
 
 data <- readr::read_csv(data_file, show_col_types = FALSE)
-required_cols <- c(group_col, value_col, subgroup_col[!is.na(subgroup_col)])
+required_cols <- c(x_col, y_col, group_col[!is.na(group_col)])
 missing_cols <- setdiff(required_cols, names(data))
 if (length(missing_cols) > 0) {
   stop("Missing required columns: ", paste(missing_cols, collapse = ", "), call. = FALSE)
 }
 
 plot_data <- data |>
-  dplyr::filter(!is.na(.data[[group_col]]), !is.na(.data[[value_col]])) |>
+  dplyr::filter(!is.na(.data[[x_col]]), !is.na(.data[[y_col]])) |>
   dplyr::mutate(
-    .group = forcats::fct_inorder(as.factor(.data[[group_col]])),
-    .value = as.numeric(.data[[value_col]])
+    .x = as.numeric(.data[[x_col]]),
+    .y = as.numeric(.data[[y_col]])
   )
 
-if (!is.na(subgroup_col)) {
+if (!is.na(group_col)) {
   plot_data <- plot_data |>
-    dplyr::filter(!is.na(.data[[subgroup_col]])) |>
-    dplyr::mutate(.subgroup = forcats::fct_inorder(as.factor(.data[[subgroup_col]])))
+    dplyr::filter(!is.na(.data[[group_col]])) |>
+    dplyr::mutate(.group = forcats::fct_inorder(as.factor(.data[[group_col]])))
 }
 
 if (nrow(plot_data) == 0) {
-  stop("No complete rows remain after filtering group/value columns.", call. = FALSE)
+  stop("No complete numeric rows remain after filtering x/y columns.", call. = FALSE)
 }
 
-group_count <- length(unique(plot_data$.group))
-palette_values <- rmg_palette(max(group_count, if (!is.na(subgroup_col)) length(unique(plot_data$.subgroup)) else 1), style)
-
-if (is.na(subgroup_col)) {
-  p <- ggplot2::ggplot(plot_data, ggplot2::aes(x = .group, y = .value, fill = .group)) +
-    ggplot2::stat_boxplot(geom = "errorbar", width = 0.18, linewidth = 0.35) +
-    ggplot2::geom_boxplot(width = 0.5, outlier.shape = NA, alpha = 0.72, linewidth = 0.35) +
-    ggplot2::geom_jitter(width = 0.12, height = 0, alpha = 0.5, size = 1.2, color = "grey25") +
-    ggplot2::scale_fill_manual(values = palette_values) +
-    ggplot2::guides(fill = "none")
+if (is.na(group_col)) {
+  p <- ggplot2::ggplot(plot_data, ggplot2::aes(x = .x, y = .y)) +
+    ggplot2::geom_point(alpha = 0.65, size = 1.6, color = rmg_palette(1, style)[[1]]) +
+    ggplot2::geom_smooth(method = smooth_method, se = TRUE, linewidth = 0.7, color = "grey20", fill = "grey70")
 } else {
-  p <- ggplot2::ggplot(plot_data, ggplot2::aes(x = .group, y = .value, fill = .subgroup)) +
-    ggplot2::stat_boxplot(
-      geom = "errorbar", width = 0.25, linewidth = 0.35,
-      position = ggplot2::position_dodge2(width = 0.75, preserve = "single")
-    ) +
-    ggplot2::geom_boxplot(
-      width = 0.62, outlier.shape = NA, alpha = 0.72, linewidth = 0.35,
-      position = ggplot2::position_dodge2(width = 0.75, preserve = "single")
-    ) +
-    ggplot2::scale_fill_manual(values = palette_values) +
-    ggplot2::labs(fill = subgroup_col)
+  p <- ggplot2::ggplot(plot_data, ggplot2::aes(x = .x, y = .y, color = .group, fill = .group)) +
+    ggplot2::geom_point(alpha = 0.62, size = 1.5) +
+    ggplot2::geom_smooth(method = smooth_method, se = TRUE, linewidth = 0.7, alpha = 0.16) +
+    ggplot2::scale_color_manual(values = rmg_palette(length(unique(plot_data$.group)), style)) +
+    ggplot2::scale_fill_manual(values = rmg_palette(length(unique(plot_data$.group)), style)) +
+    ggplot2::labs(color = group_col, fill = group_col)
 }
 
 p <- p +
-  ggplot2::labs(x = group_col, y = value_col) +
+  ggplot2::labs(x = x_col, y = y_col) +
   rmg_theme(style)
 
 rds_file <- file.path(output_dir, paste0(figure_name, ".rds"))

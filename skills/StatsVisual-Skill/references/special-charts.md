@@ -16,11 +16,11 @@ This reference is derived from the local special-chart manuscript notes and cali
 
 | Chart | Prefer when | Avoid when | Key data structure |
 |---|---|---|---|
-| Polar plot | Category count is at least 20, or grouped categories total at least 20, categories are cyclic or too many for a compact horizontal chart | Fewer than 20 non-cyclic categories, close clinical thresholds requiring precise reading | Category + numeric value; optional group, radius, size, color |
-| Signed polar plot | Dense categorical signed values such as biomarker SHAP, feature contribution, or model contribution summaries | exact CI/threshold reading is the main evidence | Category + signed value; optional point distribution, group, radius, size, color |
+| Polar plot | Category count is >25 and the goal is frequency, proportion, composition, absolute contribution, burden, or overview ranking | Significance-value precision, correlation-coefficient precision, P values, CIs, threshold judgment, significance marks, or adjusted-versus-unadjusted differences are the main evidence | Category + numeric value; optional group, radius, size, color |
+| Signed polar plot | Dense categorical signed values used for overview only | exact CI/threshold/P-value/significance reading or adjusted-versus-unadjusted comparison is the main evidence | Category + signed value; optional point distribution, group, radius, size, color |
 | Radar chart | 3 to 8 comparable axes and 2 to 6 groups with normalized scales | Axes use incompatible scales or more than 6 groups overlap | Group + several numeric profile variables |
 | Stream / river chart | Longitudinal composition across many time points, usually 4 to 12 dominant strata | Sparse time points, exact category comparison, too many small strata | Time + value + stratum |
-| Rose chart | Ranked or compositional categories, usually >=20 categories after single-variable counting or grouped aggregation, where a circular editorial display is justified | Exact between-category comparison is primary; values include negatives | Category + positive value |
+| Rose chart | Category count is >25 with non-negative frequency, proportion, composition, absolute contribution, burden, or overview-ranking values | Exact comparison, P values, CIs, thresholds, significance marks, adjusted-versus-unadjusted differences, or negative values are primary | Category + positive value |
 | Fourfold plot | One or more 2 by 2 tables where odds ratio / independence is the message | Sparse cells, non-binary variables, adjusted models are needed | Binary row + binary column + counts; optional strata |
 | Spiral histogram | At least two repeated cycles of high-frequency time data where seasonality/circadian pattern is the message | Short, non-periodic, or irregular time series | Date/time + value, optional threshold |
 | Manhattan plot | Genome-wide or exome-wide association scan with many variants/features and p values | Small candidate-gene plot or adjusted effect interpretation is primary | Chromosome + position + p value; optional labels |
@@ -31,11 +31,11 @@ This reference is derived from the local special-chart manuscript notes and cali
 | Model-diagnostic bubble plot | Regression diagnostics require residual outliers, high leverage, and Cook's distance to be screened in one panel | A formal deletion/influence table is required, the model is not yet specified, or sample size is too small for a stable smooth | Model object or observation-level leverage + standardized/studentized residual + Cook's distance; optional label/group |
 
 ## 1. Polar Plot
-Use for radial category displays when the category count is high enough to justify circular layout. A good default threshold is at least 20 categories for one variable, or at least 20 total category entries across groups for grouped summaries; below that, use a horizontal bar, dot plot, or lollipop plot unless the categories are inherently cyclic. Medical examples include adverse-event profiles, symptom frequency by variant, subgroup prevalence, ranked biomarker values, feature importance, model contribution, and circular summaries of many biomarkers.
+Use for radial category displays when the category count is high enough to justify circular layout and the message is an overview. A good default threshold is more than 25 categories for one variable, and the main goal should be frequency, proportion, composition, absolute contribution, burden, or overview ranking. Do not prioritize polar plots when exact comparison, P values, CIs, thresholds, significance marks, correlation coefficients, or adjusted-versus-unadjusted differences are central.
 
 Top-journal notes:
 
-- Use polar bars for pattern overview, or exact clinical comparison.
+- Use polar bars for pattern, composition, burden, or ranking overview.
 - Keep an interpretable scale label because polar bars lose the familiar y-axis.
 - Annular polar scatter is preferable when the radius carries a continuous measure and color/size adds one extra variable.
 - Reserve a circular blank center with `scale_y_continuous(limits = c(-inner_blank, ...))` or an equivalent annular baseline. The center may hold a concise denominator/scale note, but should not be filled with decorative graphics.
@@ -148,31 +148,39 @@ Top-journal notes:
 - Normalize or rescale axes before plotting and disclose the transformation.
 - Keep groups to 2 to 6; if more groups are required, use small multiples.
 - Do not use radar charts when the order of axes is arbitrary and drives the visual conclusion.
-
+- Radar chart profiles should be represented as crisp polygonal outlines formed by straight connections between adjacent axes. Smoothed curves, circular arcs, or spline interpolation should be avoided because they may imply artificial continuity between discrete variables.
+- Use circular dashed reference rings and light radial axis lines by default, matching common medical radar-chart style. Use regular polygon grid rings only when the user explicitly asks for polygonal grid/background.
+- Do not let data marks or profile lines exceed the outer reference ring. A safe default is `outer_radius = 1.00` and `max_data_radius = 0.96`.
+- Prefer manual Cartesian geometry over `coord_polar()` for publication radar charts: compute `theta`, `r`, `x = r * cos(theta)`, and `y = r * sin(theta)`. This gives explicit control over circular rings, radial axes, labels, clipping, and data bounds.
+- Use `coord_equal(clip = "off")`; never allow unequal x/y scaling to distort the radar shape.
+- If values are signed, disclose the transformation and show the zero/reference ring clearly. Do not label the center as zero unless zero truly maps to the center.
+- If there are more than 8 axes or more than 6 groups, recommend faceting, small multiples, heatmap, or Cleveland dot plot before drawing a single overloaded radar chart.
 ```r
-rmg_radar_plot <- function(data, group, value_cols, max_value = NULL,
-                           palette = NULL, title = NULL, fill_alpha = 0.08) {
-  rmg_check_cols(data, c(group, value_cols))
-  d <- data %>%
-    select(.group = all_of(group), all_of(value_cols)) %>%
-    pivot_longer(-.group, names_to = ".axis", values_to = ".value") %>%
-    mutate(.axis = forcats::fct_inorder(.axis), .value = as.numeric(.value))
+colnames(covid_nph) = c("region",
+                        "Never under control(n=81)", 
+                        "once under control(n=85)", 
+                        "Rebound(n=56)",
+                        "Rebound greater(n=28)", 
+                        "Fluctuate(n=10)")
+# 定义雷达图颜色
+radar_color = c("#FDAF91FF",
+                "#0099B4FF",
+                "#ED0000FF",
+                "#00468BFF",
+                "#42B540FF",
+                "#925E9FFF")
 
-  if (is.null(max_value)) max_value <- max(d$.value, na.rm = TRUE)
-  if (!is.finite(max_value) || max_value <= 0) stop("max_value must be positive.", call. = FALSE)
-  d <- d %>% mutate(.scaled = pmax(0, .value / max_value))
-
-  p <- ggplot(d, aes(.axis, .scaled, group = .group, color = .group, fill = .group)) +
-    geom_polygon(alpha = fill_alpha, linewidth = 0.5) +
-    geom_line(linewidth = 0.6) +
-    geom_point(size = 1.8) +
-    coord_polar(clip = "off") +
-    scale_y_continuous(limits = c(0, 1), labels = percent_format(accuracy = 1)) +
-    labs(x = NULL, y = NULL, title = title) +
-    rmg_special_theme()
-
-  if (!is.null(palette)) p <- p + scale_color_manual(values = palette) + scale_fill_manual(values = palette)
-  p
+ggradar(covid_nph,
+        base.size = 1,
+        background.circle.transparency = 0,
+        plot.extent.x.sf = 1.2,
+        group.colours = radar_color,
+        legend.position = "bottom",
+        legend.text.size = 8,
+        group.point.size = 4,
+        axis.label.offset = 1.1,
+        axis.label.size = 4,
+        font.radar = 1)
 }
 ```
 
@@ -226,6 +234,33 @@ Top-journal notes:
 - Place each outside label next to the corresponding bar tip using a small value-scaled offset. Avoid putting all labels on one large outer concentric circle, because short bars then lose visual contact with their labels.
 - Use inside labels only for the longest or top-ranked bars where contrast is strong; use outside labels for shorter bars.
 - Keep outer padding just large enough for labels, not so large that labels float far from the petals. Check the exported final size because radial labels often look acceptable on screen but fail in journal-column width.
+Grouped full-category rose chart rules:
+
+1. Group-first ordering
+   - If the data include an explicit grouping variable such as `Group`, `class`, or `family`, the rose chart should prioritize grouped ordering.
+   - Categories from the same group must be adjacent; different groups should be distinguished with discrete colours.
+   - Within each group, categories should be sorted by the main numeric value in descending order.
+
+2. Between-group angular gaps
+   - Grouped rose charts should include slight angular gaps between groups.
+   - Gaps should only signal group boundaries and must not dominate the figure.
+   - A default gap of about one category slot is recommended; avoid large gaps that fragment the circular display.
+
+3. Colour rules
+   - Group colours must use distinct discrete palettes. Different groups must not use repeated or overly similar colours.
+
+4. Outside labels
+   - In full-category rose charts, outside labels should stay close to their corresponding petal tips.
+   - Labels should include the category name and original value when feasible, for example `GENE  6.8`.
+
+5. Center title
+   - Center text should be short and professional, avoiding stacked explanatory wording.
+   - Prefer a concise main message such as `Grouped protein significance`.
+   - Center text must be horizontally and vertically centered, anchored to the true polar origin rather than visually offset upward or downward.
+
+6. Radial reference scale
+   - Rose charts should include radial reference lines or concentric reference rings, especially when values vary widely.
+   - Reference rings should be evenly spaced on the displayed radius and labelled with the corresponding values transformed back to the original scale.
 
 ```r
 library(ggplot2)

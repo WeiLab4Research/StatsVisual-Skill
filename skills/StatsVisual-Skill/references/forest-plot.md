@@ -100,6 +100,9 @@ plot_forest_light_category_bands <- function(
   }
 ```
 
+## Template Starter
+
+- Use `assets/templates/subgroup_forest.R` as the starter template for subgroup forest plots with table-aligned effect estimates, confidence intervals, sample-size columns, and optional interaction P values. Copy it into `<project_dir>/R/` and adapt the subgroup, level, estimate, CI, sample-size, and interaction columns before running.
 ## Implementation Principle
 
 The category bands are a structural aid, not the main visual feature. The viewer should first notice the estimates, confidence intervals, and null-effect reference line. The light Y-axis bands should only help the viewer understand which rows belong to the same group.

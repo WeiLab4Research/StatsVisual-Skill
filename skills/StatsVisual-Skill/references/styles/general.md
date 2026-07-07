@@ -225,6 +225,19 @@ Always define:
 - Test/model: exact test, rank test, t-test, ANOVA, regression model, Cox model, etc.
 - Adjustment: covariates and multiple-comparison correction when applicable.
 
+## Forest Plot Rules
+
+Reference image: `references/styles/examples/general-forest-plot.png`. Use it only as a visual reference; do not copy its data, labels, or exact column order blindly.
+
+- Use a forest plot only when each row has an effect estimate and uncertainty interval, or when these can be computed from a declared model. Do not force a forest plot from raw groups, counts, or percentages without an effect estimate.
+- Build an integrated table-and-forest display: descriptor columns on the left, the estimate axis near the middle, and numeric estimate/statistical columns on the right.
+- Choose columns from the analysis, such as subgroup/level labels, treatment and comparator counts, study weights, HR/OR/RR/risk difference/mean difference/SMD with CI, P value, or P for interaction. Do not add unused columns just to mimic a reference image.
+- Label the effect measure explicitly. Use `HR`, `OR`, `RR`, `risk difference`, `mean difference`, `SMD`, or another correct label instead of hard-coding HR.
+- Include `P for interaction` only for subgroup interaction analyses; ordinary rows may need no P-value column.
+- Use light row bands or subtle group shading only when they improve row tracking in dense tables.
+- Keep the null-effect line, CI marks, axis ticks, favour labels, and CI text aligned to the same row coordinate system.
+- Reject forest plots with missing CI definitions, unclear reference group, unreadable table text, or disconnected table and forest panels that only appear aligned by eye.
+
 ## Journal Defaults
 
 - Use vector PDF/SVG for line art and editable text.

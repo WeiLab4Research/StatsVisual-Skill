@@ -305,6 +305,9 @@ Use survival curves when both event occurrence and time to event matter. Require
 - Comparison with uncorrected curves should be recommended to observe the impact of covariates on differences between groups.
 - Suitable for reporting visualization results that are closer to "independent exposure effects"
 
+## Template Starter
+
+- Use `assets/templates/km_survival.R` as the starter template for Kaplan-Meier survival curves with risk tables. Copy it into `<project_dir>/R/` and adapt the time, event, grouping, labels, and style-specific annotations before running.
 ## Code Reference
 - Original development note: source script `1600-survival-finished.Rmd` is not included in the public skill.
 

@@ -6,7 +6,7 @@ Use this guide for the first turn after the assistant receives or locates a data
 
 The first data-handling response must stop at data profile and recommendation. The first turn may create a project directory, copy the dataset into it, inspect the data, and write `output/data_profile.md`. It must not write plotting code, copy plotting templates, install plotting packages, build plot objects, export figures, validate figures, or choose a single/multi-panel figure on the user's behalf.
 
-Proceed to plotting only after a follow-up user message selects a concrete chart option from the recommendation, such as the recommended single figure, a named alternative, or the optional multi-panel figure. Also ask the user to choose a style: `general` by default, `nature`, `lancet`, or `nejm`. If the user selects a chart but omits style, proceed with `general` and state that default. If the original request names a specific chart type, inspect first, confirm suitability, present the recommendation, and ask for confirmation before coding.
+Proceed to plotting only after a follow-up user message selects a concrete chart option from the recommendation, such as the recommended single figure, a named alternative, or the optional multi-panel figure. Also ask the user to choose a style: `general` by default, `nature`, `lancet`, `nejm`, `jama`, or `bmj`. If the user selects a chart but omits style, proceed with `general` and state that default. If the original request names a specific chart type, inspect first, confirm suitability, present the recommendation, and ask for confirmation before coding.
 
 If the original message contains both a dataset and a phrase that sounds like authorization, resolve the conflict in favor of the gate. Example: "Here is my CSV, please directly plot it" still means inspect, recommend, ask, and wait. Do not mention that you are choosing automatically; automatic selection is unavailable on the first data-handling turn.
 
@@ -17,9 +17,11 @@ If the original message contains both a dataset and a phrase that sounds like au
 - Is the unit of analysis individual-level, aggregated, repeated-measure, or matrix-like?
 - Does the plot need to show uncertainty, sample size, statistical tests, or model predictions?
 
-## Hard Override For Many Categories
+## Many-Category Circular Chart Rule
 
-If a categorical numeric variable has `>=20` categories, or grouped categorical numeric summaries have a total category count across groups of `>=20`, and the standard vertical layout would be too tall, recommend a polar plot or rose chart as the primary single figure. This override applies to biomarker/gene/pathway/feature/SHAP/model-contribution/adverse-event/regional/cause-specific/subgroup category sets. For signed point distributions such as per-biomarker SHAP values, choose a signed polar plot first; use rose chart only for non-negative or absolute summaries. Use polar bar plots for compact non-negative summaries, grouped polar bars only for 2 or 3 readable groups, polar dot or annular polar scatter for dense point distributions or multi-encoding profiles, and rose charts for ranked non-negative burden/composition overviews. Conventional vertical beeswarm/bar/dot charts can be alternatives, not the primary recommendation, unless exact thresholds, uncertainty intervals, or precise value comparison are the main evidence.
+If a categorical numeric variable has `>25` categories and the main goal is to show frequency, proportion, composition, absolute contribution, burden magnitude, or overview ranking, recommend a polar plot or rose chart as the primary single figure.
+
+If the main goal is significance-value or correlation-coefficient precision, threshold judgment, P value, CI, significance marking, or adjusted-versus-unadjusted differences, do not prioritize a polar plot or rose chart even when the category count is `>25`.
 
 ## Common Routes
 
@@ -34,7 +36,7 @@ If a categorical numeric variable has `>=20` categories, or grouped categorical 
 | Cumulative event over time | Step plot | Survival curve | Be explicit about risk set and censoring. |
 | Time-to-event outcome | Kaplan-Meier curve | Cumulative hazard, forest plot for Cox model | Include risk table when useful. |
 | Categorical composition | Stacked bar | 100% stacked bar, mosaic-like plot | Label denominators or percentages. |
-| Categorical numeric summaries with `>=20` categories, or grouped category summaries totaling `>=20` categories, that would make a vertical chart too tall | Polar plot or rose chart | Cleveland dot plot, horizontal/faceted bar, beeswarm, split dot plot | Proactively prioritize compact circular layout when the message is pattern, ranking, directionality, or composition overview rather than exact clinical threshold comparison. Use polar bars for non-negative summaries, grouped polar bars for 2 or 3 groups, polar dot/annular scatter for point or multi-encoding data, signed polar plots for positive/negative summaries such as per-biomarker SHAP distributions, and rose charts for non-negative ranked burden/composition. |
+| Categorical numeric summaries with `>25` categories where the goal is frequency, proportion, composition, absolute contribution, burden, or overview ranking | Polar plot or rose chart | | Use circular layouts for compact overview messages, not for significance-value precision, correlation-coefficient comparison, thresholds, P values, CIs, significance marks, or adjusted-versus-unadjusted differences. |
 | Part-to-whole with few categories | Bar chart | Pie/donut only for simple composition | Prefer bars when comparing slices matters. |
 | High-dimensional numeric matrix | Heatmap | Clustered heatmap, annotated heatmap | Standardize rows/columns only when scientifically justified. |
 | Three components summing to one | Ternary plot | Stacked bar if groups are discrete | Validate that components sum to a constant. |
@@ -49,7 +51,7 @@ The first user-facing response after inspecting data must be a recommendation re
 2. One recommended single-figure chart and up to two single-figure alternatives.
 3. An `Optional multi-panel figure` note when the data can support complementary analyses such as distribution plus effect estimate, trend plus subgroup summary, survival curve plus risk table/forest plot, heatmap plus validation plot, or model fit plus diagnostics. Include the main message, A/B/C panel roles, support logic, use case, limitation, and expected outputs.
 4. A `Multi-panel not recommended` note when the data profile lacks enough complementary evidence; name the missing field or statistic.
-5. `Style options` with `general`, `nature`, `lancet`, and `nejm`.
+5. `Style options` with `general`, `nature`, `lancet`, `nejm`, `jama`, and `bmj`.
 6. A direct choice question asking which chart option and style to generate.
 
 ```text
@@ -78,6 +80,8 @@ Style options:
 - Nature 风格 nature：适合 Nature-family / 高影响力期刊图，强调证据层级、低饱和统一色系、可编辑 SVG 和紧凑多面板布局。
 - Lancet 风格 lancet：适合 The Lancet / 临床流行病学图，强调强可读性、可编辑矢量图、实线对比编码、临床表格与效应量对齐。
 - NEJM 风格 nejm：适合 NEJM 临床试验/肿瘤/生存曲线与表格式森林图，强调白底、粗黑坐标轴、直接标注、风险表和浅灰表格行带。
+- JAMA 风格 jama：适合 JAMA / JAMA Network 临床研究图，强调统计标签清楚、克制期刊色板、表格和效应量对齐、可编辑矢量输出。
+- BMJ 风格 bmj：适合 BMJ / The BMJ 实用临床和公共卫生图，强调高可读性、朴素证据展示、保守配色、读者友好的标签和注释。
 
 请选择：图表方案 + 风格。
 如果只选择图表，我将默认使用通用风格。
@@ -85,4 +89,4 @@ Style options:
 
 If multiple choices are plausible, offer at most three and choose a recommended default for the user to approve. Always include the available style options. Then wait for the user's selection. On the first data-handling turn, automatic chart selection is disabled even when the user says to plot or visualize the data.
 
-When profiling finds a categorical count/rate/proportion/mean/SHAP/model-contribution variable with `>=20` categories, or grouped categorical summaries with total categories across groups `>=20`, and a conventional vertical categorical chart would become too tall, make a polar plot or rose chart the first recommendation unless exact value comparison, clinical thresholds, or confidence intervals are the main evidence. For signed positive/negative data such as per-biomarker SHAP point distributions, prefer a signed polar plot with a clear zero ring and diverging color/direction encoding; reserve rose charts for non-negative magnitudes, absolute summaries, counts, proportions, or burden/composition overviews. Load `references/special-charts.md` for the circular-chart rules, and name a Cleveland dot plot, beeswarm, or faceted/horizontal bar chart as the readability or precision fallback.
+When profiling finds a categorical numeric variable with `>25` categories and the message is frequency, proportion, composition, absolute contribution, burden, or overview ranking, make a polar plot or rose chart the first recommendation. If the message is significance-value or correlation-coefficient precision, threshold judgment, P value, CI, significance marking, or adjusted-versus-unadjusted differences, do not prioritize circular charts.

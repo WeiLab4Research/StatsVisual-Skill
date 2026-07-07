@@ -1,6 +1,6 @@
 ---
 name: r-medical-graphics
-description: Create publication-ready medical and biostatistical graphics with R. Use when Codex needs to inspect tabular data, produce a data-profile-first chart recommendation, ask which chart and visual style to use, support general book-derived style, Nature-style figures, Lancet-style clinical figures, or NEJM-style clinical trial figures, then only after the user confirms a chart choice write and run R plotting code, export vector PDF, editable SVG, 700 dpi or higher TIFF, and a web image under 1 MB, or apply medical research visualization conventions for ggplot2, survival curves, heatmaps, regression diagnostics, distribution graphics, and multi-panel figures.
+description: Create publication-ready medical and biostatistical graphics with R. Use when Codex needs to inspect tabular data, produce a data-profile-first chart recommendation, ask which chart and visual style to use, support general book-derived style, Nature-style figures, Lancet-style clinical figures, NEJM-style clinical trial figures, JAMA-style clinical research figures, or BMJ-style pragmatic clinical figures, then only after the user confirms a chart choice write and run R plotting code, export vector PDF, editable SVG, 700 dpi or higher TIFF, and a web image under 1 MB, or apply medical research visualization conventions for ggplot2, survival curves, heatmaps, regression diagnostics, distribution graphics, and multi-panel figures.
 ---
 
 # R Medical Graphics
@@ -9,16 +9,22 @@ description: Create publication-ready medical and biostatistical graphics with R
 
 Use this skill to turn user data and research intent into reproducible R code and publication-ready figures.
 
-## Hard Chart-Routing Override
+## Many-Category Circular Chart Rule
 
-When data profiling finds a categorical numeric variable with `>=20` categories, or grouped categorical numeric summaries where the total category count across groups is `>=20`, and the normal vertical layout would become too tall, prioritize a polar plot or rose chart and do not recommend a vertical-first chart as the primary single figure. This includes biomarker, gene, pathway, feature, variable-importance, SHAP, model-contribution, adverse-event, regional, cause-specific, or subgroup categories. Recommend a polar plot or rose chart first:
+When data profiling finds a categorical numeric variable with `>25` categories, prioritize a rose chart or polar plot only when the main goal is to show frequency, proportion, composition, absolute contribution, burden magnitude, or overview ranking.
 
-- Use a polar bar plot for non-negative numeric summaries when the message is compact ranking, pattern, subgroup overview, or precise quantitative comparison.
-- Use a grouped polar bar plot when there are several groups and the grouped categories together reach 20.
-- Use a polar dot plot, annular polar scatter, or signed polar plot for point distributions, positive/negative values, SHAP distributions, model contributions, or cases where radius, color, and size need to encode separate variables.
-- Use a rose chart first for non-negative counts, rates, proportions, burden magnitudes, cause-specific totals, regional totals, or absolute SHAP summaries when the goal is a ranked/editorial overview.
+Do not prioritize a rose chart or polar plot when the main goal is significance-value or correlation-coefficient precision, threshold judgment, P value, CI, significance marking, or adjusted-versus-unadjusted differences, even when the category count is `>25`.
+
+- Use a polar bar plot for non-negative numeric summaries when the message is compact pattern, subgroup overview, composition, burden, or overview ranking.
+- Use a grouped polar bar plot when there are several readable groups and the grouped categories together exceed 25 for an overview message.
+- Use a polar dot plot or annular polar scatter for dense multi-encoding overview displays where radius, color, and size need to encode separate variables.
+- Use a rose chart first for non-negative counts, rates, proportions, burden magnitudes, cause-specific totals, regional totals, or absolute contributions when the goal is a ranked/editorial overview.
 - For both polar plots and rose charts, reserve a clear circular blank center, keep the angle of every label one-to-one with its category.
 - For rose charts, place outside labels close to each bar tip; do not put all labels on a single outer concentric circle when bar lengths differ seriously, because that separates labels from their marks.
+
+## Calibration Curve Shape Rule
+
+Calibration curve figures must use a square plotting area. Use equal x and y limits, keep the ideal calibration line at 45 degrees with a fixed aspect ratio such as `coord_equal()`, and export the figure with equal width and height unless the calibration panel is part of a planned multi-panel figure.
 
 ## Non-Negotiable First-Turn Gate
 
@@ -43,9 +49,9 @@ Only a follow-up user message after the recommendation can authorize plotting. V
 
 1. Create or use one explicit per-request project directory. Never write task artifacts to the skill repository root or the caller's current directory by default. Use `scripts/create_plot_project.R <project_dir>`, then keep all data copies, R scripts, outputs, and figures inside that directory.
 2. First inspect the data and produce a data-profile-based recommendation before any plotting code, figure export, package-heavy plotting work, or template copying. Prefer `scripts/inspect_data_for_charts.R <data_file> <project_dir>/output/data_profile.md` for CSV, TSV, XLSX, and RDS files, but treat that file as an internal run log.
-3. In the first user-facing reply after data inspection, summarize the data profile directly in the conversation. Include rows, columns, key fields, variable roles, missingness highlights, matched chart families, and any data-quality limits that affect chart choice.
-4. Before writing plotting code or exporting figures, recommend charts from the data profile. Always provide one recommended single figure and up to two single-figure alternatives. Always ask whether the user wants the recommended single figure, an alternative single figure, or the optional multi-panel figure when available. Also ask which style to use: `general`/通用风格 by default, `nature`/Nature 风格, `lancet`/Lancet 风格, or `nejm`/NEJM 风格. If the data can support complementary analyses, also provide an optional multi-panel figure. If a categorical variable paired with count, rate, proportion, mean, SHAP value, model contribution, or another numeric summary has `>=20` categories, or if grouped categorical summaries have a total category count across groups of `>=20`, and a conventional vertical categorical chart would become too tall or label-heavy, proactively prioritize a polar plot or rose chart in the recommendation. For signed values with positive and negative direction, such as per-biomarker SHAP point distributions, make a signed polar plot the first recommendation and map sign around a clear zero ring or diverging radial/color encoding. Use polar bar plots for compact non-negative category summaries, grouped polar bars for 2 or 3 readable groups, polar dot/annular scatter for dense point or multi-encoding displays, and rose charts for non-negative ranked magnitudes, absolute SHAP summaries, counts, proportions, cause-specific burden, or composition overviews. Make the circular option the recommended single figure when the message is compact pattern, ranking, directionality, or composition overview rather than exact threshold comparison; offer Cleveland dot plot, horizontal/faceted bar, beeswarm, or split dot plot as precision-oriented alternatives. Use `references/chart-router.md`, `references/chart-index.md`, `references/design-rules.md`, `references/styles/style-router.md`, the selected style reference, the relevant detailed chart reference, `references/multipanel-figures.md` when relevant, and the data profile.
-5. Format the recommendation so the user can choose without opening files: summarize the data profile, then state `Recommended single figure`, `Alternatives`, `Optional multi-panel figure` or `Multi-panel not recommended`, and `Style options`. A multi-panel recommendation must include the main message, A/B/C panel roles, support logic, suitable use case, key limitation, and expected outputs.
+3. In the first user-facing reply after data inspection, summarize the data profile directly in the conversation. Include rows, columns, key fields, variable roles, missingness highlights, matched chart families, and any data-quality limits that affect chart choice. State how the data profile drives chart choice, including variable types, category count, grouping, time/outcome/model fields, missingness, and whether complementary analyses support a multi-panel figure.
+4. Before writing plotting code or exporting figures, recommend charts from the data profile. Always provide one recommended single figure and up to two single-figure alternatives. For every recommended or alternative figure, include `Reason`so the user can see why the chart fits, which skill rules or references support it, and where it is weaker. Always ask whether the user wants the recommended single figure, an alternative single figure, or the optional multi-panel figure when available. Also ask which style to use: `general`/通用风格 by default, `nature`/Nature 风格, `lancet`/Lancet 风格, `nejm`/NEJM 风格, `jama`/JAMA 风格, or `bmj`/BMJ 风格. If the data can support complementary analyses, also provide an optional multi-panel figure. If a categorical variable paired with a numeric variable has `>25` categories and the main goal is frequency, proportion, composition, absolute contribution, burden, or overview ranking, proactively prioritize a polar plot or rose chart in the recommendation. If the main goal is significance-value or correlation-coefficient precision, threshold judgment, P value, CI, significance marking, or adjusted-versus-unadjusted differences, do not prioritize a polar plot or rose chart even when category count is `>25`. Skill basis should cite only loaded or directly relevant skill content, such as `Many-Category Circular Chart Rule`, `data-profile-first recommendation`, `references/chart-router.md`, `references/chart-index.md`, `references/design-rules.md`, `references/styles/style-router.md`, the selected style reference, the relevant detailed chart reference, `references/special-charts.md`, or `references/multipanel-figures.md` when relevant.
+5. Format the recommendation so the user can choose without opening files. Use the Chinese recommendation reply format below. Except for professional medical/statistical English terms, chart names, package/function names, style names, file/path names, and exact field names from the user's data, write the user-facing recommendation in Chinese. A multi-panel recommendation must include the main message, A/B/C panel roles, support logic, suitable use case, key limitation, expected outputs, and `Skill basis`.
 6. Wait for the user's chart choice after the recommendation response. Do not start plotting in the same turn that first receives or locates the data, even if the user adds a general request such as "plot this data", "draw a figure", "make charts", "visualize it", "help me plot", "帮我画图", "给我的数据画图", or "生成图片". These phrases only express the overall task, not permission to bypass the recommendation stage. If the user names an exact chart type in the original request, still inspect the data first, confirm whether that chart is appropriate, mention any serious mismatch, recommend the best single-figure and optional multi-panel choices, then ask for confirmation before coding. Only a follow-up user message after the recommendation stage can authorize plotting.
 7. Treat automatic selection as disabled during the first data-handling turn. A first-turn instruction like "use this folder/project and plot my data" still requires data profiling, chart recommendation, and a choice question. The user can authorize plotting only after seeing the recommendation, for example by replying "按推荐单图绘制", "选择组图", "用方案 B", or an equivalent explicit chart choice.
 8. If the user chooses or requests a multi-panel figure, write a short figure plan before coding. Include main message, primary result, supporting analyses, interpretation risk, panel roles, shared encodings, output size, and export formats. Do not write the R script until this plan is explicit in the conversation or saved in `<project_dir>/output/figure_plan.md`.
@@ -60,6 +66,41 @@ Only a follow-up user message after the recommendation can authorize plotting. V
 13. Write `<project_dir>/output/figure_rationale.md` after generating a final figure. Include selected figure, book basis, data mapping, style choices, thresholds/statistical annotations, limitations, and output files. For multi-panel figures, include the figure plan and explain what distinct clinical or statistical role each panel contributes.
 14. Report output paths under the project directory and any unresolved design decisions. If package installation still fails after the appropriate approval/retry path, stop and report the exact installation failure instead of producing a lower-quality fallback.
 
+## Recommendation Reply Format
+
+Use this structure for the first recommendation reply after profiling data. Keep entries concise and omit a second alternative when it would be weak or repetitive. Keep professional medical/statistical English terms in English when that is clearer or conventional, such as `hazard ratio`, `odds ratio`, `risk ratio`, `confidence interval`, `Kaplan-Meier`, `forest plot`, `ROC curve`, `calibration curve`, `Cleveland dot plot`, `polar plot`, `rose chart`, `SHAP`, `P value`, `95% CI`, `ggplot2`, and journal/style names. Write all non-technical explanations, reasons, limitations, prompts, and transitions in Chinese.
+
+```markdown
+数据画像摘要
+- 行数/列数：
+- 关键字段：
+- 变量角色：
+- 缺失值和数据质量提示：
+
+推荐的单图
+- 图形：
+- 推荐理由：
+
+备选方案
+1. 图形：
+   推荐理由：
+2. 图形：
+   推荐理由：
+
+可选多面板图 / 不建议多面板图
+- 建议：
+- 面板角色：
+- 推荐理由：
+- 局限性：
+
+风格选项
+- 可选风格：`general` `nature` `lancet` `nejm` `jama` `bmj` 
+
+请确认
+- 选择“推荐的单图”、备选方案 1 或 2、或“可选多面板图”。
+- 同时选择风格；如果只选择图形，我将默认使用 `general` 通用风格。
+```
+
 ## Reference Loading
 
 Load only the references needed for the task:
@@ -69,7 +110,7 @@ Load only the references needed for the task:
 - Use the relevant detailed chart reference after the chart family is chosen: `bar-chart.md`, `line-chart.md`, `pie-chart.md`, `histogram.md`, `cleveland-dot-plot.md`, `box-plot.md`, `scatter-plot.md`, `heatmap.md`, `ternary-plot.md`, `q-q-plot.md`, `probability-distribution-plot.md`, `smoothing-curve.md`, `linear-regression.md`, `nonlinear-regression.md`, `regression-diagnostics.md`, `survival-curve.md`, `forest-plot.md`, or `special-charts.md`.
 - Use `references/special-charts.md` for advanced special figures: polar plot, signed polar plot, annular polar scatter, radar, stream/river, rose, fourfold, spiral histogram, Manhattan, sunflower density, bubble, LOWESS smooth, density ternary, and model-diagnostic bubble charts.
 - Use `references/multipanel-figures.md` when the requested output is a multi-panel figure, composite clinical/statistical figure, image plus measurement figure, workflow-led figure, shared-legend layout, or any A/B/C panel figure. A multi-panel figure must be a coherent manuscript figure with a figure plan, not a simple collage.
-- Use `references/design-rules.md` as the style entrypoint. Load `references/styles/general.md` for the default book-derived general style, `references/styles/nature.md` for Nature-style figures, `references/styles/lancet.md` for Lancet-style clinical figures, or `references/styles/nejm.md` for example-derived NEJM clinical-trial figures.
+- Use `references/design-rules.md` as the style entrypoint. Load `references/styles/general.md` for the default book-derived general style, `references/styles/nature.md` for Nature-style figures, `references/styles/lancet.md` for Lancet-style clinical figures, `references/styles/nejm.md` for example-derived NEJM clinical-trial figures, `references/styles/jama.md` for JAMA-style clinical research figures, or `references/styles/bmj.md` for BMJ-style pragmatic clinical figures.
 - For `lancet` forest plots, `references/styles/lancet.md` overrides generic `forest-plot.md` layout defaults: the forest axis must be embedded as a table column, not rendered as a separate side-by-side panel, and must not inherit generic light category bands or extra table separator rules unless the user explicitly requested them.
 - Use `references/styles/style-router.md` during the first recommendation turn so chart and style are requested together.
 - Use `references/output-rules.md` for file naming, output folders, export formats, CJK PDF guidance, and output bundle rules.
@@ -109,6 +150,9 @@ Copy these into `<project_dir>/R/` and adapt column names, labels, statistics, a
 - `assets/templates/distribution_compare.R` for boxplot, jittered boxplot, and grouped distribution comparisons.
 - `assets/templates/scatter_association.R` for scatter plots with linear, LOESS, or GAM-style smoothing choices.
 - `assets/templates/model_diagnostics.R` for linear-model diagnostic panels.
+- `assets/templates/km_survival.R` for Kaplan-Meier survival curves with risk tables and journal-style survival outputs.
+- `assets/templates/subgroup_forest.R` for subgroup forest plots with table-aligned effect estimates and interaction columns.
+- `assets/templates/radar_chart.R` for radar charts and faceted radar charts with controlled circular reference rings, straight polygon profiles, bounded radii, and manual Cartesian geometry.
 - `assets/templates/multipanel_helpers.R` for reusable patchwork/cowplot layout helpers.
 - `assets/templates/multipanel_figure.R` for a planned multi-panel script scaffold that sources the helpers and expects task-specific panels.
 

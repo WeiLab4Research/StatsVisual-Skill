@@ -13,6 +13,7 @@ This guidance is distilled from NEJM-style example figures provided during style
 - Use in-panel statistical summaries for key clinical results, such as hazard ratio, confidence interval, and P value.
 - Keep colour semantic and restrained. Blue is the usual primary or active-treatment colour; orange, green, red, gray, and black are supporting colours.
 - Use black-and-white line types for older or monochrome-style references only when colour is not needed for interpretation.
+- Axis titles should be bold relative to tick labels.
 
 ## Typography and Numeric Text
 
@@ -35,6 +36,9 @@ Use blue for a primary intervention or highlighted treatment, orange for a secon
 ## Survival and Time-To-Event Figures
 
 - Attach number-at-risk tables directly below the parent curve panel; do not give risk tables separate panel labels.
+- Align number-at-risk values to the center of the corresponding x-axis tick/time point.
+- Right-align and bold the `Number at risk` label and the risk-table group names.
+- Use black risk-table text by default unless colour has a stated encoding purpose.
 - Place hazard ratio, confidence interval, and P value inside the plotting region or in a closely attached right-side summary block.
 - Use direct curve labels near the right side when possible.
 - Show censor marks when they are part of the survival evidence.
@@ -43,16 +47,29 @@ Use blue for a primary intervention or highlighted treatment, orange for a secon
 
 ## Forest Plot Rules
 
+Reference image: `references/styles/examples/nejm-forest-plot.png`. Use it only as a visual reference; do not copy its data, labels, or exact column order blindly.
+
+- Use a forest plot only when each row has an effect estimate and uncertainty interval, or when they can be computed from a declared model.
 - Prefer an integrated table-and-forest layout on one shared row coordinate system.
-- Use shallow alternating light-gray row bands for dense subgroup tables when they improve row tracking.
-- Use black or theme-blue points or squares, thin CI lines, and a clear vertical null-effect reference line.
+- Choose columns from the analysis: subgroup/level labels, event or sample-size columns, study weights, HR/OR/RR/risk difference/mean difference/SMD with CI, P value, and P for interaction are optional fields.
+- Use shallow alternating light-gray row bands for dense subgroup tables when they improve row tracking; keep bands light enough that CI marks and text remain dominant.
+- Use theme-blue or black squares/points, thin CI lines, and a clear null-effect reference line.
 - A dashed vertical line may mark the overall estimate or another clinically meaningful reference when the figure needs it.
-- Put subgroup labels and count columns to the left, the forest estimate column in the middle, and HR/CI plus P-value text columns to the right when those fields are available.
-- Use bold column headers and regular-weight body text.
-- Express subgroup hierarchy with group rows, indentation, and row spacing rather than boxed table grids.
-- Do not draw a table-wide horizontal rule above the column headers or at the very top of the forest table. NEJM-style examples start with header text on white space, not a top border.
-- Do not add boxed table grids or decorative header rules. If a separator is truly needed, use only a subtle local divider that does not read as a full-width table top rule.
-- Add bottom favor labels with directional arrows when they clarify interpretation.
+- Keep forest-plot column headers the same font size as the body category labels; use bold weight for headers if needed.
+- Use bold column headers and regular-weight body text. Express subgroup hierarchy with group rows, indentation, and row spacing rather than boxed table grids.
+- Do not draw a heavy table-wide rule above the column headers or a boxed/table-grid top border. If a separator is needed, use a subtle local divider.
+- Add favour labels with directional arrows only when they clarify interpretation.
+- Reject NEJM forest plots with unclear effect measure labels, missing CI definitions, row bands that overpower the data, or table/forest components that do not share row alignment.
+- For example,the plot should be arranged as follows:
+| **Subgroup / level** | **Treatment** | **Comparator** | **HR (95% CI)** | **HR (95% CI)** | **P interaction** |
+|---|---:|---:|:---:|---:|---:|
+| **Age** |  |  |  |  | 0·48 |
+| &nbsp;&nbsp;<65 years | 86/742 | 112/736 | ───■──── | 0·76 (0·58–0·99) |  |
+| &nbsp;&nbsp;≥65 years | 74/658 | 89/662 | ─────■── | 0·84 (0·62–1·13) |  |
+| **Sex** |  |  |  |  | 0·71 |
+| &nbsp;&nbsp;Male | 96/812 | 121/806 | ───■──── | 0·79 (0·61–1·02) |  |
+| &nbsp;&nbsp;Female | 64/588 | 80/592 | ─────■── | 0·81 (0·58–1·12) |  |
+|  |  |  | └──0·5──1·0──2·0──┘ |  |  |
 
 ## Multi-Panel Rules
 

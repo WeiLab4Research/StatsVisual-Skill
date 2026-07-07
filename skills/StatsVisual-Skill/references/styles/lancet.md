@@ -15,6 +15,7 @@ This guidance is distilled from Lancet example figures and official author/artwo
 - Use direct numeric labels, hazard-ratio text blocks, confidence-interval text, and number-at-risk tables when they reduce lookup burden.
 - Use pastel fills with dark outlines for bars, boxes, and areas. Use stronger clinical colours for lines and points.
 - Prefer 2D graphics. Do not use 3D graphs for ordinary statistical data.
+- Axis titles should be bold relative to tick labels.
 - Use midline decimal points in Lancet numeric text, including axis labels, direct labels, CI text, P values, and table-like figure text. Use `rmg_format_number()`, `rmg_format_ci()`, `rmg_format_p()`, and `rmg_label_number("lancet")` instead of raw `sprintf()` or `scales::label_number()` for visible numbers.
 - Use Arial/Helvetica-like sans-serif typography for figure-internal labels, axes, legends, forest-plot columns, and table-like annotations unless the user explicitly requests another font. Do not use Times New Roman as the default in-figure Lancet artwork font.
 - Treat the official 10 pt Times New Roman guidance as manuscript submission guidance for main figure headings, legends, and supplementary material, not as the default for all text inside generated figure artwork.
@@ -47,24 +48,42 @@ For filled bars, boxes, and areas, prefer the lighter colours in the sequence an
 - Use shared axes and consistent ticks for serial panels with the same measurement.
 - Use uppercase panel labels. Keep labels large enough to remain readable at final journal size.
 
+## Lancet Kaplan-Meier Curve Rules
+
+- Place a number-at-risk table directly below every KM curve.
+- Align each number-at-risk value to the center of the corresponding x-axis tick/time point.
+- Right-align and bold the `Number at risk` label and the risk-table group names.
+- Use black risk-table text by default unless colour has a stated encoding purpose.
+
 ## Lancet Forest Plot Rules
 
-- For Lancet-style forest plots, the forest axis must be embedded as a table column between count/statistic columns and HR/CI, risk-difference, or P-value text columns.
-- Do not render the table and forest plot as separate side-by-side panels, separate table grobs plus a forest ggplot, or patchwork/cowplot subplots unless the user explicitly requests a separated layout.
-- Use this default column order: descriptor or subgroup columns, event/sample-size/count columns, embedded forest estimate column, HR/CI text column, then P-value or other statistical text columns.
-- Build the table text, CI lines, square markers, reference line, HR/CI text, and P-value text on one shared row coordinate system. Do not merely align independent plot objects after rendering.
-- Put column names at the top, then draw a horizontal rule below the column header row across the integrated table width before numeric rows begin.
-- For grouped headers such as Intervention/Comparator, draw short underline rules beneath the parent headers and above subcolumns such as Events/Total or Events/Patients.
-- Do not use boxed table grids. Use white space, aligned columns, bold group labels, and horizontal header rules for structure.
-- Lancet forest plots override generic forest-plot light-band defaults: keep the forest/table body pure white. Do not use alternating grey row bands, shaded group backgrounds, panel background fills, or light body bands unless the user explicitly requests them.
-- Use only one table-structure horizontal rule per panel by default: the rule directly under the column headers. Do not add extra horizontal rules under panel labels, analysis blocks, matching/subgroup headings, body rows, or table bottoms.
-- Scientific line work is still allowed: CI lines, square markers, the forest x-axis baseline and ticks, and a vertical null-effect reference line do not count as table-structure horizontal rules.
-- Express subgroup hierarchy with bold subgroup labels, indentation, vertical whitespace, and row alignment rather than shaded bands or extra separator rules.
-- Keep effect estimate columns, event-count columns, HR/CI text, P-value text, and absolute-risk-difference text row-aligned.
-- The forest estimate column may have its own x-axis, ticks, reference line, and favour labels, but these must remain inside the table column rather than in a separate panel outside the table.
-- Default forest plots, trial profiles, and study profiles to black-and-white unless colour has explicit scientific meaning.
-- Use square markers, thin CI lines, a clear vertical reference line, and bottom axis labels or favour arrows when they clarify interpretation.
-- Write visible numeric labels with Lancet helpers, for example `rmg_format_ci()` for HR text and `rmg_format_p()` for P-value columns.
+Reference image: `references/styles/examples/lancet-forest-plot.png`. Use it only as a visual reference; do not copy its data, labels, or exact column order blindly.
+
+- Use a forest plot only when each row has an effect estimate and uncertainty interval, or when they can be computed from a declared model.
+- For Lancet-style forest plots, the forest axis must be embedded as a table column, not rendered as a detached side-by-side plot, unless the user explicitly requests a separated layout.
+- Choose columns from the analysis: subgroup/level labels, event or sample-size columns, study weights, HR/OR/RR/risk difference/mean difference/SMD with CI, P value, and P for interaction are optional fields, not required template columns.
+- Arrange the table so that the effect-estimate/CI section contains the forest axis and the numeric interval value. The forest axis should sit to the left, and the numeric effect estimate with CI should sit immediately to its right.
+- The forest-axis ticks and axis labels must stay within the forest-axis column only. They should not extend horizontally across subgroup labels, event/sample-size columns, P-value columns, or other table-header categories.
+- Place P value or P for interaction columns at the far right when included.
+- Build table text, CI lines, markers, reference line, estimate text, and P-value text on one shared row coordinate system.
+- Keep the table body pure white by default. Do not use alternating row bands, shaded subgroup backgrounds, boxed grids, decorative separator rules, or background grid lines.
+- Use square markers as the default point-estimate symbol in Lancet-style forest plots
+- Keep forest-plot column headers the same font size as the body category labels; use bold weight for headers if needed.
+- Column headers must be present and clearly aligned with their columns. The horizontal rule below the column headers must not be omitted.
+- Use one table-structure horizontal rule by default: the rule below the column headers. Short underlines are acceptable for grouped headers such as treatment/comparator subcolumns.
+- Express subgroup hierarchy with bold labels, indentation, vertical whitespace, and row alignment rather than shading.
+- Use a black-and-white style by default: black CI lines, black reference line, and black or white square markers with black outlines. Use colour only when it has explicit scientific meaning.
+- Keep the forest axis visually minimal: show the reference line and necessary tick labels only. Do not add panel background lines, dense grid lines, grey plotting backgrounds, or full-table grid lines.
+- For example,the plot should be arranged as follows:
+| **Subgroup / level** | **Treatment** | **Comparator** | **HR (95% CI)** | **HR (95% CI)** | **P interaction** |
+|---|---:|---:|:---:|---:|---:|
+| **Age** |  |  |  |  | 0·48 |
+| &nbsp;&nbsp;<65 years | 86/742 | 112/736 | ───■──── | 0·76 (0·58–0·99) |  |
+| &nbsp;&nbsp;≥65 years | 74/658 | 89/662 | ─────■── | 0·84 (0·62–1·13) |  |
+| **Sex** |  |  |  |  | 0·71 |
+| &nbsp;&nbsp;Male | 96/812 | 121/806 | ───■──── | 0·79 (0·61–1·02) |  |
+| &nbsp;&nbsp;Female | 64/588 | 80/592 | ─────■── | 0·81 (0·58–1·12) |  |
+|  |  |  | └──0·5──1·0──2·0──┘ |  |  |
 
 ## R Implementation
 

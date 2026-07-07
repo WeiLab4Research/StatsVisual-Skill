@@ -37,7 +37,7 @@ rmg_ensure_packages(c("ggplot2", "dplyr", "readr", "patchwork", "cowplot", "ragg
 source(file.path(skill_dir, "assets", "theme_medical_graphics.R"), local = TRUE)
 source(file.path(skill_dir, "assets", "templates", "multipanel_helpers.R"), local = TRUE)
 
-known_styles <- c("general", "default", "general-style", "通用", "通用风格", "nature", "nature-style", "nature family", "nature-family", "nature风格", "lancet", "lancet-style", "the lancet", "lancet journal", "lancet风格", "柳叶刀", "柳叶刀风格", "nejm", "nejm-style", "new england journal of medicine", "nejm journal", "nejm风格", "新英格兰医学杂志", "新英格兰医学杂志风格")
+known_styles <- c("general", "default", "general-style", "通用", "通用风格", "nature", "nature-style", "nature family", "nature-family", "nature风格", "lancet", "lancet-style", "the lancet", "lancet journal", "lancet风格", "柳叶刀", "柳叶刀风格", "nejm", "nejm-style", "new england journal of medicine", "nejm journal", "nejm风格", "新英格兰医学杂志", "新英格兰医学杂志风格", "jama", "jama-style", "jama network", "jama journal", "journal of the american medical association", "jama风格", "美国医学会杂志", "美国医学会杂志风格", "bmj", "bmj-style", "the bmj", "bmj journal", "british medical journal", "bmj风格", "英国医学杂志", "英国医学杂志风格")
 if (!is.na(arg4) && tolower(trimws(arg4)) %in% known_styles && is.na(arg5)) {
   layout <- "quantitative-grid"
   style <- arg4
