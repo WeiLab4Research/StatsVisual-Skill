@@ -1,5 +1,5 @@
 ---
-name: r-medical-graphics
+name: StatsVisual-Skill
 description: Create publication-ready medical and biostatistical graphics with R. Use when Codex needs to inspect tabular data, produce a data-profile-first chart recommendation, ask which chart and visual style to use, support general book-derived style, Nature-style figures, Lancet-style clinical figures, NEJM-style clinical trial figures, JAMA-style clinical research figures, or BMJ-style pragmatic clinical figures, then only after the user confirms a chart choice write and run R plotting code, export vector PDF, editable SVG, 700 dpi or higher TIFF, and a web image under 1 MB, or apply medical research visualization conventions for ggplot2, survival curves, heatmaps, regression diagnostics, distribution graphics, and multi-panel figures.
 ---
 

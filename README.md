@@ -5,13 +5,13 @@
 </p>
 
 Team:  
-开发人员（Developer）：Haotian Jiang, Wenxiao Du, Bangyu Wang  
-指导老师（Supervisor and Sponsor）：Prof. Yongyue Wei, Peking University  
-内部测试：Graduate students on the team including: Miao Cui, Qiaochu Wei, Ziwei Xi
+Developer：Haotian Jiang, Wenxiao Du, Bangyu Wang  
+Supervisor and Sponsor：Prof. Yongyue Wei, Peking University  
+tester: Miao Cui, Qiaochu Wei, Ziwei Xi
 
 **Language:** English | [简体中文](README.zh-CN.md)
 
-StatsVisual-Skill provides Codex skills for publication-ready medical and biostatistical graphics in R. It helps an AI assistant inspect data first, recommend appropriate figure types, generate reproducible plotting code, and export journal-ready artwork for manuscripts, submissions, and research presentations.
+StatsVisual-Skill provides skills for publication-ready medical and biostatistical graphics in R. It helps an AI assistant inspect data first, recommend appropriate figure types, generate reproducible plotting code, and export journal-ready artwork for manuscripts, submissions, and research presentations.
 
 ## Motivation
 
@@ -182,15 +182,27 @@ The repository ships with concise rewritten guidance and synthetic example data.
 
 ## Installation
 
-Clone the repository and copy the skill folders into your Codex skills directory.
+Clone the repository and copy both skill folders into the skills directory for your target client.
+
+### Codex
 
 ```powershell
 git clone https://github.com/HaotianJiang056/R-plot-skill.git StatsVisual-Skill
-Copy-Item StatsVisual-Skill/skills/StatsVisual-Skill "$env:USERPROFILE/.codex/skills/StatsVisual-Skill" -Recurse -Force
-Copy-Item StatsVisual-Skill/skills/r-journal-style-calibrator "$env:USERPROFILE/.codex/skills/" -Recurse -Force
+Copy-Item ".\StatsVisual-Skill\skills\StatsVisual-Skill\*" "$env:USERPROFILE\.codex\skills\StatsVisual-Skill" -Recurse -Force
+Copy-Item ".\StatsVisual-Skill\skills\r-journal-style-calibrator\*" "$env:USERPROFILE\.codex\skills\r-journal-style-calibrator" -Recurse -Force
 ```
 
-If `CODEX_HOME` is set, copy the folders into `$env:CODEX_HOME/skills/`.
+If `CODEX_HOME` is set, replace `$env:USERPROFILE\.codex` with `$env:CODEX_HOME`.
+
+### CodeBuddy
+
+The CodeBuddy trial provides 500 base credits each month for free use.
+
+```powershell
+git clone https://github.com/HaotianJiang056/R-plot-skill.git StatsVisual-Skill
+Copy-Item ".\StatsVisual-Skill\skills\StatsVisual-Skill\*" "$env:USERPROFILE\.codebuddy\skills\StatsVisual-Skill" -Recurse -Force
+Copy-Item ".\StatsVisual-Skill\skills\r-journal-style-calibrator\*" "$env:USERPROFILE\.codebuddy\skills\r-journal-style-calibrator" -Recurse -Force
+```
 
 ## Windows R Setup
 
@@ -249,7 +261,7 @@ Even for direct drawing requests, the first response should inspect the data, co
 
 ## Community And Use
 
-We welcome researchers, developers, and students to co-build, test, and share improvements to this skill. The skill materials, documentation, examples, and visual assets are protected by copyright. If you plan to cite, reproduce, adapt, redistribute, or use these materials in a public work, please contact the development team in advance.
+We welcome everybody to co-build, test, and share improvements to this skill. The skill materials, documentation, examples, and visual assets are protected by copyright. If you plan to cite, reproduce, adapt, redistribute, or use these materials in a public work, please contact the development team in advance.
 
 ## Acknowledgements
 

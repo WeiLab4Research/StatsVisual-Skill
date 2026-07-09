@@ -5,13 +5,13 @@
 </p>
 
 Team:  
-开发人员（Developer）：江昊天，杜文晓，王邦宇  
-指导老师（Supervisor and Sponsor）：Prof. Yongyue Wei, Peking University  
-内部测试：Graduate students on the team including: 崔淼、魏翘楚、奚梓玮
+开发人员：江昊天，杜文晓，王邦宇  
+指导老师：Prof. Yongyue Wei, Peking University  
+内部测试: 崔淼、魏翘楚、奚梓玮
 
 **语言：** [English](README.md) | 简体中文
 
-StatsVisual-Skill 提供一组用于 R 医学统计绘图的 Codex skills，帮助 AI 助手先检查数据，再推荐合适图形，生成可复现 R 代码，并导出适合论文、投稿和汇报使用的高质量图形。
+StatsVisual-Skill 提供一组用于 R 医学统计绘图的skill，帮助 AI 助手先检查数据，再推荐合适图形，生成可复现 R 代码，并导出适合论文、投稿和汇报使用的高质量图形。
 
 ## Motivation
 
@@ -34,7 +34,7 @@ StatsVisual-Skill 提供一组用于 R 医学统计绘图的 Codex skills，帮�
 
 ## 绘图效果展示
 
-The gallery focuses on three comparisons: four medical journal visual styles, domestic-versus-international model outputs, and skill outputs with or without guidance from *Statistical Graphics and Art*.
+skill的绘图效果围绕三组对比展开：四大医学期刊的图形风格差异、国内与国际模型生成结果差异、有无《统计图形与美学》理论指导下的制图成果差异。
 
 ### 一、四大医学期刊风格差异
 
@@ -84,7 +84,7 @@ The gallery focuses on three comparisons: four medical journal visual styles, do
 
 ### 二、国内外模型绘制效果差异
 
-这一组使用具体模型名称比较国内 LLM `minimax-m3` 与国外 LLM `chatgpt-5.5` 的绘制结果，分为 ROC 曲线、火山图和玫瑰图。
+这一组比较国内 LLM `minimax-m3` 与国外 LLM `chatgpt-5.5` 的绘制结果，分为 ROC 曲线、火山图和玫瑰图。
 
 #### 1. ROC 曲线
 
@@ -182,15 +182,27 @@ skills/
 
 ## 安装
 
-克隆仓库，然后把 skill 文件夹复制到 Codex skills 目录。
+克隆仓库，然后把两个 skill 文件夹复制到目标客户端的 skills 目录。
+
+### Codex
 
 ```powershell
 git clone https://github.com/HaotianJiang056/R-plot-skill.git StatsVisual-Skill
-Copy-Item StatsVisual-Skill/skills/StatsVisual-Skill "$env:USERPROFILE/.codex/skills/StatsVisual-Skill" -Recurse -Force
-Copy-Item StatsVisual-Skill/skills/r-journal-style-calibrator "$env:USERPROFILE/.codex/skills/" -Recurse -Force
+Copy-Item ".\StatsVisual-Skill\skills\StatsVisual-Skill\*" "$env:USERPROFILE\.codex\skills\StatsVisual-Skill" -Recurse -Force
+Copy-Item ".\StatsVisual-Skill\skills\r-journal-style-calibrator\*" "$env:USERPROFILE\.codex\skills\r-journal-style-calibrator" -Recurse -Force
 ```
 
-如果设置了 `CODEX_HOME`，请复制到 `$env:CODEX_HOME/skills/`。
+如果设置了 `CODEX_HOME`，请把 `$env:USERPROFILE\.codex` 替换为 `$env:CODEX_HOME`。
+
+### CodeBuddy
+
+CodeBuddy 体验版每月提供 500 credits 基础积分，供大家免费使用。
+
+```powershell
+git clone https://github.com/HaotianJiang056/R-plot-skill.git StatsVisual-Skill
+Copy-Item ".\StatsVisual-Skill\skills\StatsVisual-Skill\*" "$env:USERPROFILE\.codebuddy\skills\StatsVisual-Skill" -Recurse -Force
+Copy-Item ".\StatsVisual-Skill\skills\r-journal-style-calibrator\*" "$env:USERPROFILE\.codebuddy\skills\r-journal-style-calibrator" -Recurse -Force
+```
 
 ## Windows R 环境
 
@@ -249,11 +261,11 @@ Rscript skills/StatsVisual-Skill/scripts/validate_r_plot.R demo/figures
 
 ## 共建共享声明
 
-我们鼓励研究者、开发者和学生共同完善、测试和共享这个 skill，让医学统计图形更加规范、清晰和美观。Skill 材料、说明文档、示例和视觉资产均受版权保护；如需引用、转载、改编、再发布或用于公开作品，请提前与开发团队联系。
+我们鼓励大家共同完善、测试和共享这个 skill，让医学统计图形更加规范、清晰和美观。Skill 材料、说明文档、示例和视觉资产均受版权保护；如需引用、转载、改编、再发布或用于公开作品，请提前与开发团队联系。
 
 ## 致谢
 
-本项目灵感亦参考 [Yuan1z0825/nature-skills](https://github.com/Yuan1z0825/nature-skills)，但定位有所不同。本项目主要聚焦四大医学期刊（The Lancet、NEJM、JAMA、BMJ）的医学统计绘图原则，并结合《统计图形与艺术》的知识框架，覆盖更丰富的图形类型。同时，在用户初次绘图时，可根据数据结构与统计意图推荐合适的图形方案。
+本项目灵感亦参考 [Yuan1z0825/nature-skills](https://github.com/Yuan1z0825/nature-skills)，但定位有所不同。本项目主要聚焦四大医学期刊（The Lancet、NEJM、JAMA、BMJ）的医学统计绘图原则，并结合《统计图形与艺术》的知识框架，覆盖更丰富的图形类型。同时，在用户初次绘图时，可根据数据结构与统计意图推荐合适的图形绘制方案。
 
 ## 招聘启事
 课题组现诚聘博士后研究员，欢迎有相关研究背景者申请。详情请见：http://phepr.pku.edu.cn/info/1038/2521.htm。
