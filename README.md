@@ -28,7 +28,6 @@ The visual philosophy of this project is mainly inspired by *Statistical Graphic
 - Recommends a primary single figure, up to two alternatives, and an optional multi-panel figure when complementary analyses are useful.
 - Uses a first-turn gate: when data are first provided, the assistant profiles and recommends before writing plotting code.
 - Supports `general`, `nature`, `lancet`, `nejm`, `jama`, and `bmj` figure styles.
-- Prioritizes polar plots or rose charts for dense categorical numeric summaries with 20 or more categories when a vertical layout would be too tall or label-heavy.
 - Exports PDF, editable SVG, high-resolution TIFF, and a compact web preview.
 - Records reproducibility artifacts such as the plotting script, data profile, figure rationale, readability QA, and R session information.
 

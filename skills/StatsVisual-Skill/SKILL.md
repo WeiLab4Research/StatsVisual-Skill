@@ -55,7 +55,7 @@ Only a follow-up user message after the recommendation can authorize plotting. V
 6. Wait for the user's chart choice after the recommendation response. Do not start plotting in the same turn that first receives or locates the data, even if the user adds a general request such as "plot this data", "draw a figure", "make charts", "visualize it", "help me plot", "帮我画图", "给我的数据画图", or "生成图片". These phrases only express the overall task, not permission to bypass the recommendation stage. If the user names an exact chart type in the original request, still inspect the data first, confirm whether that chart is appropriate, mention any serious mismatch, recommend the best single-figure and optional multi-panel choices, then ask for confirmation before coding. Only a follow-up user message after the recommendation stage can authorize plotting.
 7. Treat automatic selection as disabled during the first data-handling turn. A first-turn instruction like "use this folder/project and plot my data" still requires data profiling, chart recommendation, and a choice question. The user can authorize plotting only after seeing the recommendation, for example by replying "按推荐单图绘制", "选择组图", "用方案 B", or an equivalent explicit chart choice.
 8. If the user chooses or requests a multi-panel figure, write a short figure plan before coding. Include main message, primary result, supporting analyses, interpretation risk, panel roles, shared encodings, output size, and export formats. Do not write the R script until this plan is explicit in the conversation or saved in `<project_dir>/output/figure_plan.md`.
-9. Write a complete R script rather than disconnected snippets after the user chooses. Use `assets/plot_template.R` as the default shape, or copy the closest starter from `assets/templates/` for distribution comparison, scatter/association, model diagnostics, or multi-panel figures. Pass the selected style to the starter or call `rmg_theme(style)` and `rmg_palette(n, style)` directly; if the user chose a chart but not a style, use `general`. For multi-panel figures, source `assets/templates/multipanel_helpers.R` or copy only the needed helpers; do not reuse synthetic demo panels as final analysis. Find the skill directory, source `scripts/setup_r_library.R`, load the repository/project R library, check packages, read data, validate columns, build plot, export figures, save `sessionInfo()`.
+9. Write a complete R script rather than disconnected snippets after the user chooses. Use `assets/plot_template.R` as the default shape, or copy the closest starter from `assets/templates/` for distribution comparison, scatter/association, model diagnostics, or multi-panel figures. Pass the selected style to the starter or call `rmg_theme(style)` and `rmg_palette(n, style)` directly; if the user chose a chart but not a style, use `general`. For multi-panel figures, source `assets/templates/multipanel_helpers.R` or copy only the needed helpers; do not reuse synthetic demo panels as final analysis. Find the skill directory, source `scripts/setup_r_library.R`, load the repository/project R library, check packages, read data, validate columns, build plot, and export figures.
 10. Export every final figure in four forms inside `<project_dir>/figures/` unless the user asks otherwise:
    - Vector: `<name>.pdf`
    - Editable: `<name>.svg`
@@ -63,8 +63,7 @@ Only a follow-up user message after the recommendation can authorize plotting. V
    - Web: `<name>_web.png` or `<name>_web.jpg`, target under 1 MB
 11. Before any CRAN/Bioconductor access, verify installed packages from the active environment by sourcing `scripts/setup_r_library.R` and calling `rmg_prepare_library(project_dir, skill_dir)`. This must happen before deciding a package is missing. Install missing R packages only after that local-library check, using the repository-local `.r-medical-graphics-library/` by default and `<project_dir>/R-library` or a writable user library as fallback. Use `scripts/install_required_packages.R` or call `rmg_ensure_packages()` from generated scripts. In restricted Codex environments, CRAN/Bioconductor access may require an escalated network approval; if installation fails with network, repository, DNS, proxy, SSL, or permission errors, request the needed approval and retry the same installation command. If Windows reports `740` or "requested operation requires elevation", first switch to the repository-local or project-local library; do not misreport this as a CRAN access problem. Do not silently downgrade figure quality or switch away from the intended plotting package because a library is missing.
 12. Run the script when feasible. Check that files exist, are non-empty, SVG is present, and that the web image is under 1 MB. Use `scripts/validate_r_plot.R <project_dir>/figures` for basic file/export checks. Then run `scripts/validate_figure_readability.R <plot_rds> <project_dir>/figures <figure_name> <width_in> <height_in> <project_dir>` for final-size readability checks. Read `references/readability-qa.md` before delivery or when any panel, subgroup, label, legend, or axis scale may be hard to read. If readability QA reports `FAIL`, revise the plotting code and re-export instead of delivering the figure. When image viewing is available, inspect the final web PNG or TIFF preview directly and check that the plotted data are large enough, text is readable, labels/legends do not overlap, panels are balanced, and shared axes do not visually collapse any subgroup.
-13. Write `<project_dir>/output/figure_rationale.md` after generating a final figure. Include selected figure, book basis, data mapping, style choices, thresholds/statistical annotations, limitations, and output files. For multi-panel figures, include the figure plan and explain what distinct clinical or statistical role each panel contributes.
-14. Report output paths under the project directory and any unresolved design decisions. If package installation still fails after the appropriate approval/retry path, stop and report the exact installation failure instead of producing a lower-quality fallback.
+13. Report output paths under the project directory and any unresolved design decisions. If package installation still fails after the appropriate approval/retry path, stop and report the exact installation failure instead of producing a lower-quality fallback.
 
 ## Recommendation Reply Format
 
@@ -155,6 +154,11 @@ Copy these into `<project_dir>/R/` and adapt column names, labels, statistics, a
 - `assets/templates/radar_chart.R` for radar charts and faceted radar charts with controlled circular reference rings, straight polygon profiles, bounded radii, and manual Cartesian geometry.
 - `assets/templates/multipanel_helpers.R` for reusable patchwork/cowplot layout helpers.
 - `assets/templates/multipanel_figure.R` for a planned multi-panel script scaffold that sources the helpers and expects task-specific panels.
+- `assets/templates/Raincloud Plot.R` for a raincloud plot script 
+- `assets/templates/Ternary Plot.R` for a ternary plot script
+- `assets/templates/LOWESS Smooth Plot.R` for a LOWESS smooth plot script 
+- `assets/templates/Bubble Plot.R` for a bubble plot script 
+- `assets/templates/Manhattan Plot.R` for a manhattan plot script 
 
 Treat templates as starting points, not fixed outputs. Read `references/chart-index.md` and the relevant detailed chart reference before adapting them for variants such as violin, raincloud, density scatter, coefficient plots, or longitudinal charts. Read `references/design-rules.md` and the selected style reference before finalizing visual choices. Read `references/multipanel-figures.md` before adapting any A/B/C or composite figure.
 
@@ -169,9 +173,7 @@ figures/<name>.svg
 figures/<name>_700dpi.tiff
 figures/<name>_web.png
 output/data_profile.md
-output/figure_rationale.md
 output/figure_qa.md
-output/session_info.txt
 ```
 
 These paths are relative to the per-request project directory, not the skill repository root.
