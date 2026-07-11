@@ -187,6 +187,7 @@ Use Cleveland dot plots for ranked category-level estimates, rates, means, model
 - Significant site labels label only a few key SNPs to avoid crowding the entire map.
 - Place the title at the top and center it.
 - Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- code reference:source script `\StatsVisual-Skill\assets\templates\Manhattan Plot.R`
 
 #### Epidemic Trend Dot Plot
 
@@ -215,6 +216,7 @@ Use Cleveland dot plots for ranked category-level estimates, rates, means, model
 - To enhance readings, the light gray horizontal reference can be retained.
 - The title and legend are placed at the top and in the center. If there are many categories, the legend can be arranged vertically and centered on the right side.
 - Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- code reference:source script `\StatsVisual-Skill\assets\templates\Epidemic Trend Dot Plot.R`
 
 ## Code Reference
 - Original development note: source script `0500-cleveland-finished.rmd` is not included in the public skill.

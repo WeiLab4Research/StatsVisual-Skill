@@ -117,6 +117,7 @@ Use heatmaps for numeric matrices, correlation matrices, omics abundance matrice
 - Place the title at the top and center it.
 - Do not add a gridline background.
 - Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- code reference:source script `\StatsVisual-Skill\assets\templates\Contour Line Plot.R`
 
 ### Contour with Filled Areas
 
@@ -143,6 +144,7 @@ Use heatmaps for numeric matrices, correlation matrices, omics abundance matrice
 - Place the title at the top and center it.
 - Do not add a gridline background.
 - Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- code reference:source script `\StatsVisual-Skill\assets\templates\Contour with Filled Areas.R`
 
 ### Sankey Plot
 
@@ -169,6 +171,7 @@ Use heatmaps for numeric matrices, correlation matrices, omics abundance matrice
 - Place the legend on the right and center it vertically.
 - Place the title at the top and center it.
 - Do not add a gridline background.
+- code reference:source script `\StatsVisual-Skill\assets\templates\Sankey Plot.R`
 
 ### Venn Plot
 
@@ -195,6 +198,7 @@ Use heatmaps for numeric matrices, correlation matrices, omics abundance matrice
 - Place the title at the top and center it.
 - Do not add a gridline background.
 - Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- code reference:source script `\StatsVisual-Skill\assets\templates\Venn Plot.R`
 
 ### UpSet Plot
 
@@ -220,6 +224,7 @@ Use heatmaps for numeric matrices, correlation matrices, omics abundance matrice
 - Place the title at the top and center it.
 - Do not add a gridline background.
 - Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- code reference:source script `\StatsVisual-Skill\assets\templates\UpSet Plot.R`
 
 ### Calendar Chart
 
@@ -248,9 +253,7 @@ Use heatmaps for numeric matrices, correlation matrices, omics abundance matrice
 - Place the title at the top and center it.
 - Do not add a gridline background.
 - Unless specifically requested, do not add subtitles or explanatory text outside the plot.
-
-## Code Reference
-- Original development note: source script `0800-heatmap-finished.Rmd` is not included in the public skill.
+- code reference:source script `\StatsVisual-Skill\assets\templates\Calendar Chart.R`
 
 ## QA
 

@@ -38,6 +38,7 @@ Use smoothing curves to reveal nonlinear trend in noisy ordered or scatter data.
 - Place both the title and legend at the top and center them.
 - Do not add a gridline background.
 - Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- code reference:source script `\StatsVisual-Skill\assets\templates\LOWESS Smooth Plot.R`
 
 ### LOWESS Smooth with Multiple frac Values
 
@@ -89,6 +90,7 @@ Use smoothing curves to reveal nonlinear trend in noisy ordered or scatter data.
 - Place both the title and legend at the top and center them.
 - Do not add a gridline background.
 - Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- code reference:source script `\StatsVisual-Skill\assets\templates\LOWESS Regression Plot.R`
 
 ### Grouped LOWESS Regression with Confidence Band
 

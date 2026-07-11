@@ -213,6 +213,7 @@ Use histograms for one continuous variable to inspect distribution shape, skewne
 - Place the title at the top and center it.
 - You can add horizontal or vertical gray background lines
 - Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- code reference:source script `\StatsVisual-Skill\assets\templates\Ridgeline Plot.R`
 
 ### Epidemic Ridgeline Plot
 
@@ -239,6 +240,7 @@ Use histograms for one continuous variable to inspect distribution shape, skewne
 - Place the title at the top and center it.
 - You can add horizontal or vertical gray background lines
 - Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- code reference:source script `\StatsVisual-Skill\assets\templates\Epidemic Ridgeline Plot.R`
 
 ### Spiral Histogram
 
@@ -265,9 +267,7 @@ Use histograms for one continuous variable to inspect distribution shape, skewne
 - Place the figure title and figure title at the top and in the center
 - You can add horizontal or vertical gray background lines
 - Unless specifically requested, do not add subtitles or explanatory text outside the plot.
-
-## Code Reference
-- Original development note: source script `0400-histogram-finished.rmd` is not included in the public skill.
+- code reference:source script `\StatsVisual-Skill\assets\templates\Spiral Histogram.R`
 
 ## QA
 

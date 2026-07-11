@@ -146,16 +146,3 @@ qa_status <- system2("Rscript", c(qa_script, rds_file, figures_dir, figure_name,
 if (!identical(qa_status, 0L)) {
   stop("Figure readability QA failed.", call. = FALSE)
 }
-
-writeLines(c(
-  "# Multi-panel Figure Rationale",
-  "",
-  paste0("- Layout: ", layout),
-  paste0("- Style: ", rmg_style_label(style)),
-  "- Figure plan: see output/figure_plan.md.",
-  "- Panel roles: replace scaffold text with task-specific A/B/C panel descriptions.",
-  "- Shared encodings: keep group colors, units, scales, transformations, and denominators consistent across panels.",
-  "- Limitations: replace scaffold text with data-quality, model, or interpretation limits."
-), file.path(output_dir, "figure_rationale.md"))
-
-writeLines(capture.output(sessionInfo()), file.path(output_dir, "session_info.txt"))

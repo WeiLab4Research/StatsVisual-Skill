@@ -154,6 +154,7 @@ Do not use bars for arbitrary raw continuous observations when the distribution 
 - Place both the title and legend at the top and center them.
 - Do not add a gridline background.
 - Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- Code Reference: source script `\StatsVisual-Skill\assets\templates\Waterfall Plot.R`
 
 ---
 
@@ -183,10 +184,7 @@ Do not use bars for arbitrary raw continuous observations when the distribution 
 - Place both the title and legend at the top and center them.
 - Do not add a gridline background.
 - Unless specifically requested, do not add subtitles or explanatory text outside the plot.
-
-## Code Reference
-- Original development note: source script `0100-barplot-finished.Rmd` is not included in the public skill.
-
+- Code Reference: source script `\StatsVisual-Skill\assets\templates\Polar Bar Plot.R`
 
 ## QA
 

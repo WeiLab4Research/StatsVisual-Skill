@@ -183,6 +183,7 @@ Use scatter plots for two continuous variables to show association, clusters, no
 - Place both the title and legend at the top and center them.
 - Do not add a gridline background.
 - Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- code reference:source script `\StatsVisual-Skill\assets\templates\Bubble Plot.R`
 
 ### Volcano Plot
 

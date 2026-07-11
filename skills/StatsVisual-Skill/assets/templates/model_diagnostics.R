@@ -85,4 +85,3 @@ if (!identical(qa_status, 0L)) {
 }
 
 writeLines(capture.output(summary(model)), file.path(output_dir, paste0(figure_name, "_model_summary.txt")))
-writeLines(capture.output(sessionInfo()), file.path(output_dir, "session_info.txt"))

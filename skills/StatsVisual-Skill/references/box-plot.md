@@ -87,8 +87,9 @@ Use box plots to compare continuous distributions across groups. The box summari
 - Place both the title and legend at the top and center them.
 - Do not add a gridline background.
 - Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- code reference:source script `\StatsVisual-Skill\assets\templates\Notched Box Plot.R`
 
-### Letter-value Box Plot
+### Boxenplot(enhanced box plot)
 
 **Applicable Data**
 
@@ -111,6 +112,7 @@ Use box plots to compare continuous distributions across groups. The box summari
 - Place both the title and legend at the top and center them.
 - Do not add a gridline background.
 - Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- code reference:source script `\StatsVisual-Skill\assets\templates\boxenplot(enhanced box plot).R`
 
 ### Pagoda Plot
 
@@ -137,6 +139,7 @@ Use box plots to compare continuous distributions across groups. The box summari
 - Place both the title and legend at the top and center them.
 - Do not add a gridline background.
 - Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- code reference:source script `\StatsVisual-Skill\assets\templates\Pagoda Plot.R`
 
 ### Violin Plot
 
@@ -187,6 +190,7 @@ Use box plots to compare continuous distributions across groups. The box summari
 - Place both the title and legend at the top and center them.
 - Do not add a gridline background.
 - Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- code reference:source script `\StatsVisual-Skill\assets\templates\Beeswarm Plot.R`
 
 ### Pirate Plot
 
@@ -212,6 +216,7 @@ Use box plots to compare continuous distributions across groups. The box summari
 - Place both the title and legend at the top and center them.
 - Do not add a gridline background.
 - Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- code reference:source script `\StatsVisual-Skill\assets\templates\Pirate Plot.R`
 
 ### Raincloud Plot
 
@@ -238,6 +243,7 @@ Use box plots to compare continuous distributions across groups. The box summari
 - Place both the title and legend at the top and center them.
 - Do not add a gridline background.
 - Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- code reference:source script `\StatsVisual-Skill\assets\templates\Raincloud Plot.R`
 
 ### Grouped Raincloud Plot
 
@@ -262,9 +268,7 @@ Use box plots to compare continuous distributions across groups. The box summari
 - Place both the title and legend at the top and center them.
 - Do not add a gridline background.
 - Unless specifically requested, do not add subtitles or explanatory text outside the plot.
-
-## Code Reference
-- Original development note: source script `0600-boxplot-finished.rmd` is not included in the public skill.
+- code reference:source script `\StatsVisual-Skill\assets\templates\Grouped Raincloud Plot.R`
 
 ## QA
 

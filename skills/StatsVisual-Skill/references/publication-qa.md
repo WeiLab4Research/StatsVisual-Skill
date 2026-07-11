@@ -7,7 +7,6 @@ Run this checklist before final delivery. Use it together with `readability-qa.m
 - Run `scripts/validate_r_plot.R <project_dir>/figures` to verify PDF, SVG, TIFF, and web image presence.
 - Run `scripts/validate_figure_readability.R <plot_rds> <project_dir>/figures <figure_name> <width_in> <height_in> <project_dir>` to verify final-size readability.
 - Confirm `output/figure_qa.md` exists and contains no unresolved `FAIL`.
-- Confirm `session_info.txt` exists for reproducibility.
 - Confirm the R script can be rerun from the project root.
 
 ## Delivery-Blocking Failures

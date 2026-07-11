@@ -419,7 +419,7 @@ If the requested figure is a main manuscript figure, do not use the default bala
 - Use final journal dimensions when exporting; do not design at one size and scale later.
 - Keep web PNG under 1 MB when feasible, but never let the web preview drive the print layout.
 - For complex figures, optionally export separate panel source files in addition to the combined figure.
-- Write `output/figure_rationale.md` with the figure plan, layout plan, panel roles, model/statistical definitions, limitations, and output paths.
+- Summarize the figure plan, layout plan, panel roles, model/statistical definitions, limitations, and output paths in the final response or project notes when needed; do not require an `output/figure_rationale.md` file.
 
 ## QA Checklist
 

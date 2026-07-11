@@ -225,6 +225,7 @@ Prefer bar charts, Cleveland dot plots, or stacked bars when categories are nume
 - Place the title at the top and center it.
 - Do not add a gridline background.
 - Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- code reference:source script `\StatsVisual-Skill\assets\templates\Nested Pie Plot.R`
 
 ### Circular Polar Heatmap
 
@@ -272,6 +273,7 @@ Prefer bar charts, Cleveland dot plots, or stacked bars when categories are nume
 - Place the title at the top and center it.
 - Do not add a gridline background.
 - Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- code reference:source script `\StatsVisual-Skill\assets\templates\Fourfold Plot.R`
 
 ## Code Reference
 - Original development note: source script `0300-pieplot-finished.rmd` is not included in the public skill.

@@ -12,7 +12,7 @@ Create or use one explicit per-request project directory. Do not use the skill r
   figures/
 ```
 
-Write the plot script in `<project_dir>/R/plot_<chart_type>.R`. Keep data profiling output in `<project_dir>/output/data_profile.md` as an internal reproducibility artifact, figure files in `<project_dir>/figures/`, and `sessionInfo()` in `<project_dir>/output/session_info.txt`. Summarize the profile directly in the assistant reply; do not make the user open `data_profile.md` just to choose a chart.
+Write the plot script in `<project_dir>/R/plot_<chart_type>.R`. Keep data profiling output in `<project_dir>/output/data_profile.md` as an internal reproducibility artifact and figure files in `<project_dir>/figures/`. Summarize the profile directly in the assistant reply; do not make the user open `data_profile.md` just to choose a chart.
 
 Do not enter the script-writing or export workflow on the first data-handling turn. First-turn work is limited to project setup, data copy, data inspection, and chart recommendation. Start this R workflow only after the user has replied with a concrete chart choice from the recommendation.
 
@@ -26,7 +26,6 @@ Use this order:
 4. Clean factor levels, dates, missing values, and units.
 5. Build the plot object.
 6. Export PDF, SVG, 700 dpi TIFF, and web image.
-7. Save `sessionInfo()`.
 
 Use `assets/plot_template.R` as the default starting point for a new figure script. When the task matches a common implementation, copy and adapt one of these starters into `<project_dir>/R/`:
 

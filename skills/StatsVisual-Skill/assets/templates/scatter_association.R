@@ -111,5 +111,3 @@ qa_status <- system2("Rscript", c(qa_script, rds_file, figures_dir, figure_name,
 if (!identical(qa_status, 0L)) {
   stop("Figure readability QA failed.", call. = FALSE)
 }
-
-writeLines(capture.output(sessionInfo()), file.path(output_dir, "session_info.txt"))

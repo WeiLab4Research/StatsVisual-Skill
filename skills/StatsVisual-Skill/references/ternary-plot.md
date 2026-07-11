@@ -120,7 +120,7 @@ Use ternary plots for three-part compositions where the components are non-negat
 - Unless specifically requested, do not add subtitles or explanatory text outside the plot.
 
 ## Code Reference
-- Original development note: source script `1500-ternary-finished.rmd` is not included in the public skill.
+- source script `StatsVisual-Skill\assets\templates\Ternary Plot.R` 
 
 ## QA
 

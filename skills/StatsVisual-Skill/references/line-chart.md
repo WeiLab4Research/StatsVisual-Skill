@@ -163,6 +163,7 @@ Use line charts for ordered x-values: time, dose, sequence, or another continuou
 - Place both the title and legend at the top and center them.
 - Do not add a gridline background.
 - Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- code reference:source script `\StatsVisual-Skill\assets\templates\Area Graph.R`
 
 ### Stacked Area Graph
 
@@ -192,6 +193,7 @@ Use line charts for ordered x-values: time, dose, sequence, or another continuou
 - Place both the title and legend at the top and center them.
 - Do not add a gridline background.
 - Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- code reference:source script `\StatsVisual-Skill\assets\templates\Stacked Area Graph.R`
 
 ### Stream Graph
 
@@ -219,6 +221,7 @@ Use line charts for ordered x-values: time, dose, sequence, or another continuou
 - When there are many groups, the legend should be placed to the right and centered vertically.
 - Do not add a gridline background.
 - Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- code reference:source script `\StatsVisual-Skill\assets\templates\Stream Graph.R`
 
 ### Stepper Line Chart
 
@@ -268,6 +271,7 @@ Use line charts for ordered x-values: time, dose, sequence, or another continuou
 - When there are many groups, the legend should be placed to the right and centered vertically.
 - Do not add a gridline background.
 - Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- code reference:source script `\StatsVisual-Skill\assets\templates\rader_chart.R`
 
 ## Code Reference
 - Original development note: source script `0200-lineplot-finished.rmd` is not included in the public skill.
