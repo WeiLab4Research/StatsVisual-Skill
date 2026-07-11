@@ -11,7 +11,7 @@ tester: Miao Cui, Qiaochu Wei, Ziwei Xi
 
 **Language:** English | [简体中文](README.zh-CN.md)
 
-StatsVisual-Skill provides skills for publication-ready medical and biostatistical graphics in R. It helps an AI assistant inspect data first, recommend appropriate figure types, generate reproducible plotting code, and export journal-ready artwork for manuscripts, submissions, and research presentations.
+StatsVisual-Skill provides skills for publication-ready medical and biostatistical graphics. It helps an AI assistant inspect data first, recommend appropriate figure types, generate reproducible plotting code, and export journal-ready artwork for manuscripts, submissions, and research presentations.
 
 ## Motivation
 

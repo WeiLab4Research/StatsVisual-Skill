@@ -11,7 +11,7 @@ Team:
 
 **语言：** [English](README.md) | 简体中文
 
-StatsVisual-Skill 提供一组用于 R 医学统计绘图的skill，帮助 AI 助手先检查数据，再推荐合适图形，生成可复现 R 代码，并导出适合论文、投稿和汇报使用的高质量图形。
+StatsVisual-Skill 提供一组用于医学统计绘图的skill，帮助 AI 助手先检查数据，再推荐合适图形，生成可复现代码，并导出适合论文、投稿和汇报使用的高质量图形。
 
 ## Motivation
 
