@@ -122,16 +122,19 @@ saveRDS(fig, rds_file)
 plan_file <- file.path(output_dir, "figure_plan.md")
 if (!file.exists(plan_file)) {
   writeLines(c(
-    "# Figure Plan",
+    "# 图形计划",
     "",
-    "- Main message: TODO replace with one sentence from the recommendation stage.",
-    "- Primary result: Panel A.",
-    "- Supporting analyses: Panel B.",
-    "- Interpretation risk: TODO state the most likely limitation.",
-    "- Panel roles: A distribution; B effect estimate. Replace if the final panels differ.",
-    "- Shared encodings: TODO state group colors, units, scales, transformations, and denominators.",
-    paste0("- Style: ", rmg_style_label(style), "."),
-    "- Output set: PDF, SVG, 700 dpi TIFF, and web PNG at the selected final size."
+    "- 核心信息：TODO 用一句话说明整张图传达的核心信息。",
+    "",
+    "## 面板角色与证据层级",
+    "",
+    "- 面板 A（主要结果）：TODO 说明面板 A 展示的核心结果及其在证据链中的位置。",
+    "- 面板 B（辅助分析）：TODO 说明面板 B 如何支撑或补充面板 A 的结论。",
+    "- 面板 C（验证/稳健性）：TODO 如有，说明面板 C 的作用。",
+    "",
+    "## 整体逻辑",
+    "",
+    "- TODO 说明这些面板合在一起为何比单图更强，形成什么样的证据层级。"
   ), plan_file)
 }
 

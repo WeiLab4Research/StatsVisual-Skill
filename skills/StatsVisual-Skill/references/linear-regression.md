@@ -8,6 +8,8 @@ Use linear regression graphics when two variables show an approximately linear r
 
 ### Linear Regression Plot
 
+![Linear Regression Plot](../assets/gallery/linear_regression/linear.png)
+
 **Applicable Data**
 
 - One continuous independent variable and one continuous dependent variable.
@@ -31,6 +33,8 @@ Use linear regression graphics when two variables show an approximately linear r
 - Unless specifically requested, do not add subtitles or explanatory text outside the plot.
 
 ### Linear Regression with Confidence and Tolerance Bands
+
+![Linear Regression with Confidence and Tolerance Bands](../assets/gallery/linear_regression/bands.png)
 
 **Applicable Data**
 
@@ -64,6 +68,8 @@ Use linear regression graphics when two variables show an approximately linear r
 
 ### Bivariate Ellipse Interval
 
+![Bivariate Ellipse Interval](../assets/gallery/linear_regression/ellipse.png)
+
 **Applicable Data**
 
 - Two continuous variables and are related.
@@ -89,6 +95,8 @@ Use linear regression graphics when two variables show an approximately linear r
 
 ### Regression with Deviations
 
+![Regression with Deviations](../assets/gallery/linear_regression/deviations.png)
+
 **Applicable Data**
 
 - One continuous independent variable and one continuous dependent variable.
@@ -112,6 +120,8 @@ Use linear regression graphics when two variables show an approximately linear r
 - Unless specifically requested, do not add subtitles or explanatory text outside the plot.
 
 ### Linear Regression Response Surface
+
+![Linear Regression Response Surface](../assets/gallery/linear_regression/surface.png)
 
 **Applicable Data**
 
@@ -140,6 +150,8 @@ Use linear regression graphics when two variables show an approximately linear r
 - Unless specifically requested, do not add subtitles or explanatory text outside the plot.
 
 ### Regression Performance Radar Plot
+
+![Regression Performance Radar Plot](../assets/gallery/linear_regression/performance.png)
 
 **Applicable Data**
 
@@ -180,4 +192,3 @@ Include:
 - Check linearity, independence, normality, and equal variance assumptions.
 - Inspect residuals and influence before presenting a fitted line as the main result.
 - Do not confuse correlation, unadjusted regression, and adjusted regression.
-

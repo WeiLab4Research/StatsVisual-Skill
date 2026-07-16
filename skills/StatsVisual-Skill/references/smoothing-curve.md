@@ -16,6 +16,8 @@ Use smoothing curves to reveal nonlinear trend in noisy ordered or scatter data.
 
 ### LOWESS Smooth Plot
 
+![LOWESS Smooth Plot](../assets/gallery/smoothing/lowess_smooth.png)
+
 **Applicable Data**
 
 - Data on a single continuous variable as a function of time or another continuous independent variable.
@@ -69,6 +71,8 @@ Use smoothing curves to reveal nonlinear trend in noisy ordered or scatter data.
 - Unless specifically requested, do not add subtitles or explanatory text outside the plot.
 
 ### LOWESS Regression Plot
+
+![LOWESS Regression Plot](../assets/gallery/smoothing/lowess_regression.png)
 
 **Applicable Data**
 
@@ -134,4 +138,3 @@ Use smoothing curves to reveal nonlinear trend in noisy ordered or scatter data.
 - Report smoother type and key tuning parameter (`span`, degrees of freedom, basis).
 - Avoid over-smoothing or under-smoothing; check sensitivity.
 - Do not imply a mechanistic model from an exploratory smooth.
-

@@ -10,15 +10,11 @@ For high-stakes manuscript figures, the target style is a restrained research fi
 
 Before writing code, define:
 
-- **Main message**: the single message the full figure supports.
-- **Primary result**: the panel that carries the main result.
-- **Supporting analyses**: model adjustment, subgroup analysis, sensitivity analysis, diagnostics, image quantification, or risk context.
-- **Interpretation risk**: the most likely limitation or challenge in interpreting the figure.
-- **Panel roles**: `A`, `B`, `C`, etc., with one sentence per scientific panel.
-- **Dependent elements**: risk tables, legends, color keys, scale bars, inset plots, or annotation strips that belong to a panel and must not receive their own panel letter.
-- **Shared encodings**: group colors, line types, symbols, time units, axis scales, transformations, and denominators.
-- **Layout specification**: final width/height, panel coordinates or relative widths/heights, dominant panel, legend axis, gutters, and reserved margins.
-- **Output specification**: editable SVG plus PDF, 700 dpi TIFF, web PNG, rationale, session info, and whether panels need independent source files.
+- **核心信息**：整张图所支撑的单一信息。
+- **面板 A（主要结果）**：承载主要结果的面板及其在证据链中的位置。
+- **面板 B（辅助分析）**：模型调整、亚组分析、敏感性分析、诊断或风险背景，说明如何支撑面板 A。
+- **面板 C（验证/稳健性）**：如有，验证或稳健性检查面板。
+- **整体逻辑**：这些面板合在一起为何比单图更强，形成什么样的证据层级。
 
 Remove a panel if it does not make the main message more defensible. Remove a legend, table, or annotation if it repeats information without improving interpretation.
 
@@ -29,16 +25,16 @@ Keep the original skill path: inspect data first, recommend a single figure firs
 In the recommendation reply, use this structure:
 
 ```text
-Recommended single figure: <chart>, because <data-profile reason>.
-Alternatives: <up to two single figures, or none>.
-Optional multi-panel figure: <yes/no>.
-Main message: <one sentence>.
-Panel roles: A <primary result>; B <supporting analysis>; C <validation/robustness>, if available.
-Dependent elements: <risk table/legend/inset/scale bar belongs to which panel>.
-Support logic: <why these panels together are stronger than one plot>.
-Use when: <manuscript need>.
-Limitation: <missing field, weak sample size, unavailable statistic, or interpretation caveat>.
-Expected outputs: SVG, PDF, 700 dpi TIFF, web PNG, rationale, session info.
+推荐单图：<图表>，理由：<数据画像原因>。
+备选方案：<最多两个单图，或无可选>。
+可选多面板图：<是/否>。
+核心信息：<一句话>。
+面板角色：A <主要结果>；B <辅助分析>；C <验证/稳健性>（如有）。
+附属元素：<风险表/图例/嵌入图/比例尺属于哪个面板>。
+支撑逻辑：<这些面板合在一起为何比单图更强>。
+适用场景：<论文需求>。
+局限性：<缺失字段、样本量不足、不可用统计量或解读注意事项>。
+预期输出：SVG、PDF、700 dpi TIFF、web PNG。
 ```
 
 If the data are insufficient for a multi-panel figure, say `Multi-panel not recommended` and name the missing pieces, such as no grouping variable, no time/event fields, no uncertainty estimates, no validation cohort, no feature identifiers, or no model results.

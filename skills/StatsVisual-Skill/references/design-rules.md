@@ -22,3 +22,9 @@ Use this file as the style entrypoint. The detailed rules live in `references/st
 - If the user requests BMJ, The BMJ, British Medical Journal, pragmatic clinical or health-services style, or explicitly says `bmj`, use `bmj`.
 - Use `assets/styles/theme_registry.R` in plotting scripts and call `rmg_theme(style)` plus `rmg_palette(n, style)`.
 - Keep chart-specific statistical rules in the detailed chart reference; keep style-specific typography, palette, panel, and layout rules in the selected style document.
+
+## Annotation Policy
+
+- Do not place figure captions, explanatory text, or inline annotations inside the figure panel. The figure panel must contain only data marks, axis titles, axis tick labels, legends, direct labels, and statistical annotations (e.g. P values, CIs, effect estimates).
+- All figure captions, interpretation notes, data-source references, methodology descriptions, and caveats belong outside the figure panel — in the manuscript caption block or the manuscript body, never inside the plotting area.
+- If a figure requires explanation to be understood, revise the visual encoding (labels, legends, scales, annotations) rather than adding caption-like text blocks inside the panel.

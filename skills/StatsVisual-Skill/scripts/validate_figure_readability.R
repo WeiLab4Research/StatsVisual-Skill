@@ -33,10 +33,6 @@ skill_dir <- normalizePath(file.path(script_dir, ".."), winslash = "/", mustWork
 source(file.path(skill_dir, "scripts", "setup_r_library.R"), local = TRUE)
 rmg_ensure_packages(c("ggplot2", "ragg", "png"), project_dir = project_dir, skill_dir = skill_dir)
 
-output_dir <- file.path(project_dir, "output")
-dir.create(output_dir, showWarnings = FALSE, recursive = TRUE)
-qa_file <- file.path(output_dir, "figure_qa.md")
-
 p <- readRDS(plot_rds)
 if (!inherits(p, "ggplot")) {
   stop("RDS must contain a ggplot-compatible object.", call. = FALSE)
@@ -377,10 +373,9 @@ lines <- c(
   "- Check whether the plotted data are large enough, text is readable, labels/legends do not overlap, panels are balanced, and shared axes do not visually collapse any subgroup."
 )
 
-writeLines(lines, qa_file)
+cat(paste(lines, collapse = "\n"), "\n")
 message("Figure readability QA status: ", overall)
-message("Wrote: ", normalizePath(qa_file, winslash = "/", mustWork = FALSE))
 
 if (overall == "FAIL") {
-  stop("Figure readability QA failed. See: ", qa_file, call. = FALSE)
+  stop("Figure readability QA failed. Check the findings above.", call. = FALSE)
 }

@@ -2,8 +2,6 @@
 
 Use this index to move from data structure and scientific intent to a chart reference. Load the detailed chart file only after the route is clear.
 
-Selection override: when a categorical variable paired with a numeric value has `>25` categories and the main goal is frequency, proportion, composition, absolute contribution, burden, or overview ranking, route first to Polar plot or Rose chart. Do not route first to circular charts when the main goal is significance-value or correlation-coefficient precision, threshold judgment, P value, CI, significance marking, or adjusted-versus-unadjusted differences.
-
 | Chart family | Suitable data structure | Main message | Reference |
 |---|---|---|---|
 | Bar chart | One categorical variable plus count, proportion, rate, mean, or other summary; optional grouping | Compare magnitudes across categories or ordered groups | `bar-chart.md` |

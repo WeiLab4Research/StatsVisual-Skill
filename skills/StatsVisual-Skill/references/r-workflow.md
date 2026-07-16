@@ -12,7 +12,7 @@ Create or use one explicit per-request project directory. Do not use the skill r
   figures/
 ```
 
-Write the plot script in `<project_dir>/R/plot_<chart_type>.R`. Keep data profiling output in `<project_dir>/output/data_profile.md` as an internal reproducibility artifact and figure files in `<project_dir>/figures/`. Summarize the profile directly in the assistant reply; do not make the user open `data_profile.md` just to choose a chart.
+Write the plot script in `<project_dir>/R/plot_<chart_type>.R`. Keep data profiling output in `<project_dir>/output/data_profile.md` as an internal reproducibility artifact, figure explanation in `<project_dir>/output/figure_explanation.md` as a statistical and visual rationale, and figure files in `<project_dir>/figures/`. Summarize the profile and explanation directly in the assistant reply; do not make the user open `data_profile.md` or `figure_explanation.md` just to choose a chart or understand the figure.
 
 Do not enter the script-writing or export workflow on the first data-handling turn. First-turn work is limited to project setup, data copy, data inspection, and chart recommendation. Start this R workflow only after the user has replied with a concrete chart choice from the recommendation.
 

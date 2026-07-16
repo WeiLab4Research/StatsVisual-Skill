@@ -354,7 +354,7 @@ rmg_theme <- function(style = "general", base_size = NULL, base_family = "") {
           legend.key = ggplot2::element_blank(),
           strip.background = ggplot2::element_blank(),
           strip.text = ggplot2::element_text(face = "plain", color = "grey10"),
-          panel.grid.major = ggplot2::element_line(linewidth = 0.18, color = "grey92"),
+          panel.grid.major = ggplot2::element_blank(),
           panel.grid.minor = ggplot2::element_blank(),
           plot.margin = ggplot2::margin(5, 5, 5, 5)
         )

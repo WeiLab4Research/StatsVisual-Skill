@@ -239,12 +239,12 @@ if (requireNamespace("ragg", quietly = TRUE)) {
 
 # Export to PNG (web, <1MB) - requires ragg
 if (requireNamespace("ragg", quietly = TRUE)) {
-  ggsave(png_file, plot = p_combined[[1]], width = 7, height = 7, units = "in", dpi = 144, device = ragg::agg_png)
+  ggsave(png_file, plot = p_combined[[1]], width = 7, height = 7, units = "in", dpi = 300, device = ragg::agg_png)
   
   # Ensure web image is under 1MB
   limit <- 1024 * 1024
   if (file.info(png_file)$size > limit) {
-    ggsave(png_file, plot = p_combined[[1]], width = 6, height = 6, units = "in", dpi = 120, device = ragg::agg_png)
+    ggsave(png_file, plot = p_combined[[1]], width = 5, height = 5, units = "in", dpi = 300, device = ragg::agg_png)
   }
   cat(sprintf("Web PNG saved: %s (%.0f KB)\n", png_file, file.info(png_file)$size / 1024))
 }

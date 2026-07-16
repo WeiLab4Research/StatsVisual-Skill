@@ -19,6 +19,8 @@ Use line charts for ordered x-values: time, dose, sequence, or another continuou
 
 ### Line Plot with Point
 
+![Line Plot with Point](../assets/gallery/line/point_line.png)
+
 **Applicable Data**
 
 - One-dimensional continuous trend data
@@ -43,6 +45,8 @@ Use line charts for ordered x-values: time, dose, sequence, or another continuou
 
 ### Scree Plot
 
+![Scree Plot](../assets/gallery/line/scree.png)
+
 **Applicable Data**
 
 - Principal component analysis, factor analysis, and eigenvalue decomposition results
@@ -66,6 +70,8 @@ Use line charts for ordered x-values: time, dose, sequence, or another continuou
 
 ### Line Plot with Errorbar
 
+![Line Plot with Errorbar](../assets/gallery/line/errorbar_line.png)
+
 **Applicable Data**
 
 - Means/estimates and their uncertainties at each point in time or at successive locations
@@ -88,6 +94,8 @@ Use line charts for ordered x-values: time, dose, sequence, or another continuou
 - Unless specifically requested, do not add subtitles or explanatory text outside the plot.
 
 ### Time Series Plot
+
+![Time Series Plot](../assets/gallery/line/time_series.png)
 
 **Applicable Data**
 
@@ -116,6 +124,8 @@ Use line charts for ordered x-values: time, dose, sequence, or another continuou
 
 ### Smooth Line Plot
 
+![Smooth Line Plot](../assets/gallery/line/smooth_line.png)
+
 **Applicable Data**
 
 - Original observation points + a smoothing or model fitting result (to avoid the influence of certain outliers on the trend)
@@ -137,6 +147,8 @@ Use line charts for ordered x-values: time, dose, sequence, or another continuou
 - Unless specifically requested, do not add subtitles or explanatory text outside the plot.
 
 ### Area Graph
+
+![Area Graph](../assets/gallery/line/area.png)
 
 **Applicable Data**
 
@@ -166,6 +178,8 @@ Use line charts for ordered x-values: time, dose, sequence, or another continuou
 - code reference:source script `\StatsVisual-Skill\assets\templates\Area Graph.R`
 
 ### Stacked Area Graph
+
+![Stacked Area Graph](../assets/gallery/line/stacked_area.png)
 
 **Applicable Data**
 
@@ -197,6 +211,8 @@ Use line charts for ordered x-values: time, dose, sequence, or another continuou
 
 ### Stream Graph
 
+![Stream Graph](../assets/gallery/line/stream.png)
+
 **Applicable Data**
 
 - Relative fluctuation display of multiple sets of sequences
@@ -225,6 +241,8 @@ Use line charts for ordered x-values: time, dose, sequence, or another continuou
 
 ### Stepper Line Chart
 
+![Stepper Line Chart](../assets/gallery/line/step.png)
+
 **Applicable Data**
 
 - Event-driven, cumulative counting, state changes, piecewise constant process
@@ -247,6 +265,8 @@ Use line charts for ordered x-values: time, dose, sequence, or another continuou
 - Unless specifically requested, do not add subtitles or explanatory text outside the plot.
 
 ### Radar Plot
+
+![Radar Plot](../assets/gallery/line/radar.png)
 
 **Applicable Data**
 
@@ -283,4 +303,3 @@ Use line charts for ordered x-values: time, dose, sequence, or another continuou
 - Keep the number of lines readable; facet or directly label if many groups.
 - For stacked area, verify values are additive and the sum has meaning.
 - For repeated individuals, decide whether to show individual trajectories, group summaries, or both.
-

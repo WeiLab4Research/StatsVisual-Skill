@@ -66,12 +66,12 @@ add_choice <- function(title, book, why, best_for, style, limits) {
   c(
     paste0("### ", title),
     "",
-    paste0("- Book basis: ", book),
-    paste0("- Why it fits: ", why),
-    paste0("- Best for: ", best_for),
-    paste0("- Style promise: ", style),
-    paste0("- Limitation: ", limits),
-    "- Expected outputs: PDF, SVG, 700 dpi TIFF, web PNG under 1 MB",
+    paste0("- 参考依据：", book),
+    paste0("- 适配原因：", why),
+    paste0("- 最适合：", best_for),
+    paste0("- 风格承诺：", style),
+    paste0("- 局限性：", limits),
+    "- 预期输出格式：PDF、SVG、700 dpi TIFF、web PNG（<1 MB）",
     ""
   )
 }
@@ -233,42 +233,103 @@ if (length(multi_panel_notes) > 3) {
 }
 
 lines <- c(
-  "# Data Profile",
+  "# 数据画像",
   "",
-  paste0("- File: `", normalizePath(data_file, winslash = "/", mustWork = FALSE), "`"),
-  paste0("- Rows: ", nrow(data)),
-  paste0("- Columns: ", ncol(data)),
+  paste0("- 文件：`", normalizePath(data_file, winslash = "/", mustWork = FALSE), "`"),
+  paste0("- 行数：", nrow(data)),
+  paste0("- 列数：", ncol(data)),
   "",
-  "## Columns",
+  "## 列信息",
   "",
-  "| Column | Type | Missing % | Unique values |",
-  "| --- | --- | ---: | ---: |"
+  "| 列名 | 类型 | 缺失% | 唯一值数 | 示例值 |",
+  "| --- | --- | ---: | ---: | --- |"
 )
 
-for (nm in names(data)) {
-  lines <- c(lines, sprintf("| `%s` | %s | %.1f | %s |", nm, types[[nm]], missing_pct[[nm]], unique_n[[nm]]))
+sample_val <- function(x) {
+  x <- x[!is.na(x)]
+  if (length(x) == 0) return("—")
+  u <- unique(x)
+  if (length(u) <= 3) return(paste(u, collapse = ", "))
+  paste(u[1:min(3, length(u))], collapse = ", ")
 }
+
+for (nm in names(data)) {
+  lines <- c(lines, sprintf("| `%s` | %s | %.1f | %s | %s |", nm, types[[nm]], missing_pct[[nm]], unique_n[[nm]], sample_val(data[[nm]])))
+}
+
+if (length(continuous) > 0) {
+  lines <- c(
+    lines,
+    "",
+    "## 连续变量摘要",
+    "",
+    "| 列名 | Min | Median | Max | SD |",
+    "| --- | ---: | ---: | ---: | ---: |"
+  )
+  for (nm in continuous) {
+    x <- data[[nm]]
+    x <- x[!is.na(x)]
+    lines <- c(lines, sprintf("| `%s` | %.2f | %.2f | %.2f | %.2f |", nm, min(x), median(x), max(x), sd(x)))
+  }
+}
+
+if (length(categorical) > 0) {
+  lines <- c(
+    lines,
+    "",
+    "## 分类变量频次",
+    "",
+    "| 列名 | 类别数 | 最常见类别 | 最罕见类别 |",
+    "| --- | ---: | --- | --- |"
+  )
+  for (nm in categorical) {
+    x <- data[[nm]]
+    x <- x[!is.na(x)]
+    tb <- sort(table(x), decreasing = TRUE)
+    lines <- c(lines, sprintf("| `%s` | %s | %s (%s) | %s (%s) |",
+      nm, length(tb),
+      names(tb)[1], tb[1],
+      names(tb)[length(tb)], tb[length(tb)]
+    ))
+  }
+}
+
+high_missing <- names(data)[missing_pct > 20]
+constant_cols <- names(data)[unique_n <= 1]
+suspected_id <- names(data)[unique_n == nrow(data) & types %in% c("text/id", "continuous")]
 
 lines <- c(
   lines,
   "",
-  "## Candidate Charts",
+  "## 数据质量提示",
+  "",
+  sprintf("- 高缺失列（>20%%）：%s", if (length(high_missing) > 0) paste(paste0("`", high_missing, "`（", sprintf("%.1f", missing_pct[high_missing]), "%%）"), collapse = "、") else "无"),
+  sprintf("- 常量列：%s", if (length(constant_cols) > 0) paste(paste0("`", constant_cols, "`"), collapse = "、") else "无"),
+  sprintf("- 疑似 ID 列：%s", if (length(suspected_id) > 0) paste(paste0("`", suspected_id, "`"), collapse = "、") else "无")
+)
+
+writeLines(lines, output_md)
+
+full_lines <- c(
+  lines,
+  "",
+  "## 候选图表",
   "",
   paste0("- ", unique(suggestions)),
   "",
-  "## Book Basis",
+  "## 参考依据",
   "",
   paste0("- ", unique(book_basis)),
   "",
-  "## Multi-panel Option",
+  "## 多面板图选项",
   "",
   paste0("- ", multi_panel_notes),
   "",
-  "## Chart Choice Menu",
+  "## 图表选择菜单",
   "",
   choice_menu,
   "",
-  "## Style Options",
+  "## 风格选项",
   "",
   "- 通用风格 general（默认）：来源于《统计图形艺术》的医学统计绘图规则。",
   "- Nature 风格 nature：适合 Nature-family / 高影响力期刊图，强调证据层级、低饱和统一色系、可编辑 SVG 和紧凑多面板布局。",
@@ -280,12 +341,13 @@ lines <- c(
   "请选择：图表方案 + 风格。",
   "如果只选择图表，我将默认使用通用风格。",
   "",
-  "## Stop Here",
+  "## 在此停止",
   "",
-  "Ask the user to choose one single-figure option or the multi-panel option, and ask for a style choice, before writing plotting code. General requests such as 'plot my data', 'draw figures', 'visualize it', '帮我画图', '给我的数据画图', '直接画', or '自动选择' do not authorize skipping this recommendation stage.",
+  "请用户选择一项单图方案或多面板图方案，并选择一种风格，然后再编写绘图代码。",
+  "像'画图'、'可视化数据'、'帮我画图'、'直接画'、'自动选择'这类通用请求，不构成跳过推荐阶段的授权。",
   "",
-  "Do not write or copy R plotting scripts, install plotting packages, export figures, validate figures, or choose a figure automatically until the user replies with a concrete chart choice. If the user chooses a chart but omits style, use `general`."
+  "在用户回复具体图表选择之前，不要编写或复制 R 绘图脚本、安装绘图包、导出图形、验证图形或自动选择图表。",
+  "如果用户选择了图表但未指定风格，使用 `general`。"
 )
 
-writeLines(lines, output_md)
-cat(paste(lines, collapse = "\n"), "\n")
+cat(paste(full_lines, collapse = "\n"), "\n")

@@ -49,7 +49,7 @@ save_web <- function(file, w, h, dpi_value) {
 
 web_width <- width
 web_height <- height
-web_dpi <- 144
+web_dpi <- 300
 save_web(web_file, web_width, web_height, web_dpi)
 
 limit <- 1024 * 1024

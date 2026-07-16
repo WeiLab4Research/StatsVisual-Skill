@@ -16,6 +16,8 @@ Use distribution plots to explain or compare theoretical distributions, empirica
 
 #### Normal Distribution
 
+![Normal Distribution](../assets/gallery/distribution/normal.png)
+
 **Applicable Data**
 
 - Theoretical normal distribution presentation task.
@@ -44,6 +46,8 @@ Use distribution plots to explain or compare theoretical distributions, empirica
 
 #### Log-normal Distribution
 
+![Log-normal Distribution](../assets/gallery/distribution/lognormal.png)
+
 **Applicable Data**
 
 - Theoretical lognormal distribution presentation task.
@@ -70,6 +74,8 @@ Use distribution plots to explain or compare theoretical distributions, empirica
 
 #### Multivariate Normal Distribution
 
+![Multivariate Normal Distribution](../assets/gallery/distribution/multivariate_normal.png)
+
 **Applicable Data**
 
 - Theoretical joint density presentation of bivariate or multivariate normal distributions.
@@ -92,7 +98,9 @@ Use distribution plots to explain or compare theoretical distributions, empirica
 ## Code Reference
 - Original development note: source example `Multivariate Normal Distribution.txt` is not included in the public skill.
 
-#### Student’s t Distribution
+#### Student's t Distribution
+
+![Student's t Distribution](../assets/gallery/distribution/t.png)
 
 **Applicable Data**
 
@@ -118,6 +126,8 @@ Use distribution plots to explain or compare theoretical distributions, empirica
 - Original development note: source example `Student’s t Distribution.txt` is not included in the public skill.
 
 #### F Distribution
+
+![F Distribution](../assets/gallery/distribution/f.png)
 
 **Applicable Data**
 
@@ -145,6 +155,8 @@ Use distribution plots to explain or compare theoretical distributions, empirica
 
 #### Chi-square Distribution
 
+![Chi-square Distribution](../assets/gallery/distribution/chi_square.png)
+
 **Applicable Data**
 
 - Theoretical chi-square distribution comparison task.
@@ -169,6 +181,8 @@ Use distribution plots to explain or compare theoretical distributions, empirica
 - Original development note: source example `Chi-square Distribution.txt` is not included in the public skill.
 
 #### Beta Distribution
+
+![Beta Distribution](../assets/gallery/distribution/beta.png)
 
 **Applicable Data**
 
@@ -195,6 +209,8 @@ Use distribution plots to explain or compare theoretical distributions, empirica
 
 #### Uniform Distribution
 
+![Uniform Distribution](../assets/gallery/distribution/uniform.png)
+
 **Applicable Data**
 
 - Demonstration of continuous uniform distribution theory.
@@ -219,6 +235,8 @@ Use distribution plots to explain or compare theoretical distributions, empirica
 - Original development note: source example `Uniform Distribution.txt` is not included in the public skill.
 
 #### Discrete Uniform Distribution
+
+![Discrete Uniform Distribution](../assets/gallery/distribution/discrete_uniform.png)
 
 **Applicable Data**
 
@@ -245,6 +263,8 @@ Use distribution plots to explain or compare theoretical distributions, empirica
 
 #### Gamma Distribution
 
+![Gamma Distribution](../assets/gallery/distribution/gamma.png)
+
 **Applicable Data**
 
 - Theoretical distribution of nonnegative continuous variables.
@@ -269,6 +289,8 @@ Use distribution plots to explain or compare theoretical distributions, empirica
 - Original development note: source example `Gamma Distribution.txt` is not included in the public skill.
 
 #### Exponential Distribution
+
+![Exponential Distribution](../assets/gallery/distribution/exponential.png)
 
 **Applicable Data**
 
@@ -295,6 +317,8 @@ Use distribution plots to explain or compare theoretical distributions, empirica
 
 #### Inverse Gamma Distribution
 
+![Inverse Gamma Distribution](../assets/gallery/distribution/inverse_gamma.png)
+
 **Applicable Data**
 
 - Display of the theoretical distribution of positive continuous variables.
@@ -319,6 +343,8 @@ Use distribution plots to explain or compare theoretical distributions, empirica
 - Original development note: source example `Inverse Gamma Distribution.txt` is not included in the public skill.
 
 #### Bernoulli Distribution
+
+![Bernoulli Distribution](../assets/gallery/distribution/bernoulli.png)
 
 **Applicable Data**
 
@@ -345,6 +371,8 @@ Use distribution plots to explain or compare theoretical distributions, empirica
 
 #### Binomial Distribution
 
+![Binomial Distribution](../assets/gallery/distribution/binomial.png)
+
 **Applicable Data**
 
 - A discrete count distribution with a fixed number of trials `n` and a single success probability `π`.
@@ -369,6 +397,8 @@ Use distribution plots to explain or compare theoretical distributions, empirica
 - Original development note: source example `Binomial Distribution.txt` is not included in the public skill.
 
 #### Poisson Distribution
+
+![Poisson Distribution](../assets/gallery/distribution/poisson.png)
 
 **Applicable Data**
 
@@ -395,6 +425,8 @@ Use distribution plots to explain or compare theoretical distributions, empirica
 
 #### Beta-binomial Distribution
 
+![Beta-binomial Distribution](../assets/gallery/distribution/beta_binomial.png)
+
 **Applicable Data**
 
 - Discrete count distribution, often used in binomial scenarios with overdispersion or as a conjugate extension of the binomial distribution.
@@ -419,6 +451,8 @@ Use distribution plots to explain or compare theoretical distributions, empirica
 - Original development note: source example `Beta-binomial Distribution.txt` is not included in the public skill.
 
 #### Multinomial Distribution
+
+![Multinomial Distribution](../assets/gallery/distribution/multinomial.png)
 
 **Applicable Data**
 
@@ -450,6 +484,8 @@ Use distribution plots to explain or compare theoretical distributions, empirica
 
 #### Geometric Distribution
 
+![Geometric Distribution](../assets/gallery/distribution/geometric.png)
+
 **Applicable Data**
 
 - A theoretical distribution of the discrete waiting time type, representing the number of failures experienced before the first success, or equivalently a discrete count of the number of trials required to achieve the first success.
@@ -476,6 +512,8 @@ Use distribution plots to explain or compare theoretical distributions, empirica
 
 #### Hypergeometric Distribution
 
+![Hypergeometric Distribution](../assets/gallery/distribution/hypergeometric.png)
+
 **Applicable Data**
 
 - Discrete count distributions sampled from a finite population without replacement.
@@ -501,6 +539,8 @@ Use distribution plots to explain or compare theoretical distributions, empirica
 
 #### Negative Binomial Distribution
 
+![Negative Binomial Distribution](../assets/gallery/distribution/negative_binomial.png)
+
 **Applicable Data**
 
 - Discrete count theory distribution.
@@ -525,6 +565,8 @@ Use distribution plots to explain or compare theoretical distributions, empirica
 - Original development note: source example `Negative Binomial Distribution.txt` is not included in the public skill.
 
 #### Dirichlet Distribution
+
+![Dirichlet Distribution](../assets/gallery/distribution/dirichlet.png)
 
 **Applicable Data**
 
@@ -557,6 +599,8 @@ Use distribution plots to explain or compare theoretical distributions, empirica
 
 #### Cauchy Distribution
 
+![Cauchy Distribution](../assets/gallery/distribution/cauchy.png)
+
 **Applicable Data**
 
 - Demonstration of theoretical continuous distributions.
@@ -581,6 +625,8 @@ Use distribution plots to explain or compare theoretical distributions, empirica
 - Original development note: source example `Cauchy Distribution.txt` is not included in the public skill.
 
 #### Weibull Distribution
+
+![Weibull Distribution](../assets/gallery/distribution/weibull.png)
 
 **Applicable Data**
 
@@ -607,6 +653,8 @@ Use distribution plots to explain or compare theoretical distributions, empirica
 - Original development note: source example `Weibull Distribution.txt` is not included in the public skill.
 
 #### Logistic Distribution
+
+![Logistic Distribution](../assets/gallery/distribution/logistic.png)
 
 **Applicable Data**
 
@@ -636,4 +684,3 @@ Use distribution plots to explain or compare theoretical distributions, empirica
 - Label parameters clearly.
 - Do not mix density, probability, and cumulative probability without clear y-axis labels.
 - Use facets when overlays become hard to read.
-

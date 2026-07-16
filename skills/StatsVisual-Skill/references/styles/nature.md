@@ -35,16 +35,7 @@ Recommended order for discrete groups:
 - Attach dependent elements to their parent panel: risk tables, scale bars, inset labels, legend strips, and color bars should not receive separate panel labels unless they are scientific panels.
 - Use asymmetric layouts when one result is primary. Avoid equal tiled grids unless the panels have equal evidential weight.
 
-## Kaplan-Meier Curve Rules
-
-- Place a number-at-risk table directly below every KM curve.
-- Align each number-at-risk value to the center of the corresponding x-axis tick/time point.
-- Right-align and bold the `Number at risk` label and the risk-table group names.
-- Use black risk-table text by default unless colour has a stated encoding purpose.
-
 ## Forest Plot Rules
-
-Reference image: `references/styles/examples/nature-forest-plot.png`. Use it only as a visual reference; do not copy its data, labels, or exact column order blindly.
 
 - Use a forest plot only when effect estimates and uncertainty intervals are present or can be computed from a declared model.
 - Keep Nature-style forest plots compact, column-aligned, and evidence-first; avoid oversized titles or explanatory text inside the plot.

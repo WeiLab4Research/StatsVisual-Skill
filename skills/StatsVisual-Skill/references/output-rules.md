@@ -48,7 +48,7 @@ ggplot2::ggsave(
   width = 6,
   height = 4.2,
   units = "in",
-  dpi = 160,
+  dpi = 300,
   bg = "white"
 )
 ```
@@ -112,3 +112,36 @@ Some objects are not ordinary ggplot objects:
 - Color encodings match legends and remain interpretable in grayscale.
 - Statistical annotations match the model/test actually used.
 
+## Figure Explanation
+
+After figures are exported and validated, write `output/figure_explanation.md` with the following content. 该文件记录所生成图形的统计和可视化原理，用于可复现性和同行评审。
+
+### 内容模板
+
+```markdown
+# 图形说明
+
+## 图形标识
+- 图形名称 
+- 图表类型
+- 风格（general / nature / lancet / nejm / jama / bmj）
+
+## 统计摘要
+- 变量角色（结局 / 预测变量 / 分组 / 分层）
+- 样本量（总 N，各组 N）
+- 效应估计值（HR / OR / beta / MD + 95% CI）
+- P 值或显著性阈值
+- 使用的模型或检验（Cox / log-rank / 线性回归 / 等）
+
+## 视觉编码
+- 各轴代表的含义（如单位、是否做了变换）
+- 颜色 / 形状 / 线型编码的内容
+- 图例解读
+
+## 解读说明
+- 图表核心结论
+- 关键比较或趋势
+- 注意事项 / 局限性
+```
+
+说明内容必须写入对话回复并保存到 `output/figure_explanation.md`。

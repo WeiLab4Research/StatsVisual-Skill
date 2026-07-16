@@ -14,7 +14,9 @@ Use Cleveland dot plots for ranked category-level estimates, rates, means, model
 
 ## Core Mapping Logic
 
-### Cleveland’s Dot Plot
+### Cleveland's Dot Plot
+
+![Cleveland's Dot Plot](../assets/gallery/dot/cleveland.png)
 
 **Applicable Data**
 
@@ -40,6 +42,8 @@ Use Cleveland dot plots for ranked category-level estimates, rates, means, model
 
 ### Lollipop Plot
 
+![Lollipop Plot](../assets/gallery/dot/lollipop.png)
+
 **Applicable Data**
 
 - Same as a regular point plot, but with additional emphasis on the distance "from baseline to value point".
@@ -63,6 +67,8 @@ Use Cleveland dot plots for ranked category-level estimates, rates, means, model
 - Unless specifically requested, do not add subtitles or explanatory text outside the plot.
 
 ### Lollipop Plot with Interaction Effect
+
+![Lollipop Plot with Interaction Effect](../assets/gallery/dot/interaction_lollipop.png)
 
 **Applicable Data**
 
@@ -92,6 +98,8 @@ Use Cleveland dot plots for ranked category-level estimates, rates, means, model
 
 ### Dumbbell Plot
 
+![Dumbbell Plot](../assets/gallery/dot/dumbbell.png)
+
 **Applicable Data**
 
 - The same subject has two comparable values, such as before and after adjustment, before and after treatment, male and female, experimental group and control group.
@@ -114,6 +122,8 @@ Use Cleveland dot plots for ranked category-level estimates, rates, means, model
 - Unless specifically requested, do not add subtitles or explanatory text outside the plot.
 
 ### Stratified Dot Plot
+
+![Stratified Dot Plot](../assets/gallery/dot/stratified.png)
 
 **Applicable Data**
 
@@ -167,6 +177,8 @@ Use Cleveland dot plots for ranked category-level estimates, rates, means, model
 
 #### Manhattan Plot
 
+![Manhattan Plot](../assets/gallery/dot/manhattan.png)
+
 **Applicable Data**
 
 - GWAS or other omics association analysis results.
@@ -190,6 +202,8 @@ Use Cleveland dot plots for ranked category-level estimates, rates, means, model
 - code reference:source script `\StatsVisual-Skill\assets\templates\Manhattan Plot.R`
 
 #### Epidemic Trend Dot Plot
+
+![Epidemic Trend Dot Plot](../assets/gallery/dot/epidemic_trend.png)
 
 **Applicable Data**
 
@@ -227,4 +241,3 @@ Use Cleveland dot plots for ranked category-level estimates, rates, means, model
 - Use a reference line for effect estimates.
 - Keep long labels readable with horizontal layout.
 - Include CI/uncertainty when showing model estimates.
-

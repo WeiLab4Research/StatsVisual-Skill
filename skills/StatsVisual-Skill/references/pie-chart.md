@@ -18,6 +18,8 @@ Prefer bar charts, Cleveland dot plots, or stacked bars when categories are nume
 
 ### Pie Plot
 
+![Pie Plot](../assets/gallery/pie/pie.png)
+
 **Applicable Data**
 
 - Aggregated multi-category constituent data.
@@ -70,6 +72,8 @@ Prefer bar charts, Cleveland dot plots, or stacked bars when categories are nume
 
 ### Doughnut Plot
 
+![Doughnut Plot](../assets/gallery/pie/doughnut.png)
+
 **Applicable Data**
 
 - Like a regular pie chart, the data is summarized.
@@ -96,6 +100,8 @@ Prefer bar charts, Cleveland dot plots, or stacked bars when categories are nume
 - Unless specifically requested, do not add subtitles or explanatory text outside the plot.
 
 ### Pie Plot with Exploded Slice
+
+![Pie Plot with Exploded Slice](../assets/gallery/pie/exploded_slice.png)
 
 **Applicable Data**
 
@@ -124,6 +130,8 @@ Prefer bar charts, Cleveland dot plots, or stacked bars when categories are nume
 
 ### Exploding Pie Plot
 
+![Exploding Pie Plot](../assets/gallery/pie/exploding.png)
+
 **Applicable Data**
 
 - The constituent data have been summarized.
@@ -148,6 +156,8 @@ Prefer bar charts, Cleveland dot plots, or stacked bars when categories are nume
 - Unless specifically requested, do not add subtitles or explanatory text outside the plot.
 
 ### Nightingale Rose Chart
+
+![Nightingale Rose Chart](../assets/gallery/pie/rose.png)
 
 **Applicable Data**
 
@@ -202,6 +212,8 @@ Prefer bar charts, Cleveland dot plots, or stacked bars when categories are nume
 
 ### Nested Pie Plot
 
+![Nested Pie Plot](../assets/gallery/pie/nested.png)
+
 **Applicable Data**
 
 - Hierarchical structure data.
@@ -253,6 +265,8 @@ Prefer bar charts, Cleveland dot plots, or stacked bars when categories are nume
 
 ### Fourfold Plot
 
+![Fourfold Plot](../assets/gallery/pie/fourfold.png)
+
 **Applicable Data**
 
 - `2 × 2` contingency table, or `2 × 2 × k` hierarchical contingency table.
@@ -284,4 +298,3 @@ Prefer bar charts, Cleveland dot plots, or stacked bars when categories are nume
 - Keep categories few, usually no more than 5-6.
 - Report percentages and counts in caption or labels.
 - Avoid 3D pies, exploded slices, gradients, and excessive colors.
-

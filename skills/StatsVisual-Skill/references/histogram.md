@@ -16,6 +16,8 @@ Use histograms for one continuous variable to inspect distribution shape, skewne
 
 ### Basic Histogram
 
+![Basic Histogram](../assets/gallery/histogram/basic_histogram.png)
+
 **Applicable Data**
 
 - Raw observational data for a single continuous variable.
@@ -40,6 +42,8 @@ Use histograms for one continuous variable to inspect distribution shape, skewne
 
 ### Histogram with Different Bin Width
 
+![Histogram with Different Bin Width](../assets/gallery/histogram/bin_width.png)
+
 **Applicable Data**
 
 - Same as regular histogram, raw data for a single continuous variable.
@@ -62,6 +66,8 @@ Use histograms for one continuous variable to inspect distribution shape, skewne
 - Unless specifically requested, do not add subtitles or explanatory text outside the plot.
 
 ### Gradient-colored Histogram
+
+![Gradient-colored Histogram](../assets/gallery/histogram/colored.png)
 
 **Applicable Data**
 
@@ -86,6 +92,8 @@ Use histograms for one continuous variable to inspect distribution shape, skewne
 - Unless specifically requested, do not add subtitles or explanatory text outside the plot.
 
 ### Grouped Histogram
+
+![Grouped Histogram](../assets/gallery/histogram/grouped.png)
 
 **Applicable Data**
 
@@ -116,6 +124,8 @@ Use histograms for one continuous variable to inspect distribution shape, skewne
 
 ### Symmetric Histogram
 
+![Symmetric Histogram](../assets/gallery/histogram/mirrored.png)
+
 **Applicable Data**
 
 - Compare the distribution of the same continuous variable in two large groups.
@@ -143,6 +153,8 @@ Use histograms for one continuous variable to inspect distribution shape, skewne
 
 ### Stacked Histogram
 
+![Stacked Histogram](../assets/gallery/histogram/stacked.png)
+
 **Applicable Data**
 
 - Data on a continuous-time or ordinal variable that has been summarized into a total with multiple components at each point in time.
@@ -167,6 +179,8 @@ Use histograms for one continuous variable to inspect distribution shape, skewne
 
 ### Population Pyramid
 
+![Population Pyramid](../assets/gallery/histogram/pyramid.png)
+
 **Applicable Data**
 
 - Age Group × Gender × Population Number or Proportion Data.
@@ -190,6 +204,8 @@ Use histograms for one continuous variable to inspect distribution shape, skewne
 - Unless specifically requested, do not add subtitles or explanatory text outside the plot.
 
 ### Ridgeline Plot
+
+![Ridgeline Plot](../assets/gallery/histogram/ridgeline.png)
 
 **Applicable Data**
 
@@ -217,6 +233,8 @@ Use histograms for one continuous variable to inspect distribution shape, skewne
 
 ### Epidemic Ridgeline Plot
 
+![Epidemic Ridgeline Plot](../assets/gallery/histogram/epidemic_ridgeline.png)
+
 **Applicable Data**
 
 - Multi-region/multi-event time series height data.
@@ -243,6 +261,8 @@ Use histograms for one continuous variable to inspect distribution shape, skewne
 - code reference:source script `\StatsVisual-Skill\assets\templates\Epidemic Ridgeline Plot.R`
 
 ### Spiral Histogram
+
+![Spiral Histogram](../assets/gallery/histogram/spiral.png)
 
 **Applicable Data**
 
@@ -275,4 +295,3 @@ Use histograms for one continuous variable to inspect distribution shape, skewne
 - Use density scaling when overlaying density curves.
 - Avoid histograms for very small samples; use dot/box/rug alternatives.
 - For grouped histograms, facet or use transparency carefully.
-

@@ -32,6 +32,7 @@ Treat overlap and layout as publication-readability issues, not cosmetic prefere
 - Multi-panel figures keep panel labels, shared encodings, and legends consistent.
 - Multi-panel layouts look intentional: panel sizes, spacing, alignment, and shared legends should support the figure's message.
 - Every statistical panel states or implies sample size, interval definition, and model/test source.
+- No figure captions, explanatory text, or inline annotations appear inside the figure panel.
 - SVG/PDF text should remain editable when feasible.
 
 ## Required QA Loop
@@ -45,7 +46,7 @@ Rscript scripts/validate_figure_readability.R <plot_rds> <project_dir>/figures <
 
 If readability validation reports `FAIL`, revise the plot code and export again. Do not deliver a failed figure as publication-ready output.
 
-If warnings remain after a reasonable revision, mention them in the final reply and in `output/figure_qa.md`.
+If warnings remain after a reasonable revision, mention them in the final reply.
 
 ## Visual Review
 

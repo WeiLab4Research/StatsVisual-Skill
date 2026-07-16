@@ -17,6 +17,8 @@ Use scatter plots for two continuous variables to show association, clusters, no
 
 ### Scatter Plot
 
+![Scatter Plot](../assets/gallery/scatter/scatter.png)
+
 **Applicable Data**
 
 - Relational data between two continuous variables.
@@ -39,6 +41,8 @@ Use scatter plots for two continuous variables to show association, clusters, no
 - Unless specifically requested, do not add subtitles or explanatory text outside the plot.
 
 ### Scatterplot Matrix
+
+![Scatterplot Matrix](../assets/gallery/scatter/matrix.png)
 
 **Applicable Data**
 
@@ -64,6 +68,8 @@ Use scatter plots for two continuous variables to show association, clusters, no
 
 ### Scatter Plot with Marginal Distribution
 
+![Scatter Plot with Marginal Distribution](../assets/gallery/scatter/marginal.png)
+
 **Applicable Data**
 
 - Two continuous variables, and their joint relationship and respective marginal distributions need to be shown simultaneously.
@@ -87,6 +93,8 @@ Use scatter plots for two continuous variables to show association, clusters, no
 - Unless specifically requested, do not add subtitles or explanatory text outside the plot.
 
 ### Scatter Plot with Smooth Curve
+
+![Scatter Plot with Smooth Curve](../assets/gallery/scatter/smooth.png)
 
 **Applicable Data**
 
@@ -114,6 +122,8 @@ Use scatter plots for two continuous variables to show association, clusters, no
 
 ### Smooth Scatter Plot
 
+![Smooth Scatter Plot](../assets/gallery/scatter/smooth_scatter.png)
+
 **Applicable Data**
 
 - Extremely high-density bicontinuous variable data, with serious overlapping of conventional scatter plot points.
@@ -136,6 +146,8 @@ Use scatter plots for two continuous variables to show association, clusters, no
 - Unless specifically requested, do not add subtitles or explanatory text outside the plot.
 
 ### Sunflower Plot
+
+![Sunflower Plot](../assets/gallery/scatter/sunflower.png)
 
 **Applicable Data**
 
@@ -160,6 +172,8 @@ Use scatter plots for two continuous variables to show association, clusters, no
 - Unless specifically requested, do not add subtitles or explanatory text outside the plot.
 
 ### Bubble Plot
+
+![Bubble Plot](../assets/gallery/scatter/bubble.png)
 
 **Applicable Data**
 
@@ -186,6 +200,8 @@ Use scatter plots for two continuous variables to show association, clusters, no
 - code reference:source script `\StatsVisual-Skill\assets\templates\Bubble Plot.R`
 
 ### Volcano Plot
+
+![Volcano Plot](../assets/gallery/scatter/volcano.png)
 
 **Applicable Data**
 
@@ -224,4 +240,3 @@ Gray/black dots: genes that do not meet either threshold (change is small or not
 - Map bubble size to area, not radius, when using bubble plots.
 - Use alpha or density methods for overplotting.
 - Include raw points when adding trend/model lines.
-

@@ -21,6 +21,8 @@ Use survival curves when both event occurrence and time to event matter. Require
 
 ### Kaplan–Meier Survival Plot
 
+![Kaplan–Meier Survival Plot](../assets/gallery/survival/km.png)
+
 **Applicable Data**
 
 - time-to-event raw data.
@@ -50,6 +52,8 @@ Use survival curves when both event occurrence and time to event matter. Require
 
 ### Truncated Survival Plot
 
+![Truncated Survival Plot](../assets/gallery/survival/truncated.png)
+
 **Applicable Data**
 
 - Same as conventional survival curve.
@@ -74,6 +78,8 @@ Use survival curves when both event occurrence and time to event matter. Require
 
 ### Median Survival Reference Plot
 
+![Median Survival Reference Plot](../assets/gallery/survival/median.png)
+
 **Applicable Data**
 
 - General KM curve object.
@@ -95,6 +101,8 @@ Use survival curves when both event occurrence and time to event matter. Require
 - Unless specifically requested, do not add subtitles or explanatory text outside the plot.
 
 ### Survival Plot with Confidence Band
+
+![Survival Plot with Confidence Band](../assets/gallery/survival/band.png)
 
 **Applicable Data**
 
@@ -119,6 +127,8 @@ Use survival curves when both event occurrence and time to event matter. Require
 
 ### Cumulative Hazard Plot
 
+![Cumulative Hazard Plot](../assets/gallery/survival/cumulative_hazard.png)
+
 **Applicable Data**
 
 - General survival fitting object.
@@ -140,6 +150,8 @@ Use survival curves when both event occurrence and time to event matter. Require
 - Unless specifically requested, do not add subtitles or explanatory text outside the plot.
 
 ### Survival Plot with Risk Table
+
+![Survival Plot with Risk Table](../assets/gallery/survival/risk_table.png)
 
 **Applicable Data**
 
@@ -188,6 +200,8 @@ Use survival curves when both event occurrence and time to event matter. Require
 
 ### Survival Curve Comparison Methods Plot
 
+![Survival Curve Comparison Methods Plot](../assets/gallery/survival/comparison.png)
+
 **Applicable Data**
 
 - Two or more groups of survival curve fitting objects.
@@ -213,6 +227,8 @@ Use survival curves when both event occurrence and time to event matter. Require
 
 ### Integrated Survival-and-Comparison Plot
 
+![Integrated Survival-and-Comparison Plot](../assets/gallery/survival/joint.png)
+
 **Applicable Data**
 
 - There are both standard survival curves, risk number tables and multi-method comparison results.
@@ -236,6 +252,8 @@ Use survival curves when both event occurrence and time to event matter. Require
 - Unless specifically requested, do not add subtitles or explanatory text outside the plot.
 
 ### Schoenfeld Residual Plot
+
+![Schoenfeld Residual Plot](../assets/gallery/survival/ph_assumption.png)
 
 **Applicable Data**
 
@@ -263,6 +281,8 @@ Use survival curves when both event occurrence and time to event matter. Require
 
 ### Cox Deviance Residual Plot
 
+![Cox Deviance Residual Plot](../assets/gallery/survival/outlier.png)
+
 **Applicable Data**
 
 - Fitted Cox model object.
@@ -283,6 +303,8 @@ Use survival curves when both event occurrence and time to event matter. Require
 - If users need to identify impact points, they can further use extended diagnosis such as `type = "dfbeta"`.
 
 ### Adjusted Survival Curve
+
+![Adjusted Survival Curve](../assets/gallery/survival/adjusted.png)
 
 **Applicable Data**
 
@@ -319,4 +341,3 @@ Use survival curves when both event occurrence and time to event matter. Require
 - Provide number at risk at clinically meaningful time points.
 - Use log-rank tests for unadjusted group comparison; use Cox model for adjusted effects.
 - Check proportional-hazards assumption when reporting Cox hazard ratios.
-

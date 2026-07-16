@@ -41,13 +41,8 @@ Use blue for a primary intervention or highlighted treatment, orange for a secon
 - Use black risk-table text by default unless colour has a stated encoding purpose.
 - Place hazard ratio, confidence interval, and P value inside the plotting region or in a closely attached right-side summary block.
 - Use direct curve labels near the right side when possible.
-- Show censor marks when they are part of the survival evidence.
-- Keep axes strong and simple; avoid background grid lines.
-- For small multiples of clinical endpoints, align axis ranges and ticks when the endpoints are comparable.
 
 ## Forest Plot Rules
-
-Reference image: `references/styles/examples/nejm-forest-plot.png`. Use it only as a visual reference; do not copy its data, labels, or exact column order blindly.
 
 - Use a forest plot only when each row has an effect estimate and uncertainty interval, or when they can be computed from a declared model.
 - Prefer an integrated table-and-forest layout on one shared row coordinate system.

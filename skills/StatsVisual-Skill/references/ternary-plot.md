@@ -8,6 +8,8 @@ Use ternary plots for three-part compositions where the components are non-negat
 
 ### Basic Ternary Plot
 
+![Basic Ternary Plot](../assets/gallery/ternary/basic_ternary.png)
+
 **Applicable Data**
 
 - Three component variables, and the sum of the three for each observation is 1 or 100.
@@ -35,6 +37,8 @@ Use ternary plots for three-part compositions where the components are non-negat
 - Unless specifically requested, do not add subtitles or explanatory text outside the plot.
 
 ### Confidence Ternary Plot
+
+![Confidence Ternary Plot](../assets/gallery/ternary/interval.png)
 
 **Applicable Data**
 
@@ -65,6 +69,8 @@ Use ternary plots for three-part compositions where the components are non-negat
 
 ### Density Ternary Plot
 
+![Density Ternary Plot](../assets/gallery/ternary/density.png)
+
 **Applicable Data**
 
 - Data where the sum of the three components is a constant.
@@ -91,6 +97,8 @@ Use ternary plots for three-part compositions where the components are non-negat
 - Unless specifically requested, do not add subtitles or explanatory text outside the plot.
 
 ### Interpolated Ternary Plot
+
+![Interpolated Ternary Plot](../assets/gallery/ternary/interpolation.png)
 
 **Applicable Data**
 
@@ -127,4 +135,3 @@ Use ternary plots for three-part compositions where the components are non-negat
 - Verify components sum to a constant after missing-value handling.
 - Normalize only if normalization is scientifically valid.
 - Avoid ternary plots for audiences that need exact numeric reading; provide a table or alternative dot plot when needed.
-

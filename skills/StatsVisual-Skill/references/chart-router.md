@@ -73,7 +73,7 @@ Panels: A: boxplot + raw points; B: mean difference with 95% CI.
 Support logic: Panel A shows data distribution; Panel B provides the manuscript-ready effect estimate.
 Use when: the manuscript needs both distribution and effect-size evidence.
 Limitation: this requires a defensible CI/test definition and enough observations per group.
-Expected outputs: PDF, SVG, 700 dpi TIFF, web PNG, rationale, session info.
+Expected outputs: PDF, SVG, 700 dpi TIFF, web PNG.
 
 Style options:
 - 通用风格 general（默认）：来源于《统计图形艺术》的医学统计绘图规则。

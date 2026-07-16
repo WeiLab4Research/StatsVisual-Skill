@@ -1,5 +1,5 @@
 interface:
-  display_name: "R Medical Graphics"
+  display_name: "StatsVisual-Skill"
   short_description: "Publication-ready medical R figures."
   icon_small: "./assets/brand/r-medical-graphics-mark.svg"
   icon_large: "./assets/brand/r-medical-graphics-logo.svg"

@@ -20,6 +20,8 @@ Do not use bars for arbitrary raw continuous observations when the distribution 
 
 ### Basic Bar Plot
 
+![Basic Bar Plot](../assets/gallery/bar/basic_bar.png)
+
 **Applicable Data**
 
 - Aggregated data
@@ -44,6 +46,8 @@ Do not use bars for arbitrary raw continuous observations when the distribution 
 ---
 
 ### Stacked Bar Plot
+
+![Stacked Bar Plot](../assets/gallery/bar/stacked_bar.png)
 
 **Applicable Data**
 
@@ -74,6 +78,8 @@ Do not use bars for arbitrary raw continuous observations when the distribution 
 
 ### Stratified Bar Plot
 
+![Stratified Bar Plot](../assets/gallery/bar/grouped_bar.png)
+
 **Applicable Data**
 
 - Aggregated data
@@ -100,6 +106,8 @@ Do not use bars for arbitrary raw continuous observations when the distribution 
 ---
 
 ### Bar Plot with Error Bars
+
+![Bar Plot with Error Bars](../assets/gallery/bar/error_bar.png)
 
 **Applicable Data**
 
@@ -132,6 +140,8 @@ Do not use bars for arbitrary raw continuous observations when the distribution 
 
 ### Waterfall Plot
 
+![Waterfall Plot](../assets/gallery/bar/waterfall_bar.png)
+
 **Applicable Data**
 
 - individual level data
@@ -159,6 +169,8 @@ Do not use bars for arbitrary raw continuous observations when the distribution 
 ---
 
 ### Polar Bar Plot
+
+![Polar Bar Plot](../assets/gallery/bar/polar_bar.png)
 
 **Applicable Data**
 
@@ -193,4 +205,3 @@ Do not use bars for arbitrary raw continuous observations when the distribution 
 - Sort categories intentionally: clinical order, dose order, effect size, or frequency.
 - Avoid stacked bars when exact subgroup comparison is the main task.
 - Use direct percentage labels only when they do not clutter the plot.
-

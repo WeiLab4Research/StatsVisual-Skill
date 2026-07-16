@@ -18,6 +18,8 @@ Use heatmaps for numeric matrices, correlation matrices, omics abundance matrice
 
 ### Basic Heatmap
 
+![Basic Heatmap](../assets/gallery/heatmap/basic_heatmap.png)
+
 **Applicable Data**
 
 - Matrix data in the form of a two-dimensional matrix or long table.
@@ -70,6 +72,8 @@ Use heatmaps for numeric matrices, correlation matrices, omics abundance matrice
 
 ### Clustered Heatmap
 
+![Clustered Heatmap](../assets/gallery/heatmap/clustered.png)
+
 **Applicable Data**
 
 - Square or near square matrix data.
@@ -93,6 +97,8 @@ Use heatmaps for numeric matrices, correlation matrices, omics abundance matrice
 - Unless specifically requested, do not add subtitles or explanatory text outside the plot.
 
 ### Contour Line Plot
+
+![Contour Line Plot](../assets/gallery/heatmap/contour_line.png)
 
 **Applicable Data**
 
@@ -121,6 +127,8 @@ Use heatmaps for numeric matrices, correlation matrices, omics abundance matrice
 
 ### Contour with Filled Areas
 
+![Contour with Filled Areas](../assets/gallery/heatmap/filled_contour.png)
+
 **Applicable Data**
 
 - Same as contour plots, suitable for density or intensity distributions of two-dimensional continuous variables.
@@ -147,6 +155,8 @@ Use heatmaps for numeric matrices, correlation matrices, omics abundance matrice
 - code reference:source script `\StatsVisual-Skill\assets\templates\Contour with Filled Areas.R`
 
 ### Sankey Plot
+
+![Sankey Plot](../assets/gallery/heatmap/sankey.png)
 
 **Applicable Data**
 
@@ -175,6 +185,8 @@ Use heatmaps for numeric matrices, correlation matrices, omics abundance matrice
 
 ### Venn Plot
 
+![Venn Plot](../assets/gallery/heatmap/venn.png)
+
 **Applicable Data**
 
 - Show the intersection relationship of a small number of sets (usually <=5 groups).
@@ -202,6 +214,8 @@ Use heatmaps for numeric matrices, correlation matrices, omics abundance matrice
 
 ### UpSet Plot
 
+![UpSet Plot](../assets/gallery/heatmap/upset.png)
+
 **Applicable Data**
 
 - Display of intersection relationships for multiple sets (usually > 5 sets).
@@ -227,6 +241,8 @@ Use heatmaps for numeric matrices, correlation matrices, omics abundance matrice
 - code reference:source script `\StatsVisual-Skill\assets\templates\UpSet Plot.R`
 
 ### Calendar Chart
+
+![Calendar Chart](../assets/gallery/heatmap/calendar.png)
 
 **Applicable Data**
 
@@ -261,4 +277,3 @@ Use heatmaps for numeric matrices, correlation matrices, omics abundance matrice
 - Use perceptually ordered palettes; avoid rainbow.
 - Keep dendrograms only when clustering is meaningful.
 - Avoid tiny unreadable labels; filter, group, or annotate selected features.
-

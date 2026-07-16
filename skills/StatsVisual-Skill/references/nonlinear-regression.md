@@ -18,6 +18,8 @@ Use nonlinear regression graphics when scatter or theory suggests a nonlinear re
 
 ### Polynomial Regression Plot
 
+![Polynomial Regression Plot](../assets/gallery/nonlinear_regression/polynomial.png)
+
 **Applicable Data**
 
 - One continuous independent variable and one continuous dependent variable.
@@ -64,6 +66,8 @@ Use nonlinear regression graphics when scatter or theory suggests a nonlinear re
 
 ### Convex–Concave Curve Regression Plot
 
+![Convex–Concave Curve Regression Plot](../assets/gallery/nonlinear_regression/convex_concave.png)
+
 **Applicable Data**
 
 - One continuous independent variable and one continuous dependent variable.
@@ -93,6 +97,8 @@ Use nonlinear regression graphics when scatter or theory suggests a nonlinear re
 
 ### Sigmoid Curve Regression Plot
 
+![Sigmoid Curve Regression Plot](../assets/gallery/nonlinear_regression/sigmoid.png)
+
 **Applicable Data**
 
 - One continuous independent variable and one continuous dependent variable.
@@ -118,6 +124,8 @@ Use nonlinear regression graphics when scatter or theory suggests a nonlinear re
 - Unless specifically requested, do not add subtitles or explanatory text outside the plot.
 
 ### Quantile Regression Plot
+
+![Quantile Regression Plot](../assets/gallery/nonlinear_regression/quantile.png)
 
 **Applicable Data**
 
@@ -200,4 +208,3 @@ Use nonlinear regression graphics when scatter or theory suggests a nonlinear re
 - Report transformation and parameter interpretation.
 - Guard against overfitting, especially with high-degree polynomials.
 - Check convergence and sensitivity to starting values for NLS.
-

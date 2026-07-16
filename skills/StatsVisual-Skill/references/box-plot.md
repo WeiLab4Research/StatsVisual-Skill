@@ -17,6 +17,8 @@ Use box plots to compare continuous distributions across groups. The box summari
 
 ### Box Plot
 
+![Box Plot](../assets/gallery/box/box.png)
+
 **Applicable Data**
 
 - The population distribution of a single continuous variable.
@@ -40,6 +42,8 @@ Use box plots to compare continuous distributions across groups. The box summari
 - Unless specifically requested, do not add subtitles or explanatory text outside the plot.
 
 ### Stratified Box Plot
+
+![Stratified Box Plot](../assets/gallery/box/stratified.png)
 
 **Applicable Data**
 
@@ -66,6 +70,8 @@ Use box plots to compare continuous distributions across groups. The box summari
 
 ### Notched Box Plot
 
+![Notched Box Plot](../assets/gallery/box/notched.png)
+
 **Applicable Data**
 
 - Continuous variable data need to be compared between different group medians and their uncertainties.
@@ -90,6 +96,10 @@ Use box plots to compare continuous distributions across groups. The box summari
 - code reference:source script `\StatsVisual-Skill\assets\templates\Notched Box Plot.R`
 
 ### Boxenplot(enhanced box plot)
+
+![Boxenplot (enhanced box plot)](../assets/gallery/box/enhanced.png)
+
+![Boxenplot (LV plot)](../assets/gallery/box/lvplot.png)
 
 **Applicable Data**
 
@@ -143,6 +153,8 @@ Use box plots to compare continuous distributions across groups. The box summari
 
 ### Violin Plot
 
+![Violin Plot](../assets/gallery/box/violin.png)
+
 **Applicable Data**
 
 - Comparison of distributions of continuous variables across multiple groups.
@@ -167,6 +179,8 @@ Use box plots to compare continuous distributions across groups. The box summari
 - Unless specifically requested, do not add subtitles or explanatory text outside the plot.
 
 ### Beeswarm Plot
+
+![Beeswarm Plot](../assets/gallery/box/beeswarm.png)
 
 **Applicable Data**
 
@@ -194,6 +208,8 @@ Use box plots to compare continuous distributions across groups. The box summari
 
 ### Pirate Plot
 
+![Pirate Plot](../assets/gallery/box/pirate.png)
+
 **Applicable Data**
 
 - I hope to display the distribution shape, original point and central trend in one picture.
@@ -219,6 +235,8 @@ Use box plots to compare continuous distributions across groups. The box summari
 - code reference:source script `\StatsVisual-Skill\assets\templates\Pirate Plot.R`
 
 ### Raincloud Plot
+
+![Raincloud Plot](../assets/gallery/box/raincloud.png)
 
 **Applicable Data**
 
@@ -246,6 +264,8 @@ Use box plots to compare continuous distributions across groups. The box summari
 - code reference:source script `\StatsVisual-Skill\assets\templates\Raincloud Plot.R`
 
 ### Grouped Raincloud Plot
+
+![Grouped Raincloud Plot](../assets/gallery/box/stacked_raincloud.png)
 
 **Applicable Data**
 
@@ -276,4 +296,3 @@ Use box plots to compare continuous distributions across groups. The box summari
 - Do not hide raw data for small samples.
 - For skewed data, consider log scale, median/IQR, or robust summaries.
 - Avoid interpreting box width as sample size unless intentionally encoded.
-

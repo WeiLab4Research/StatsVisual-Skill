@@ -52,12 +52,9 @@ For filled bars, boxes, and areas, prefer the lighter colours in the sequence an
 
 - Place a number-at-risk table directly below every KM curve.
 - Align each number-at-risk value to the center of the corresponding x-axis tick/time point.
-- Right-align and bold the `Number at risk` label and the risk-table group names.
 - Use black risk-table text by default unless colour has a stated encoding purpose.
 
 ## Lancet Forest Plot Rules
-
-Reference image: `references/styles/examples/lancet-forest-plot.png`. Use it only as a visual reference; do not copy its data, labels, or exact column order blindly.
 
 - Use a forest plot only when each row has an effect estimate and uncertainty interval, or when they can be computed from a declared model.
 - For Lancet-style forest plots, the forest axis must be embedded as a table column, not rendered as a detached side-by-side plot, unless the user explicitly requests a separated layout.

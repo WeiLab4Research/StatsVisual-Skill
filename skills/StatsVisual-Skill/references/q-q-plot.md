@@ -8,6 +8,8 @@ Use Q-Q plots to compare sample quantiles with a theoretical distribution, most 
 
 ### Theoretical QQ Plot
 
+![Theoretical QQ Plot](../assets/gallery/qq/qq.png)
+
 **Applicable Data**
 
 - A single continuous variable sample.
@@ -77,6 +79,8 @@ Use Q-Q plots to compare sample quantiles with a theoretical distribution, most 
 
 ### Probability–Probability Plot
 
+![Probability–Probability Plot](../assets/gallery/qq/pp.png)
+
 **Applicable Data**
 
 - A single continuous variable sample.
@@ -100,6 +104,8 @@ Use Q-Q plots to compare sample quantiles with a theoretical distribution, most 
 
 ### Symmetry Plot
 
+![Symmetry Plot](../assets/gallery/qq/symmetry.png)
+
 **Applicable Data**
 
 - A single continuous variable sample.
@@ -122,6 +128,8 @@ Use Q-Q plots to compare sample quantiles with a theoretical distribution, most 
 
 ### Chi-square Quantile Plot
 
+![Chi-square Quantile Plot](../assets/gallery/qq/chi_square.png)
+
 **Applicable Data**
 
 - A single continuous variable sample.
@@ -143,6 +151,10 @@ Use Q-Q plots to compare sample quantiles with a theoretical distribution, most 
 - Unless specifically requested, do not add subtitles or explanatory text outside the plot.
 
 ### Ladder of Powers for Normal Distribution
+
+![Ladder of Powers for Normal Distribution (Histogram)](../assets/gallery/qq/ladder_hist.png)
+
+![Ladder of Powers for Normal Distribution (QQ)](../assets/gallery/qq/ladder_qq.png)
 
 **Applicable Data**
 
@@ -181,4 +193,3 @@ Use Q-Q plots to compare sample quantiles with a theoretical distribution, most 
 - Do not use Q-Q plots as the only evidence for model validity.
 - Interpret tail deviations and systematic curvature separately.
 - For p-value Q-Q plots, remove invalid p-values and report genomic inflation if needed.
-

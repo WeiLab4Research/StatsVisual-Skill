@@ -17,6 +17,8 @@ Use diagnostic plots to assess whether a fitted model is stable, appropriate, an
 
 ### Residuals vs Fitted Plot
 
+![Residuals vs Fitted Plot](../assets/gallery/regression_diagnostics/residual.png)
+
 **Applicable Data**
 
 - Fitted linear model object, such as `lmfit <- lm(y ~ x, data = df)`.
@@ -111,6 +113,8 @@ Use diagnostic plots to assess whether a fitted model is stable, appropriate, an
 
 ### Leverage Plot
 
+![Leverage Plot](../assets/gallery/regression_diagnostics/leverage.png)
+
 **Applicable Data**
 
 - A fitted linear model object, especially suitable for models with multiple independent variables.
@@ -152,7 +156,9 @@ Use diagnostic plots to assess whether a fitted model is stable, appropriate, an
 - Do not add a gridline background.
 - Unless specifically requested, do not add subtitles or explanatory text outside the plot.
 
-### Cook’s Distance Needle Plot
+### Cook's Distance Needle Plot
+
+![Cook's Distance Needle Plot](../assets/gallery/regression_diagnostics/cook.png)
 
 **Applicable Data**
 
@@ -216,6 +222,8 @@ Use diagnostic plots to assess whether a fitted model is stable, appropriate, an
 
 ### Leverage-Residual-Cook Bubble Plot
 
+![Leverage-Residual-Cook Bubble Plot](../assets/gallery/regression_diagnostics/joint.png)
+
 **Applicable Data**
 
 - Fitted linear model object.
@@ -239,6 +247,8 @@ Use diagnostic plots to assess whether a fitted model is stable, appropriate, an
 - Unless specifically requested, do not add subtitles or explanatory text outside the plot.
 
 ### Influence Plot
+
+![Influence Plot](../assets/gallery/regression_diagnostics/influence.png)
 
 **Applicable Data**
 
@@ -267,4 +277,3 @@ Use diagnostic plots to assess whether a fitted model is stable, appropriate, an
 - Do not automatically delete influential points. Verify data accuracy, document decisions, and consider sensitivity analysis.
 - Distinguish outliers, high-leverage points, and influential points.
 - If assumptions fail, consider transformation, robust regression, nonlinear terms, or alternate model family.
-

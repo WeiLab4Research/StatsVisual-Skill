@@ -137,12 +137,12 @@ ggplot2::ggsave(
   width = 6,
   height = 4.2,
   units = "in",
-  dpi = 160,
+  dpi = 300,
   bg = "white"
 )
 ```
 
-TIFF submission export must use `ggsave()` and at least 600 dpi; use 700 dpi as a conservative default when feasible:
+TIFF submission export must use `ggsave()` at 700 dpi:
 
 ```r
 ggplot2::ggsave(
@@ -151,7 +151,7 @@ ggplot2::ggsave(
   width = 6,
   height = 4.2,
   units = "in",
-  dpi = 600,
+  dpi = 700,
   bg = "white"
 )
 ```
@@ -227,8 +227,6 @@ Always define:
 
 ## Forest Plot Rules
 
-Reference image: `references/styles/examples/general-forest-plot.png`. Use it only as a visual reference; do not copy its data, labels, or exact column order blindly.
-
 - Use a forest plot only when each row has an effect estimate and uncertainty interval, or when these can be computed from a declared model. Do not force a forest plot from raw groups, counts, or percentages without an effect estimate.
 - Build an integrated table-and-forest display: descriptor columns on the left, the estimate axis near the middle, and numeric estimate/statistical columns on the right.
 - Choose columns from the analysis, such as subgroup/level labels, treatment and comparator counts, study weights, HR/OR/RR/risk difference/mean difference/SMD with CI, P value, or P for interaction. Do not add unused columns just to mimic a reference image.
@@ -241,7 +239,7 @@ Reference image: `references/styles/examples/general-forest-plot.png`. Use it on
 ## Journal Defaults
 
 - Use vector PDF/SVG for line art and editable text.
-- Use TIFF for submission raster, at least 600 dpi; 700 dpi is a conservative default.
+- Use TIFF for submission raster at 700 dpi.
 - Keep final text readable at target size.
 - Use white background for statistical plots.
 - Use black backgrounds only for image plates that require it, not for routine charts.

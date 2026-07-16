@@ -410,9 +410,12 @@ export_png <- function(path, res) {
   draw_full_figure(plot_df, fig_w_in = FIG_W, fig_h_in = FIG_H)
   dev.off()
 }
-export_png(png_path, 200)
-if (file.info(png_path)$size / 1024 > 950) export_png(png_path, 140)
-if (file.info(png_path)$size / 1024 > 950) export_png(png_path, 110)
+export_png(png_path, 300)
+if (file.info(png_path)$size / 1024 > 950) {
+  png(png_path, width = FIG_W * 0.75, height = FIG_H * 0.75, units = "in", res = 300, type = "cairo-png")
+  draw_full_figure(plot_df, fig_w_in = FIG_W, fig_h_in = FIG_H)
+  dev.off()
+}
 cat("\n--- Output files ---\n")
 for (f in list.files(fig_dir, full.names = TRUE)) {
   cat(sprintf("  %s   %.1f KB\n", basename(f), file.info(f)$size / 1024))
