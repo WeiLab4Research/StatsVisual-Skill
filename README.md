@@ -17,6 +17,338 @@ StatsVisual-Skill provides skills for publication-ready medical and biostatistic
 
 The visual philosophy of this project is mainly inspired by *Statistical Graphics and Art*, edited by Prof. Yongyue Wei from the Peking University Center for Public Health Strategy. The skill follows the principles of faithfulness, expressiveness, and elegance: a figure should stay loyal to the data, reveal the scientific message clearly, and present evidence with refined visual order. We hope the project helps medical researchers turn statistical results into graphics that are scientifically rigorous, readable, and worthy of careful public communication.
 
+## Chart Types Overview
+
+This skill covers **16 statistical chart families**. All figure examples are from *Statistical Graphics and Art*.
+
+### 1. Bar Chart
+
+<table>
+  <tr bgcolor="#ffffff">
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/bar/basic_bar.png" width="400"></td>
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/bar/grouped_bar.png" width="400"></td>
+  </tr>
+  <tr bgcolor="#ffffff">
+    <td align="center"><b>(1) Basic Bar</b></td>
+    <td align="center"><b>(2) Grouped Bar</b></td>
+  </tr>
+  <tr bgcolor="#ffffff">
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/bar/stacked_bar.png" width="400"></td>
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/bar/polar_bar.png" width="400"></td>
+  </tr>
+  <tr bgcolor="#ffffff">
+    <td align="center"><b>(3) Stacked Bar</b></td>
+    <td align="center"><b>(4) Polar Bar</b></td>
+  </tr>
+</table>
+
+### 2. Box Plot
+
+<table>
+  <tr bgcolor="#ffffff">
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/box/box.png" width="400"></td>
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/box/violin.png" width="400"></td>
+  </tr>
+  <tr bgcolor="#ffffff">
+    <td align="center"><b>(1) Basic Box</b></td>
+    <td align="center"><b>(2) Violin</b></td>
+  </tr>
+  <tr bgcolor="#ffffff">
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/box/beeswarm.png" width="400"></td>
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/box/raincloud.png" width="400"></td>
+  </tr>
+  <tr bgcolor="#ffffff">
+    <td align="center"><b>(3) Beeswarm</b></td>
+    <td align="center"><b>(4) Raincloud</b></td>
+  </tr>
+</table>
+
+### 3. Probability Distribution
+
+<table>
+  <tr bgcolor="#ffffff">
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/distribution/normal.png" width="400"></td>
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/distribution/beta.png" width="400"></td>
+  </tr>
+  <tr bgcolor="#ffffff">
+    <td align="center"><b>(1) Normal</b></td>
+    <td align="center"><b>(2) Beta</b></td>
+  </tr>
+  <tr bgcolor="#ffffff">
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/distribution/binomial.png" width="400"></td>
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/distribution/gamma.png" width="400"></td>
+  </tr>
+  <tr bgcolor="#ffffff">
+    <td align="center"><b>(3) Binomial</b></td>
+    <td align="center"><b>(4) Gamma</b></td>
+  </tr>
+</table>
+
+### 4. Dot Plot
+
+<table>
+  <tr bgcolor="#ffffff">
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/dot/cleveland.png" width="400"></td>
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/dot/lollipop.png" width="400"></td>
+  </tr>
+  <tr bgcolor="#ffffff">
+    <td align="center"><b>(1) Cleveland Dot</b></td>
+    <td align="center"><b>(2) Lollipop</b></td>
+  </tr>
+  <tr bgcolor="#ffffff">
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/dot/dumbbell.png" width="400"></td>
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/dot/manhattan.png" width="400"></td>
+  </tr>
+  <tr bgcolor="#ffffff">
+    <td align="center"><b>(3) Dumbbell</b></td>
+    <td align="center"><b>(4) Manhattan</b></td>
+  </tr>
+</table>
+
+### 5. Heatmap
+
+<table>
+  <tr bgcolor="#ffffff">
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/heatmap/basic_heatmap.png" width="400"></td>
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/heatmap/contour_line.png" width="400"></td>
+  </tr>
+  <tr bgcolor="#ffffff">
+    <td align="center"><b>(1) Basic Heatmap</b></td>
+    <td align="center"><b>(2) Contour Line</b></td>
+  </tr>
+  <tr bgcolor="#ffffff">
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/heatmap/filled_contour.png" width="400"></td>
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/heatmap/calendar.png" width="400"></td>
+  </tr>
+  <tr bgcolor="#ffffff">
+    <td align="center"><b>(3) Filled Contour</b></td>
+    <td align="center"><b>(4) Calendar</b></td>
+  </tr>
+</table>
+
+### 6. Histogram
+
+<table>
+  <tr bgcolor="#ffffff">
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/histogram/basic_histogram.png" width="400"></td>
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/histogram/ridgeline.png" width="400"></td>
+  </tr>
+  <tr bgcolor="#ffffff">
+    <td align="center"><b>(1) Basic Histogram</b></td>
+    <td align="center"><b>(2) Ridgeline</b></td>
+  </tr>
+  <tr bgcolor="#ffffff">
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/histogram/spiral.png" width="400"></td>
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/histogram/pyramid.png" width="400"></td>
+  </tr>
+  <tr bgcolor="#ffffff">
+    <td align="center"><b>(3) Spiral</b></td>
+    <td align="center"><b>(4) Pyramid</b></td>
+  </tr>
+</table>
+
+### 7. Line Chart
+
+<table>
+  <tr bgcolor="#ffffff">
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/line/time_series.png" width="400"></td>
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/line/area.png" width="400"></td>
+  </tr>
+  <tr bgcolor="#ffffff">
+    <td align="center"><b>(1) Time Series</b></td>
+    <td align="center"><b>(2) Area</b></td>
+  </tr>
+  <tr bgcolor="#ffffff">
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/line/step.png" width="400"></td>
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/line/stream.png" width="400"></td>
+  </tr>
+  <tr bgcolor="#ffffff">
+    <td align="center"><b>(3) Step</b></td>
+    <td align="center"><b>(4) Stream</b></td>
+  </tr>
+</table>
+
+### 8. Linear Regression
+
+<table>
+  <tr bgcolor="#ffffff">
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/linear_regression/linear.png" width="400"></td>
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/linear_regression/bands.png" width="400"></td>
+  </tr>
+  <tr bgcolor="#ffffff">
+    <td align="center"><b>(1) Linear Fit</b></td>
+    <td align="center"><b>(2) Bands</b></td>
+  </tr>
+  <tr bgcolor="#ffffff">
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/linear_regression/ellipse.png" width="400"></td>
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/linear_regression/surface.png" width="400"></td>
+  </tr>
+  <tr bgcolor="#ffffff">
+    <td align="center"><b>(3) Ellipse</b></td>
+    <td align="center"><b>(4) Surface</b></td>
+  </tr>
+</table>
+
+### 9. Nonlinear Regression
+
+<table>
+  <tr bgcolor="#ffffff">
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/nonlinear_regression/polynomial.png" width="400"></td>
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/nonlinear_regression/sigmoid.png" width="400"></td>
+  </tr>
+  <tr bgcolor="#ffffff">
+    <td align="center"><b>(1) Polynomial</b></td>
+    <td align="center"><b>(2) Sigmoid</b></td>
+  </tr>
+  <tr bgcolor="#ffffff">
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/nonlinear_regression/convex_concave.png" width="400"></td>
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/nonlinear_regression/quantile.png" width="400"></td>
+  </tr>
+  <tr bgcolor="#ffffff">
+    <td align="center"><b>(3) Convex-Concave</b></td>
+    <td align="center"><b>(4) Quantile</b></td>
+  </tr>
+</table>
+
+### 10. Pie Chart
+
+<table>
+  <tr bgcolor="#ffffff">
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/pie/pie.png" width="400"></td>
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/pie/doughnut.png" width="400"></td>
+  </tr>
+  <tr bgcolor="#ffffff">
+    <td align="center"><b>(1) Pie</b></td>
+    <td align="center"><b>(2) Doughnut</b></td>
+  </tr>
+  <tr bgcolor="#ffffff">
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/pie/rose.png" width="400"></td>
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/pie/nested.png" width="400"></td>
+  </tr>
+  <tr bgcolor="#ffffff">
+    <td align="center"><b>(3) Rose</b></td>
+    <td align="center"><b>(4) Nested</b></td>
+  </tr>
+</table>
+
+### 11. Q-Q Plot
+
+<table>
+  <tr bgcolor="#ffffff">
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/qq/qq.png" width="400"></td>
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/qq/pp.png" width="400"></td>
+  </tr>
+  <tr bgcolor="#ffffff">
+    <td align="center"><b>(1) Q-Q</b></td>
+    <td align="center"><b>(2) P-P</b></td>
+  </tr>
+  <tr bgcolor="#ffffff">
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/qq/ladder_qq.png" width="400"></td>
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/qq/symmetry.png" width="400"></td>
+  </tr>
+  <tr bgcolor="#ffffff">
+    <td align="center"><b>(3) Ladder Q-Q</b></td>
+    <td align="center"><b>(4) Symmetry</b></td>
+  </tr>
+</table>
+
+### 12. Regression Diagnostics
+
+<table>
+  <tr bgcolor="#ffffff">
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/regression_diagnostics/residual.png" width="400"></td>
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/regression_diagnostics/cook.png" width="400"></td>
+  </tr>
+  <tr bgcolor="#ffffff">
+    <td align="center"><b>(1) Residual</b></td>
+    <td align="center"><b>(2) Cook's Distance</b></td>
+  </tr>
+  <tr bgcolor="#ffffff">
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/regression_diagnostics/leverage.png" width="400"></td>
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/regression_diagnostics/influence.png" width="400"></td>
+  </tr>
+  <tr bgcolor="#ffffff">
+    <td align="center"><b>(3) Leverage</b></td>
+    <td align="center"><b>(4) Influence</b></td>
+  </tr>
+</table>
+
+### 13. Scatter Plot
+
+<table>
+  <tr bgcolor="#ffffff">
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/scatter/scatter.png" width="400"></td>
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/scatter/bubble.png" width="400"></td>
+  </tr>
+  <tr bgcolor="#ffffff">
+    <td align="center"><b>(1) Basic Scatter</b></td>
+    <td align="center"><b>(2) Bubble</b></td>
+  </tr>
+  <tr bgcolor="#ffffff">
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/scatter/smooth.png" width="400"></td>
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/scatter/matrix.png" width="400"></td>
+  </tr>
+  <tr bgcolor="#ffffff">
+    <td align="center"><b>(3) Smooth Scatter</b></td>
+    <td align="center"><b>(4) Matrix</b></td>
+  </tr>
+</table>
+
+### 14. Smoothing Curve
+
+<table>
+  <tr bgcolor="#ffffff">
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/smoothing/lowess_smooth.png" width="400"></td>
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/smoothing/lowess_regression.png" width="400"></td>
+  </tr>
+  <tr bgcolor="#ffffff">
+    <td align="center"><b>(1) LOWESS Smooth</b></td>
+    <td align="center"><b>(2) LOWESS Regression</b></td>
+  </tr>
+</table>
+
+### 15. Survival Curve
+
+<table>
+  <tr bgcolor="#ffffff">
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/survival/km.png" width="400"></td>
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/survival/comparison.png" width="400"></td>
+  </tr>
+  <tr bgcolor="#ffffff">
+    <td align="center"><b>(1) Kaplan-Meier</b></td>
+    <td align="center"><b>(2) Comparison</b></td>
+  </tr>
+  <tr bgcolor="#ffffff">
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/survival/adjusted.png" width="400"></td>
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/survival/risk_table.png" width="400"></td>
+  </tr>
+  <tr bgcolor="#ffffff">
+    <td align="center"><b>(3) Adjusted</b></td>
+    <td align="center"><b>(4) Risk Table</b></td>
+  </tr>
+</table>
+
+### 16. Ternary Plot
+
+<table>
+  <tr bgcolor="#ffffff">
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/ternary/basic_ternary.png" width="400"></td>
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/ternary/density.png" width="400"></td>
+  </tr>
+  <tr bgcolor="#ffffff">
+    <td align="center"><b>(1) Basic Ternary</b></td>
+    <td align="center"><b>(2) Density</b></td>
+  </tr>
+  <tr bgcolor="#ffffff">
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/ternary/interpolation.png" width="400"></td>
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/ternary/interval.png" width="400"></td>
+  </tr>
+  <tr bgcolor="#ffffff">
+    <td align="center"><b>(3) Interpolation</b></td>
+    <td align="center"><b>(4) Interval</b></td>
+  </tr>
+</table>
+
 ## Included Skills
 
 - `StatsVisual-Skill`: creates data-profile-first medical statistics figures and biostatistical graphics with R.
