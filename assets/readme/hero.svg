@@ -1,0 +1,145 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+     width="1200" height="380" viewBox="0 0 1200 380"
+     role="img" aria-labelledby="hero-title hero-desc">
+  <title id="hero-title">StatsVisual-Skill — AI-Powered Medical Statistical Visualization</title>
+  <desc id="hero-desc">让 AI 先检查数据，再推荐合适图形，一键生成四大医学期刊级别的出版图</desc>
+
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FAFBFC"/>
+      <stop offset="100%" stop-color="#F0F3F5"/>
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#2C6FAC"/>
+      <stop offset="100%" stop-color="#1A5276"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="380" rx="28" fill="url(#bgGrad)"/>
+
+  <!-- Subtle grid lines (coordinate system motif) -->
+  <g opacity="0.06" stroke="#2C6FAC" stroke-width="0.5">
+    <line x1="0" y1="95" x2="1200" y2="95"/>
+    <line x1="0" y1="190" x2="1200" y2="190"/>
+    <line x1="0" y1="285" x2="1200" y2="285"/>
+    <line x1="400" y1="0" x2="400" y2="380"/>
+    <line x1="800" y1="0" x2="800" y2="380"/>
+  </g>
+
+  <!-- Right side: statistical graphics motif -->
+  <g id="stats-motif" transform="translate(700 50)">
+    <!-- Coordinate axes -->
+    <line x1="60" y1="280" x2="440" y2="280" stroke="#8899A6" stroke-width="1.5"/>
+    <line x1="60" y1="20" x2="60" y2="280" stroke="#8899A6" stroke-width="1.5"/>
+
+    <!-- X-axis ticks -->
+    <line x1="155" y1="280" x2="155" y2="286" stroke="#8899A6" stroke-width="1"/>
+    <line x1="250" y1="280" x2="250" y2="286" stroke="#8899A6" stroke-width="1"/>
+    <line x1="345" y1="280" x2="345" y2="286" stroke="#8899A6" stroke-width="1"/>
+
+    <!-- Distribution curve (bell-shaped) -->
+    <path d="M 80 275 Q 120 100 180 80 Q 220 65 250 60 Q 280 65 320 80 Q 380 100 420 275"
+          fill="none" stroke="#2C6FAC" stroke-width="2.5" opacity="0.7"/>
+
+    <!-- Filled area under curve -->
+    <path d="M 80 275 Q 120 100 180 80 Q 220 65 250 60 Q 280 65 320 80 Q 380 100 420 275 Z"
+          fill="#2C6FAC" opacity="0.08"/>
+
+    <!-- Data points scattered -->
+    <circle cx="130" cy="150" r="3.5" fill="#E0554A" opacity="0.6"/>
+    <circle cx="170" cy="100" r="3.5" fill="#E0554A" opacity="0.5"/>
+    <circle cx="210" cy="72" r="3.5" fill="#E0554A" opacity="0.4"/>
+    <circle cx="250" cy="60" r="3.5" fill="#E0554A" opacity="0.3"/>
+    <circle cx="290" cy="73" r="3.5" fill="#E0554A" opacity="0.4"/>
+    <circle cx="330" cy="102" r="3.5" fill="#E0554A" opacity="0.5"/>
+    <circle cx="370" cy="155" r="3.5" fill="#E0554A" opacity="0.6"/>
+
+    <!-- Bottom horizontal reference line -->
+    <rect x="70" y="286" width="370" height="1" fill="#D0D5DA" opacity="0.5"/>
+
+    <!-- Small graph thumbnails (journal style previews) -->
+    <!-- KM curve mini -->
+    <g transform="translate(60 295)">
+      <rect width="80" height="50" rx="6" fill="white" stroke="#E5E8EB" stroke-width="1"/>
+      <path d="M 10 42 L 28 42 L 28 28 L 40 22 L 52 18 L 64 15" fill="none" stroke="#2C6FAC" stroke-width="1.5" stroke-linejoin="round"/>
+      <text x="40" y="10" text-anchor="middle" font-size="7" fill="#8899A6" font-family="-apple-system, sans-serif">KM Curve</text>
+    </g>
+
+    <!-- Volcano mini -->
+    <g transform="translate(155 295)">
+      <rect width="80" height="50" rx="6" fill="white" stroke="#E5E8EB" stroke-width="1"/>
+      <circle cx="20" cy="20" r="2" fill="#8899A6" opacity="0.5"/>
+      <circle cx="35" cy="28" r="2" fill="#8899A6" opacity="0.5"/>
+      <circle cx="50" cy="35" r="2" fill="#8899A6" opacity="0.5"/>
+      <circle cx="60" cy="8" r="3" fill="#E0554A" opacity="0.7"/>
+      <circle cx="45" cy="12" r="2.5" fill="#E0554A" opacity="0.5"/>
+      <text x="40" y="10" text-anchor="middle" font-size="7" fill="#8899A6" font-family="-apple-system, sans-serif">Volcano</text>
+    </g>
+
+    <!-- Forest plot mini -->
+    <g transform="translate(250 295)">
+      <rect width="80" height="50" rx="6" fill="white" stroke="#E5E8EB" stroke-width="1"/>
+      <rect x="8" y="22" width="28" height="4" rx="2" fill="#2C6FAC" opacity="0.6"/>
+      <rect x="12" y="30" width="20" height="4" rx="2" fill="#2C6FAC" opacity="0.4"/>
+      <rect x="6" y="38" width="35" height="4" rx="2" fill="#2C6FAC" opacity="0.5"/>
+      <text x="40" y="10" text-anchor="middle" font-size="7" fill="#8899A6" font-family="-apple-system, sans-serif">Forest</text>
+    </g>
+
+    <!-- Rose chart mini -->
+    <g transform="translate(345 295)">
+      <rect width="80" height="50" rx="6" fill="white" stroke="#E5E8EB" stroke-width="1"/>
+      <path d="M 40 40 L 40 15 A 25 25 0 0 1 65 40 Z" fill="#2C6FAC" opacity="0.3"/>
+      <path d="M 40 40 L 25 40 A 15 15 0 0 1 40 25 Z" fill="#E0554A" opacity="0.25"/>
+      <text x="40" y="10" text-anchor="middle" font-size="7" fill="#8899A6" font-family="-apple-system, sans-serif">Rose</text>
+    </g>
+  </g>
+
+  <!-- Left side: Title block -->
+  <g id="title-block" transform="translate(60 52)">
+    <!-- Category label -->
+    <text x="0" y="28" font-family="-apple-system, Segoe UI, sans-serif" font-size="14" fill="#8899A6" font-weight="500" letter-spacing="2">
+      AI SKILL · MEDICAL STATISTICS
+    </text>
+
+    <!-- Project name -->
+    <text x="0" y="80" font-family="Georgia, Songti SC, serif" font-size="52" fill="#1A1D23" font-weight="700">
+      StatsVisual
+    </text>
+
+    <!-- Highlight bar under name -->
+    <rect x="0" y="94" width="120" height="4" rx="2" fill="url(#accentGrad)"/>
+
+    <!-- One-line value proposition -->
+    <text x="0" y="134" font-family="-apple-system, Segoe UI, sans-serif" font-size="18" fill="#4A5568" line-height="1.6">
+      让 AI 先检查数据，再推荐合适图形
+    </text>
+    <text x="0" y="162" font-family="-apple-system, Segoe UI, sans-serif" font-size="18" fill="#4A5568" line-height="1.6">
+      一键生成四大医学期刊级别的出版图
+    </text>
+
+    <!-- Feature pills -->
+    <g transform="translate(0 196)">
+      <rect x="0" y="0" width="160" height="30" rx="15" fill="#2C6FAC" opacity="0.1"/>
+      <text x="80" y="20" text-anchor="middle" font-family="-apple-system, sans-serif" font-size="12" fill="#2C6FAC" font-weight="500">16 种统计图形</text>
+
+      <rect x="172" y="0" width="160" height="30" rx="15" fill="#2C6FAC" opacity="0.1"/>
+      <text x="252" y="20" text-anchor="middle" font-family="-apple-system, sans-serif" font-size="12" fill="#2C6FAC" font-weight="500">6 种期刊风格</text>
+
+      <rect x="344" y="0" width="150" height="30" rx="15" fill="#E0554A" opacity="0.1"/>
+      <text x="419" y="20" text-anchor="middle" font-family="-apple-system, sans-serif" font-size="12" fill="#E0554A" font-weight="500">出版级质量</text>
+    </g>
+
+    <!-- Bottom metadata: journal logos hint -->
+    <g transform="translate(0 260)" opacity="0.5">
+      <text x="0" y="14" font-family="ui-monospace, SFMono-Regular, monospace" font-size="11" fill="#8899A6">
+        Lancet · NEJM · JAMA · BMJ · Nature
+      </text>
+    </g>
+  </g>
+
+  <!-- Bottom-right accent: subtle axis marker -->
+  <circle cx="1120" cy="330" r="4" fill="#2C6FAC" opacity="0.15"/>
+  <circle cx="1140" cy="340" r="3" fill="#2C6FAC" opacity="0.1"/>
+  <circle cx="1105" cy="350" r="2.5" fill="#2C6FAC" opacity="0.08"/>
+</svg>
