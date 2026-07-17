@@ -1,7 +1,7 @@
 # Statistical Visualization Skill
 
 <p align="center">
-  <img src="assets/brand/r-medical-graphics-logo.svg" alt="StatsVisual-Skill" width="560">
+  <img src="assets/brand/statsvisual-skill-hero.svg" alt="StatsVisual-Skill" width="100%">
 </p>
 
 **Language:** English | [简体中文](README.zh-CN.md)
