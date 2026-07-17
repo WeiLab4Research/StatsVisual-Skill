@@ -109,6 +109,28 @@ Copy-Item ".\StatsVisual-Skill\skills\StatsVisual-Skill\*" "$env:USERPROFILE\.co
 Copy-Item ".\StatsVisual-Skill\skills\r-journal-style-calibrator\*" "$env:USERPROFILE\.codebuddy\skills\r-journal-style-calibrator" -Recurse -Force
 ```
 
+## Updating
+
+Enter the cloned repository, pull the latest changes, and re-copy the skill folders:
+
+### Codex
+
+```powershell
+cd StatsVisual-Skill
+git pull
+Copy-Item ".\skills\StatsVisual-Skill\*" "$env:USERPROFILE\.codex\skills\StatsVisual-Skill" -Recurse -Force
+Copy-Item ".\skills\r-journal-style-calibrator\*" "$env:USERPROFILE\.codex\skills\r-journal-style-calibrator" -Recurse -Force
+```
+
+### CodeBuddy
+
+```powershell
+cd StatsVisual-Skill
+git pull
+Copy-Item ".\skills\StatsVisual-Skill\*" "$env:USERPROFILE\.codebuddy\skills\StatsVisual-Skill" -Recurse -Force
+Copy-Item ".\skills\r-journal-style-calibrator\*" "$env:USERPROFILE\.codebuddy\skills\r-journal-style-calibrator" -Recurse -Force
+```
+
 ## Windows R Setup
 
 From the repository root, install the recommended R packages:

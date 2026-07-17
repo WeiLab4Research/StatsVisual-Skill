@@ -109,6 +109,28 @@ Copy-Item ".\StatsVisual-Skill\skills\StatsVisual-Skill\*" "$env:USERPROFILE\.co
 Copy-Item ".\StatsVisual-Skill\skills\r-journal-style-calibrator\*" "$env:USERPROFILE\.codebuddy\skills\r-journal-style-calibrator" -Recurse -Force
 ```
 
+## 更新
+
+进入已克隆的仓库目录，拉取最新代码后重新复制 skill 文件夹即可：
+
+### Codex
+
+```powershell
+cd StatsVisual-Skill
+git pull
+Copy-Item ".\skills\StatsVisual-Skill\*" "$env:USERPROFILE\.codex\skills\StatsVisual-Skill" -Recurse -Force
+Copy-Item ".\skills\r-journal-style-calibrator\*" "$env:USERPROFILE\.codex\skills\r-journal-style-calibrator" -Recurse -Force
+```
+
+### CodeBuddy
+
+```powershell
+cd StatsVisual-Skill
+git pull
+Copy-Item ".\skills\StatsVisual-Skill\*" "$env:USERPROFILE\.codebuddy\skills\StatsVisual-Skill" -Recurse -Force
+Copy-Item ".\skills\r-journal-style-calibrator\*" "$env:USERPROFILE\.codebuddy\skills\r-journal-style-calibrator" -Recurse -Force
+```
+
 ## Windows R 环境
 
 在仓库根目录安装推荐的 R 包：
