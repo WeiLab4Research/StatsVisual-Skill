@@ -42,112 +42,7 @@ StatsVisual-Skill 提供一组用于医学统计绘图的skill，帮助 AI 助�
   </tr>
 </table>
 
-### 2. 箱线图
-
-<table>
-  <tr bgcolor="#ffffff">
-    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/box/box.png" width="400"></td>
-    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/box/violin.png" width="400"></td>
-  </tr>
-  <tr bgcolor="#ffffff">
-    <td align="center"><b>（1）基础箱线图</b></td>
-    <td align="center"><b>（2）小提琴图</b></td>
-  </tr>
-  <tr bgcolor="#ffffff">
-    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/box/beeswarm.png" width="400"></td>
-    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/box/raincloud.png" width="400"></td>
-  </tr>
-  <tr bgcolor="#ffffff">
-    <td align="center"><b>（3）蜂群图</b></td>
-    <td align="center"><b>（4）雨云图</b></td>
-  </tr>
-</table>
-
-### 3. 概率分布图
-
-<table>
-  <tr bgcolor="#ffffff">
-    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/distribution/normal.png" width="400"></td>
-    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/distribution/beta.png" width="400"></td>
-  </tr>
-  <tr bgcolor="#ffffff">
-    <td align="center"><b>（1）正态分布</b></td>
-    <td align="center"><b>（2）Beta 分布</b></td>
-  </tr>
-  <tr bgcolor="#ffffff">
-    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/distribution/binomial.png" width="400"></td>
-    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/distribution/gamma.png" width="400"></td>
-  </tr>
-  <tr bgcolor="#ffffff">
-    <td align="center"><b>（3）二项分布</b></td>
-    <td align="center"><b>（4）Gamma 分布</b></td>
-  </tr>
-</table>
-
-### 4. 点图
-
-<table>
-  <tr bgcolor="#ffffff">
-    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/dot/cleveland.png" width="400"></td>
-    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/dot/lollipop.png" width="400"></td>
-  </tr>
-  <tr bgcolor="#ffffff">
-    <td align="center"><b>（1）Cleveland 点图</b></td>
-    <td align="center"><b>（2）棒棒糖图</b></td>
-  </tr>
-  <tr bgcolor="#ffffff">
-    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/dot/dumbbell.png" width="400"></td>
-    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/dot/manhattan.png" width="400"></td>
-  </tr>
-  <tr bgcolor="#ffffff">
-    <td align="center"><b>（3）哑铃图</b></td>
-    <td align="center"><b>（4）曼哈顿图</b></td>
-  </tr>
-</table>
-
-### 5. 热图
-
-<table>
-  <tr bgcolor="#ffffff">
-    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/heatmap/basic_heatmap.png" width="400"></td>
-    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/heatmap/contour_line.png" width="400"></td>
-  </tr>
-  <tr bgcolor="#ffffff">
-    <td align="center"><b>（1）基础热图</b></td>
-    <td align="center"><b>（2）等高线图</b></td>
-  </tr>
-  <tr bgcolor="#ffffff">
-    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/heatmap/filled_contour.png" width="400"></td>
-    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/heatmap/calendar.png" width="400"></td>
-  </tr>
-  <tr bgcolor="#ffffff">
-    <td align="center"><b>（3）填充等高线</b></td>
-    <td align="center"><b>（4）日历图</b></td>
-  </tr>
-</table>
-
-### 6. 直方图
-
-<table>
-  <tr bgcolor="#ffffff">
-    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/histogram/basic_histogram.png" width="400"></td>
-    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/histogram/ridgeline.png" width="400"></td>
-  </tr>
-  <tr bgcolor="#ffffff">
-    <td align="center"><b>（1）基础直方图</b></td>
-    <td align="center"><b>（2）山脊图</b></td>
-  </tr>
-  <tr bgcolor="#ffffff">
-    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/histogram/spiral.png" width="400"></td>
-    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/histogram/pyramid.png" width="400"></td>
-  </tr>
-  <tr bgcolor="#ffffff">
-    <td align="center"><b>（3）螺旋直方图</b></td>
-    <td align="center"><b>（4）金字塔图</b></td>
-  </tr>
-</table>
-
-### 7. 折线图
+### 2. 折线图
 
 <table>
   <tr bgcolor="#ffffff">
@@ -168,49 +63,7 @@ StatsVisual-Skill 提供一组用于医学统计绘图的skill，帮助 AI 助�
   </tr>
 </table>
 
-### 8. 线性回归
-
-<table>
-  <tr bgcolor="#ffffff">
-    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/linear_regression/linear.png" width="400"></td>
-    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/linear_regression/bands.png" width="400"></td>
-  </tr>
-  <tr bgcolor="#ffffff">
-    <td align="center"><b>（1）线性拟合</b></td>
-    <td align="center"><b>（2）置信带</b></td>
-  </tr>
-  <tr bgcolor="#ffffff">
-    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/linear_regression/ellipse.png" width="400"></td>
-    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/linear_regression/surface.png" width="400"></td>
-  </tr>
-  <tr bgcolor="#ffffff">
-    <td align="center"><b>（3）置信椭圆</b></td>
-    <td align="center"><b>（4）响应面</b></td>
-  </tr>
-</table>
-
-### 9. 非线性回归
-
-<table>
-  <tr bgcolor="#ffffff">
-    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/nonlinear_regression/polynomial.png" width="400"></td>
-    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/nonlinear_regression/sigmoid.png" width="400"></td>
-  </tr>
-  <tr bgcolor="#ffffff">
-    <td align="center"><b>（1）多项式回归</b></td>
-    <td align="center"><b>（2）Sigmoid 曲线</b></td>
-  </tr>
-  <tr bgcolor="#ffffff">
-    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/nonlinear_regression/convex_concave.png" width="400"></td>
-    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/nonlinear_regression/quantile.png" width="400"></td>
-  </tr>
-  <tr bgcolor="#ffffff">
-    <td align="center"><b>（3）凸凹性分析</b></td>
-    <td align="center"><b>（4）分位数回归</b></td>
-  </tr>
-</table>
-
-### 10. 饼图
+### 3. 饼图
 
 <table>
   <tr bgcolor="#ffffff">
@@ -231,49 +84,70 @@ StatsVisual-Skill 提供一组用于医学统计绘图的skill，帮助 AI 助�
   </tr>
 </table>
 
-### 11. Q-Q 图
+### 4. 直方图
 
 <table>
   <tr bgcolor="#ffffff">
-    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/qq/qq.png" width="400"></td>
-    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/qq/pp.png" width="400"></td>
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/histogram/basic_histogram.png" width="400"></td>
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/histogram/ridgeline.png" width="400"></td>
   </tr>
   <tr bgcolor="#ffffff">
-    <td align="center"><b>（1）Q-Q 图</b></td>
-    <td align="center"><b>（2）P-P 图</b></td>
+    <td align="center"><b>（1）基础直方图</b></td>
+    <td align="center"><b>（2）山脊图</b></td>
   </tr>
   <tr bgcolor="#ffffff">
-    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/qq/ladder_qq.png" width="400"></td>
-    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/qq/symmetry.png" width="400"></td>
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/histogram/spiral.png" width="400"></td>
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/histogram/pyramid.png" width="400"></td>
   </tr>
   <tr bgcolor="#ffffff">
-    <td align="center"><b>（3）阶梯 Q-Q</b></td>
-    <td align="center"><b>（4）对称性检验</b></td>
+    <td align="center"><b>（3）螺旋直方图</b></td>
+    <td align="center"><b>（4）金字塔图</b></td>
   </tr>
 </table>
 
-### 12. 回归诊断
+### 5. 点图
 
 <table>
   <tr bgcolor="#ffffff">
-    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/regression_diagnostics/residual.png" width="400"></td>
-    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/regression_diagnostics/cook.png" width="400"></td>
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/dot/cleveland.png" width="400"></td>
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/dot/lollipop.png" width="400"></td>
   </tr>
   <tr bgcolor="#ffffff">
-    <td align="center"><b>（1）残差图</b></td>
-    <td align="center"><b>（2）Cook 距离</b></td>
+    <td align="center"><b>（1）Cleveland 点图</b></td>
+    <td align="center"><b>（2）棒棒糖图</b></td>
   </tr>
   <tr bgcolor="#ffffff">
-    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/regression_diagnostics/leverage.png" width="400"></td>
-    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/regression_diagnostics/influence.png" width="400"></td>
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/dot/dumbbell.png" width="400"></td>
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/dot/manhattan.png" width="400"></td>
   </tr>
   <tr bgcolor="#ffffff">
-    <td align="center"><b>（3）杠杆值</b></td>
-    <td align="center"><b>（4）影响度</b></td>
+    <td align="center"><b>（3）哑铃图</b></td>
+    <td align="center"><b>（4）曼哈顿图</b></td>
   </tr>
 </table>
 
-### 13. 散点图
+### 6. 箱线图
+
+<table>
+  <tr bgcolor="#ffffff">
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/box/box.png" width="400"></td>
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/box/violin.png" width="400"></td>
+  </tr>
+  <tr bgcolor="#ffffff">
+    <td align="center"><b>（1）基础箱线图</b></td>
+    <td align="center"><b>（2）小提琴图</b></td>
+  </tr>
+  <tr bgcolor="#ffffff">
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/box/beeswarm.png" width="400"></td>
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/box/raincloud.png" width="400"></td>
+  </tr>
+  <tr bgcolor="#ffffff">
+    <td align="center"><b>（3）蜂群图</b></td>
+    <td align="center"><b>（4）雨云图</b></td>
+  </tr>
+</table>
+
+### 7. 散点图
 
 <table>
   <tr bgcolor="#ffffff">
@@ -294,41 +168,28 @@ StatsVisual-Skill 提供一组用于医学统计绘图的skill，帮助 AI 助�
   </tr>
 </table>
 
-### 14. 平滑曲线
+### 8. 热图
 
 <table>
   <tr bgcolor="#ffffff">
-    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/smoothing/lowess_smooth.png" width="400"></td>
-    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/smoothing/lowess_regression.png" width="400"></td>
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/heatmap/basic_heatmap.png" width="400"></td>
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/heatmap/contour_line.png" width="400"></td>
   </tr>
   <tr bgcolor="#ffffff">
-    <td align="center"><b>（1）LOWESS 平滑</b></td>
-    <td align="center"><b>（2）LOWESS 回归</b></td>
+    <td align="center"><b>（1）基础热图</b></td>
+    <td align="center"><b>（2）等高线图</b></td>
+  </tr>
+  <tr bgcolor="#ffffff">
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/heatmap/filled_contour.png" width="400"></td>
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/heatmap/calendar.png" width="400"></td>
+  </tr>
+  <tr bgcolor="#ffffff">
+    <td align="center"><b>（3）填充等高线</b></td>
+    <td align="center"><b>（4）日历图</b></td>
   </tr>
 </table>
 
-### 15. 生存曲线
-
-<table>
-  <tr bgcolor="#ffffff">
-    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/survival/km.png" width="400"></td>
-    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/survival/comparison.png" width="400"></td>
-  </tr>
-  <tr bgcolor="#ffffff">
-    <td align="center"><b>（1）Kaplan-Meier 曲线</b></td>
-    <td align="center"><b>（2）分组比较</b></td>
-  </tr>
-  <tr bgcolor="#ffffff">
-    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/survival/adjusted.png" width="400"></td>
-    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/survival/risk_table.png" width="400"></td>
-  </tr>
-  <tr bgcolor="#ffffff">
-    <td align="center"><b>（3）调整生存曲线</b></td>
-    <td align="center"><b>（4）风险表</b></td>
-  </tr>
-</table>
-
-### 16. 三元图
+### 9. 三元图
 
 <table>
   <tr bgcolor="#ffffff">
@@ -346,6 +207,145 @@ StatsVisual-Skill 提供一组用于医学统计绘图的skill，帮助 AI 助�
   <tr bgcolor="#ffffff">
     <td align="center"><b>（3）插值三元图</b></td>
     <td align="center"><b>（4）区间三元图</b></td>
+  </tr>
+</table>
+
+### 10. Q-Q 图
+
+<table>
+  <tr bgcolor="#ffffff">
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/qq/qq.png" width="400"></td>
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/qq/pp.png" width="400"></td>
+  </tr>
+  <tr bgcolor="#ffffff">
+    <td align="center"><b>（1）Q-Q 图</b></td>
+    <td align="center"><b>（2）P-P 图</b></td>
+  </tr>
+  <tr bgcolor="#ffffff">
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/qq/ladder_qq.png" width="400"></td>
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/qq/symmetry.png" width="400"></td>
+  </tr>
+  <tr bgcolor="#ffffff">
+    <td align="center"><b>（3）阶梯 Q-Q</b></td>
+    <td align="center"><b>（4）对称性检验</b></td>
+  </tr>
+</table>
+
+### 11. 概率分布图
+
+<table>
+  <tr bgcolor="#ffffff">
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/distribution/normal.png" width="400"></td>
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/distribution/beta.png" width="400"></td>
+  </tr>
+  <tr bgcolor="#ffffff">
+    <td align="center"><b>（1）正态分布</b></td>
+    <td align="center"><b>（2）Beta 分布</b></td>
+  </tr>
+  <tr bgcolor="#ffffff">
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/distribution/binomial.png" width="400"></td>
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/distribution/gamma.png" width="400"></td>
+  </tr>
+  <tr bgcolor="#ffffff">
+    <td align="center"><b>（3）二项分布</b></td>
+    <td align="center"><b>（4）Gamma 分布</b></td>
+  </tr>
+</table>
+
+### 12. 平滑曲线
+
+<table>
+  <tr bgcolor="#ffffff">
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/smoothing/lowess_smooth.png" width="400"></td>
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/smoothing/lowess_regression.png" width="400"></td>
+  </tr>
+  <tr bgcolor="#ffffff">
+    <td align="center"><b>（1）LOWESS 平滑</b></td>
+    <td align="center"><b>（2）LOWESS 回归</b></td>
+  </tr>
+</table>
+
+### 13. 线性回归
+
+<table>
+  <tr bgcolor="#ffffff">
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/linear_regression/linear.png" width="400"></td>
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/linear_regression/bands.png" width="400"></td>
+  </tr>
+  <tr bgcolor="#ffffff">
+    <td align="center"><b>（1）线性拟合</b></td>
+    <td align="center"><b>（2）置信带</b></td>
+  </tr>
+  <tr bgcolor="#ffffff">
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/linear_regression/ellipse.png" width="400"></td>
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/linear_regression/surface.png" width="400"></td>
+  </tr>
+  <tr bgcolor="#ffffff">
+    <td align="center"><b>（3）置信椭圆</b></td>
+    <td align="center"><b>（4）响应面</b></td>
+  </tr>
+</table>
+
+### 14. 非线性回归
+
+<table>
+  <tr bgcolor="#ffffff">
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/nonlinear_regression/polynomial.png" width="400"></td>
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/nonlinear_regression/sigmoid.png" width="400"></td>
+  </tr>
+  <tr bgcolor="#ffffff">
+    <td align="center"><b>（1）多项式回归</b></td>
+    <td align="center"><b>（2）Sigmoid 曲线</b></td>
+  </tr>
+  <tr bgcolor="#ffffff">
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/nonlinear_regression/convex_concave.png" width="400"></td>
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/nonlinear_regression/quantile.png" width="400"></td>
+  </tr>
+  <tr bgcolor="#ffffff">
+    <td align="center"><b>（3）凸凹性分析</b></td>
+    <td align="center"><b>（4）分位数回归</b></td>
+  </tr>
+</table>
+
+### 15. 回归诊断
+
+<table>
+  <tr bgcolor="#ffffff">
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/regression_diagnostics/residual.png" width="400"></td>
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/regression_diagnostics/cook.png" width="400"></td>
+  </tr>
+  <tr bgcolor="#ffffff">
+    <td align="center"><b>（1）残差图</b></td>
+    <td align="center"><b>（2）Cook 距离</b></td>
+  </tr>
+  <tr bgcolor="#ffffff">
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/regression_diagnostics/leverage.png" width="400"></td>
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/regression_diagnostics/influence.png" width="400"></td>
+  </tr>
+  <tr bgcolor="#ffffff">
+    <td align="center"><b>（3）杠杆值</b></td>
+    <td align="center"><b>（4）影响度</b></td>
+  </tr>
+</table>
+
+### 16. 生存曲线
+
+<table>
+  <tr bgcolor="#ffffff">
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/survival/km.png" width="400"></td>
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/survival/comparison.png" width="400"></td>
+  </tr>
+  <tr bgcolor="#ffffff">
+    <td align="center"><b>（1）Kaplan-Meier 曲线</b></td>
+    <td align="center"><b>（2）分组比较</b></td>
+  </tr>
+  <tr bgcolor="#ffffff">
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/survival/adjusted.png" width="400"></td>
+    <td width="50%" align="center"><img src="skills/StatsVisual-Skill/assets/gallery/survival/risk_table.png" width="400"></td>
+  </tr>
+  <tr bgcolor="#ffffff">
+    <td align="center"><b>（3）调整生存曲线</b></td>
+    <td align="center"><b>（4）风险表</b></td>
   </tr>
 </table>
 
