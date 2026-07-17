@@ -87,7 +87,7 @@ skills/
 
 ## 安装
 
-克隆仓库，然后把两个 skill 文件夹复制到目标客户端的 skills 目录。
+克隆仓库，然后把两个 skill 文件夹复制到目标客户端的 skills 目录。后续如需更新，进入已克隆的仓库目录执行 `git pull`，然后重新运行对应的复制命令即可。
 
 ### Codex
 
@@ -107,28 +107,6 @@ CodeBuddy 体验版每月提供 500 credits 基础积分，供大家免费使用
 git clone https://github.com/HaotianJiang056/R-plot-skill.git StatsVisual-Skill
 Copy-Item ".\StatsVisual-Skill\skills\StatsVisual-Skill\*" "$env:USERPROFILE\.codebuddy\skills\StatsVisual-Skill" -Recurse -Force
 Copy-Item ".\StatsVisual-Skill\skills\r-journal-style-calibrator\*" "$env:USERPROFILE\.codebuddy\skills\r-journal-style-calibrator" -Recurse -Force
-```
-
-## 更新
-
-进入已克隆的仓库目录，拉取最新代码后重新复制 skill 文件夹即可：
-
-### Codex
-
-```powershell
-cd StatsVisual-Skill
-git pull
-Copy-Item ".\skills\StatsVisual-Skill\*" "$env:USERPROFILE\.codex\skills\StatsVisual-Skill" -Recurse -Force
-Copy-Item ".\skills\r-journal-style-calibrator\*" "$env:USERPROFILE\.codex\skills\r-journal-style-calibrator" -Recurse -Force
-```
-
-### CodeBuddy
-
-```powershell
-cd StatsVisual-Skill
-git pull
-Copy-Item ".\skills\StatsVisual-Skill\*" "$env:USERPROFILE\.codebuddy\skills\StatsVisual-Skill" -Recurse -Force
-Copy-Item ".\skills\r-journal-style-calibrator\*" "$env:USERPROFILE\.codebuddy\skills\r-journal-style-calibrator" -Recurse -Force
 ```
 
 ## Windows R 环境
