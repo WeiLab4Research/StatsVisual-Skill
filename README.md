@@ -1,42 +1,21 @@
 # Statistical Visualization Skill
 
 <p align="center">
-  <img src="assets/readme/hero.svg" width="100%" alt="StatsVisual-Skill — AI-powered medical statistical visualization that inspects data first, then recommends and generates publication-ready figures">
+  <img src="assets/brand/r-medical-graphics-logo.svg" alt="StatsVisual-Skill" width="560">
 </p>
 
 **Language:** English | [简体中文](README.zh-CN.md)
 
----
+Team:  
+Developer：Haotian Jiang, Wenxiao Du, Bangyu Wang  
+Supervisor and Sponsor：Prof. Yongyue Wei, Peking University  
+tester: Miao Cui, Qiaochu Wei, Ziwei Xi
 
-Let your AI assistant inspect data first, recommend the most appropriate statistical chart, generate reproducible R code, and export publication-ready graphics meeting the standards of Lancet, NEJM, JAMA, and BMJ. The visual philosophy is inspired by *Statistical Graphics and Art*, edited by Prof. Yongyue Wei at Peking University — bringing faithfulness, clarity, and elegance to medical visualization: staying true to the data, communicating findings clearly, and presenting evidence with refined visual order.
+## Motivation
 
-## Gallery
-
-<p align="center">
-  <img src="assets/readme/section-gallery.svg" width="100%" alt="Three comparison groups">
-</p>
-
-The gallery focuses on three comparisons.
-
-| Comparison | Preview | Description |
-|------------|---------|-------------|
-| **1. Four Medical Journal Styles** | <table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;border-spacing:0;"><tr style="line-height:0;"><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="assets/gallery/journal-km-lancet.png" width="140"></td><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="assets/gallery/journal-km-nejm.png" width="140"></td><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="assets/gallery/journal-km-jama.png" width="140"></td><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="assets/gallery/journal-km-bmj.png" width="140"></td></tr><tr style="line-height:0;"><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="assets/gallery/journal-forest-lancet.png" width="140"></td><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="assets/gallery/journal-forest-nejm.png" width="140"></td><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="assets/gallery/journal-forest-jama.png" width="140"></td><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="assets/gallery/journal-forest-bmj.png" width="140"></td></tr><tr style="line-height:0;"><td style="padding:4px 0;text-align:center;font-size:11px;color:#555;width:140;">Lancet</td><td style="padding:4px 0;text-align:center;font-size:11px;color:#555;width:140;">NEJM</td><td style="padding:4px 0;text-align:center;font-size:11px;color:#555;width:140;">JAMA</td><td style="padding:4px 0;text-align:center;font-size:11px;color:#555;width:140;">BMJ</td></tr></table> | Compare KM curves and forest plots across Lancet, NEJM, JAMA, and BMJ, primarily in color schemes. |
-| **2. Domestic vs. International Models** | <table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;border-spacing:0;"><tr style="line-height:0;"><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="assets/gallery/model-roc-minimax-m3.png" width="140"></td><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="assets/gallery/model-volcano-minimax-m3.png" width="140"></td><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="assets/gallery/model-rose-minimax-m3.png" width="140"></td></tr><tr style="line-height:0;"><td style="padding:4px 0;text-align:center;font-size:11px;color:#555;">minimax-m3 (Domestic)</td><td style="padding:4px 0;text-align:center;font-size:11px;color:#555;">minimax-m3 (Domestic)</td><td style="padding:4px 0;text-align:center;font-size:11px;color:#555;">minimax-m3 (Domestic)</td></tr><tr style="line-height:0;"><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="assets/gallery/model-roc-chatgpt-55.png" width="140"></td><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="assets/gallery/model-volcano-chatgpt-55.png" width="140"></td><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="assets/gallery/model-rose-chatgpt-55.png" width="140"></td></tr><tr style="line-height:0;"><td style="padding:4px 0;text-align:center;font-size:11px;color:#555;">chatgpt-5.5 (International)</td><td style="padding:4px 0;text-align:center;font-size:11px;color:#555;">chatgpt-5.5 (International)</td><td style="padding:4px 0;text-align:center;font-size:11px;color:#555;">chatgpt-5.5 (International)</td></tr></table> | Compare domestic LLM `minimax-m3` with international LLM `chatgpt-5.5` on ROC curves, volcano plots, and rose charts. |
-| **3. With vs. Without *Statistical Graphics and Art* Guidance** | <table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;border-spacing:0;"><tr style="line-height:0;"><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="assets/gallery/art-radar-with-guidance.png" width="140"></td><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="assets/gallery/art-rose-with-guidance.png" width="140"></td><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="assets/gallery/art-raincloud-with-guidance.png" width="140"></td><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="assets/gallery/art-manhattan-with-guidance.png" width="140"></td></tr><tr style="line-height:0;"><td style="padding:4px 0;text-align:center;font-size:11px;color:#555;">With</td><td style="padding:4px 0;text-align:center;font-size:11px;color:#555;">With</td><td style="padding:4px 0;text-align:center;font-size:11px;color:#555;">With</td><td style="padding:4px 0;text-align:center;font-size:11px;color:#555;">With</td></tr><tr style="line-height:0;"><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="assets/gallery/art-radar-without-guidance.png" width="140"></td><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="assets/gallery/art-rose-without-guidance.png" width="140"></td><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="assets/gallery/art-raincloud-without-guidance.png" width="140"></td><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="assets/gallery/art-manhattan-without-guidance.png" width="140"></td></tr><tr style="line-height:0;"><td style="padding:4px 0;text-align:center;font-size:11px;color:#555;">Without</td><td style="padding:4px 0;text-align:center;font-size:11px;color:#555;">Without</td><td style="padding:4px 0;text-align:center;font-size:11px;color:#555;">Without</td><td style="padding:4px 0;text-align:center;font-size:11px;color:#555;">Without</td></tr></table> | Show how guidance from the book improves grouping, spacing, reference scales, labels, and visual hierarchy. |
-
-## How It Works
-
-<p align="center">
-  <img src="assets/readme/workflow.svg" width="100%" alt="Workflow: Provide data → Data profiling → Chart recommendation → Generate publication figure">
-</p>
-
-Core design principle: **profile first, plot after confirmation**. When data is first provided, the assistant profiles and recommends before writing any plotting code. After user confirmation, it generates the R script, figure rationale, and reproducible artifacts automatically.
+StatsVisual-Skill is a collection of AI skills for medical statistical graphics. It is designed to help AI assistants first inspect the data, then recommend appropriate chart types, generate reproducible code, and export high-quality figures suitable for manuscripts, journal submissions, and academic presentations.Its visualization philosophy is mainly inspired by Statistical Graphics and Art, edited by Professor Yongyue Wei from the Peking University Center for Public Health and Epidemic Preparedness & Response. We aim to integrate the principles of “faithfulness, clarity, and elegance” into medical statistical visualization: remaining faithful to the data itself, clearly communicating scientific findings, and presenting evidence in a restrained, refined, and well-structured visual form, so that each figure combines scientific rigor, readability, and aesthetic quality.
 
 ## Chart Types Overview
-
-<p align="center">
-  <img src="assets/readme/section-charts.svg" width="100%" alt="16 statistical chart families">
-</p>
 
 This skill covers **16 statistical chart families**. All figure examples are from *Statistical Graphics and Art*.
 
@@ -59,23 +38,56 @@ This skill covers **16 statistical chart families**. All figure examples are fro
 | **15. Regression Diagnostics** | <table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;border-spacing:0;"><tr style="line-height:0;"><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="skills/StatsVisual-Skill/assets/gallery/regression_diagnostics/residual.png" width="140"></td><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="skills/StatsVisual-Skill/assets/gallery/regression_diagnostics/cook.png" width="140"></td><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="skills/StatsVisual-Skill/assets/gallery/regression_diagnostics/leverage.png" width="140"></td><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="skills/StatsVisual-Skill/assets/gallery/regression_diagnostics/influence.png" width="140"></td></tr></table> | Assess model assumptions with residual plots, Cook's distance, leverage, and influence metrics. |
 | **16. Survival Curve** | <table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;border-spacing:0;"><tr style="line-height:0;"><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="skills/StatsVisual-Skill/assets/gallery/survival/km.png" width="140"></td><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="skills/StatsVisual-Skill/assets/gallery/survival/comparison.png" width="140"></td><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="skills/StatsVisual-Skill/assets/gallery/survival/adjusted.png" width="140"></td><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="skills/StatsVisual-Skill/assets/gallery/survival/risk_table.png" width="140"></td></tr></table> | Analyze time-to-event data with Kaplan-Meier curves, group comparisons, and adjusted survival estimates. |
 
+## Included Skills
+
+- `StatsVisual-Skill`: creates data-profile-first medical statistics figures and biostatistical graphics with R.
+- `r-journal-style-calibrator`: extends `StatsVisual-Skill` with journal-specific visual styles based on example figures and author guidance.
+
+## What It Does
+
+- Profiles CSV, TSV, XLSX, and RDS datasets before plotting.
+- Recommends a primary single figure, up to two alternatives, and an optional multi-panel figure when complementary analyses are useful.
+- Uses a first-turn gate: when data are first provided, the assistant profiles and recommends before writing plotting code.
+- Supports `general`, `nature`, `lancet`, `nejm`, `jama`, and `bmj` figure styles.
+- Exports PDF, editable SVG, high-resolution TIFF, and a compact web preview.
+- Records reproducibility artifacts such as the plotting script, data profile, figure rationale, readability QA, and R session information.
+
+## Figure Gallery
+
+The gallery focuses on three comparisons.
+
+| Comparison | Preview | Description |
+|------------|---------|-------------|
+| **1. Four Medical Journal Styles** | <table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;border-spacing:0;"><tr style="line-height:0;"><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="assets/gallery/journal-km-lancet.png" width="140"></td><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="assets/gallery/journal-km-nejm.png" width="140"></td><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="assets/gallery/journal-km-jama.png" width="140"></td><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="assets/gallery/journal-km-bmj.png" width="140"></td></tr><tr style="line-height:0;"><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="assets/gallery/journal-forest-lancet.png" width="140"></td><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="assets/gallery/journal-forest-nejm.png" width="140"></td><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="assets/gallery/journal-forest-jama.png" width="140"></td><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="assets/gallery/journal-forest-bmj.png" width="140"></td></tr><tr style="line-height:0;"><td style="padding:4px 0;text-align:center;font-size:11px;color:#555;width:140;">Lancet</td><td style="padding:4px 0;text-align:center;font-size:11px;color:#555;width:140;">NEJM</td><td style="padding:4px 0;text-align:center;font-size:11px;color:#555;width:140;">JAMA</td><td style="padding:4px 0;text-align:center;font-size:11px;color:#555;width:140;">BMJ</td></tr></table> | Compare KM curves and forest plots across Lancet, NEJM, JAMA, and BMJ, primarily in color schemes. |
+| **2. Domestic vs. International Models** | <table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;border-spacing:0;"><tr style="line-height:0;"><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="assets/gallery/model-roc-minimax-m3.png" width="140"></td><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="assets/gallery/model-volcano-minimax-m3.png" width="140"></td><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="assets/gallery/model-rose-minimax-m3.png" width="140"></td></tr><tr style="line-height:0;"><td style="padding:4px 0;text-align:center;font-size:11px;color:#555;">minimax-m3 (Domestic)</td><td style="padding:4px 0;text-align:center;font-size:11px;color:#555;">minimax-m3 (Domestic)</td><td style="padding:4px 0;text-align:center;font-size:11px;color:#555;">minimax-m3 (Domestic)</td></tr><tr style="line-height:0;"><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="assets/gallery/model-roc-chatgpt-55.png" width="140"></td><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="assets/gallery/model-volcano-chatgpt-55.png" width="140"></td><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="assets/gallery/model-rose-chatgpt-55.png" width="140"></td></tr><tr style="line-height:0;"><td style="padding:4px 0;text-align:center;font-size:11px;color:#555;">chatgpt-5.5 (International)</td><td style="padding:4px 0;text-align:center;font-size:11px;color:#555;">chatgpt-5.5 (International)</td><td style="padding:4px 0;text-align:center;font-size:11px;color:#555;">chatgpt-5.5 (International)</td></tr></table> | Compare domestic LLM `minimax-m3` with international LLM `chatgpt-5.5` on ROC curves, volcano plots, and rose charts. |
+| **3. With vs. Without *Statistical Graphics and Art* Guidance** | <table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;border-spacing:0;"><tr style="line-height:0;"><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="assets/gallery/art-radar-with-guidance.png" width="140"></td><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="assets/gallery/art-rose-with-guidance.png" width="140"></td><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="assets/gallery/art-raincloud-with-guidance.png" width="140"></td><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="assets/gallery/art-manhattan-with-guidance.png" width="140"></td></tr><tr style="line-height:0;"><td style="padding:4px 0;text-align:center;font-size:11px;color:#555;">With</td><td style="padding:4px 0;text-align:center;font-size:11px;color:#555;">With</td><td style="padding:4px 0;text-align:center;font-size:11px;color:#555;">With</td><td style="padding:4px 0;text-align:center;font-size:11px;color:#555;">With</td></tr><tr style="line-height:0;"><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="assets/gallery/art-radar-without-guidance.png" width="140"></td><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="assets/gallery/art-rose-without-guidance.png" width="140"></td><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="assets/gallery/art-raincloud-without-guidance.png" width="140"></td><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="assets/gallery/art-manhattan-without-guidance.png" width="140"></td></tr><tr style="line-height:0;"><td style="padding:4px 0;text-align:center;font-size:11px;color:#555;">Without</td><td style="padding:4px 0;text-align:center;font-size:11px;color:#555;">Without</td><td style="padding:4px 0;text-align:center;font-size:11px;color:#555;">Without</td><td style="padding:4px 0;text-align:center;font-size:11px;color:#555;">Without</td></tr></table> | Show how guidance from the book improves grouping, spacing, reference scales, labels, and visual hierarchy. |
+
+## Repository Layout
+
+```text
+assets/
+  brand/
+    r-medical-graphics-logo.svg
+    r-medical-graphics-mark.svg
+    statistical-graphics-art.jpg
+  gallery/
+    journal-km-lancet.png ... art-rose-with-guidance.png
+skills/
+  StatsVisual-Skill/
+    SKILL.md
+    agents/openai.yaml
+    assets/
+    references/
+    scripts/
+  r-journal-style-calibrator/
+    SKILL.md
+    agents/openai.yaml
+    references/
+```
+
 ## Installation
 
-<p align="center">
-  <img src="assets/readme/section-install.svg" width="100%" alt="Installation guide">
-</p>
-
 Clone the repository and copy both skill folders into the skills directory for your target client.
-
-### CodeBuddy
-
-The CodeBuddy trial provides 500 base credits each month for free use.
-
-```powershell
-git clone https://github.com/HaotianJiang056/R-plot-skill.git StatsVisual-Skill
-Copy-Item ".\StatsVisual-Skill\skills\StatsVisual-Skill\*" "$env:USERPROFILE\.codebuddy\skills\StatsVisual-Skill" -Recurse -Force
-Copy-Item ".\StatsVisual-Skill\skills\r-journal-style-calibrator\*" "$env:USERPROFILE\.codebuddy\skills\r-journal-style-calibrator" -Recurse -Force
-```
 
 ### Codex
 
@@ -87,20 +99,45 @@ Copy-Item ".\StatsVisual-Skill\skills\r-journal-style-calibrator\*" "$env:USERPR
 
 If `CODEX_HOME` is set, replace `$env:USERPROFILE\.codex` with `$env:CODEX_HOME`.
 
-### Windows R Setup
+### CodeBuddy
+
+The CodeBuddy trial provides 500 base credits each month for free use.
 
 ```powershell
-# Install recommended R packages
+git clone https://github.com/HaotianJiang056/R-plot-skill.git StatsVisual-Skill
+Copy-Item ".\StatsVisual-Skill\skills\StatsVisual-Skill\*" "$env:USERPROFILE\.codebuddy\skills\StatsVisual-Skill" -Recurse -Force
+Copy-Item ".\StatsVisual-Skill\skills\r-journal-style-calibrator\*" "$env:USERPROFILE\.codebuddy\skills\r-journal-style-calibrator" -Recurse -Force
+```
+
+## Windows R Setup
+
+From the repository root, install the recommended R packages:
+
+```powershell
 powershell -ExecutionPolicy Bypass -File skills/StatsVisual-Skill/scripts/bootstrap_windows_dependencies.ps1
+```
 
-# Verify environment
+Verify the active R environment:
+
+```powershell
 Rscript skills/StatsVisual-Skill/scripts/check_dependencies.R
+```
 
-# Optional: specify CRAN mirror
+If the default CRAN mirror is unavailable, pass a mirror explicitly:
+
+```powershell
 powershell -ExecutionPolicy Bypass -File skills/StatsVisual-Skill/scripts/bootstrap_windows_dependencies.ps1 -CranRepo "https://mirrors.tuna.tsinghua.edu.cn/CRAN/"
 ```
 
-### Quick Smoke Test
+Optional Bioconductor heatmap packages can be checked with:
+
+```powershell
+Rscript skills/StatsVisual-Skill/scripts/check_dependencies.R --include-optional
+```
+
+## Quick Smoke Test
+
+From the repository root:
 
 ```powershell
 Rscript skills/StatsVisual-Skill/scripts/create_plot_project.R demo
@@ -127,54 +164,16 @@ Use $r-journal-style-calibrator to add a JAMA-style visual profile to StatsVisua
 
 Even for direct drawing requests, the first response should inspect the data, confirm whether the requested chart is suitable, recommend the best single figure and any optional multi-panel figure, then ask for confirmation before generating R code.
 
-## Repository Layout
-
-```text
-assets/
-  brand/                    # Logo and book cover
-  gallery/                  # Comparison showcase images
-  readme/                   # README visual assets
-skills/
-  StatsVisual-Skill/        # Core plotting skill
-    SKILL.md
-    agents/
-    assets/                 # Plot templates and previews
-    references/             # 16 chart-type references + journal style guides
-    scripts/                # Dependency bootstrapping and validation
-  r-journal-style-calibrator/  # Journal style extension skill
-```
-
-## Included Skills
-
-- **`StatsVisual-Skill`** — creates data-profile-first medical statistics figures and biostatistical graphics with R.
-- **`r-journal-style-calibrator`** — extends `StatsVisual-Skill` with journal-specific visual styles based on example figures and author guidance.
-
-## What It Does
-
-- Profiles CSV, TSV, XLSX, and RDS datasets before plotting
-- Recommends a primary single figure, up to two alternatives, and an optional multi-panel figure when complementary analyses are useful
-- Uses a first-turn gate: when data are first provided, the assistant profiles and recommends before writing plotting code
-- Supports `general`, `nature`, `lancet`, `nejm`, `jama`, and `bmj` figure styles
-- Exports PDF, editable SVG, high-resolution TIFF, and a compact web preview
-- Records reproducibility artifacts such as the plotting script, data profile, figure rationale, readability QA, and R session information
-
 ## Community And Use
 
 We welcome everybody to co-build, test, and share improvements to this skill. The skill materials, documentation, examples, and visual assets are protected by copyright. If you plan to cite, reproduce, adapt, redistribute, or use these materials in a public work, please contact the development team in advance.
 
-## Team
-
-Developer：Haotian Jiang, Wenxiao Du, Bangyu Wang  
-Supervisor and Sponsor：Prof. Yongyue Wei, Peking University  
-Tester: Miao Cui, Qiaochu Wei, Ziwei Xi
-
-## Recruitment Notice
-
-The research group is seeking postdoctoral researchers. Applicants with relevant research backgrounds are encouraged to apply. For details, please visit: http://phepr.pku.edu.cn/info/1038/2521.htm
-
 ## Acknowledgements
 
-This project was inspired by [Yuan1z0825/nature-skills](https://github.com/Yuan1z0825/nature-skills), but follows a different focus. It centers on medical statistical visualization principles from four leading medical journals—The Lancet, NEJM, JAMA, and BMJ—and is structured around the framework of *Statistical Graphics and Art*.
+This project was inspired by [Yuan1z0825/nature-skills](https://github.com/Yuan1z0825/nature-skills),but follows a different focus. It centers on medical statistical visualization principles from four leading medical journals—The Lancet, NEJM, JAMA, and BMJ—and is structured around the framework of Statistical Graphics and Art. It covers a broader range of chart types and helps users choose suitable visualizations based on their data structure and statistical intent.
+
+## Recruitment Notice
+The research group is seeking postdoctoral researchers. Applicants with relevant research backgrounds are encouraged to apply. For details, please visit: http://phepr.pku.edu.cn/info/1038/2521.htm
 
 ## References
 
