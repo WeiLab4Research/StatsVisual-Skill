@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="390" viewBox="0 0 1200 390" role="img" aria-labelledby="title desc">
+  <title id="title">StatsVisual-Skill hero banner</title>
+  <desc id="desc">A refined GitHub README hero for StatsVisual-Skill, showing a medical statistical graphics workflow from data profile to recommendation, R plotting, and quality assurance.</desc>
+  <defs>
+    <style>
+      .sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", Arial, sans-serif; }
+      .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+      .ink { fill: #102033; }
+      .muted { fill: #647084; }
+      .navy { fill: #102033; }
+      .teal { fill: #0f9f98; }
+    </style>
+    <linearGradient id="panelGlow" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#102033"/>
+      <stop offset="1" stop-color="#0b1a2b"/>
+    </linearGradient>
+    <linearGradient id="tealGrad" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#96d9ce"/>
+      <stop offset="1" stop-color="#0f9f98"/>
+    </linearGradient>
+    <filter id="softShadow" x="-10%" y="-20%" width="120%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#102033" flood-opacity="0.09"/>
+    </filter>
+    <marker id="arrowBlue" markerWidth="6" markerHeight="6" refX="5.5" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L6,3 L0,6 Z" fill="#8fb7c9"/>
+    </marker>
+    <marker id="arrowGold" markerWidth="6" markerHeight="6" refX="5.5" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L6,3 L0,6 Z" fill="#e6bd68"/>
+    </marker>
+    <marker id="arrowTeal" markerWidth="6" markerHeight="6" refX="5.5" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L6,3 L0,6 Z" fill="#8fd3c7"/>
+    </marker>
+  </defs>
+
+  <rect width="1200" height="390" rx="28" fill="#f7f8f4"/>
+  <rect x="28" y="28" width="1144" height="334" rx="24" fill="#ffffff" stroke="#d8ddd7" stroke-width="2" filter="url(#softShadow)"/>
+
+  <!-- Left copy area -->
+  <g transform="translate(62 78)">
+    <text class="sans ink" x="0" y="50" font-size="58" font-weight="850" letter-spacing="-1.6">StatsVisual-Skill</text>
+    <text class="sans ink" x="0" y="98" font-size="28" font-weight="650">Publication-ready medical figures in R</text>
+    <text class="sans muted" x="0" y="146" font-size="21">Inspect data, recommend the right chart, generate reproducible R code,</text>
+    <text class="sans muted" x="0" y="176" font-size="21">and export manuscript-ready figures for papers, submissions, and talks.</text>
+
+    <g transform="translate(0 226)">
+      <rect x="0" y="0" width="130" height="40" rx="20" fill="#eef5f7" stroke="#c7dce4"/>
+      <text class="sans" x="65" y="26" text-anchor="middle" font-size="16" fill="#245b83" font-weight="700">Faithful</text>
+
+      <rect x="158" y="0" width="130" height="40" rx="20" fill="#f9efef" stroke="#e7c6c6"/>
+      <text class="sans" x="223" y="26" text-anchor="middle" font-size="16" fill="#b23b3b" font-weight="700">Clear</text>
+
+      <rect x="316" y="0" width="130" height="40" rx="20" fill="#eef6f0" stroke="#c8decf"/>
+      <text class="sans" x="381" y="26" text-anchor="middle" font-size="16" fill="#0f766e" font-weight="700">Elegant</text>
+    </g>
+  </g>
+
+  <!-- Right workflow panel -->
+  <g transform="translate(735 56)">
+    <rect x="0" y="0" width="382" height="278" rx="22" fill="url(#panelGlow)"/>
+    <g transform="translate(28 26)">
+      <text class="mono" x="0" y="0" font-size="14" fill="#9fb0c4">workflow</text>
+
+      <!-- Step boxes -->
+      <g>
+        <rect x="0" y="30" width="136" height="48" rx="12" fill="#ffffff"/>
+        <text class="sans" x="17" y="60" font-size="17" font-weight="700" fill="#102033">data profile</text>
+
+        <rect x="194" y="30" width="136" height="48" rx="12" fill="#ffffff"/>
+        <text class="sans" x="216" y="60" font-size="17" font-weight="700" fill="#102033">recommend</text>
+
+        <rect x="0" y="116" width="136" height="48" rx="12" fill="#ffffff"/>
+        <text class="sans" x="52" y="146" font-size="17" font-weight="700" fill="#102033">QA</text>
+
+        <rect x="194" y="116" width="136" height="48" rx="12" fill="#ffffff"/>
+        <text class="sans" x="213" y="146" font-size="17" font-weight="700" fill="#102033">R plotting</text>
+      </g>
+
+      <!-- Workflow arrows -->
+      <path d="M146 54 H181" fill="none" stroke="#8fb7c9" stroke-width="2.2" stroke-linecap="round" marker-end="url(#arrowBlue)"/>
+      <path d="M262 80 V105" fill="none" stroke="#8fd3c7" stroke-width="2.2" stroke-linecap="round" marker-end="url(#arrowTeal)"/>
+      <path d="M192 140 H149" fill="none" stroke="#e6bd68" stroke-width="2.2" stroke-linecap="round" marker-end="url(#arrowGold)"/>
+
+      <!-- Compact chart motif -->
+      <g transform="translate(3 180)">
+        <path d="M0 24 L22 14 L47 19 L72 6 L98 15 L124 2 L150 9" fill="none" stroke="#8fd3c7" stroke-width="5" stroke-linecap="round"/>
+        <rect x="192" y="0" width="24" height="42" rx="5" fill="#8fd3c7"/>
+        <rect x="226" y="13" width="24" height="29" rx="5" fill="#f0b8b4"/>
+        <rect x="260" y="6" width="24" height="36" rx="5" fill="#e6bd68"/>
+      </g>
+
+      <!-- Export format chips, centered in a clean bottom lane -->
+      <g transform="translate(37 230)">
+        <rect x="0" y="0" width="54" height="22" rx="11" fill="#ffffff" fill-opacity="0.08" stroke="#ffffff" stroke-opacity="0.14"/>
+        <text class="sans" x="27" y="15" text-anchor="middle" font-size="11" fill="#c8d3df" font-weight="700">PDF</text>
+
+        <rect x="64" y="0" width="54" height="22" rx="11" fill="#ffffff" fill-opacity="0.08" stroke="#ffffff" stroke-opacity="0.14"/>
+        <text class="sans" x="91" y="15" text-anchor="middle" font-size="11" fill="#c8d3df" font-weight="700">SVG</text>
+
+        <rect x="128" y="0" width="54" height="22" rx="11" fill="#ffffff" fill-opacity="0.08" stroke="#ffffff" stroke-opacity="0.14"/>
+        <text class="sans" x="155" y="15" text-anchor="middle" font-size="11" fill="#c8d3df" font-weight="700">TIFF</text>
+
+        <rect x="192" y="0" width="54" height="22" rx="11" fill="#ffffff" fill-opacity="0.08" stroke="#ffffff" stroke-opacity="0.14"/>
+        <text class="sans" x="219" y="15" text-anchor="middle" font-size="11" fill="#c8d3df" font-weight="700">PNG</text>
+      </g>
+    </g>
+  </g>
+</svg>
