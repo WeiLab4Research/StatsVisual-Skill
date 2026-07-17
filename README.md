@@ -4,18 +4,16 @@
   <img src="assets/brand/r-medical-graphics-logo.svg" alt="StatsVisual-Skill" width="560">
 </p>
 
+**Language:** English | [简体中文](README.zh-CN.md)
+
 Team:  
 Developer：Haotian Jiang, Wenxiao Du, Bangyu Wang  
 Supervisor and Sponsor：Prof. Yongyue Wei, Peking University  
 tester: Miao Cui, Qiaochu Wei, Ziwei Xi
 
-**Language:** English | [简体中文](README.zh-CN.md)
-
-StatsVisual-Skill provides skills for publication-ready medical and biostatistical graphics. It helps an AI assistant inspect data first, recommend appropriate figure types, generate reproducible plotting code, and export journal-ready artwork for manuscripts, submissions, and research presentations.
-
 ## Motivation
 
-The visual philosophy of this project is mainly inspired by *Statistical Graphics and Art*, edited by Prof. Yongyue Wei from the Peking University Center for Public Health Strategy. The skill follows the principles of faithfulness, expressiveness, and elegance: a figure should stay loyal to the data, reveal the scientific message clearly, and present evidence with refined visual order. We hope the project helps medical researchers turn statistical results into graphics that are scientifically rigorous, readable, and worthy of careful public communication.
+StatsVisual-Skill is a collection of AI skills for medical statistical graphics. It is designed to help AI assistants first inspect the data, then recommend appropriate chart types, generate reproducible code, and export high-quality figures suitable for manuscripts, journal submissions, and academic presentations.Its visualization philosophy is mainly inspired by Statistical Graphics and Art, edited by Professor Yongyue Wei from the Peking University Center for Public Health and Epidemic Preparedness & Response. We aim to integrate the principles of “faithfulness, clarity, and elegance” into medical statistical visualization: remaining faithful to the data itself, clearly communicating scientific findings, and presenting evidence in a restrained, refined, and well-structured visual form, so that each figure combines scientific rigor, readability, and aesthetic quality.
 
 ## Chart Types Overview
 
