@@ -56,126 +56,13 @@ This skill covers **16 statistical chart families**. All figure examples are fro
 
 ## Figure Gallery
 
-The gallery focuses on three comparisons: four medical journal visual styles, domestic-versus-international model outputs, and skill outputs with or without guidance from *Statistical Graphics and Art*.
+The gallery focuses on three comparisons.
 
-### 1. Four Medical Journal Style Differences
-
-This group compares graphical styles across four major medical journals, especially color use. In forest plots, *The Lancet* favors black-and-white styling, while *NEJM*, *JAMA*, and *BMJ* do not require it.
-
-#### 1. Kaplan-Meier Curves
-
-<table>
-  <tr bgcolor="#ffffff">
-    <td width="50%" align="center" valign="bottom" bgcolor="#ffffff"><img src="assets/gallery/journal-km-lancet.png" alt="Lancet KM curve"></td>
-    <td width="50%" align="center" valign="bottom" bgcolor="#ffffff"><img src="assets/gallery/journal-km-nejm.png" alt="NEJM KM curve"></td>
-  </tr>
-  <tr bgcolor="#ffffff">
-    <td align="center" bgcolor="#ffffff"><b>(1) Lancet</b></td>
-    <td align="center" bgcolor="#ffffff"><b>(2) NEJM</b></td>
-  </tr>
-  <tr bgcolor="#ffffff">
-    <td width="50%" align="center" valign="bottom" bgcolor="#ffffff"><img src="assets/gallery/journal-km-jama.png" alt="JAMA KM curve"></td>
-    <td width="50%" align="center" valign="bottom" bgcolor="#ffffff"><img src="assets/gallery/journal-km-bmj.png" alt="BMJ KM curve"></td>
-  </tr>
-  <tr bgcolor="#ffffff">
-    <td align="center" bgcolor="#ffffff"><b>(3) JAMA</b></td>
-    <td align="center" bgcolor="#ffffff"><b>(4) BMJ</b></td>
-  </tr>
-</table>
-
-#### 2. Forest Plots
-
-<table>
-  <tr bgcolor="#ffffff">
-    <td width="50%" align="center" valign="bottom" bgcolor="#ffffff"><img src="assets/gallery/journal-forest-lancet.png" alt="Lancet forest plot"></td>
-    <td width="50%" align="center" valign="bottom" bgcolor="#ffffff"><img src="assets/gallery/journal-forest-nejm.png" alt="NEJM forest plot"></td>
-  </tr>
-  <tr bgcolor="#ffffff">
-    <td align="center" bgcolor="#ffffff"><b>(1) Lancet</b></td>
-    <td align="center" bgcolor="#ffffff"><b>(2) NEJM</b></td>
-  </tr>
-  <tr bgcolor="#ffffff">
-    <td width="50%" align="center" valign="bottom" bgcolor="#ffffff"><img src="assets/gallery/journal-forest-jama.png" alt="JAMA forest plot"></td>
-    <td width="50%" align="center" valign="bottom" bgcolor="#ffffff"><img src="assets/gallery/journal-forest-bmj.png" alt="BMJ forest plot"></td>
-  </tr>
-  <tr bgcolor="#ffffff">
-    <td align="center" bgcolor="#ffffff"><b>(3) JAMA</b></td>
-    <td align="center" bgcolor="#ffffff"><b>(4) BMJ</b></td>
-  </tr>
-</table>
-
-### 2. Domestic And International Model Outputs
-
-This group uses the exact model labels to compare the domestic LLM `minimax-m3` and the international LLM `chatgpt-5.5` across ROC curves, volcano plots, and rose charts.
-
-#### 1. ROC Curves
-
-<table>
-  <tr bgcolor="#ffffff">
-    <td width="50%" align="center" valign="bottom" bgcolor="#ffffff"><img src="assets/gallery/model-roc-minimax-m3.png" alt="minimax-m3 ROC curves"></td>
-    <td width="50%" align="center" valign="bottom" bgcolor="#ffffff"><img src="assets/gallery/model-roc-chatgpt-55.png" alt="chatgpt-5.5 ROC curves"></td>
-  </tr>
-  <tr bgcolor="#ffffff">
-    <td align="center" bgcolor="#ffffff"><b>(1) Domestic LLM: minimax-m3</b></td>
-    <td align="center" bgcolor="#ffffff"><b>(2) International LLM: chatgpt-5.5</b></td>
-  </tr>
-</table>
-
-#### 2. Volcano Plots
-
-<table>
-  <tr bgcolor="#ffffff">
-    <td width="50%" align="center" valign="bottom" bgcolor="#ffffff"><img src="assets/gallery/model-volcano-minimax-m3.png" alt="minimax-m3 volcano plots"></td>
-    <td width="50%" align="center" valign="bottom" bgcolor="#ffffff"><img src="assets/gallery/model-volcano-chatgpt-55.png" alt="chatgpt-5.5 volcano plots"></td>
-  </tr>
-  <tr bgcolor="#ffffff">
-    <td align="center" bgcolor="#ffffff"><b>(1) Domestic LLM: minimax-m3</b></td>
-    <td align="center" bgcolor="#ffffff"><b>(2) International LLM: chatgpt-5.5</b></td>
-  </tr>
-</table>
-
-#### 3. Rose Charts
-
-<table>
-  <tr bgcolor="#ffffff">
-    <td width="50%" align="center" valign="bottom" bgcolor="#ffffff"><img src="assets/gallery/model-rose-minimax-m3.png" alt="minimax-m3 rose chart"></td>
-    <td width="50%" align="center" valign="bottom" bgcolor="#ffffff"><img src="assets/gallery/model-rose-chatgpt-55.png" alt="chatgpt-5.5 rose chart"></td>
-  </tr>
-  <tr bgcolor="#ffffff">
-    <td align="center" bgcolor="#ffffff"><b>(1) Domestic LLM: minimax-m3</b></td>
-    <td align="center" bgcolor="#ffffff"><b>(2) International LLM: chatgpt-5.5</b></td>
-  </tr>
-</table>
-
-### 3. Skill Outputs With Or Without *Statistical Graphics And Art* Guidance
-
-This group shows how adding the core ideas of *Statistical Graphics and Art* changes grouping, spacing, reference scales, label completeness, and visual hierarchy.
-
-#### 1. Radar Charts
-
-<table>
-  <tr bgcolor="#ffffff">
-    <td width="50%" align="center" valign="bottom" bgcolor="#ffffff"><img src="assets/gallery/art-radar-without-guidance.png" alt="Radar chart without statistical graphics guidance"></td>
-    <td width="50%" align="center" valign="bottom" bgcolor="#ffffff"><img src="assets/gallery/art-radar-with-guidance.png" alt="Radar chart with statistical graphics guidance"></td>
-  </tr>
-  <tr bgcolor="#ffffff">
-    <td align="center" bgcolor="#ffffff"><b>(1) Without <i>Statistical Graphics and Art</i> guidance</b></td>
-    <td align="center" bgcolor="#ffffff"><b>(2) With <i>Statistical Graphics and Art</i> guidance</b></td>
-  </tr>
-</table>
-
-#### 2. Rose Charts
-
-<table>
-  <tr bgcolor="#ffffff">
-    <td width="50%" align="center" valign="bottom" bgcolor="#ffffff"><img src="assets/gallery/art-rose-without-guidance.png" alt="Rose chart without statistical graphics guidance"></td>
-    <td width="50%" align="center" valign="bottom" bgcolor="#ffffff"><img src="assets/gallery/art-rose-with-guidance.png" alt="Rose chart with statistical graphics guidance"></td>
-  </tr>
-  <tr bgcolor="#ffffff">
-    <td align="center" bgcolor="#ffffff"><b>(1) Without <i>Statistical Graphics and Art</i> guidance</b></td>
-    <td align="center" bgcolor="#ffffff"><b>(2) With <i>Statistical Graphics and Art</i> guidance</b></td>
-  </tr>
-</table>
+| Comparison | Preview | Description |
+|------------|---------|-------------|
+| **1. Four Medical Journal Styles** | <table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;border-spacing:0;"><tr style="line-height:0;"><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="assets/gallery/journal-km-lancet.png" width="140"></td><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="assets/gallery/journal-km-nejm.png" width="140"></td><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="assets/gallery/journal-km-jama.png" width="140"></td><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="assets/gallery/journal-km-bmj.png" width="140"></td></tr><tr style="line-height:0;"><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="assets/gallery/journal-forest-lancet.png" width="140"></td><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="assets/gallery/journal-forest-nejm.png" width="140"></td><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="assets/gallery/journal-forest-jama.png" width="140"></td><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="assets/gallery/journal-forest-bmj.png" width="140"></td></tr></table> | Compare KM curves and forest plots across Lancet, NEJM, JAMA, and BMJ, primarily in color schemes. |
+| **2. Domestic vs. International Models** | <table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;border-spacing:0;"><tr style="line-height:0;"><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="assets/gallery/model-roc-minimax-m3.png" width="140"></td><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="assets/gallery/model-roc-chatgpt-55.png" width="140"></td></tr><tr style="line-height:0;"><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="assets/gallery/model-volcano-minimax-m3.png" width="140"></td><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="assets/gallery/model-volcano-chatgpt-55.png" width="140"></td></tr><tr style="line-height:0;"><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="assets/gallery/model-rose-minimax-m3.png" width="140"></td><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="assets/gallery/model-rose-chatgpt-55.png" width="140"></td></tr></table> | Compare domestic LLM `minimax-m3` with international LLM `chatgpt-5.5` on ROC curves, volcano plots, and rose charts. |
+| **3. With vs. Without *Statistical Graphics and Art* Guidance** | <table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;border-spacing:0;"><tr style="line-height:0;"><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="assets/gallery/art-radar-without-guidance.png" width="140"></td><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="assets/gallery/art-radar-with-guidance.png" width="140"></td></tr><tr style="line-height:0;"><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="assets/gallery/art-rose-without-guidance.png" width="140"></td><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="assets/gallery/art-rose-with-guidance.png" width="140"></td></tr></table> | Show how guidance from the book improves grouping, spacing, reference scales, labels, and visual hierarchy. |
 
 ## Repository Layout
 

@@ -54,126 +54,13 @@ StatsVisual-Skill 是一组面向医学统计绘图的 AI skills，旨在帮助 
 
 ## 绘图效果展示
 
-skill的绘图效果围绕三组对比展开：四大医学期刊的图形风格差异、国内与国际模型生成结果差异、有无《统计图形与艺术》理论指导下的制图成果差异。
+skill 的绘图效果围绕三组对比展开。
 
-### 一、四大医学期刊风格差异
-
-这一组主要观察四大医学期刊的绘图风格差异：主要体现在配色方面，如森林图中 Lancet 明确采用黑白配色，而 NEJM、JAMA、BMJ 没有这种硬性要求。
-
-#### 1. KM 曲线
-
-<table>
-  <tr bgcolor="#ffffff">
-    <td width="50%" align="center" valign="bottom" bgcolor="#ffffff"><img src="assets/gallery/journal-km-lancet.png" alt="Lancet KM curve"></td>
-    <td width="50%" align="center" valign="bottom" bgcolor="#ffffff"><img src="assets/gallery/journal-km-nejm.png" alt="NEJM KM curve"></td>
-  </tr>
-  <tr bgcolor="#ffffff">
-    <td align="center" bgcolor="#ffffff"><b>（1）Lancet</b></td>
-    <td align="center" bgcolor="#ffffff"><b>（2）NEJM</b></td>
-  </tr>
-  <tr bgcolor="#ffffff">
-    <td width="50%" align="center" valign="bottom" bgcolor="#ffffff"><img src="assets/gallery/journal-km-jama.png" alt="JAMA KM curve"></td>
-    <td width="50%" align="center" valign="bottom" bgcolor="#ffffff"><img src="assets/gallery/journal-km-bmj.png" alt="BMJ KM curve"></td>
-  </tr>
-  <tr bgcolor="#ffffff">
-    <td align="center" bgcolor="#ffffff"><b>（3）JAMA</b></td>
-    <td align="center" bgcolor="#ffffff"><b>（4）BMJ</b></td>
-  </tr>
-</table>
-
-#### 2. 森林图
-
-<table>
-  <tr bgcolor="#ffffff">
-    <td width="50%" align="center" valign="bottom" bgcolor="#ffffff"><img src="assets/gallery/journal-forest-lancet.png" alt="Lancet forest plot"></td>
-    <td width="50%" align="center" valign="bottom" bgcolor="#ffffff"><img src="assets/gallery/journal-forest-nejm.png" alt="NEJM forest plot"></td>
-  </tr>
-  <tr bgcolor="#ffffff">
-    <td align="center" bgcolor="#ffffff"><b>（1）Lancet</b></td>
-    <td align="center" bgcolor="#ffffff"><b>（2）NEJM</b></td>
-  </tr>
-  <tr bgcolor="#ffffff">
-    <td width="50%" align="center" valign="bottom" bgcolor="#ffffff"><img src="assets/gallery/journal-forest-jama.png" alt="JAMA forest plot"></td>
-    <td width="50%" align="center" valign="bottom" bgcolor="#ffffff"><img src="assets/gallery/journal-forest-bmj.png" alt="BMJ forest plot"></td>
-  </tr>
-  <tr bgcolor="#ffffff">
-    <td align="center" bgcolor="#ffffff"><b>（3）JAMA</b></td>
-    <td align="center" bgcolor="#ffffff"><b>（4）BMJ</b></td>
-  </tr>
-</table>
-
-### 二、国内外模型绘制效果差异
-
-这一组比较国内 LLM `minimax-m3` 与国外 LLM `chatgpt-5.5` 的绘制结果，分为 ROC 曲线、火山图和玫瑰图。
-
-#### 1. ROC 曲线
-
-<table>
-  <tr bgcolor="#ffffff">
-    <td width="50%" align="center" valign="bottom" bgcolor="#ffffff"><img src="assets/gallery/model-roc-minimax-m3.png" alt="minimax-m3 ROC curves"></td>
-    <td width="50%" align="center" valign="bottom" bgcolor="#ffffff"><img src="assets/gallery/model-roc-chatgpt-55.png" alt="chatgpt-5.5 ROC curves"></td>
-  </tr>
-  <tr bgcolor="#ffffff">
-    <td align="center" bgcolor="#ffffff"><b>（1）国内 LLM：minimax-m3</b></td>
-    <td align="center" bgcolor="#ffffff"><b>（2）国外 LLM：chatgpt-5.5</b></td>
-  </tr>
-</table>
-
-#### 2. 火山图
-
-<table>
-  <tr bgcolor="#ffffff">
-    <td width="50%" align="center" valign="bottom" bgcolor="#ffffff"><img src="assets/gallery/model-volcano-minimax-m3.png" alt="minimax-m3 volcano plots"></td>
-    <td width="50%" align="center" valign="bottom" bgcolor="#ffffff"><img src="assets/gallery/model-volcano-chatgpt-55.png" alt="chatgpt-5.5 volcano plots"></td>
-  </tr>
-  <tr bgcolor="#ffffff">
-    <td align="center" bgcolor="#ffffff"><b>（1）国内 LLM：minimax-m3</b></td>
-    <td align="center" bgcolor="#ffffff"><b>（2）国外 LLM：chatgpt-5.5</b></td>
-  </tr>
-</table>
-
-#### 3. 玫瑰图
-
-<table>
-  <tr bgcolor="#ffffff">
-    <td width="50%" align="center" valign="bottom" bgcolor="#ffffff"><img src="assets/gallery/model-rose-minimax-m3.png" alt="minimax-m3 rose chart"></td>
-    <td width="50%" align="center" valign="bottom" bgcolor="#ffffff"><img src="assets/gallery/model-rose-chatgpt-55.png" alt="chatgpt-5.5 rose chart"></td>
-  </tr>
-  <tr bgcolor="#ffffff">
-    <td align="center" bgcolor="#ffffff"><b>（1）国内 LLM：minimax-m3</b></td>
-    <td align="center" bgcolor="#ffffff"><b>（2）国外 LLM：chatgpt-5.5</b></td>
-  </tr>
-</table>
-
-### 三、有无《统计图形与艺术》思想支撑的 skill 绘图差异
-
-这一组展示 skill 是否增加《统计图形与艺术》的绘图思想作为支撑后，在分组、留白、刻度参考、标签完整性和图形层级上的差异。
-
-#### 1. 雷达图
-
-<table>
-  <tr bgcolor="#ffffff">
-    <td width="50%" align="center" valign="bottom" bgcolor="#ffffff"><img src="assets/gallery/art-radar-without-guidance.png" alt="Radar chart without statistical graphics guidance"></td>
-    <td width="50%" align="center" valign="bottom" bgcolor="#ffffff"><img src="assets/gallery/art-radar-with-guidance.png" alt="Radar chart with statistical graphics guidance"></td>
-  </tr>
-  <tr bgcolor="#ffffff">
-    <td align="center" bgcolor="#ffffff"><b>（1）无《统计图形与艺术》的绘图思想作为支撑</b></td>
-    <td align="center" bgcolor="#ffffff"><b>（2）有《统计图形与艺术》的绘图思想作为支撑</b></td>
-  </tr>
-</table>
-
-#### 2. 玫瑰图
-
-<table>
-  <tr bgcolor="#ffffff">
-    <td width="50%" align="center" valign="bottom" bgcolor="#ffffff"><img src="assets/gallery/art-rose-without-guidance.png" alt="Rose chart without statistical graphics guidance"></td>
-    <td width="50%" align="center" valign="bottom" bgcolor="#ffffff"><img src="assets/gallery/art-rose-with-guidance.png" alt="Rose chart with statistical graphics guidance"></td>
-  </tr>
-  <tr bgcolor="#ffffff">
-    <td align="center" bgcolor="#ffffff"><b>（1）无《统计图形与艺术》的绘图思想作为支撑</b></td>
-    <td align="center" bgcolor="#ffffff"><b>（2）有《统计图形与艺术》的绘图思想作为支撑</b></td>
-  </tr>
-</table>
+| 对比组 | 预览 | 说明 |
+|--------|------|------|
+| **一、四大医学期刊风格差异** | <table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;border-spacing:0;"><tr style="line-height:0;"><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="assets/gallery/journal-km-lancet.png" width="140"></td><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="assets/gallery/journal-km-nejm.png" width="140"></td><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="assets/gallery/journal-km-jama.png" width="140"></td><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="assets/gallery/journal-km-bmj.png" width="140"></td></tr><tr style="line-height:0;"><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="assets/gallery/journal-forest-lancet.png" width="140"></td><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="assets/gallery/journal-forest-nejm.png" width="140"></td><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="assets/gallery/journal-forest-jama.png" width="140"></td><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="assets/gallery/journal-forest-bmj.png" width="140"></td></tr></table> | 比较 Lancet、NEJM、JAMA、BMJ 四大期刊的 KM 曲线和森林图风格差异，主要体现在配色方案上。 |
+| **二、国内外模型绘制效果差异** | <table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;border-spacing:0;"><tr style="line-height:0;"><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="assets/gallery/model-roc-minimax-m3.png" width="140"></td><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="assets/gallery/model-roc-chatgpt-55.png" width="140"></td></tr><tr style="line-height:0;"><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="assets/gallery/model-volcano-minimax-m3.png" width="140"></td><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="assets/gallery/model-volcano-chatgpt-55.png" width="140"></td></tr><tr style="line-height:0;"><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="assets/gallery/model-rose-minimax-m3.png" width="140"></td><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="assets/gallery/model-rose-chatgpt-55.png" width="140"></td></tr></table> | 比较国内 LLM `minimax-m3` 与国外 LLM `chatgpt-5.5` 在 ROC 曲线、火山图和玫瑰图上的绘制效果。 |
+| **三、有无《统计图形与艺术》思想支撑** | <table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;border-spacing:0;"><tr style="line-height:0;"><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="assets/gallery/art-radar-without-guidance.png" width="140"></td><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="assets/gallery/art-radar-with-guidance.png" width="140"></td></tr><tr style="line-height:0;"><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="assets/gallery/art-rose-without-guidance.png" width="140"></td><td style="padding:0;line-height:0;font-size:0;"><img style="display:block;margin:0;border:0;" src="assets/gallery/art-rose-with-guidance.png" width="140"></td></tr></table> | 展示增加《统计图形与艺术》绘图思想支撑后，在分组、留白、刻度、标签和图形层级上的差异。 |
 
 ## 仓库结构
 
