@@ -60,16 +60,6 @@ while (file.exists(web_file) && file.info(web_file)$size > limit && attempt <= 6
   attempt <- attempt + 1
 }
 
-manifest <- file.path(figures_dir, paste0(name, "_exports.txt"))
-writeLines(c(
-  paste("PDF:", normalizePath(pdf_file, winslash = "/", mustWork = FALSE)),
-  paste("SVG:", normalizePath(svg_file, winslash = "/", mustWork = FALSE)),
-  paste("TIFF:", normalizePath(tiff_file, winslash = "/", mustWork = FALSE)),
-  paste("Web:", normalizePath(web_file, winslash = "/", mustWork = FALSE)),
-  paste("Web bytes:", if (file.exists(web_file)) file.info(web_file)$size else NA),
-  paste("DPI:", dpi)
-), manifest)
-
 message("Exported: ", pdf_file)
 message("Exported: ", svg_file)
 message("Exported: ", tiff_file)

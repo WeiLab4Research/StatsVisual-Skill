@@ -1,298 +1,267 @@
 # Box Plot
 
-## Use For
+## 1. Scope and Definition
 
-Use box plots to compare continuous distributions across groups. The box summarizes median and IQR; whiskers and outliers depend on rule, commonly 1.5 IQR.
+Box plots summarize a continuous distribution using the median, first and third quartiles (`Q1`, `Q3`), and interquartile range (`IQR = Q3 - Q1`). Under the common Tukey rule, whiskers extend to the most extreme observations within `1.5 × IQR` of the box; observations beyond the whiskers are flagged as potential outliers, not automatically as data errors.
 
-## Variants
+Boxenplots, violin plots, beeswarm plots, pirate plots, and raincloud plots extend the basic box plot by showing additional tail structure, density shape, or raw observations.
 
-- Basic box plot.
-- Grouped box plot.
-- Violin plot for distribution shape.
-- Beeswarm/jitter overlay for raw observations.
-- Raincloud plot combining half-violin, box, and points.
-- Mean point plus CI overlay when mean is clinically relevant.
+## 2. Selection Guide
 
-## Core Mapping Logic
+| Analytical purpose | Recommended chart |
+|---|---|
+| Summarize one continuous distribution | Box Plot |
+| Compare distributions across one or two grouping variables | Stratified Box Plot |
+| Compare medians with an approximate notch interval | Notched Box Plot |
+| Show detailed tail quantiles in large samples | Boxenplot(enhanced box plot) |
+| Display one prespecified side of a distribution | Pagoda Plot |
+| Show smoothed distribution shape together with quartiles | Violin Plot |
+| Show individual observations without excessive overlap | Beeswarm Plot |
+| Combine density, raw observations, and a central summary | Pirate Plot |
+| Combine half-density, box summary, and raw observations | Raincloud Plot |
+| Compare subgroup distributions within each main group | Grouped Raincloud Plot |
+
+## 3. Required Data Structure
+
+- Standard box, violin, and beeswarm plots require individual-level observations with one continuous outcome and an optional categorical grouping variable.
+- Stratified and grouped raincloud plots additionally require a main group and a subgroup; repeated observations should retain a subject identifier so dependence is not mistaken for independent sampling.
+- Boxenplots require sufficiently large group sizes to estimate deeper quantiles reliably. Notched plots require adequate observations within each group.
+- Pagoda plots require an explicitly defined one-sided transformation. Pirate and raincloud plots require raw observations plus any group-level summaries used in additional layers.
+
+## 4. Common Statistical Principles
+
+- The box shows the median and middle 50% of observations; it does not show the mean, sample size, multimodality, or confidence interval unless these are added explicitly.
+- Tukey outliers are observations beyond a graphical rule, not confirmed errors. Investigate data quality and clinical plausibility before excluding them.
+- Compare groups descriptively with medians, `IQR`, tails, and raw observations. Visual separation alone does not establish statistical significance.
+- For skewed outcomes, report median and `IQR` or use a justified transformation. Use the same scale and units across groups intended for direct comparison.
+- Notches provide an approximate interval around the median. Their overlap is only a visual guide and should not replace a prespecified inferential analysis.
+
+## 5. Common Visual Rules
+
+- Place the title and legend at the top and center them.
+- Do not add a gridline background.
+- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- Add value labels only when they improve interpretation without crowding the figure.
+- Keep group order, color meaning, axis limits, and measurement units consistent across related panels.
+- Show raw observations for small or moderate samples when feasible; control point size, transparency, and outlier display in large samples.
+
+## 6. Variants
 
 ### Box Plot
 
 ![Box Plot](../assets/gallery/box/box.png)
 
-**Applicable Data**
+**Statistical Features**
 
-- The population distribution of a single continuous variable.
-- Or a categorical variable corresponds to a continuous variable, but when only displaying the population, `x` is set to a single group.
+- Summarizes one continuous distribution by the median, `Q1`, `Q3`, `IQR`, whiskers, and potential outliers.
+- Whisker endpoints are the most extreme observed values within the selected Tukey limits, not necessarily the minimum and maximum.
 
-**Mapping Logic**
+**Visual Features**
 
-- `x`: Single group or categorical variable.
-- `y`: continuous variable.
-- Use `stat_boxplot(geom = "errorbar")` to draw the box-whisker endpoints.
-- Use `geom_boxplot()` to draw bins, median lines, and outliers.
-- Cabinets are built based on `Q1`, `median`, `Q3`; must generally extend to the extremes of the `1.5 × IQR` range.
+- A rectangular box contains the middle 50% of observations, with a line marking the median.
+- Whiskers extend from the box and observations beyond them appear as separate points.
 
-**Additional Requirements**
+**Code Features**
 
-- If the overall sample size is extremely large, there may be too many outlier points, and the outlier style should be controlled to avoid blackening the screen.
-- If the purpose is to compare population distributions rather than between groups, a single `x` level is usually sufficient.
-- There need to be short horizontal lines on both sides of the box plot indicating the upper and lower limits (upper limit: Q3+1.5IQR; lower limit: Q1-1.5IQR)
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- Map the continuous outcome to `y` and use a single `x` level for an overall distribution.
+- Draw whisker caps with `stat_boxplot(geom = "errorbar")` and the summary with `geom_boxplot()`; control outlier appearance separately.
+
+- code reference:source script `\StatsVisual-Skill\assets\templates\box\Box Plot.R`
 
 ### Stratified Box Plot
 
 ![Stratified Box Plot](../assets/gallery/box/stratified.png)
 
-**Applicable Data**
+**Statistical Features**
 
-- Comparison of the distribution of a continuous variable between different groups.
-- It can be a single-level grouping or a two-factor grouping, such as gender × educational system.
+- Compares the location, spread, skewness, and potential outliers of a continuous outcome across predefined groups.
+- With two grouping variables, side-by-side boxes show subgroup distributions but do not by themselves test interaction.
 
-**Mapping Logic**
+**Visual Features**
 
-- `x`: Main grouping variable.
-- `y`: continuous variable.
-- `fill` or `color`: subgroup variable.
-- Use `geom_boxplot()` to draw multiple groups of boxes.
-- When grouping in a single layer, press `x = group` directly.
-- `x = school_grade` and `fill = gender` are often used for double-layer grouping, and intra-group comparison is displayed through dodge.
-- When comparing multiple panels, you can use `plot_grid()` or `patchwork` for splicing.
+- Each group has a separate box on a shared numerical axis.
+- A subgroup variable may create adjacent colored boxes within each main category; multiple panels can separate one-factor and two-factor comparisons.
 
-**Additional Requirements**
+**Code Features**
 
-- If you display single-factor and dual-factor results at the same time, it is recommended to use the `A / B` panel label.
-- There need to be short horizontal lines on both sides of the box plot indicating the upper and lower limits (upper limit: Q3+1.5IQR; lower limit: Q1-1.5IQR)
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- Map the main grouping variable to `x`, the continuous outcome to `y`, and the subgroup to `fill` or `color`.
+- Use `geom_boxplot()` with consistent dodge and scales; combine related panels with `plot_grid()` or `patchwork`.
+
+- code reference:source script `\StatsVisual-Skill\assets\templates\box\Stratified Box Plot.R`
 
 ### Notched Box Plot
 
 ![Notched Box Plot](../assets/gallery/box/notched.png)
 
-**Applicable Data**
+**Statistical Features**
 
-- Continuous variable data need to be compared between different group medians and their uncertainties.
-- Often used to compare medians between two or a small number of groups.
+- Adds an approximate uncertainty interval around each group median.
+- Non-overlapping notches suggest a difference in medians, but notch overlap is not a formal hypothesis test and is sensitive to sample size and distribution shape.
 
-**Mapping Logic**
+**Visual Features**
 
-- Same as regular boxplot, but adds `notch = TRUE` to `geom_boxplot()`.
-- `notchwidth` is used to control the groove width.
-- `x`: Group variable.
-- `y`: continuous variable.
-- `fill`: group variable or stratification variable.
+- The box narrows around the median, producing a waist-like notch.
+- Notch width differs across groups according to the estimated uncertainty of the median.
 
-**Additional Requirements**
+**Code Features**
 
-- Notches are used to represent the 95% confidence interval of the median, which can often be approximated as an aid in comparison between groups.
-- The vertical axis range should not be cut excessively, otherwise the visual effect of the groove will be distorted.
-- There need to be short horizontal lines on both sides of the box plot indicating the upper and lower limits (upper limit: Q3+1.5IQR; lower limit: Q1-1.5IQR)
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
-- code reference:source script `\StatsVisual-Skill\assets\templates\Notched Box Plot.R`
+- Use the standard box-plot mappings and set `notch = TRUE` in `geom_boxplot()`.
+- Control the horizontal notch shape with `notchwidth`; retain sufficient y-axis range so the notch is not visually distorted.
+
+- code reference:source script `\StatsVisual-Skill\assets\templates\box\Notched Box Plot.R`
 
 ### Boxenplot(enhanced box plot)
 
 ![Boxenplot (enhanced box plot)](../assets/gallery/box/enhanced.png)
 
-![Boxenplot (LV plot)](../assets/gallery/box/lvplot.png)
+**Statistical Features**
 
-**Applicable Data**
+- Extends the box plot with progressively deeper letter-value quantiles, providing more information about both tails in large samples.
+- It is more stable than displaying numerous isolated outlier points when group sizes are large, but deep quantiles remain unreliable in small groups.
 
-- Large sample continuous data.
-- It is necessary to show more detailed tail distribution and outlier structure beyond quartiles.
+**Visual Features**
 
-**Mapping Logic**
+- Nested boxes become narrower toward the tails, forming a layered distribution profile around the median.
+- Fill intensity can distinguish successive quantile levels beyond the conventional quartiles.
 
-- `x`: Categorical variable.
-- `y`: continuous variable.
-- Use `lvplot::geom_lv()`.
-- `fill = after_stat(LV)` represents different letter-value levels.
-- `k` controls the depth of quantile layers.
+**Code Features**
 
-**Additional Requirements**
+- Map group to `x` and the continuous outcome to `y`, then draw with `lvplot::geom_lv()`.
+- Map `after_stat(LV)` to `fill`; use `k` to control the number of letter-value layers supported by the sample size.
 
-- This chart is suitable for replacing traditional box plots when the sample size is large, showing a more detailed tail distribution.
-- Darker, narrower layers in the figure represent closer to extreme quantiles.
-- Starting from the median (M), extend to both ends, using darker colors and narrower boxes at 1/4 (F), 1/8 (E), 1/16 (D), 1/32 (C), 1/64 (B), 1/128 (A), 1/256 (Z), 1/512 (Y) from both ends, until the preset threshold is reached.
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
-- code reference:source script `\StatsVisual-Skill\assets\templates\boxenplot(enhanced box plot).R`
+- code reference:source script `\StatsVisual-Skill\assets\templates\box\Letter-value Box Plot.R`
 
 ### Pagoda Plot
 
-**Applicable Data**
+![Boxenplot (LV plot)](../assets/gallery/box/lvplot.png)
 
-- When the data has the characteristics that the upper and lower directions can be ignored, an enhanced box plot can be used to display the data distribution, that is, only the distribution on one side of the data median is displayed, similar to the Big Wild Goose Pagoda, a landmark building in Xi'an.
-- Commonly used in the upper and tail display of single group or single gender data.
+**Statistical Features**
 
-**Mapping Logic**
+- Displays only one prespecified side of a distribution after compressing or truncating the opposite side.
+- Because the full distribution is no longer retained, it should be used only when the directional tail is the explicit analytical focus.
 
-- First perform unilateral truncation or folding on the original continuous variables:
-  - Press the side below the center to the center;
-  - Or just keep the distribution above the median.
-- `x`: Categorical variable.
-- `y`: Value after unilateral processing.
-- Use `geom_lv()` to generate a one-sided boosted boxplot.
-- `fill = ..LV..` or `after_stat(LV)` maps the quantile level.
+**Visual Features**
 
-**Additional Requirements**
+- Successive letter-value boxes taper in one direction from a common central boundary, creating a pagoda-like silhouette.
+- The omitted or compressed half is not visually represented.
 
-- The wild goose pagoda relies on preprocessing, and it must be clearly stated in the code what kind of one-sided preservation or compression is done to the data.
-- This figure is suitable for the situation where "only one side of the tail structure is concerned" and is not suitable for complete distribution comparison.
-- Chromatography is usually performed using either a divergent or a continuous scheme, but saturation still needs to be kept low.
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
-- code reference:source script `\StatsVisual-Skill\assets\templates\Pagoda Plot.R`
+**Code Features**
+
+- Create a transformed outcome that preserves the selected side and sets observations on the opposite side to the chosen center or boundary.
+- Draw the transformed variable with `geom_lv()` and map the letter-value level to `fill`; document the transformation explicitly.
+
+- code reference:source script `\StatsVisual-Skill\assets\templates\box\Pagoda Plot.R`
 
 ### Violin Plot
 
 ![Violin Plot](../assets/gallery/box/violin.png)
 
-**Applicable Data**
+**Statistical Features**
 
-- Comparison of distributions of continuous variables across multiple groups.
-- Want to show both box and line summary and kernel density morphology.
-- Commonly used for omics expression, clinical indicator distribution differences, etc.
+- Shows a kernel-density estimate of a continuous outcome across groups and can reveal skewness or multimodality hidden by quartile summaries.
+- Density shape depends on bandwidth and group sample size; violin width is not a direct count unless explicitly scaled to sample size.
 
-**Mapping Logic**
+**Visual Features**
 
-- `x`: Group variable.
-- `y`: continuous variable.
-- Use `geom_violin()` to draw the kernel density contour.
-- `geom_boxplot()` and `stat_boxplot()` can be stacked to display quartiles and whiskers.
-- `fill` / `color`: group variable.
+- A symmetric density envelope widens where observations are concentrated and narrows where they are sparse.
+- A narrow internal box plot can add the median, quartiles, whiskers, and potential outliers.
 
-**Additional Requirements**
+**Code Features**
 
-- Kernel density distribution + traditional box plot, but the box width must be significantly smaller than the violin width.
-- When the number of groups is large, the violin diagram is easily crowded, and the width of the diagram should be controlled.
-- If the kernel density is too smooth, the multimodal structure will be obscured, and the bandwidth needs to be moderate.
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- Draw the density with `geom_violin()` and optionally overlay a narrow `geom_boxplot()` and `stat_boxplot()`.
+- Keep bandwidth, trimming, and scale settings comparable across groups when shapes are interpreted jointly.
+
+- code reference:source script `\StatsVisual-Skill\assets\templates\box\Violin Plot.R`
 
 ### Beeswarm Plot
 
 ![Beeswarm Plot](../assets/gallery/box/beeswarm.png)
 
-**Applicable Data**
+**Statistical Features**
 
-- The original points need to be overlaid on a boxplot or violin plot.
-- The sample size is medium, and we hope to observe the dense area and dispersion of points.
+- Displays individual observations while reducing overlap, allowing direct assessment of sample size, clusters, gaps, and extreme values.
+- It is most informative for small or moderate samples; very large datasets may require sampling or more compact summaries.
 
-**Mapping Logic**
+**Visual Features**
 
-- The body is usually `geom_violin()` or `geom_boxplot()`.
-- Original point layer:
-  - Bee colony diagram uses `geom_beeswarm()`;
-  - Fly charts use `geom_jitter()`.
-- `x`: Group variable.
-- `y`: continuous variable.
-- `color`: Additional stratification variable, such as `school_grade`.
+- Points spread laterally around each group while retaining their exact vertical outcome values.
+- A violin or box layer may provide a distribution summary behind the observations.
 
-**Additional Requirements**
+**Code Features**
 
-- The transparency of the dot layer should be moderate to avoid completely covering the cabinet or violin layer.
-- If coloring is superimposed on a second categorical variable, the legend must be clear.
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
-- code reference:source script `\StatsVisual-Skill\assets\templates\Beeswarm Plot.R`
+- Add raw observations with `geom_beeswarm()` for structured non-overlap or `geom_jitter()` for random displacement.
+- Map the outcome to `y`, group to `x`, and an optional subgroup to point color; use restrained transparency.
+
+- code reference:source script `\StatsVisual-Skill\assets\templates\box\Beeswarm Plot.R`
 
 ### Pirate Plot
 
 ![Pirate Plot](../assets/gallery/box/pirate.png)
 
-**Applicable Data**
+**Statistical Features**
 
-- I hope to display the distribution shape, original point and central trend in one picture.
-- Suitable for comprehensive comparisons between a small number of groups.
+- Combines raw observations, distribution shape, and a central summary for a small number of groups.
+- The central layer must be defined explicitly as a mean, median, or interval so that readers do not infer the wrong summary.
 
-**Mapping Logic**
+**Visual Features**
 
-- Often the following layers are combined:
-  - `geom_violin()`: Display distribution shape;
-  - `geom_jitter()`: Display the original point;
-  - `geom_boxplot()`: Display quartiles;
-  - `geom_bar(stat = "identity")` or other center layer: Displays median or mean "swim lanes".
-- `x`: grouping variable.
-- `y`: continuous variable.
-- `fill`/`color`: grouping variables.
+- A violin-shaped distribution, jittered observations, a compact box, and a central band are superimposed in one group profile.
+- The layered silhouette emphasizes both individual variability and the group center.
 
-**Additional Requirements**
+**Code Features**
 
-- The pirate chart needs to combine the characteristics of the bee colony chart, violin chart, and bar chart to make it more visually impactful.
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
-- code reference:source script `\StatsVisual-Skill\assets\templates\Pirate Plot.R`
+- Combine `geom_violin()`, `geom_jitter()`, and `geom_boxplot()` on the same grouped outcome.
+- Calculate the selected central statistic before plotting and add it in a separate layer with an encoding that does not obscure the raw data.
+
+- code reference:source script `\StatsVisual-Skill\assets\templates\box\Pirate Plot.R`
 
 ### Raincloud Plot
 
 ![Raincloud Plot](../assets/gallery/box/raincloud.png)
 
-**Applicable Data**
+**Statistical Features**
 
-- The distribution, center position and origin point need to be shown simultaneously.
-- Typically used for comparisons of continuous variables between a small number of groups.
+- Displays smoothed density, quartile summary, and individual observations simultaneously.
+- It supports descriptive group comparison without hiding distributional features, but formal inference must be reported separately.
 
-**Mapping Logic**
+**Visual Features**
 
-- Use `ggdist::stat_halfeye()` to draw a half violin/half eye density layer.
-- Use `geom_boxplot()` to stack the cabinets.
-- Use `stat_dots()` to draw the point column layer.
-- Often combined with `coord_flip()` to form a horizontal structure of "clouds above and rain below".
-- `x`: Group variable.
-- `y`: continuous variable.
-- `fill`: Group variable.
+- A half-density forms the cloud, a compact box represents the summary, and stacked dots form the rain.
+- Horizontal orientation commonly separates the three layers and improves comparison across groups.
 
-**Additional Requirements**
+**Code Features**
 
-- A cloud and rain chart is a composite chart that organically combines a half-violin chart (clouds) and a jittered scatter chart (rain).
-- `binwidth` of `stat_dots()` need to match the data scale.
-- When displaying horizontally, the axis title and layout must be adjusted simultaneously.
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
-- code reference:source script `\StatsVisual-Skill\assets\templates\Raincloud Plot.R`
+- Draw the half-density with `ggdist::stat_halfeye()`, add `geom_boxplot()`, and display observations with `stat_dots()`.
+- Match `adjust`, interval width, and dot `binwidth` to the data scale; use `coord_flip()` when a horizontal layout is required.
+
+- code reference:source script `\StatsVisual-Skill\assets\templates\box\Raincloud Plot.R`
 
 ### Grouped Raincloud Plot
 
 ![Grouped Raincloud Plot](../assets/gallery/box/stacked_raincloud.png)
 
-**Applicable Data**
+**Statistical Features**
 
-- A main grouping variable + a subgroup variable + a continuous variable.
-- The distribution of multiple subgroups needs to be compared simultaneously within the same main group.
+- Compares continuous distributions across a main group and subgroup while retaining density, quartiles, and individual observations.
+- Subgroup sample sizes and repeated-measure structure should be considered before interpreting apparent distribution differences.
 
-**Mapping Logic**
+**Visual Features**
 
-- Half violin layer uses `geom_flat_violin()` or project custom function.
-- The original point uses `geom_point(position = position_jitter(...))`.
-- Use `geom_boxplot()` for the cabinet layer.
-- `x`: Main group variable.
-- `y`: continuous variable.
-- `fill`/`color`: Subgroup variable.
-- The relative arrangement of half violins, points and cabinets is often controlled by position fine-tuning `position_nudge()`.
+- Within each main group, offset half-violins, compact boxes, and jittered points form parallel subgroup rainclouds.
+- Color distinguishes subgroups while positional nudging keeps the composite layers separate.
 
-**Additional Requirements**
+**Code Features**
 
-- The stacked cloud and rain chart is a composite chart that organically integrates the half-violin chart (cloud) + box chart (umbrella) + jittered scatter chart (rain). The layout should meet 
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
-- code reference:source script `\StatsVisual-Skill\assets\templates\Grouped Raincloud Plot.R`
+- Draw half-violins with `geom_flat_violin()` or the project custom function, raw points with jitter, and summaries with `geom_boxplot()`.
+- Map subgroup to `fill` and `color`, and coordinate `position_nudge()` and jitter widths so corresponding layers remain aligned.
 
-## QA
+- code reference:source script `\StatsVisual-Skill\assets\templates\box\Grouped Raincloud Plot.R`
 
-- State the outlier rule if outliers are discussed.
-- Do not hide raw data for small samples.
-- For skewed data, consider log scale, median/IQR, or robust summaries.
-- Avoid interpreting box width as sample size unless intentionally encoded.
+## 7. QA Checklist
+
+- Verify the outcome is continuous and each observation is assigned to the correct group.
+- State the whisker and outlier rule whenever outliers are interpreted; do not remove flagged observations without investigation.
+- Check group sample sizes before using notches, deep letter-value layers, or density estimates.
+- Confirm whether displayed centers are medians or means and whether raw points represent independent observations.
+- Use consistent scales and transformations, and avoid clipping tails or outliers with restrictive axis limits.
+- For Pagoda, Pirate, and grouped raincloud plots, document all preprocessing and composite-layer meanings.

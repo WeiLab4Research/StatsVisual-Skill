@@ -1,279 +1,241 @@
 # Heatmap
 
-## Use For
+## 1. Scope and Definition
 
-Use heatmaps for numeric matrices, correlation matrices, omics abundance matrices, confusion-style grids, or two-dimensional binned summaries.
+Heatmaps display values in a two-dimensional matrix using color. They are widely used for correlation matrices, omics abundance or expression data, quality-control summaries, and other sample-by-feature or variable-by-variable structures.
 
-## Variants
+This chapter also includes related relationship plots. Contour plots display a continuous surface, Sankey plots display flows, Venn and UpSet plots display set intersections, and calendar charts display daily values in a calendar layout. Their statistical meanings differ from those of a conventional heatmap.
 
-- Simple matrix heatmap.
-- Correlation heatmap.
-- Linkage disequilibrium heatmap.
-- Clustered heatmap.
-- Annotated omics heatmap.
-- Calendar/temporal heatmap.
-- Contour or filled contour for continuous surfaces.
+## 2. Selection Guide
 
-## Core Mapping Logic
+| Analytical purpose | Recommended chart |
+|---|---|
+| Display values in a numeric matrix | Basic Heatmap |
+| Show linkage disequilibrium among ordered genetic markers | Linkage Disequilibrium Heatmap |
+| Reveal similarity-based row or column structure | Clustered Heatmap |
+| Show two-dimensional density or a continuous surface with isolines | Contour Line Plot |
+| Show density or intensity intervals as filled regions | Contour with Filled Areas |
+| Display flow between source and destination categories | Sankey Plot |
+| Display intersections among a small number of sets | Venn Plot |
+| Display intersections among many sets | UpSet Plot |
+| Display daily values in a monthly calendar layout | Calendar Chart |
+
+## 3. Required Data Structure
+
+- Basic and clustered heatmaps require a numeric matrix or long table with row variable, column variable, and cell value. Correlation matrices should be square and use the same variables on both axes.
+- Linkage Disequilibrium Heatmap requires genotype or LD data together with markers ordered by genomic position.
+- Contour plots require paired continuous coordinates and either estimated density or a gridded `z` value.
+- Sankey Plot requires source, destination, and non-negative flow magnitude. Venn and UpSet plots require valid set membership data.
+- Calendar Chart requires one observation per date, plus correctly derived month, weekday, and week-within-month fields.
+
+## 4. Common Statistical Principles
+
+- State whether cell values are raw, centered, scaled, standardized, transformed, or model-derived; color has no interpretable meaning without a defined scale.
+- Use a sequential palette for one-directional magnitude and a diverging palette only when a meaningful center exists, such as correlation `0` or standardized value `0`.
+- Row and column order must follow the research question or a stated clustering method. Clustering reveals similarity under the chosen distance and linkage, not confirmed biological subtypes.
+- Distinguish missing values from true zeros. In temporal or abundance data, replacing missing values with zero can create false patterns.
+- These plots are descriptive. Apparent clusters, flows, intersections, or hot spots do not by themselves establish statistical significance or causality.
+
+## 5. Common Visual Rules
+
+- Do not add a gridline background.
+- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- Add value labels only when they improve interpretation without crowding the figure.
+- Use restrained, perceptually ordered color scales and keep scale limits consistent across figures intended for comparison.
+- Reduce, rotate, group, or selectively label rows and columns when the matrix is too large for readable text.
+
+## 6. Variants
 
 ### Basic Heatmap
 
 ![Basic Heatmap](../assets/gallery/heatmap/basic_heatmap.png)
 
-**Applicable Data**
+**Statistical Features**
 
-- Matrix data in the form of a two-dimensional matrix or long table.
-- Commonly used to display abundance, expression, correlation coefficient, exposure level correlation, etc.
+- Displays one numeric value for each row–column combination, such as abundance, expression, or correlation.
+- For correlation matrices, values should lie on the stated coefficient scale and use `0` as the neutral center.
 
-**Mapping Logic**
+**Visual Features**
 
-- `x`: column variable.
-- `y`: row variable.
-- `fill`: Numerical intensity in the matrix, such as correlation coefficient, abundance, content, or degree of connection.
-- Use `geom_tile()` as the core geometry layer.
-- Colors usually use continuous color scale; if the data has a central value (such as correlation coefficient 0), `scale_fill_gradient2()` is preferred.
-- If the label is long, you can use `str_wrap()` or preprocessing to wrap the label.
+- Equal-sized rectangular tiles form a matrix, and color intensity represents cell magnitude.
+- Symmetric matrices often show matching row and column labels and a visually prominent diagonal.
 
-**Additional Requirements**
+**Code Features**
 
-- Heatmaps are suitable for matrix comparisons, not for expressing precise numerical values ​​per se.
-- If it is a correlation matrix, it is recommended to use a symmetrical color band centered on 0.
-- The order of rows and columns must have statistical meaning; if there is no clustering, the ordering should be clearly based on original order or research semantics.
-- You can use white strokes on the grid borders to enhance the sense of segmentation, but they should not be too thick.
-- When the matrix is ​​too large, the text should be reduced and the x-axis text should be rotated
-- Place the legend on the right and center it vertically.
-- Place the title at the top and center it.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- Map column variable to `x`, row variable to `y`, and the matrix value to `fill`, then draw with `geom_tile()`.
+- Use `scale_fill_gradient2()` for centered data and `coord_fixed()` when square cells are required.
+
+- code reference:source script `\StatsVisual-Skill\assets\templates\heatmap\Basic Heatmap.R`
 
 ### Linkage Disequilibrium Heatmap
 
-**Applicable Data**
+**Statistical Features**
 
-- SNP-level genotype or linkage disequilibrium data.
-- Commonly used to show association structure among SNPs, haplotype blocks, or nearby genetic markers.
+- Displays pairwise linkage disequilibrium among SNPs or nearby genetic markers ordered along a genomic region.
+- The legend must state whether color represents `D'`, `r²`, or another LD statistic because these measures have different interpretations.
 
-**Mapping Logic**
+**Visual Features**
 
-- Input usually includes SNP genotypes or an LD matrix plus marker positions.
-- Use `LDheatmap::LDheatmap()` when working with the manuscript-style LD heatmap example.
-- The triangular heatmap encodes linkage disequilibrium strength through color intensity.
-- `genetic.distances` or equivalent marker-position information controls the genomic coordinate spacing.
+- Pairwise LD values form a triangular matrix beneath or above the diagonal.
+- A genomic-position track may run parallel to the matrix, with selected SNP names placed along the physical map.
 
-**Additional Requirements**
+**Code Features**
 
-- State whether the color encodes `D'`, `r^2`, or another LD statistic.
-- Preserve marker order by genomic position unless there is a documented reason to reorder.
-- Use a restrained sequential palette; darker color should correspond to stronger LD when following the manuscript example.
-- Keep SNP labels readable; for many markers, reduce labels or show only key markers instead of shrinking text excessively.
-- Place the title at the top and center it.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- Supply ordered genotype or LD data and marker positions to `LDheatmap::LDheatmap()`.
+- Use `genetic.distances` to preserve physical spacing and `SNP.name` only for selected markers that need annotation.
 
 ### Clustered Heatmap
 
 ![Clustered Heatmap](../assets/gallery/heatmap/clustered.png)
 
-**Applicable Data**
+**Statistical Features**
 
-- Square or near square matrix data.
-- Commonly found in correlation matrices, abundance matrices, and sample × feature matrices.
+- Reorders rows and columns according to similarity, allowing correlated variables, samples, or abundance profiles to appear together.
+- Results depend on preprocessing, distance measure, and linkage method; cluster branches are exploratory rather than inferential groups.
 
-**Mapping Logic**
+**Visual Features**
 
-- Typically `pheatmap()` is entered in matrix form.
-- `color`: Continuous color band, often constructed according to negative correlation - no correlation - positive correlation.
-- `cluster_rows`/`cluster_cols`: rearrange ranks by hierarchical clustering.
-- `annotation_row` / `annotation_col` can be appended to add grouping comments.
+- The colored matrix is accompanied by row and/or column dendrograms.
+- Similar profiles appear as adjacent blocks, producing visible clusters of related cells.
 
-**Additional Requirements**
+**Code Features**
 
-- The core of the cluster heat map is not simple coloring, but revealing the proximity of variables or samples through distance structure.
-- The original row and column order is no longer retained and rearranged by similarity.
-- The higher the similarity → the closer the distance → the earlier the clustering tree is merged and the branches are shorter
-- Place the legend on the right and center it vertically.
-- Place the title at the top and center it.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- Provide a numeric matrix to `pheatmap()` and specify row and column clustering as required.
+- Define the color breaks and add `annotation_row` or `annotation_col` only when metadata are available and correctly aligned.
+
+- code reference:source script `\StatsVisual-Skill\assets\templates\heatmap\Clustered Heatmap.R`
 
 ### Contour Line Plot
 
 ![Contour Line Plot](../assets/gallery/heatmap/contour_line.png)
 
-**Applicable Data**
+**Statistical Features**
 
-- Two continuous variables + an implicit intensity dimension derived from 2D density estimation.
-- Suitable for expressing three-dimensional density information in two-dimensional way.
-- Typical examples include two-dimensional density of eruption time and waiting time.
+- Represents levels of a two-dimensional density estimate or continuous surface across two numerical variables.
+- With `stat_density2d()`, contours describe estimated observation density and depend on kernel and bandwidth choices.
 
-**Mapping Logic**
+**Visual Features**
 
-- `x`: Continuous variable 1.
-- `y`: Continuous variable 2.
-- Use `stat_density2d()` to calculate and plot 2D kernel density contours.
-- `colour = after_stat(level)` maps contour levels to colors.
-- Often superimposed on `geom_point()` to display the original observation point.
+- Curved isolines connect locations with equal estimated density or equal `z` value.
+- Raw observations may remain visible beneath the contour lines.
 
-**Additional Requirements**
+**Code Features**
 
-- If the number of points is small, the contour plot may be unstable and should be used with caution.
-- Contour colors need to correspond monotonically to density levels.
-- If original points have been overlaid, point and line colors must be avoided to be confused.
-- Place the legend on the right and center it vertically.
-- Place the title at the top and center it.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
-- code reference:source script `\StatsVisual-Skill\assets\templates\Contour Line Plot.R`
+- Map the two continuous variables to `x` and `y` and use `stat_density2d()` for kernel-density contours.
+- Map `after_stat(level)` to line color and add `geom_point()` when the source observations should remain visible.
+
+- code reference:source script `\StatsVisual-Skill\assets\templates\heatmap\Contour Line Plot.R`
 
 ### Contour with Filled Areas
 
 ![Contour with Filled Areas](../assets/gallery/heatmap/filled_contour.png)
 
-**Applicable Data**
+**Statistical Features**
 
-- Same as contour plots, suitable for density or intensity distributions of two-dimensional continuous variables.
-- Regular grid data is usually obtained in advance, such as `x-y-z` format.
+- Displays intervals of a continuous surface or estimated density using filled contour bands.
+- The number and boundaries of contour levels determine the apparent hot spots and should be chosen deliberately.
 
-**Mapping Logic**
+**Visual Features**
 
-- `x`: Continuous variable 1.
-- `y`: Continuous variable 2.
-- `z`: Density or intensity value.
-- Use `geom_contour_filled()` to draw the filled outline area.
-- The color band layering reflects the range of `z`.
+- Adjacent colored regions represent ranges of `z`, separated by contour boundaries.
+- The filled surface emphasizes broad high- and low-intensity regions more strongly than contour lines alone.
 
-**Additional Requirements**
+**Code Features**
 
-- Compared with simple contour plots, contour filled plots place more emphasis on continuous intensity intervals.
-- Filled pictures tend to look gaudy due to too many color levels, so the number of segments needs to be limited.
-- Additional grid or border decoration should be reduced.
-- When hot spots need to be highlighted, contour fill plots are often better than single-line contour plots.
-- Place the legend on the right and center it vertically.
-- Place the title at the top and center it.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
-- code reference:source script `\StatsVisual-Skill\assets\templates\Contour with Filled Areas.R`
+- Supply gridded `x`, `y`, and `z` values and draw with `geom_contour_filled()`.
+- Limit the number of contour bands and use an ordered palette whose legend clearly reports the interval scale.
+
+- code reference:source script `\StatsVisual-Skill\assets\templates\heatmap\Contour with Filled Areas.R`
 
 ### Sankey Plot
 
 ![Sankey Plot](../assets/gallery/heatmap/sankey.png)
 
-**Applicable Data**
+**Statistical Features**
 
-- Source-destination-traffic data.
-- Commonly used in case input sources and places, energy flow, material flow, etc.
+- Displays non-negative flow or count between source and destination categories.
+- Flow width represents magnitude; direction indicates the specified pathway but does not by itself establish causal transmission.
 
-**Mapping Logic**
+**Visual Features**
 
-- Draw using `ggalluvial` system.
-- `axis1`, `axis2`: two-end categories.
-- `y`: Traffic or number of people.
-- `fill`: Typically maps to endpoint, origin, or flow category.
-- `geom_alluvium()` draws the flow direction zone.
-- `geom_stratum()` draws the category rectangle layer.
-- `geom_text(stat = "stratum")` label category name.
+- Rectangular strata represent categories and curved ribbons connect sources to destinations.
+- Ribbon thickness changes in proportion to the flow assigned to each connection.
 
-**Additional Requirements**
+**Code Features**
 
-- The width of each stream must correspond to the numerical size.
-- When the number of categories is too large, the number of colors and label crowding must be controlled.
-- If there are many flow directions, it is preferable to turn off the legend and label the categories directly on the layer.
-- Place the legend on the right and center it vertically.
-- Place the title at the top and center it.
-- Do not add a gridline background.
-- code reference:source script `\StatsVisual-Skill\assets\templates\Sankey Plot.R`
+- Map source and destination to `axis1` and `axis2`, flow magnitude to `y`, and draw ribbons with `geom_alluvium()`.
+- Add category blocks with `geom_stratum()` and labels with `geom_text(stat = "stratum")`.
+
+- code reference:source script `\StatsVisual-Skill\assets\templates\heatmap\Sankey Plot.R`
 
 ### Venn Plot
 
 ![Venn Plot](../assets/gallery/heatmap/venn.png)
 
-**Applicable Data**
+**Statistical Features**
 
-- Show the intersection relationship of a small number of sets (usually <=5 groups).
-- Commonly used in gene sets, differentially expressed gene sets, overlapping research object sets, etc.
-- Can be composed of multiple vector or list objects.
+- Displays membership and overlap among a small number of sets.
+- Intersection counts are the primary quantities; circle area and overlap area are not necessarily proportional unless the method explicitly supports area scaling.
 
-**Mapping Logic**
+**Visual Features**
 
-- Use `ggvenn()`.
-- The input is usually a named list, where each element is a set member.
-- `show_percentage = TRUE/FALSE` controls whether to display the intersection ratio.
-- `fill`: Collection fill color.
-- The overlapping area between circles does not necessarily map exactly by quantity, but the intersection labels should be accurate.
+- Each set is represented by a circle, and overlapping regions represent shared members.
+- Counts or percentages appear within the corresponding exclusive and intersecting regions.
 
-**Additional Requirements**
+**Code Features**
 
-- Venn diagrams are suitable for use when the number of sets is small, and it is generally not recommended to exceed 4–5 sets.
-- The focus is on the number of intersections and combination relationships, rather than the precise comparison of the circle areas themselves.
-- Colors should be mild and transparent to ensure overlapping areas are still legible.
-- Place the legend on the right and center it vertically.
-- Place the title at the top and center it.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
-- code reference:source script `\StatsVisual-Skill\assets\templates\Venn Plot.R`
+- Store set members in a named list and draw with `ggvenn()`.
+- Use `show_percentage` only when the denominator is defined clearly and keep the number of sets limited.
+
+- code reference:source script `\StatsVisual-Skill\assets\templates\heatmap\Venn Plot.R`
 
 ### UpSet Plot
 
 ![UpSet Plot](../assets/gallery/heatmap/upset.png)
 
-**Applicable Data**
+**Statistical Features**
 
-- Display of intersection relationships for multiple sets (usually > 5 sets).
-- Commonly used for symptom combinations, intersection of gene sets, co-occurrence of multiple phenotypes, etc.
+- Displays exact intersection sizes across multiple sets and is preferable to a Venn diagram when the number of sets is large.
+- Set size and intersection size are different quantities and must not be confused.
 
-**Mapping Logic**
+**Visual Features**
 
-- Use `UpSetR::upset()`.
-- The input is typically a 0/1 matrix or wide table, with each column representing a set member state.
-- Horizontal bars indicate collection size.
-- Dot matrix + connected line represents intersection combination.
-- The vertical bar chart represents the size of each intersection combination.
+- Horizontal bars show total set sizes, while a dot-and-line matrix identifies each intersection combination.
+- Vertical bars above the matrix show the size of the corresponding intersection.
 
-**Additional Requirements**
+**Code Features**
 
-- Must meet:
-  - Horizontal bars represent individual collection sizes;
-  - Vertical bars represent intersection combination sizes.
-- The set order and intersection order must be consistent with the research question, and they must be sorted by numerical value.
-- Place the title at the top and center it.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
-- code reference:source script `\StatsVisual-Skill\assets\templates\UpSet Plot.R`
+- Supply a binary membership table to `UpSetR::upset()`.
+- Control the number and ordering of displayed sets and intersections using `nsets`, `nintersects`, and `order.by`.
+
+- code reference:source script `\StatsVisual-Skill\assets\templates\heatmap\UpSet Plot.R`
 
 ### Calendar Chart
 
 ![Calendar Chart](../assets/gallery/heatmap/calendar.png)
 
-**Applicable Data**
+**Statistical Features**
 
-- Time series data recorded by date.
-- Typical examples include the number of daily new cases, daily number of events, and daily monitoring values.
+- Displays a daily count or measurement in its calendar context and supports detection of temporal clusters, peaks, and gaps.
+- Missing dates must remain distinct from zero-event days.
 
-**Mapping Logic**
+**Visual Features**
 
-- `x`: week dimension.
-- `y`: Week number in the month.
-- `fill`: Daily value.
-- Use `geom_tile()` to draw the calendar grid.
-- Use `geom_text()` to mark the date numbers in the grid.
-- `facet_wrap(~ month)` forms a monthly faceted calendar layout.
-- Often used with `scale_y_reverse()` to make the calendar from top to bottom more consistent with reading habits.
+- Each day is a colored tile positioned by weekday and week within the month.
+- Monthly facets reproduce the familiar calendar structure, with darker or warmer tiles indicating larger values.
 
-**Additional Requirements**
+**Code Features**
 
-- Date derived fields must be generated correctly first: month, week number, day of week, day number.
-- The faceted month order must also be set explicitly.
-- The fill color should be light-dark enough to be distinct, but should not overwhelm the date text.
-- The darker/warmer the color, the higher the value, the more events, and the stronger the indicator; the lighter/cooler the color, the lower the value, and the fewer occurrences.
-- Place the legend on the right and center it vertically.
-- Place the title at the top and center it.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
-- code reference:source script `\StatsVisual-Skill\assets\templates\Calendar Chart.R`
+- Derive ordered month, weekday, day number, and week-within-month variables from a valid date field.
+- Draw with `geom_tile()`, add day numbers with `geom_text()`, facet by month, and use `scale_y_reverse()` for conventional calendar orientation.
 
-## QA
+- code reference:source script `\StatsVisual-Skill\assets\templates\heatmap\Calendar Chart.R`
 
-- State whether values are raw, centered, scaled, z-scored, or transformed.
-- Use perceptually ordered palettes; avoid rainbow.
-- Keep dendrograms only when clustering is meaningful.
-- Avoid tiny unreadable labels; filter, group, or annotate selected features.
+## 7. QA Checklist
+
+- Verify matrix dimensions, row–column labels, and alignment of annotations or metadata.
+- Confirm the value scale, transformation, center, color limits, and treatment of missing values.
+- For clustered heatmaps, report preprocessing, distance, linkage, and whether rows, columns, or both were clustered.
+- For LD heatmaps, confirm marker order, genome position, and the LD statistic shown.
+- For Sankey, Venn, and UpSet plots, verify flow totals or set memberships and ensure displayed counts reconcile with the source data.
+- For contour and calendar plots, verify bandwidth or grid definition, date derivation, and the distinction between zero and missing values.

@@ -1,343 +1,271 @@
 # Survival Curve
 
-## Use For
+## 1. Scope and Definition
 
-Use survival curves when both event occurrence and time to event matter. Required fields are follow-up time and event status; optional fields include group and covariates.
+Survival curves describe the distribution of time from a defined origin to a prespecified event while accounting for right censoring. The Kaplan–Meier estimator reports the probability of remaining event-free beyond time `t`; each downward step occurs at an observed event time.
 
-## Variants
+Survival graphics may also display cumulative hazard, numbers at risk, model-adjusted survival, or Cox-model diagnostics. These quantities answer different statistical questions and must be labeled accordingly.
 
-- Kaplan-Meier survival curve.
-- Curve truncated to a clinically meaningful follow-up window.
-- Median survival line.
-- Confidence band.
-- Cumulative hazard curve.
-- Cumulative event curve.
-- Risk table and censor table.
-- Adjusted survival curve from Cox model.
-- Schoenfeld residual plot for proportional-hazards assumption.
-- Deviance/DFBETA diagnostics for Cox model.
+## 2. Selection Guide
 
-## Core Mapping Logic
+| Analytical purpose | Recommended chart |
+|---|---|
+| Describe unadjusted time-to-event experience by group | Kaplan–Meier Survival Plot |
+| Restrict the displayed follow-up window | Truncated Survival Plot |
+| Mark the time at which estimated survival reaches `0.50` | Median Survival Reference Plot |
+| Display uncertainty around Kaplan–Meier estimates | Survival Plot with Confidence Band |
+| Display accumulated hazard over follow-up | Cumulative Hazard Plot |
+| Show the remaining risk set at clinically meaningful times | Survival Plot with Risk Table |
+| Magnify low event probabilities or small early differences | Survival Curve with Inset Plot |
+| Compare prespecified survival-curve tests | Survival Curve Comparison Methods Plot |
+| Combine curves, risk table, and comparison results | Integrated Survival-and-Comparison Plot |
+| Assess the proportional-hazards assumption of a Cox model | Schoenfeld Residual Plot |
+| Identify observations poorly represented by a Cox model | Cox Deviance Residual Plot |
+| Display covariate-standardized survival from a fitted Cox model | Adjusted Survival Curve |
+
+## 3. Required Data Structure
+
+- Individual-level data require a clearly defined time origin, non-negative follow-up time, and event indicator; document the coding direction, usually `1 = event` and `0 = censored`.
+- Grouped curves require a prespecified grouping variable. Cox models additionally require correctly coded covariates and the exact analysis sample.
+- Dates or time units must be harmonized before fitting. Delayed entry, time-dependent covariates, recurrent events, interval censoring, and competing risks require specialized data structures and methods.
+- Retain subject identifiers, censoring reasons when available, and the numbers at risk and events over time.
+- Missing-data handling and administrative study-end rules must be defined before model fitting.
+
+## 4. Common Statistical Principles
+
+- Kaplan–Meier estimation assumes that censoring is independent of the future event process conditional on the analysis structure. Differential or informative loss to follow-up can bias estimates and comparisons.
+- Report the event definition, time origin, censoring rule, follow-up unit, and analysis population. Survival probability, cumulative event probability, cumulative hazard, and hazard ratio are not interchangeable.
+- A log-rank test compares unadjusted survival functions and is most efficient for proportional-type alternatives. Crossing curves or time-localized differences may require a prespecified weighted or robust alternative.
+- Confidence-band overlap is not a valid test of equality between groups. Use an appropriate survival comparison or regression model.
+- A Cox hazard ratio is conditional on the fitted model and assumes proportional hazards unless modeled otherwise. It does not equal a risk ratio or a difference in survival probability.
+- Curves become unstable when few participants remain at risk; interpret late follow-up together with the risk table and confidence intervals.
+
+## 5. Common Visual Rules
+
+- Place the title and legend at the top and center them.
+- Do not add a gridline background.
+- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- Add value labels only when they improve interpretation without crowding the figure.
+- Preserve the step-function form of Kaplan–Meier estimates and show censor marks unless omission is explicitly justified.
+- Keep curve order, colors, time units, axis limits, and risk-table order consistent across related panels.
+
+## 6. Variants
 
 ### Kaplan–Meier Survival Plot
 
 ![Kaplan–Meier Survival Plot](../assets/gallery/survival/km.png)
 
-**Applicable Data**
+**Statistical Methods and Features**
 
-- time-to-event raw data.
-- Contains at least:
-  - Follow-up time
-  - Event indicator variable, usually 1 = event occurred, 0 = censored/alive
-  - grouping variable, optional
+- Estimates the unadjusted survival or event-free probability for one or more groups using the product-limit estimator.
+- Downward steps represent events; censor marks indicate observed follow-up ending without the event and do not reduce the curve directly.
+- Group separation is descriptive unless accompanied by a prespecified comparison test or effect estimate.
 
-**Mapping Logic**
+**Code Features**
 
-- Fit `survfit(Surv(time, event) ~ group, data = df)` first.
-- Then use `ggsurvplot()` or `ggsurvfit()` to draw.
-- `x`: survival time
-- `y`: Cumulative survival probability
-- `color = group`
-- The censoring mark is drawn on the step curve by default and can be controlled by parameters such as `censor.shape`.
+- Fit `survfit(Surv(time, event) ~ group, data = df)` and draw with `ggsurvplot()` or `ggsurvfit()`.
+- Specify time units, group labels, censor marks, and whether the y-axis is shown as a proportion or percentage.
+- Keep the estimator as a step function; do not replace it with a smoothed line.
 
-**Additional Requirements**
-
-- The time unit must be specified in the axis title, such as years, months, days.
-- The encoding direction of `event` must be clear to avoid inverting the meaning of 0/1.
-- The survival curve is a step-shaped curve and should not be mistakenly changed to a smooth polyline.
-- Multiple sets of KM curves should be clearly distinguished using color or line type, and legends should be retained.
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- code reference: source script `\StatsVisual-Skill\assets\templates\survival_curve\Kaplan–Meier Survival Plot.R`
 
 ### Truncated Survival Plot
 
 ![Truncated Survival Plot](../assets/gallery/survival/truncated.png)
 
-**Applicable Data**
+**Statistical Methods and Features**
 
-- Same as conventional survival curve.
-- The study focuses on the early period of follow-up, or the long-term censoring is too much, so the display time needs to be limited to a specific window.
+- Restricts attention to a clinically or operationally meaningful follow-up window, particularly when the late risk set is very small.
+- Setting an axis limit changes only the displayed range; it does not administratively censor observations or refit the estimator.
+- The selected window should be prespecified or justified, and omitted late information should not be ignored in interpretation.
 
-**Mapping Logic**
+**Code Features**
 
-- The base fit is still `survfit(...)`.
-- Set in `ggsurvplot()` / `ggsurvfit()`:
-  - `xlim = c(t0, t1)`
-  - `break.x.by = ...`
-- Only the display range is changed, the basic fitting object is not changed.
+- Retain the original `survfit()` object and set `xlim = c(t0, t1)` and compatible time breaks for display restriction.
+- Keep the risk table on the same time range.
+- If the analysis itself must be administratively censored at `t1`, recode follow-up time and event status before constructing `Surv()`.
 
-**Additional Requirements**
-
-- Censoring is often used in scenarios where post-censoring is too high and the number of samples is rapidly reduced.
-- The time range of the risk table and the main graph panel must be consistent.
-- If critical late differences are lost after censoring, this should be noted in the description.
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- code reference: source script `\StatsVisual-Skill\assets\templates\survival_curve\Truncated Survival Plot.R`
 
 ### Median Survival Reference Plot
 
 ![Median Survival Reference Plot](../assets/gallery/survival/median.png)
 
-**Applicable Data**
+**Statistical Methods and Features**
 
-- General KM curve object.
-- Study highlights include median survival time or median event-free time.
+- Marks the earliest time at which the estimated survival function reaches or falls below `0.50`.
+- Median survival is a Kaplan–Meier summary and is not the raw median of observed follow-up times.
+- When fewer than half the participants experience the event during follow-up, median survival is not reached and should be reported as `NR`.
 
-**Mapping Logic**
+**Code Features**
 
-- Use `surv.median.line = "hv"` in `ggsurvplot()`.
-- The horizontal line represents `Survival = 0.5`.
-- Vertical lines indicate the median survival time of the corresponding group.
+- Use `surv.median.line = "hv"` in `ggsurvplot()` to add the `S(t) = 0.50` horizontal line and corresponding vertical reference.
+- Verify the median and its confidence interval from the fitted survival summary rather than reading only from the plotted line.
 
-**Additional Requirements**
-
-- Only when the curve drops below 50% is there an identifiable median survival time.
-- If the curve never reaches 50%, honestly state that "median survival time has not been reached."
-- For multiple group graphs, if the median survival time of each group is different, the cross reference line should be clearly identifiable.
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- code reference: source script `\StatsVisual-Skill\assets\templates\survival_curve\Median Survival Reference Plot.R`
 
 ### Survival Plot with Confidence Band
 
 ![Survival Plot with Confidence Band](../assets/gallery/survival/band.png)
 
-**Applicable Data**
+**Statistical Methods and Features**
 
-- General KM curve object.
-- The focus of the study is to present survival estimates and their uncertainties simultaneously.
+- Displays pointwise uncertainty around each estimated survival curve, commonly as a `95%` confidence band.
+- Bands usually widen late in follow-up as the risk set decreases.
+- Overlap or non-overlap of two bands is not a formal test of between-group survival differences.
 
-**Mapping Logic**
+**Code Features**
 
-- `ggsurvplot(fit, conf.int = TRUE, ...)`
-- Or equivalently add an interval band layer to the `ggsurvfit()` system.
-- `fill = group` corresponds to the interval band color.
-- `color = group` corresponds to the KM curve color.
+- Add intervals with `ggsurvplot(fit, conf.int = TRUE, ...)` or the corresponding `ggsurvfit` interval layer.
+- Match each band to its curve and retain sufficient transparency so the step estimates remain visible.
+- State the confidence level and interval transformation when it differs from the package default.
 
-**Additional Requirements**
-
-- It must be stated that the interval bands represent 95% confidence intervals.
-- The color of the interval band should have low transparency and should not cover the main curve.
-- When there are multiple groups, the fill color and curve color must be consistent in the same group.
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- code reference: source script `\StatsVisual-Skill\assets\templates\survival_curve\Survival Plot with Confidence Band.R`
 
 ### Cumulative Hazard Plot
 
 ![Cumulative Hazard Plot](../assets/gallery/survival/cumulative_hazard.png)
 
-**Applicable Data**
+**Statistical Methods and Features**
 
-- General survival fitting object.
-- The research focus shifts from "survival probability" to "event cumulative risk".
+- Displays the accumulated hazard `H(t)`, commonly estimated as `-log[S(t)]` from a Kaplan–Meier fit or by the Nelson–Aalen estimator.
+- Cumulative hazard is non-decreasing and is not a probability; it may exceed `1`.
+- If the intended estimand is cumulative event probability, plot `1 - S(t)` rather than cumulative hazard.
 
-**Mapping Logic**
+**Code Features**
 
-- Set `fun = "cumhaz"` in `ggsurvplot()`.
-- Or set `type = "cumhaz"` in `ggsurvfit()`.
-- `x`: Follow-up time
-- `y`: Cumulative risk / cumulative hazard function
-- `color = group`
+- Use `fun = "cumhaz"` in `ggsurvplot()` or `type = "cumhaz"` in `ggsurvfit()`.
+- Label the y-axis as `Cumulative Hazard` and do not format it as a percentage.
+- Use a cumulative-event transformation instead when the axis is labeled as event incidence or percentage.
 
-**Additional Requirements**
-
-- If the event rate is very low, consider nesting subgraphs to amplify small-scale differences.
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- code reference: source script `\StatsVisual-Skill\assets\templates\survival_curve\Cumulative Hazard Plot.R`
 
 ### Survival Plot with Risk Table
 
 ![Survival Plot with Risk Table](../assets/gallery/survival/risk_table.png)
 
-**Applicable Data**
+**Statistical Methods and Features**
 
-- The research report needs to provide the number of people at risk and the number of people censored at each time point.
-- Typically used for clinical trials or survival curve display in high-quality journals.
+- Reports the number of participants still under observation and event-free immediately before selected time points.
+- The table reveals when curve estimates are supported by few participants and may optionally include interval-specific censoring or event counts.
+- Risk-set imbalance should be considered when interpreting late differences between groups.
 
-**Mapping Logic**
+**Code Features**
 
-- The commonly used fitting object is `survfit2()`.
-- Use `ggsurvfit(fit, type = "survival" or "cumhaz")` for the main image.
-- Add table via `add_risktable(risktable_stats = "{n.risk} ({n.censor})", ...)`.
-- The main graph and the risk table share the same timeline.
+- Fit with `survfit2()` when using the `ggsurvfit` workflow, then add the table with `add_risktable()`.
+- Use `risktable_stats = "{n.risk} ({n.censor})"` only when the parenthetical value is clearly labeled as censoring.
+- Align time breaks, group order, colors, and units exactly with the main panel.
 
-**Additional Requirements**
-
-- Risk table text, line height, and main image width must be coordinated to avoid compressing the main image.
-- The order of the risk table must match the order of the curves and legend.
-- If the time scale is converted to months or years, the risk table must also use the same scale system simultaneously.
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- code reference: source script `\StatsVisual-Skill\assets\templates\survival_curve\Survival Plot with Risk Table.R`
 
 ### Survival Curve with Inset Plot
 
-**Applicable Data**
+**Statistical Methods and Features**
 
-- Cumulative risk or survival is generally low, but early or low-proportion interval differences need to be highlighted.
-- Commonly used to display results of cardiovascular or low event rate clinical trials.
+- Magnifies a prespecified low-probability or early-time region when clinically important differences are compressed in the full-scale panel.
+- The inset changes visual scale only and must not imply a larger absolute difference than the underlying estimand.
+- Reported event rates, log-rank `P` values, and hazard ratios must come from the stated analyses and should not be inferred from the inset.
 
-**Mapping Logic**
+**Code Features**
 
-- Main image: KM/cumulative risk plot for the full range.
-- Subfigure: Focus on a smaller y-axis range and supplement key HR, P value, event rate and other information through `annotate()`.
-- Use `annotation_custom(ggplotGrob(subplot), xmin = ..., xmax = ..., ymin = ..., ymax = ...)` to embed the subfigure into the main image.
-- The main chart and subchart usually share the same x-axis time range.
-
-**Additional Requirements**
-
-- The sub-picture must serve to "amplify the difference" and cannot just repeat the main picture.
-- The position of the nested graph should avoid the dense area of ​​the main curve.
-- Annotations in subfigures, such as `Log-rank P`, `HR (95% CI)`, must be consistent with the statistical results in the main text.
-- Nested plots of survival curves are particularly common in cardiovascular and low-event rate studies.
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- Build the full-range plot and a second plot with the same data and time scale but a narrower y-range.
+- Embed the second plot with `annotation_custom(ggplotGrob(subplot), ...)` and place it outside dense curve regions.
+- If the y-axis is event percentage, plot cumulative event probability rather than labeling cumulative hazard as a percentage.
 
 ### Survival Curve Comparison Methods Plot
 
 ![Survival Curve Comparison Methods Plot](../assets/gallery/survival/comparison.png)
 
-**Applicable Data**
+**Statistical Methods and Features**
 
-- Two or more groups of survival curve fitting objects.
-- The study focused on comparing the P value results of different survival curve testing methods.
+- Summarizes `P` values from several survival-curve comparison tests that weight event times differently.
+- Standard log-rank emphasizes proportional-type alternatives; other methods may emphasize early, late, or crossing-curve differences.
+- The test should be prespecified from the clinical alternative or analysis plan. Selecting the smallest result after examining many methods creates multiplicity and reporting bias.
 
-**Mapping Logic**
+**Code Features**
 
-- First, obtain the P value result table of each comparison method through the extended function script.
-- `x`：`-log10(p value)`
-- `y`: method name
-- The results of each method are usually displayed in a dot plot/lollipop plot style.
-- Add a vertical reference line to represent `-log10(0.05)` corresponding to `P = 0.05`.
+- Generate a reproducible table containing method name, test definition, and `P` value, then map `-log10(P)` to the horizontal axis.
+- Add a reference at `-log10(0.05)` only as the stated nominal threshold and identify any multiplicity adjustment.
+- Pin the version of any external comparison script and verify that the method supports the number of groups and censoring pattern.
 
-**Additional Requirements**
-
-- This graph is not the KM curve itself, but a "result graph of the KM curve comparison method".
-- It must be noted in the description whether the different methods favor early differences, late differences, or cross-curve situations.
-- If using an external GitHub script, you must check that the script path exists and that the version is reproducible.
-- Suitable for methodological presentation or supplementary material, or as a secondary main figure for complex survival comparisons.
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- code reference: source script `\StatsVisual-Skill\assets\templates\survival_curve\Survival Curve Comparison Methods Plot.R`
 
 ### Integrated Survival-and-Comparison Plot
 
 ![Integrated Survival-and-Comparison Plot](../assets/gallery/survival/joint.png)
 
-**Applicable Data**
+**Statistical Methods and Features**
 
-- There are both standard survival curves, risk number tables and multi-method comparison results.
-- The research focus is on "integration of one picture" to display the survival process and comparison between groups.
+- Combines the estimated survival process, supporting risk-set information, and prespecified group-comparison results.
+- The curve and risk table remain the primary evidence; the method-comparison panel is supplementary and should not encourage post hoc test selection.
 
-**Mapping Logic**
+**Code Features**
 
-- Upper left: KM curve main graph.
-- Bottom left: Table of people at risk.
-- Right: Multi-method comparison plot.
-- Usually `ggdraw()` + `draw_plot()` is used for free layout.
-- `patchwork` / `cowplot` can also be used to achieve an approximate layout.
+- Construct the survival panel and risk table from the same fit and time breaks, then build the comparison panel from the corresponding test table.
+- Arrange components with `ggdraw()` and `draw_plot()` or an equivalent `cowplot`/`patchwork` layout.
+- Preserve exact timeline alignment and allocate sufficient space for the main curve and risk table.
 
-**Additional Requirements**
-
-- The integrated diagram must maintain a clear information hierarchy and cannot sacrifice the readability of the main diagram due to too much information.
-- The main curve and the risk table are usually proportionally larger than the comparison plot.
-- The risk table and main graph must be precisely aligned on the timeline.
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- code reference: source script `\StatsVisual-Skill\assets\templates\survival_curve\Integrated Survival-and-Comparison Plot.R`
 
 ### Schoenfeld Residual Plot
 
 ![Schoenfeld Residual Plot](../assets/gallery/survival/ph_assumption.png)
 
-**Applicable Data**
+**Statistical Methods and Features**
 
-- Fitted Cox proportional hazards model object.
-- The study focuses on testing whether the proportional hazards (PH) assumption holds.
+- Assesses whether each Cox-model log hazard ratio is approximately constant over follow-up.
+- A systematic residual trend suggests time-varying effects; interpretation should combine the smoothed pattern, covariate-specific test, global test, and clinical relevance.
+- Failure of proportional hazards does not invalidate the observed survival data but may make a single constant hazard ratio inadequate.
 
-**Mapping Logic**
+**Code Features**
 
-- Fitting model: `coxph(Surv(time, event) ~ covariates, data = df)`
-- Inspection object: `cox.zph(res.cox, global = TRUE)`
-- Drawing: `ggcoxzph(test.ph, var = c(...))`
-- `x`: time
-- `y`: Standardized Schoenfeld residuals
-- The spline represents the trend of the residuals over time.
+- Fit `coxph(Surv(time, event) ~ covariates, data = df)`, calculate `cox.zph(fit, global = TRUE)`, and draw with `ggcoxzph()`.
+- Check each covariate and the global result rather than relying on one `P`-value cutoff.
+- If proportional hazards fails, consider time interactions, stratification, or time-specific effect summaries before plotting a constant adjusted effect.
 
-**Additional Requirements**
-
-- If the smooth line is nearly horizontal, the points are roughly within ±2 SD, and test `p > 0.1` is generally supported, the PH hypothesis is supported.
-- You must check covariate by covariate, not just the global test.
-- This plot tests the Cox model assumptions, not the KM curve itself.
-- The order of the panels should be consistent with the order of the covariates in the Cox model.
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- code reference: source script `\StatsVisual-Skill\assets\templates\survival_curve\Schoenfeld Residual Plot.R`
 
 ### Cox Deviance Residual Plot
 
 ![Cox Deviance Residual Plot](../assets/gallery/survival/outlier.png)
 
-**Applicable Data**
+**Statistical Methods and Features**
 
-- Fitted Cox model object.
-- Research focuses on identifying potential outliers and abnormally fitting individuals.
+- Uses a transformed martingale residual to identify observations poorly represented by a Cox model.
+- Large absolute residuals are screening signals, not formal deletion rules. Positive values generally indicate an event occurring earlier or more strongly than expected; negative values commonly reflect longer event-free follow-up or censoring.
+- Influence on individual coefficients should be assessed separately with DFBETA or case-deletion diagnostics.
 
-**Mapping Logic**
+**Code Features**
 
-- Use `ggcoxdiagnostics(res.cox, type = "deviance", ...)`.
-- `x`: observation number or linear prediction value (according to parameter settings)
-- `y`：Deviance residuals
-- LOESS smooth lines and their intervals can be preserved.
+- Draw with `ggcoxdiagnostics(fit, type = "deviance", ...)` using observation index or linear predictor on the horizontal axis.
+- Retain the zero reference and optional LOESS trend, but do not treat a generic `±1.96` band as a universal cutoff.
+- Use `type = "dfbeta"` when the objective is coefficient-specific influence rather than overall residual fit.
 
-**Additional Requirements**
-
-- Deviance residuals have a mean of approximately 0 and a standard deviation of approximately 1.
-- In general, observations outside the `±1.96` standard error range deserve closer inspection.
-- A positive residual indicates that the actual outcome was earlier than the model predicted, and a negative residual indicates that the outcome was later than the model predicted.
-- If users need to identify impact points, they can further use extended diagnosis such as `type = "dfbeta"`.
+- code reference: source script `\StatsVisual-Skill\assets\templates\survival_curve\Cox Deviance Residual Plot.R`
 
 ### Adjusted Survival Curve
 
 ![Adjusted Survival Curve](../assets/gallery/survival/adjusted.png)
 
-**Applicable Data**
+**Statistical Methods and Features**
 
-- Fitted Cox model object.
-- The focus of the study was to demonstrate differences in the survival process of the primary exposure factors after controlling for covariates.
-- Suitable for observational studies or scenarios where significant confounding factors exist.
+- Displays model-based survival estimates for exposure groups after standardizing or conditioning on covariates in a fitted Cox model.
+- These are not Kaplan–Meier curves and depend on the model specification, proportional-hazards assumption, covariate distribution, and selected adjustment method.
+- Adjusted curves support interpretation of covariate-standardized prognosis; they do not by themselves establish a causal exposure effect.
 
-**Mapping Logic**
+**Code Features**
 
-- Fitting model: `coxph(Surv(time, event) ~ exposure + covariates, data = df)`
-- Use `ggadjustedcurves(fit, data = df, variable = "exposure", method = "average", ...)`
-- `x`: survival time
-- `y`: Corrected survival probability
-- `color = exposure group`
+- Fit `coxph(Surv(time, event) ~ exposure + covariates, data = df)` and draw with `ggadjustedcurves(..., variable = "exposure", method = "average")`.
+- State the standardization method and covariates used, and use the same target population across exposure groups.
+- Do not add censor marks to model-standardized curves; compare them with unadjusted Kaplan–Meier curves when useful.
 
-**Additional Requirements**
+- code reference: source script `\StatsVisual-Skill\assets\templates\survival_curve\Adjusted Survival Curve.R`
 
-- It must be made clear that this is not the original KM curve, but the covariate-corrected estimated curve.
-- Corrected curves usually no longer have censored points marked.
-- Comparison with uncorrected curves should be recommended to observe the impact of covariates on differences between groups.
-- Suitable for reporting visualization results that are closer to "independent exposure effects"
+## 7. QA Checklist
 
-## Template Starter
-
-- Use `assets/templates/km_survival.R` as the starter template for Kaplan-Meier survival curves with risk tables. Copy it into `<project_dir>/R/` and adapt the time, event, grouping, labels, and style-specific annotations before running.
-## Code Reference
-- Original development note: source script `1600-survival-finished.Rmd` is not included in the public skill.
-
-## QA
-
-- Verify event coding: usually `1 = event`, `0 = censored`.
-- Include time unit in x-axis title.
-- Mark censoring unless the target style explicitly omits it.
-- Provide number at risk at clinically meaningful time points.
-- Use log-rank tests for unadjusted group comparison; use Cox model for adjusted effects.
-- Check proportional-hazards assumption when reporting Cox hazard ratios.
+- Verify the time origin, event definition, event coding, censoring rule, units, and analysis population.
+- Confirm that survival probability, cumulative event probability, cumulative hazard, and hazard ratio are labeled correctly.
+- Show censor marks and numbers at risk at clinically meaningful times; interpret late tails cautiously.
+- Prespecify the group-comparison method and report an effect estimate with confidence interval when appropriate.
+- For Cox models, check proportional hazards, influential observations, functional form, and missing-data handling.
+- Ensure every annotated `P` value, hazard ratio, confidence interval, event rate, and risk-table count matches the fitted analysis.

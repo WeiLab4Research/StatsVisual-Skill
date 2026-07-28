@@ -55,7 +55,7 @@ Only a follow-up user message after the recommendation can authorize plotting. V
 6. Wait for the user's chart choice after the recommendation response. Do not start plotting in the same turn that first receives or locates the data, even if the user adds a general request such as "plot this data", "draw a figure", "make charts", "visualize it", "help me plot", "帮我画图", "给我的数据画图", or "生成图片". These phrases only express the overall task, not permission to bypass the recommendation stage. If the user names an exact chart type in the original request, still inspect the data first, confirm whether that chart is appropriate, mention any serious mismatch, recommend the best single-figure and optional multi-panel choices, then ask for confirmation before coding. Only a follow-up user message after the recommendation stage can authorize plotting.
 7. Treat automatic selection as disabled during the first data-handling turn. A first-turn instruction like "use this folder/project and plot my data" still requires data profiling, chart recommendation, and a choice question. The user can authorize plotting only after seeing the recommendation, for example by replying "按推荐单图绘制", "选择组图", "用方案 B", or an equivalent explicit chart choice.
 8. If the user chooses or requests a multi-panel figure, write a short figure plan before coding. Include main message, primary result, supporting analyses, interpretation risk, panel roles, shared encodings, output size, and export formats. Do not write the R script until this plan is explicit in the conversation or saved in `<project_dir>/output/figure_plan.md`.
-9. Write a complete R script rather than disconnected snippets after the user chooses. Use `assets/plot_template.R` as the default shape, or copy the closest starter from `assets/templates/` for distribution comparison, scatter/association, model diagnostics, or multi-panel figures. Pass the selected style to the starter or call `rmg_theme(style)` and `rmg_palette(n, style)` directly; if the user chose a chart but not a style, use `general`. For multi-panel figures, source `assets/templates/multipanel_helpers.R` or copy only the needed helpers; do not reuse synthetic demo panels as final analysis. Find the skill directory, source `scripts/setup_r_library.R`, load the repository/project R library, check packages, read data, validate columns, build plot, and export figures.
+9. Write a complete R script rather than disconnected snippets after the user chooses. Use `assets/plot_template.R` as the default shape, or copy the closest starter from `assets/templates/` for distribution comparison, scatter/association, model diagnostics, or multi-panel figures. Pass the selected style to the starter or call `rmg_theme(style)` and `rmg_palette(n, style)` directly; if the user chose a chart but not a style, use `general`. For multi-panel figures, source `assets/templates/multipanel/multipanel_helpers.R` or copy only the needed helpers; do not reuse synthetic demo panels as final analysis. Find the skill directory, source `scripts/setup_r_library.R`, load the repository/project R library, check packages, read data, validate columns, build plot, and export figures.
 10. Export every final figure in four forms inside `<project_dir>/figures/` unless the user asks otherwise:
    - Vector: `<name>.pdf`
    - Editable: `<name>.svg`
@@ -145,19 +145,24 @@ Use conservative publication defaults: white background, readable axis labels, e
 
 Copy these into `<project_dir>/R/` and adapt column names, labels, statistics, and figure-specific annotations:
 
-- `assets/templates/distribution_compare.R` for boxplot, jittered boxplot, and grouped distribution comparisons.
-- `assets/templates/scatter_association.R` for scatter plots with linear, LOESS, or GAM-style smoothing choices.
-- `assets/templates/model_diagnostics.R` for linear-model diagnostic panels.
-- `assets/templates/km_survival.R` for Kaplan-Meier survival curves with risk tables and journal-style survival outputs.
-- `assets/templates/subgroup_forest.R` for subgroup forest plots with table-aligned effect estimates and interaction columns.
-- `assets/templates/radar_chart.R` for radar charts and faceted radar charts with controlled circular reference rings, straight polygon profiles, bounded radii, and manual Cartesian geometry.
-- `assets/templates/multipanel_helpers.R` for reusable patchwork/cowplot layout helpers.
-- `assets/templates/multipanel_figure.R` for a planned multi-panel script scaffold that sources the helpers and expects task-specific panels.
-- `assets/templates/Raincloud Plot.R` for a raincloud plot script 
-- `assets/templates/Ternary Plot.R` for a ternary plot script
-- `assets/templates/LOWESS Smooth Plot.R` for a LOWESS smooth plot script 
-- `assets/templates/Bubble Plot.R` for a bubble plot script 
-- `assets/templates/Manhattan Plot.R` for a manhattan plot script 
+- `assets/templates/bar/` for basic, error-bar, stacked, stratified, waterfall, and polar bar plots.
+- `assets/templates/box/` for box, violin, notched, letter-value, stratified, beeswarm, pirate, pagoda, raincloud, and grouped raincloud plots.
+- `assets/templates/dot/` for Cleveland's dot, stratified dot, lollipop, interaction lollipop, dumbbell, epidemic trend, and Manhattan plots.
+- `assets/templates/distribution/` for 23 probability distributions (Normal, t, F, Chi-square, Beta, Gamma, Poisson, Binomial, etc.).
+- `assets/templates/forest/` for subgroup forest plots with table-aligned effect estimates and interaction columns.
+- `assets/templates/heatmap/` for basic, clustered, contour, filled contour, Sankey, Venn, UpSet, and calendar heatmaps.
+- `assets/templates/histogram/` for basic, variable-bin, gradient, grouped, stacked, symmetric, pyramid, ridgeline, epidemic ridgeline, and spiral histograms.
+- `assets/templates/line/` for time series, point-line, errorbar-line, step, smooth, area, stacked area, stream, scree, and radar plots.
+- `assets/templates/linear_regression/` for linear regression, deviations, bivariate ellipse, response surface, and performance radar plots.
+- `assets/templates/multipanel/` for reusable patchwork/cowplot layout helpers and multi-panel script scaffolds.
+- `assets/templates/nonlinear_regression/` for polynomial, convex-concave, sigmoid, and quantile regression plots.
+- `assets/templates/pie/` for pie, exploding, exploded-slice, doughnut, nested, rose, and fourfold plots.
+- `assets/templates/qq/` for theoretical QQ, P-P, Chi-square quantile, symmetry, and ladder-of-powers plots.
+- `assets/templates/regression_diagnostics/` for residuals-vs-fitted, leverage, Cook's distance, influence index, and half-normal leverage plots.
+- `assets/templates/scatter/` for scatter, smooth-scatter, marginal-distribution, scatterplot matrix, smooth, sunflower, bubble, and volcano plots.
+- `assets/templates/smoothing_curve/` for LOWESS smooth and LOWESS regression plots.
+- `assets/templates/survival_curve/` for Kaplan-Meier, truncated, median-reference, confidence-band, cumulative-hazard, risk-table, comparison, integrated, Schoenfeld, Cox deviance, and adjusted survival plots.
+- `assets/templates/ternary/` for ternary plots.
 
 Treat templates as starting points, not fixed outputs. Read `references/chart-index.md` and the relevant detailed chart reference before adapting them for variants such as violin, raincloud, density scatter, coefficient plots, or longitudinal charts. Read `references/design-rules.md` and the selected style reference before finalizing visual choices. Read `references/multipanel-figures.md` before adapting any A/B/C or composite figure.
 
@@ -177,6 +182,3 @@ output/figure_explanation.md
 
 These paths are relative to the per-request project directory, not the skill repository root.
 
-`output/data_profile.md` is an internal reproducibility artifact. The recommendation-stage data profile should be written directly in the assistant's reply so the user can choose a chart without opening an extra file.
-
-If the user specifies journal dimensions, fonts, transparent backgrounds, SVG, grayscale, CMYK, or a different DPI, honor that request over the defaults and mention the changed export settings.

@@ -2,8 +2,6 @@
 
 Use this style when the user asks for `bmj`, BMJ, The BMJ, British Medical Journal, pragmatic clinical research, public-health figures, health-services research figures, or a reader-friendly medical journal style.
 
-This guidance combines public BMJ Author Hub guidance, common BMJ clinical and public-health figure conventions, and the local `ggsci` BMJ palette. Treat official author guidance as submission constraints and this file as R/ggplot2 production guidance. Do not copy official pages, PDFs, or source figures into generated project folders.
-
 ## Visual Rules
 
 - Use a white background, clear axes, visible ticks, and minimal grid lines.
@@ -50,15 +48,6 @@ For fills, use moderate alpha with dark outlines. For lines and points, use satu
 - Avoid cramming many secondary analyses into one main figure; choose fewer panels with clearer labels.
 - Use plain-language panel titles when they help readers understand endpoints, denominators, or populations.
 
-## Chart-Specific Overrides
-
-- For rates and proportions, show denominators or sample sizes whenever practical.
-- For risk, prognosis, and treatment comparisons, prefer absolute risk, risk difference, ratio estimates, and CIs over P-value-only displays.
-- Survival curves should include number-at-risk context when it changes interpretation; direct labels are preferred for small numbers of groups.
-- For KM curves, place number at risk below the plot, center risk counts under the matching x-axis ticks, right-align and bold `Number at risk` plus group names, and use black risk-table text by default.
-- Public-health category charts should avoid excessive vertical height; use sorted horizontal bars, dot plots, or circular summaries only when the message benefits from compactness.
-- Heatmaps and high-dimensional summaries should include clear scaling, midpoint, and annotation definitions.
-
 ## BMJ Forest Plot Rules
 
 - Use a forest plot only when each row has an effect estimate and uncertainty interval, or when these are computed from a declared model.
@@ -89,15 +78,6 @@ For fills, use moderate alpha with dark outlines. For lines and points, use satu
 - Use `rmg_format_ci()` and `rmg_format_p()` for visible CI and P-value text.
 - Prefer `svglite` for SVG, `cairo_pdf` for PDF, and `ragg` for TIFF/PNG.
 - Keep SVG/PDF text editable wherever feasible.
-
-## Official Submission Rules
-
-- Follow current BMJ Author Hub and target-journal instructions before final submission because BMJ journal requirements can vary by title and article type.
-- Use separate figure files when required by the submission workflow.
-- Prefer editable vector output for line art and statistical graphics, and keep text selectable/editable where feasible.
-- Ensure raster images meet current BMJ file-type and resolution requirements. This skill's default 700 dpi TIFF is intentionally conservative for print raster export.
-- Do not treat a raster image saved inside PDF/SVG as true vector artwork.
-- Keep figure legends, abbreviations, denominators, units, and statistical definitions consistent with the manuscript.
 
 ## QA
 

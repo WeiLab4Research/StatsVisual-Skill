@@ -1,243 +1,221 @@
 # Cleveland Dot Plot
 
-## Use For
+## 1. Scope and Definition
 
-Use Cleveland dot plots for ranked category-level estimates, rates, means, model coefficients, or importance scores. They are often clearer than bars for many categories.
+Cleveland dot plots display category-level numerical estimates by position on a common scale. They are well suited to ranked means, rates, regression coefficients, effect estimates, variability measures, and importance scores, especially when many categories make bars or pies difficult to compare.
 
-## Variants
+Related variants use line segments, paired points, interaction links, genomic position, or point size to encode additional structure. These additions change the analytical emphasis and should be interpreted according to the specific variant.
 
-- Basic ranked dot plot.
-- Grouped dot plot.
-- Dumbbell plot for two-group comparison.
-- Lollipop plot for bar-like ranking with lower ink.
-- Forest/dot-whisker plot for estimates plus confidence intervals.
+## 2. Selection Guide
 
-## Core Mapping Logic
+| Analytical purpose | Recommended chart |
+|---|---|
+| Compare one estimate across many categories | Cleveland's Dot Plot |
+| Emphasize distance and direction from a meaningful baseline | Lollipop Plot |
+| Display main estimates together with selected pairwise interactions | Lollipop Plot with Interaction Effect |
+| Compare two paired estimates for each category | Dumbbell Plot |
+| Compare category-level values across a limited number of strata | Stratified Dot Plot |
+| Compare two related metrics across the same categories | Dual-metric Stratified Dot Plot |
+| Display genome-wide association results | Manhattan Plot |
+| Show event timing and magnitude across multiple regions | Epidemic Trend Dot Plot |
+
+## 3. Required Data Structure
+
+- Standard dot and lollipop plots require one row per category and one numerical estimate; optional fields may define group, significance status, or a reference threshold.
+- Dumbbell plots require two paired values for each category, preferably in long format with `item`, `variable`, and `value`.
+- Interaction lollipop plots require a main estimate table and a separate interaction-pair table. Dual-metric plots require two comparable indicators for every category.
+- Manhattan plots require marker identifier, chromosome, genomic position, and valid `P` value. Epidemic trend plots require date, region, and event magnitude.
+
+## 4. Common Statistical Principles
+
+- Order categories by value or by a prespecified clinical, biological, or administrative sequence; avoid arbitrary alphabetical order when it obscures the comparison.
+- Use a reference line only when it has a defined meaning, such as no association at 0 or a clinical standard. A point’s distance from the line does not by itself indicate statistical significance.
+- When displaying model estimates, distinguish point estimates from uncertainty. Use confidence intervals or a forest/dot-whisker plot when inference is central.
+- Define any color, shape, or size encoding explicitly. If significance is highlighted, state the threshold and any multiple-testing adjustment.
+- Transform highly skewed values only when justified, and report the transformed scale clearly.
+
+## 5. Common Visual Rules
+
+- Place the title and legend at the top and center them.
+- Do not add a gridline background.
+- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- Add value labels only when they improve interpretation without crowding the figure.
+- Use a horizontal layout for long category labels and retain light reference guides only when they support accurate reading.
+- Keep color, shape, and reference-line meanings consistent across related figures.
+
+## 6. Variants
 
 ### Cleveland's Dot Plot
 
 ![Cleveland's Dot Plot](../assets/gallery/dot/cleveland.png)
 
-**Applicable Data**
+**Statistical Features**
 
-- Multiple classification objects correspond to a continuous numerical indicator.
-- Commonly used to display regression coefficients, means, rates, importance scores, effect sizes, etc.
+- Compares one numerical estimate across multiple categories using position on a common axis.
+- Appropriate for descriptive estimates or regression coefficients; a point alone does not show precision or statistical uncertainty.
 
-**Mapping Logic**
+**Visual Features**
 
-- `x`: Continuous numerical variables, such as regression coefficients, mean values, and ratings.
-- `y`: Categorical variables, usually reordered by numerical value.
-- `color`: Usually a single color; if the salience needs to be emphasized, it can be mapped to salient/non-salient grouping.
-- Use `geom_point()` as the core geometry layer.
-- It is often used with `reorder()` or preset factor sequence to control the vertical axis.
+- Each category is represented by one dot aligned with its label.
+- Categories are commonly sorted by value, making rank and positive–negative direction easy to read.
 
-**Additional Requirements**
+**Code Features**
 
-- The vertical axis generally represents categorical variables, and the horizontal axis represents continuous variables.
-- If the value can be positive or negative, it is often necessary to retain 0 as the reference position.
-- The classification order is usually sorted by numerical size to enhance readability.
-- To enhance readings, keep the light gray horizontal reference line.
-- Place the title at the top and center it.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- Map the estimate to `x` and the category to `y`, then draw with `geom_point()`.
+- Use `reorder()` or explicit factor levels to control order, and add a zero reference line when the estimate can be positive or negative.
+
+- code reference:source script `\StatsVisual-Skill\assets\templates\dot\Cleveland's Dot Plot.R`
 
 ### Lollipop Plot
 
 ![Lollipop Plot](../assets/gallery/dot/lollipop.png)
 
-**Applicable Data**
+**Statistical Features**
 
-- Same as a regular point plot, but with additional emphasis on the distance "from baseline to value point".
-- It is often used to display the direction and size of effects, especially suitable for regression coefficient plots with a zero reference line.
+- Displays category-level estimates while emphasizing their distance and direction from a meaningful baseline.
+- If points are highlighted by significance, the criterion and multiplicity adjustment must be stated separately from effect magnitude.
 
-**Mapping Logic**
+**Visual Features**
 
-- `x`: continuous numerical value.
-- `y`: Categorical variable.
-- Use `geom_segment()` to connect to the data points from the baseline (usually `x = 0`).
-- Then use `geom_point()` to draw the end dot.
-- Usually superimposed `geom_vline(xintercept = 0)` represents the reference line.
+- A thin segment runs from the baseline to each terminal point, producing a bar-like profile with less visual mass.
+- Positive and negative estimates extend to opposite sides of the reference line.
 
-**Additional Requirements**
+**Code Features**
 
-- The baseline of a lollipop chart should have a clear statistical meaning, often 0, the mean, or a clinical threshold.
-- If there are positive and negative directions, make sure the zero line is clearly visible.
-- You can use accent colors for prominent points, but it’s not advisable to make the entire image too colorful.
-- The classification order is usually sorted by numerical size to enhance readability.
-- Place the title at the top and center it.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- Use `geom_segment()` from the baseline to each estimate, followed by `geom_point()` at the endpoint.
+- Add `geom_vline(xintercept = 0)` or another prespecified reference and use a separate data subset only for justified highlighting.
+
+- code reference:source script `\StatsVisual-Skill\assets\templates\dot\Lollipop Plot.R`
 
 ### Lollipop Plot with Interaction Effect
 
 ![Lollipop Plot with Interaction Effect](../assets/gallery/dot/interaction_lollipop.png)
 
-**Applicable Data**
+**Statistical Features**
 
-- The classification object corresponds to a main numerical indicator, and there are interactions, pairing relationships or linkage relationships between some objects.
-- Typical examples include the size of the regression coefficients of multiple elements, while showing which pairs of elements have interactions.
+- Combines one main estimate per category with selected pairwise interaction relationships.
+- Main-effect magnitude, effect direction, and interaction evidence are distinct quantities and must not be inferred from one another.
 
-**Mapping Logic**
+**Visual Features**
 
-- The main body is still the lollipop picture:
-  - `x`: Categorical variable.
-  - `y`: continuous numerical value.
-  - `geom_segment()` represents the distance from 0 to a numerical point.
-  - `geom_point()` represents the lollipop head.
-- Interactive relationship layer:
-  - Interaction pairs and control points are given through additional data frames.
-  - Use `geom_bezier()` or other curved geometry layers to connect related elements.
-- Color can be used to differentiate between positive correlations, negative correlations, and interaction curves.
+- Vertical stems and terminal points show the category-level estimates, while curved links connect interacting category pairs.
+- Point color may encode estimate direction, and a separate curve color identifies interaction links.
 
-**Additional Requirements**
+**Code Features**
 
-- The data of the main indicator layer and the interactive connection layer must be managed separately to avoid confusion in mapping.
-- If negative and positive values ​​are represented by different colors, the color semantics must be stated in the legend.
-- Interaction curves can only connect a small number of key objects, otherwise they will seriously obscure the main image.
-- When there are too many categories on the horizontal axis, the labels usually need to be rotated 45 degrees.
-- Place both the title and legend at the top and center them.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- Keep the main estimate data and interaction-link data in separate objects and layers.
+- Draw stems and points with `geom_segment()` and `geom_point()`, then add selected links with `geom_bezier()` using explicit endpoints and control points.
+
+- code reference:source script `\StatsVisual-Skill\assets\templates\dot\Lollipop Plot with Interaction Effect.R`
 
 ### Dumbbell Plot
 
 ![Dumbbell Plot](../assets/gallery/dot/dumbbell.png)
 
-**Applicable Data**
+**Statistical Features**
 
-- The same subject has two comparable values, such as before and after adjustment, before and after treatment, male and female, experimental group and control group.
+- Compares two paired estimates for each category, such as adjusted versus unadjusted coefficients or pre- versus post-treatment values.
+- The connecting distance shows within-category change, but does not provide uncertainty or establish a statistically significant difference.
 
-**Mapping Logic**
+**Visual Features**
 
-- `x`: Numeric variable.
-- `y`: Categorical variable.
-- Draw two points on the same `item` and connect them with `geom_line(aes(group = item))` or `geom_segment()`.
-- `color`: Two types of numerical sources, such as `Adjusted` and `Unadjusted`.
-- Commonly used long table structures: `item`, `variable`, `value`.
+- Two differently encoded points share one category row and are connected by a horizontal segment.
+- The direction and length of the connector show how the paired estimates differ.
 
-**Additional Requirements**
+**Code Features**
 
-- The dumbbell chart emphasizes "the difference between two points within the same object", so the two points must share the same row.
-- If sorting, it is recommended to sort by the group of values ​​​​mainly displayed.
-- When two points are very close, to avoid complete occlusion of the points, you can increase the outline or transparency appropriately.
-- To enhance readings, keep the light gray horizontal reference line.
-- Place both the title and legend at the top and center them.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- Reshape paired columns into long format with one row per category–estimate type.
+- Map value to `x`, category to `y`, connect observations by category, and map estimate type to point color.
+
+- code reference:source script `\StatsVisual-Skill\assets\templates\dot\Dumbbell Plot.R`
 
 ### Stratified Dot Plot
 
 ![Stratified Dot Plot](../assets/gallery/dot/stratified.png)
 
-**Applicable Data**
+**Statistical Features**
 
-- Multiple categorical objects, each object belongs to one of a limited number of groups, and each object has a continuous value.
-- A typical example is the car brand's `mpg`, which is stratified by the number of cylinders.
+- Displays one numerical value per category while identifying membership in a limited number of predefined strata.
+- It supports comparison across categories and strata but does not estimate within-stratum distributions from a single value per item.
 
-**Mapping Logic**
+**Visual Features**
 
-- `x`: Categorical variables, usually brands, elements, regions, etc.
-- `y`: continuous numerical value.
-- `group` / `color`: Stratified variables, such as `cyl`, regional grouping, etc.
-- It can be generated quickly using `ggpubr::ggdotchart()` or controlled manually using `geom_point()`.
-- Often used with `sorting = "descending"` or pre-sorting to improve readability.
-- If the category is too long, you can use `coord_flip()` or `rotate = TRUE`.
+- Each category has one point, with color or shape distinguishing the stratum.
+- Sorting and horizontal orientation make long labels and rank patterns easier to compare.
 
-**Additional Requirements**
+**Code Features**
 
-- There shouldn’t be too many levels of layering, usually 2–4 groups are the clearest.
-- If the meaning within the group is limited and the colors are sufficiently identifiable, additional shape mapping can be reduced.
-- It is necessary to ensure that the classification order is consistent with the research question and not just alphabetical order.
-- The classification order is usually sorted by numerical size to enhance readability.
-- To enhance readings, keep the light gray horizontal reference line.
-- Place both the title and legend at the top and center them.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- Map category and value to the axes and map the stratifying variable to `color` or `group`.
+- Use `ggdotchart()` or `geom_point()`, and control category order explicitly before applying `coord_flip()` or rotation.
+
+- code reference: source script `\StatsVisual-Skill\assets\templates\dot\Stratified Dot Plot.R`
 
 ### Dual-metric Stratified Dot Plot
 
-**Applicable Data**
+**Statistical Features**
 
-- There are two different indicators on the same classification object and need to be displayed at the same time.
-- Typical examples include the annual average concentrations of `PM2.5` and `PM10` in each province.
+- Compares two related indicators across the same categories, such as annual mean `PM2.5` and `PM10`.
+- Indicators should share compatible units and interpretation; otherwise use separate panels or standardized values.
 
-**Mapping Logic**
+**Visual Features**
 
-- `x`: Categorical variable.
-- `y`: The value of two consecutive indicators.
-- The first set of indicators uses a layer of `geom_point()` and a set of color scales.
-- The second set of indicators is layered with `geom_point()` and enables the second set of color mapping via `ggnewscale::new_scale_color()`.
-- It can be used with `shape` to distinguish the two indicators.
-- Often add `geom_hline()` to represent the respective standard line or threshold.
+- Each category contains two distinguishable points, often using different shapes and color scales.
+- Indicator-specific reference lines can show clinical, environmental, or regulatory thresholds.
 
-**Additional Requirements**
+**Code Features**
 
-- The color system or point system of the two indicators must be clearly distinguished, otherwise readers will misinterpret it.
-- If using dual color mapping, you must ensure that both sets of legends are preserved and that the titles are accurate.
-- The threshold line of the indicator can be drawn on the graph (light gray)
-- The classification order is usually sorted by numerical size to enhance readability.
-- To enhance readings, keep the light gray horizontal reference line.
-- Place both the title and legend at the top and center them.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- Draw each metric in a separate `geom_point()` layer and use `ggnewscale::new_scale_color()` when independent color scales are required.
+- Add indicator-specific `geom_hline()` thresholds and preserve accurate legend titles for both metrics.
+
+- code reference:source script `\StatsVisual-Skill\assets\templates\dot\Stratified Dot Plot.R`
 
 #### Manhattan Plot
 
 ![Manhattan Plot](../assets/gallery/dot/manhattan.png)
 
-**Applicable Data**
+**Statistical Features**
 
-- GWAS or other omics association analysis results.
-- Each record represents a site
+- Displays genome-wide association results, with each point representing a variant and height equal to `-log10(P)`.
+- Genome-wide significance thresholds must reflect the prespecified multiple-testing criterion; high points indicate stronger evidence, not larger biological effect.
 
-**Mapping Logic**
+**Visual Features**
 
-- `x`: Chromosome position or whole-genome position expanded cumulatively by chromosome.
-- `y`: Usually `-log10(P)`.
-- `color`: Different chromosomes are alternately colored, or significant sites are specially colored.
-- The significant threshold is represented by `geom_hline()`, such as `P = 5e-8`.
-- Significant site labels can be annotated with `geom_text_repel()`.
-- If the extreme salient point is too high, `ggbreak::scale_y_break()` can be used to truncate the vertical axis.
+- Variants form chromosome-specific vertical clusters resembling a skyline.
+- Alternating chromosome colors separate genomic regions, while selected significant loci may be labeled.
 
-**Additional Requirements**
+**Code Features**
 
-- `P-value` must first be guaranteed to be a numerical value and greater than 0.
-- Significant site labels label only a few key SNPs to avoid crowding the entire map.
-- Place the title at the top and center it.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
-- code reference:source script `\StatsVisual-Skill\assets\templates\Manhattan Plot.R`
+- Validate chromosome, position, and positive numeric `P` values, then compute or supply cumulative genomic position and `-log10(P)`.
+- Add the significance line with `geom_hline()`, label only selected loci with `geom_text_repel()`, and mark any y-axis break explicitly.
+
+- code reference:source script `\StatsVisual-Skill\assets\templates\dot\Manhattan Plot.R`
 
 #### Epidemic Trend Dot Plot
 
 ![Epidemic Trend Dot Plot](../assets/gallery/dot/epidemic_trend.png)
 
-**Applicable Data**
+**Statistical Features**
 
-- Dated multi-region event trend data.
+- Displays when outbreaks or events occurred across regions and encodes their observed magnitude by point size.
+- It supports comparison of timing and relative burden, but dense overlap may obscure small events and does not model transmission dynamics.
 
-**Mapping Logic**
+**Visual Features**
 
-- `x`: date.
-- `y`: Region or city label.
-- `size`: Daily case count or event intensity.
-- `fill`: Region label; it can also be used with background stripes to enhance group readability.
-- Use `geom_point()` as the principal.
-- The date axis uses `scale_x_date()` to control scale and labels.
-- Alternating background bands are often added via `geom_rect()` to facilitate line-by-line reading.
+- Dates form the horizontal axis, regions form rows, and larger circles represent larger event counts.
+- Alternating row bands may guide reading across long time ranges without encoding data.
 
-**Additional Requirements**
+**Code Features**
 
-- This picture emphasizes "when it happens" and "how large it is", and the point size must correspond one-to-one with the numerical value.
-- If there are many regions, set a fixed order and consider reversing the order for easier reading.
-- The point size scale must be reasonable to avoid large values ​​from obscuring small values.
-- The time range and date scale should match the research window and avoid being too dense or too sparse.
-- Background stripes are auxiliary designs, and the color must be light enough and cannot cover the main point.
-- The classification order is usually sorted by numerical size to enhance readability.
-- To enhance readings, the light gray horizontal reference can be retained.
-- The title and legend are placed at the top and in the center. If there are many categories, the legend can be arranged vertically and centered on the right side.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
-- code reference:source script `\StatsVisual-Skill\assets\templates\Epidemic Trend Dot Plot.R`
+- Parse dates explicitly, fix the region order, and map event count to `size` in `geom_point()`.
+- Use `scale_x_date()` for the study period, provide a readable size legend, and add light row bands with `geom_rect()` when needed.
 
-## Code Reference
-- Original development note: source script `0500-cleveland-finished.rmd` is not included in the public skill.
+- code reference:source script `\StatsVisual-Skill\assets\templates\dot\Epidemic Trend Dot Plot.R`
 
-## QA
+## 7. QA Checklist
 
-- Sort by value or clinically meaningful order.
-- Use a reference line for effect estimates.
-- Keep long labels readable with horizontal layout.
-- Include CI/uncertainty when showing model estimates.
+- Confirm that each category–estimate pair is unique and categories are ordered intentionally.
+- Verify the meaning of the baseline, thresholds, colors, shapes, and point sizes.
+- Distinguish effect magnitude from statistical significance and include uncertainty when inference is central.
+- Confirm that paired values and interaction links refer to the correct categories.
+- For Manhattan plots, verify genome build, chromosome order, valid `P` values, and the multiple-testing threshold.
+- For epidemic trend plots, verify date parsing, region order, event units, and the point-size scale.

@@ -87,7 +87,7 @@ rmg_font_family <- function(style = "general", role = "figure") {
   switch(
     style,
     general = "",
-    nature = "",
+    nature = "Arial",
     lancet = "Arial",
     nejm = "Arial",
     jama = "Arial",
@@ -465,7 +465,7 @@ rmg_theme <- function(style = "general", base_size = NULL, base_family = "") {
           legend.key = ggplot2::element_blank(),
           strip.background = ggplot2::element_blank(),
           strip.text = ggplot2::element_text(face = "bold", color = "grey10"),
-          panel.grid.major = ggplot2::element_line(linewidth = 0.16, color = "grey93"),
+          panel.grid.major = ggplot2::element_blank(),
           panel.grid.minor = ggplot2::element_blank(),
           plot.tag = ggplot2::element_text(face = "bold", color = "grey10", size = ggplot2::rel(1.12)),
           plot.margin = ggplot2::margin(7, 8, 7, 8)
@@ -473,18 +473,24 @@ rmg_theme <- function(style = "general", base_size = NULL, base_family = "") {
     )
   }
 
-  ggplot2::theme_classic(base_size = base_size, base_family = base_family) +
+  ggpubr::theme_pubr(base_family = base_family) +
     ggplot2::theme(
-      plot.title = ggplot2::element_text(face = "bold", hjust = 0),
-      axis.title = ggplot2::element_text(face = "bold"),
-      axis.title.x = ggplot2::element_text(margin = ggplot2::margin(t = 8)),
-      axis.title.y = ggplot2::element_text(margin = ggplot2::margin(r = 8)),
-      axis.line = ggplot2::element_line(linewidth = 0.5, colour = "black"),
-      axis.ticks = ggplot2::element_line(linewidth = 0.35, colour = "black"),
-      legend.title = ggplot2::element_text(face = "bold"),
+      axis.title.y = ggplot2::element_text(
+        margin = ggplot2::margin(t = 0, r = 10, b = 0, l = 0)
+      ),
+      axis.title.x = ggplot2::element_text(
+        margin = ggplot2::margin(t = 10, r = 0, b = 0, l = 0)
+      ),
+      axis.title = ggplot2::element_text(size = 13, face = "bold"),
+      axis.line = ggplot2::element_line(linewidth = 0.6, color = "black"),
+      axis.ticks = ggplot2::element_line(linewidth = 0.3),
+      axis.ticks.length = grid::unit(0.15, "cm"),
+      axis.text = ggplot2::element_text(size = 10),
+      legend.background = ggplot2::element_blank(),
+      legend.box.background = ggplot2::element_blank(),
       legend.key = ggplot2::element_blank(),
-      strip.background = ggplot2::element_rect(fill = "grey92", colour = NA),
-      strip.text = ggplot2::element_text(face = "bold"),
-      plot.margin = ggplot2::margin(8, 8, 8, 8)
+      panel.grid.major = ggplot2::element_blank(),
+      panel.grid.minor = ggplot2::element_blank(),
+      plot.margin = ggplot2::margin(0.5, 0.5, 0.5, 0.5, "cm")
     )
 }

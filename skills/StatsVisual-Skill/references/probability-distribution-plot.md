@@ -1,686 +1,467 @@
 # Probability And Statistical Distribution Plot
 
-## Use For
+## 1. Scope and Definition
 
-Use distribution plots to explain or compare theoretical distributions, empirical density, probability mass, cumulative probability, or parameter effects.
+Probability-distribution plots show the theoretical probability density, probability mass, or joint distribution implied by specified parameters. They are used to explain distributional assumptions, compare parameter effects, and support selection of statistical models for continuous, binary, count, survival, and compositional outcomes.
 
-## Variants
+The plots in this chapter are primarily generated from distribution functions rather than fitted directly to observed data. Agreement between empirical data and a theoretical distribution must be assessed separately with diagnostic plots and model checks.
 
-- Normal, standard normal, log-normal.
-- Binomial, Poisson, negative binomial.
-- t, chi-square, F distributions.
-- Empirical CDF.
-- Parameter comparison overlays.
+## 2. Selection Guide
 
-### Core Mapping Logic
+| Statistical context | Recommended distribution |
+|---|---|
+| Symmetric continuous measurements or sampling distributions | Normal Distribution; Student's t Distribution; Logistic Distribution |
+| Heavy-tailed symmetric measurements | Cauchy Distribution |
+| Positive, right-skewed biomarkers, costs, times, or rates | Log-normal Distribution; Gamma Distribution; Weibull Distribution |
+| Constant-hazard waiting time | Exponential Distribution |
+| Positive variance-like parameters | Inverse Gamma Distribution |
+| Ratios or sums of squared normal variables | F Distribution; Chi-square Distribution |
+| Continuous proportions in `(0, 1)` | Beta Distribution |
+| Equal probability across a bounded interval or finite set | Uniform Distribution; Discrete Uniform Distribution |
+| One binary outcome or successes in fixed trials | Bernoulli Distribution; Binomial Distribution |
+| Overdispersed binomial counts | Beta-binomial Distribution |
+| Event counts over a defined exposure | Poisson Distribution; Negative Binomial Distribution |
+| Waiting for the first success | Geometric Distribution |
+| Sampling without replacement from a finite population | Hypergeometric Distribution |
+| Counts across several mutually exclusive categories | Multinomial Distribution |
+| Random compositional probability vectors | Dirichlet Distribution |
+| Joint continuous outcomes under a Gaussian model | Multivariate Normal Distribution |
 
-#### Normal Distribution
+## 3. Required Data Structure
+
+- Theoretical plots require a valid support grid and all distribution parameters; the manuscript examples are generated directly in code and do not require external observations.
+- Continuous distributions use an ordered numerical grid and probability density values. Discrete distributions use the complete feasible integer support and probability mass values.
+- Multivariate Normal Distribution requires a mean vector and positive-definite covariance matrix. Multinomial Distribution requires category probabilities summing to `1`, and Dirichlet Distribution requires positive concentration parameters.
+- When parameters are estimated from medical data, retain the estimation method, units, exposure definition, and uncertainty; do not present fitted parameters as known constants.
+
+## 4. Common Statistical Principles
+
+- Distinguish probability density, probability mass, cumulative probability, and observed frequency. Density values may exceed `1`, but their integral must equal `1`; discrete probabilities must sum to `1`.
+- Respect each distribution’s support and parameterization. Use named R arguments for `shape`, `rate`, `scale`, `size`, and `prob` to avoid clinically important misinterpretation.
+- Select a distribution from the outcome-generating mechanism and study design, not from visual resemblance alone. Check independence, constant probability or rate, exposure time, overdispersion, censoring, and compositional constraints as applicable.
+- Parameter changes alter location, scale, skewness, tail weight, or dispersion. Use identical parameter definitions and comparable axes when distributions are compared.
+- A theoretical curve illustrates assumptions; it does not demonstrate that observed data follow the distribution. Use Q-Q plots, residual diagnostics, or formal model checks separately.
+
+## 5. Common Visual Rules
+
+- Do not add a gridline background.
+- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- Add value labels only when they improve interpretation without crowding the figure.
+- Use lines for continuous densities and stems or bars for discrete probability masses; label the y-axis explicitly as `Density` or `Probability`.
+- For parameter comparisons, keep panel layout, axis meaning, and parameter annotation consistent.
+
+## 6. Variants
+
+### Normal Distribution
 
 ![Normal Distribution](../assets/gallery/distribution/normal.png)
 
-**Applicable Data**
+**Statistical Methods and Features**
 
-- Theoretical normal distribution presentation task.
-- The focus is to compare the influence of the position parameter `μ` and the morphological parameter `σ` on the distribution curve.
-- Generally, it does not rely on external data files, and the `x` sequence and `dnorm()` density value are often directly generated by the code.
+- Models a symmetric continuous variable with location `μ` and standard deviation `σ`; changing `μ` shifts the distribution, whereas changing `σ` changes dispersion without altering symmetry.
+- Normality is an assumption about the outcome or model residuals, not a requirement for every medical variable or for large-sample inference in general.
 
-**Mapping Logic**
+**Code Features**
 
-- `x`: Continuous independent variable, usually an equidistant sequence.
-- `y`: Density value obtained by `dnorm(x, mean = μ, sd = σ)`.
-- `color = group`: Distribution curves of different parameter combinations.
-- Use `geom_line()` to plot the density curve.
-- If comparing different means, `geom_vline()` can be superimposed to mark the mean position.
-- "Change Mean" and "Change Standard Deviation" are often split into two panels.
+- Generate an ordered `x` grid and calculate density with `dnorm(x, mean = μ, sd = σ)`.
+- Draw parameter-specific curves with `geom_line()` and use `geom_vline()` only when the mean locations need explicit emphasis.
 
-**Additional Requirements**
+**Code Reference**
+- `assets/templates/distribution/Normal Distribution.R`
 
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
-- Use the shared book-derived plotting theme defined in `design-rules.md`.
-
-## Code Reference
-- Original development note: source example `Normal Distribution.txt` is not included in the public skill.
-
-
-#### Log-normal Distribution
+### Log-normal Distribution
 
 ![Log-normal Distribution](../assets/gallery/distribution/lognormal.png)
 
-**Applicable Data**
+**Statistical Methods and Features**
 
-- Theoretical lognormal distribution presentation task.
-- It focuses on showing the impact of different `μ` and `σ` parameters on the skewed distribution shape.
+- Applies to a positive variable whose logarithm is normally distributed; it is commonly considered for right-skewed concentrations, costs, and duration measures.
+- `meanlog` and `sdlog` describe the logarithmic scale and are not the arithmetic mean and standard deviation on the original scale.
 
-**Mapping Logic**
+**Code Features**
 
-- `x`: non-negative continuous sequence.
-- `y`: `dlnorm(x, meanlog = μ, sdlog = σ)`.
-- Use `geom_line()` to plot the density curve.
-- Usually, multiple subgraphs are generated using multiple parameter combinations, and then spliced ​​using `plot_grid()` or `patchwork`.
+- Use a strictly positive `x` grid and calculate density with `dlnorm(x, meanlog = μ, sdlog = σ)`.
+- Generate parameter combinations separately and combine them with `plot_grid()` or `patchwork` using comparable axes.
 
-**Additional Requirements**
+**Code Reference**
+- `assets/templates/distribution/Log-normal Distribution.R`
 
-- It is recommended that parameter labels be marked directly on each subgraph, such as `mu == 0`, `sigma == 1`.
-- The theme, coordinate labels and label positions should be unified in multiple panels.
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
-- Use the shared book-derived plotting theme defined in `design-rules.md`.
-
-## Code Reference
-- Original development note: source example `Log-normal Distribution.txt` is not included in the public skill.
-
-#### Multivariate Normal Distribution
+### Multivariate Normal Distribution
 
 ![Multivariate Normal Distribution](../assets/gallery/distribution/multivariate_normal.png)
 
-**Applicable Data**
+**Statistical Methods and Features**
 
-- Theoretical joint density presentation of bivariate or multivariate normal distributions.
+- Describes the joint distribution of several continuous variables through a mean vector and covariance matrix.
+- In the bivariate case, variances control marginal spread and correlation controls the orientation and elongation of the density surface.
 
-**Mapping Logic**
+**Code Features**
 
-- `x1`, `x2`: two continuous independent variable grids.
-- `z`: Joint density value calculated based on mean vector, variance and correlation coefficient.
-- The manuscript uses `outer()` to generate a two-dimensional density matrix, and then uses `plotly::add_surface()` to draw a 3D surface.
-- `color`: Continuous ribbon corresponding to high and low density.
-- `contours` can be retained to assist in understanding surface horizontal changes.
+- Create two coordinate grids, calculate the joint density on every grid combination, and assemble the result with `outer()`.
+- Display the density matrix with `plotly::add_surface()` and retain projected contours only when they clarify the covariance structure.
 
-**Additional Requirements**
+**Code Reference**
+- `assets/templates/distribution/Multivariate Normal Distribution.R`
 
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
-- Use the shared book-derived plotting theme defined in `design-rules.md`.
-
-## Code Reference
-- Original development note: source example `Multivariate Normal Distribution.txt` is not included in the public skill.
-
-#### Student's t Distribution
+### Student's t Distribution
 
 ![Student's t Distribution](../assets/gallery/distribution/t.png)
 
-**Applicable Data**
+**Statistical Methods and Features**
 
-- Theoretical t-distribution comparison task.
-- It focuses on showing how the curve shape gradually approaches the standard normal under different degrees of freedom `df`.
+- Is symmetric around zero but has heavier tails than the standard normal distribution; tail weight is controlled by degrees of freedom `df`.
+- It underlies inference for standardized mean-related statistics when variance is estimated under the relevant normal-model assumptions.
 
-**Mapping Logic**
+**Code Features**
 
-- `x`: continuous sequence, often symmetrical interval.
-- `y`：`dt(x, df)`。
-- Use `geom_line()`.
-- Multiple subgraphs are often generated by encapsulating different `df` through functions.
-- `annotate()` can be written internally to `df` directly in each subgraph.
+- Generate a symmetric `x` grid and calculate density with `dt(x, df = df)`.
+- Use one panel per selected `df` or overlay only a small number of curves; label the degrees of freedom explicitly.
 
-**Additional Requirements**
+**Code Reference**
+- `assets/templates/distribution/Student's t Distribution.R`
 
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
-- Use the shared book-derived plotting theme defined in `design-rules.md`.
-
-## Code Reference
-- Original development note: source example `Student’s t Distribution.txt` is not included in the public skill.
-
-#### F Distribution
+### F Distribution
 
 ![F Distribution](../assets/gallery/distribution/f.png)
 
-**Applicable Data**
+**Statistical Methods and Features**
 
-- Theoretical F-distribution presentation task.
-- Focus on showing the influence of the two degree of freedom parameters `df1` and `df2` on the curve.
+- Is a positive, right-skewed distribution formed from a ratio of independent scaled chi-square variables.
+- The ordered numerator and denominator degrees of freedom, `df1` and `df2`, determine its shape and are central to variance-ratio tests and analysis of variance.
 
-**Mapping Logic**
+**Code Features**
 
-- `x`: non-negative continuous sequence.
-- `y`：`df(x, df1, df2)`。
-- Draw using `geom_line()`.
-- Each parameter combination is plotted separately and arranged in multiple panels.
+- Use a non-negative `x` grid and calculate density with `df(x, df1 = df1, df2 = df2)`.
+- Display parameter combinations in separate panels and annotate both degrees of freedom.
 
-**Additional Requirements**
+**Code Reference**
+- `assets/templates/distribution/F Distribution.R`
 
-- The F distribution is asymmetric, with the horizontal axis starting at 0.
-- Parameter annotation should write `df1` and `df2` at the same time.
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
-- Use the shared book-derived plotting theme defined in `design-rules.md`.
-
-## Code Reference
-- Original development note: source example `F Distribution.txt` is not included in the public skill.
-
-#### Chi-square Distribution
+### Chi-square Distribution
 
 ![Chi-square Distribution](../assets/gallery/distribution/chi_square.png)
 
-**Applicable Data**
+**Statistical Methods and Features**
 
-- Theoretical chi-square distribution comparison task.
-- Focus on showing the change from skew to gradually approaching normality under different degrees of freedom.
+- Represents the sum of squared independent standard normal variables and has support on non-negative values.
+- Degrees of freedom determine skewness and spread; the distribution is used in variance inference and several categorical-data test statistics.
 
-**Mapping Logic**
+**Code Features**
 
-- `x`: non-negative continuous sequence.
-- `y`：`dchisq(x, df)`。
-- Use `geom_line()`.
-- Multiple `df` are often split into multiple sub-pictures for comparison.
+- Generate a non-negative grid and calculate density with `dchisq(x, df = df)`.
+- Use multiple panels for different degrees of freedom and avoid truncating the right tail without clear indication.
 
-**Additional Requirements**
+**Code Reference**
+- `assets/templates/distribution/Chi-square Distribution.R`
 
-- Parameter annotation should also write `df`.
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
-- Use the shared book-derived plotting theme defined in `design-rules.md`.
-
-## Code Reference
-- Original development note: source example `Chi-square Distribution.txt` is not included in the public skill.
-
-#### Beta Distribution
+### Beta Distribution
 
 ![Beta Distribution](../assets/gallery/distribution/beta.png)
 
-**Applicable Data**
+**Statistical Methods and Features**
 
-- A continuous proportional theoretical distribution with values ​​at `(0, 1)`.
-- Focus on showing how different `a`, `b` parameters form U-shaped, uniform, unimodal skewness or spike distribution.
+- Models a continuous proportion in `(0, 1)` using positive shape parameters `α` and `β`.
+- It can represent symmetric, skewed, U-shaped, or near-uniform distributions and is the conjugate prior for a Bernoulli or binomial probability.
 
-**Mapping Logic**
+**Code Features**
 
-- `x`: Usually a continuous sequence within `(0,1)`.
-- `y`：`dbeta(x, shape1 = a, shape2 = b)`。
-- Use `geom_line()`.
-- Multi-parameter combinations are displayed using multiple panels.
+- Use an `x` grid strictly inside `(0, 1)` and calculate density with `dbeta(x, shape1 = α, shape2 = β)`.
+- Plot each parameter pair in a separate panel and label both shape parameters.
 
-**Additional Requirements**
+**Code Reference**
+- `assets/templates/distribution/Beta Distribution.R`
 
-- Parameter annotation should write `a` and `b` at the same time.
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
-- Use the shared book-derived plotting theme defined in `design-rules.md`.
-
-## Code Reference
-- Original development note: source example `Beta Distribution.txt` is not included in the public skill.
-
-#### Uniform Distribution
+### Uniform Distribution
 
 ![Uniform Distribution](../assets/gallery/distribution/uniform.png)
 
-**Applicable Data**
+**Statistical Methods and Features**
 
-- Demonstration of continuous uniform distribution theory.
-- Focus on showing the impact of changes in the interval `[a, b]` on the rectangular density function.
+- Assigns constant density to all values in a bounded interval `[a, b]` and zero density outside it.
+- It is appropriate only when equal probability per unit interval is a meaningful assumption.
 
-**Mapping Logic**
+**Code Features**
 
-- `x`: Continuous values ​​generated within `[a, b]`.
-- `y`：`dunif(x, min = a, max = b)`。
-- Draw using `geom_line()`.
-- Different interval parameters are often compared in multiple subgraphs.
+- Use a deterministic ordered grid spanning and extending slightly beyond `[a, b]`, then calculate `dunif(x, min = a, max = b)`.
+- Do not use unsorted `runif()` samples to draw the theoretical density curve.
 
-**Additional Requirements**
+**Code Reference**
+- `assets/templates/distribution/Uniform Distribution.R`
 
-- Parameter annotation should write `a` and `b` at the same time.
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
-- Use the shared book-derived plotting theme defined in `design-rules.md`.
-
-## Code Reference
-- Original development note: source example `Uniform Distribution.txt` is not included in the public skill.
-
-#### Discrete Uniform Distribution
+### Discrete Uniform Distribution
 
 ![Discrete Uniform Distribution](../assets/gallery/distribution/discrete_uniform.png)
 
-**Applicable Data**
+**Statistical Methods and Features**
 
-- The value is a discrete distribution with a finite set of integers and equal probability for each point.
-- The focus is on discrete uniform probability mass functions under different integer ranges.
+- Assigns equal probability to each integer in a finite set.
+- It is a probability-mass distribution and should not be represented as a continuous density.
 
-**Mapping Logic**
+**Code Features**
 
-- `x`: discrete integer value.
-- `y`: Equiprobability constant `1 / (n2 - n1 + 1)`.
-- Use `geom_linerange()` or equivalent discrete PMF drawing method to express the probability mass of each value.
-- A continuous curve should not be used to mislead a distribution into a continuous one.
+- Generate the complete integer support from `n1` to `n2` and set each mass to `1 / (n2 - n1 + 1)`.
+- Draw vertical masses with `geom_linerange()` or equivalent stems.
 
-**Additional Requirements**
+**Code Reference**
+- `assets/templates/distribution/Discrete Uniform Distribution.R`
 
-- Parameter annotation should write `n1` and `n2` at the same time.
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
-- Use the shared book-derived plotting theme defined in `design-rules.md`.
-
-## Code Reference
-- Original development note: source example `Discrete Uniform Distribution.txt` is not included in the public skill.
-
-#### Gamma Distribution
+### Gamma Distribution
 
 ![Gamma Distribution](../assets/gallery/distribution/gamma.png)
 
-**Applicable Data**
+**Statistical Methods and Features**
 
-- Theoretical distribution of nonnegative continuous variables.
-- It focuses on the influence of the shape parameter `a` and the scale parameter `b` on the right-skewed distribution shape.
+- Models positive, usually right-skewed quantities such as waiting times or cumulative amounts.
+- Its shape and rate or scale parameters control modality, dispersion, and tail behavior; the exponential and chi-square distributions are special cases under specific parameterizations.
 
-**Mapping Logic**
+**Code Features**
 
-- `x`: non-negative continuous sequence.
-- `y`: `dgamma(x, shape = a, scale = b)` or the corresponding parameterization method of the book manuscript.
-- Use `geom_line()`.
-- Multi-parameter combinations are displayed using multiple panels.
+- Use a positive grid and call `dgamma()` with named arguments, for example `dgamma(x, shape = α, rate = β)` or `scale = θ`.
+- State whether the second parameter is a rate or scale and apply the same parameterization in labels and interpretation.
 
-**Additional Requirements**
+**Code Reference**
+- `assets/templates/distribution/Gamma Distribution.R`
 
-- Parameter annotation should write `a` and `b` at the same time.
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
-- Use the shared book-derived plotting theme defined in `design-rules.md`.
-
-## Code Reference
-- Original development note: source example `Gamma Distribution.txt` is not included in the public skill.
-
-#### Exponential Distribution
+### Exponential Distribution
 
 ![Exponential Distribution](../assets/gallery/distribution/exponential.png)
 
-**Applicable Data**
+**Statistical Methods and Features**
 
-- Theoretical distribution of nonnegative continuous variables.
-- It focuses on showing the memoryless distribution pattern under different `lambda`.
+- Models non-negative waiting time under a constant event hazard `λ`.
+- It is memoryless and is a special case of the Gamma and Weibull distributions; the constant-hazard assumption should be clinically plausible.
 
-**Mapping Logic**
+**Code Features**
 
-- `x`: non-negative continuous sequence.
-- `y`：`dexp(x, rate = lambda)`。
-- Use `geom_line()`.
-- Multiple `lambda` combinations are displayed using multi-panels.
+- Generate a non-negative grid and calculate density with `dexp(x, rate = λ)`.
+- Compare selected rates in separate panels and label `λ` consistently.
 
-**Additional Requirements**
+**Code Reference**
+- `assets/templates/distribution/Exponential Distribution.R`
 
-- The parameter annotation should be written `lambda`.
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
-- Use the shared book-derived plotting theme defined in `design-rules.md`.
-
-## Code Reference
-- Original development note: source example `Exponential Distribution.txt` is not included in the public skill.
-
-#### Inverse Gamma Distribution
+### Inverse Gamma Distribution
 
 ![Inverse Gamma Distribution](../assets/gallery/distribution/inverse_gamma.png)
 
-**Applicable Data**
+**Statistical Methods and Features**
 
-- Display of the theoretical distribution of positive continuous variables.
-- Focus on showing the skewed morphology under different parameters.
+- Is a positive, right-skewed distribution often used as a prior model for variance or scale parameters.
+- Its mean and variance exist only for sufficiently large shape parameters, so parameter interpretation must account for these moment conditions.
 
-**Mapping Logic**
+**Code Features**
 
-- The manuscript constructs the inverse Gamma density through `dgamma(1/x, a, b)/(x*x)`.
-- `x`: continuous sequence of positive values.
-- `y`: Inverse Gamma density value.
-- Use `geom_line()`.
-- Multi-parameter combination and multi-panel display.
+- Use `x > 0` and calculate the density with a validated inverse-Gamma function or the transformation `dgamma(1 / x, shape = α, rate = β) / x^2`.
+- Exclude zero from the grid and use named Gamma parameters to avoid division and parameterization errors.
 
-**Additional Requirements**
-- Parameter annotation should write `a` and `b` at the same time.
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
-- Use the shared book-derived plotting theme defined in `design-rules.md`.
+**Code Reference**
+- `assets/templates/distribution/Inverse Gamma Distribution.R`
 
-## Code Reference
-- Original development note: source example `Inverse Gamma Distribution.txt` is not included in the public skill.
-
-#### Bernoulli Distribution
+### Bernoulli Distribution
 
 ![Bernoulli Distribution](../assets/gallery/distribution/bernoulli.png)
 
-**Applicable Data**
+**Statistical Methods and Features**
 
-- A two-point discrete distribution with only values ​​0 and 1.
-- It focuses on showing the changes of two quality points under different success probabilities `p`.
+- Represents one binary trial with `P(X = 1) = p` and `P(X = 0) = 1 - p`.
+- It is the basic model for a single binary outcome and the building block of binomial models.
 
-**Mapping Logic**
+**Code Features**
 
-- `x`: `0` and `1`.
-- `y`: Corresponds to probability mass `p` and `1-p`.
-- Use `geom_linerange()` or the vertical bar representation of the discrete PMF.
-- Continuous curves should not be used.
+- Use support `x = c(0, 1)` and probability masses `c(1 - p, p)` under the conventional success definition.
+- Draw the two masses with `geom_linerange()` or discrete bars and label `p` explicitly.
 
-**Additional Requirements**
+**Code Reference**
+- `assets/templates/distribution/Bernoulli Distribution.R`
 
-- The parameter label should be written `p`.
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
-- Use the shared book-derived plotting theme defined in `design-rules.md`.
-
-## Code Reference
-- Original development note: source example `Bernoulli Distribution.txt` is not included in the public skill.
-
-#### Binomial Distribution
+### Binomial Distribution
 
 ![Binomial Distribution](../assets/gallery/distribution/binomial.png)
 
-**Applicable Data**
+**Statistical Methods and Features**
 
-- A discrete count distribution with a fixed number of trials `n` and a single success probability `π`.
-- It focuses on showing the change in the shape of the probability mass function after the change of `n` and `π`.
+- Models the number of successes in `n` independent trials with a common success probability `p`.
+- It assumes fixed `n`, constant `p`, and no extra-binomial heterogeneity; clustered or overdispersed data require another model.
 
-**Mapping Logic**
+**Code Features**
 
-- `x`: Discrete count of `0:n`.
-- `y`：`dbinom(x, n, π)`。
-- Use `geom_bar(stat = "identity")` or equivalent discrete column plot.
-- Multiple parameter combinations are commonly used to form a 2×3 panel comparison.
+- Generate integer support `0:n` and calculate probability mass with `dbinom(x, size = n, prob = p)`.
+- Draw the PMF with `geom_bar(stat = "identity")` and annotate both `n` and `p`.
 
-**Additional Requirements**
+**Code Reference**
+- `assets/templates/distribution/Binomial Distribution.R`
 
-- Parameter annotation should write `n` and `π` at the same time.
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
-- Use the shared book-derived plotting theme defined in `design-rules.md`.
-
-## Code Reference
-- Original development note: source example `Binomial Distribution.txt` is not included in the public skill.
-
-#### Poisson Distribution
+### Poisson Distribution
 
 ![Poisson Distribution](../assets/gallery/distribution/poisson.png)
 
-**Applicable Data**
+**Statistical Methods and Features**
 
-- Discrete theoretical distribution of rare event counts.
-- Focus on showing the changes of probability mass function under different `lambda`.
+- Models event counts over a defined time, area, or exposure when events occur independently at a constant rate.
+- Its mean and variance both equal `λ`; substantial overdispersion suggests heterogeneity, clustering, or a negative-binomial model.
 
-**Mapping Logic**
+**Code Features**
 
-- `x`: discrete count value.
-- `y`：`dpois(x, lambda)`。
-- Use `geom_bar(stat = "identity")`.
-- Usually multiple `lambda` are used to form a multi-panel comparison.
+- Generate a sufficiently wide non-negative integer support and calculate mass with `dpois(x, lambda = λ)`.
+- Draw with `geom_bar(stat = "identity")` and choose the upper support from the tail probability rather than an arbitrary fixed limit.
 
-**Additional Requirements**
+**Code Reference**
+- `assets/templates/distribution/Poisson Distribution.R`
 
-- The parameter label should be written `lambda`.
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
-- Use the shared book-derived plotting theme defined in `design-rules.md`.
-
-## Code Reference
-- Original development note: source example `Poisson Distribution.txt` is not included in the public skill.
-
-#### Beta-binomial Distribution
+### Beta-binomial Distribution
 
 ![Beta-binomial Distribution](../assets/gallery/distribution/beta_binomial.png)
 
-**Applicable Data**
+**Statistical Methods and Features**
 
-- Discrete count distribution, often used in binomial scenarios with overdispersion or as a conjugate extension of the binomial distribution.
-- Focus on showing the impact of `n`, `alpha`, `beta` parameters on PMF.
+- Extends the binomial model by allowing the success probability to vary according to a Beta distribution.
+- It accommodates extra-binomial variation and within-cluster similarity while retaining support from `0` to `n`.
 
-**Mapping Logic**
+**Code Features**
 
-- `x`: `0:n` discrete count.
-- `y`: Beta-Binomial PMF.
-- The manuscript uses `dbb()` to calculate the quality function, and then uses `geom_bar(stat = "identity")` to draw it.
-- Multi-parameter combination multi-panel comparison.
+- Generate support `0:n` and calculate the PMF with the project’s Beta-binomial function `dbb()` using `n`, `α`, and `β`.
+- Confirm the package-specific parameterization before plotting and label all three parameters.
 
-**Additional Requirements**
+**Code Reference**
+- `assets/templates/distribution/Beta-binomial Distribution.R`
 
-- Parameter annotation should also write `n`, `α`, `β`.
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
-- Use the shared book-derived plotting theme defined in `design-rules.md`.
-
-## Code Reference
-- Original development note: source example `Beta-binomial Distribution.txt` is not included in the public skill.
-
-#### Multinomial Distribution
+### Multinomial Distribution
 
 ![Multinomial Distribution](../assets/gallery/distribution/multinomial.png)
 
-**Applicable Data**
+**Statistical Methods and Features**
 
-- Discrete joint distribution of multi-category count assignments.
+- Generalizes the binomial distribution to counts across several mutually exclusive categories in `n` independent trials.
+- Category counts are jointly dependent because they must sum to `n`, and category probabilities must sum to `1`.
 
-**Mapping Logic**
+**Code Features**
 
-- Generally, the probability mass matrix of the multinomial distribution is generated first.
-- Then organize it into three columns suitable for `scatterplot3d()`:
-  - `columns`
-  - `rows`
-  - `value`
-- `x / y`: Category count combination.
-- `z`: Corresponds to joint probability mass.
-- The manuscript adopts 3D prismatic vertical bar chart `type = "h"`.
+- Enumerate only valid count combinations whose total equals `n` and calculate joint probability with `dmultinom()`.
+- Display the discrete probability masses with stems or the manuscript’s `scatterplot3d(type = "h")`; do not convert them into a continuous surface.
 
-**Additional Requirements**
+**Code Reference**
+- `assets/templates/distribution/Multinomial Distribution.R`
 
-- This is a discrete joint distribution and should not be mistakenly drawn as a continuous surface.
-- 3D images place more emphasis on structure and should not be overlaid with too many decorations.
-- Parameter annotation should also write `n` and `p`.
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
-- Use the shared book-derived plotting theme defined in `design-rules.md`.
-
-## Code Reference
-- Original development note: source example `Multinomial Distribution.txt` is not included in the public skill.
-
-#### Geometric Distribution
+### Geometric Distribution
 
 ![Geometric Distribution](../assets/gallery/distribution/geometric.png)
 
-**Applicable Data**
+**Statistical Methods and Features**
 
-- A theoretical distribution of the discrete waiting time type, representing the number of failures experienced before the first success, or equivalently a discrete count of the number of trials required to achieve the first success.
-- It focuses on showing the decay speed and central tendency change of the probability mass function after the single success probability `π` changes.
-- You can use `dgeom()` to calculate the probability mass under different `π` parameters and compare them as a multi-panel histogram.
+- Models waiting until the first success under independent trials with constant success probability `p`.
+- In R, `dgeom()` defines `X` as the number of failures before the first success, with support `0, 1, 2, ...`.
 
-**Mapping Logic**
+**Code Features**
 
-- `x`: A sequence of non-negative discrete integers, usually representing the number of failures before the first success.
-- `y`: Probability mass corresponding to `dgeom(x, prob = π)`.
-- Use `geom_bar(stat = "identity")` to draw a discrete probability mass histogram.
-- A 2×3 multi-panel comparison chart is often formed by combining multiple `π` parameters.
+- Generate non-negative integer support and calculate mass with `dgeom(x, prob = p)`.
+- Draw with `geom_bar(stat = "identity")` and state the counting convention explicitly.
 
-**Additional Requirements**
+**Code Reference**
+- `assets/templates/distribution/Geometric Distribution.R`
 
-- The parameter label should be written `π`.
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
-- Use the shared book-derived plotting theme defined in `design-rules.md`.
-
-## Code Reference
-- Original development note: source example `Geometric Distribution.txt` is not included in the public skill.
-
-#### Hypergeometric Distribution
+### Hypergeometric Distribution
 
 ![Hypergeometric Distribution](../assets/gallery/distribution/hypergeometric.png)
 
-**Applicable Data**
+**Statistical Methods and Features**
 
-- Discrete count distributions sampled from a finite population without replacement.
-- It focuses on showing the impact of changes in population size, number of successes in the population, and sampling size on PMF.
+- Models the number of target items obtained when sampling without replacement from a finite population.
+- Unlike the binomial distribution, trial probabilities change after each draw and observations are not independent.
 
-**Mapping Logic**
+**Code Features**
 
-- `x`: Discrete success count.
-- `y`: `dhyper()` corresponds to probability mass.
-- Use `geom_bar(stat = "identity")`.
-- Multi-parameter combinations are usually displayed in multiple panels.
+- Derive the feasible support from the population composition and sample size.
+- Use named arguments in `dhyper(x, m = target_count, n = other_count, k = sample_size)` and draw the PMF with discrete bars.
 
-**Additional Requirements**
+**Code Reference**
+- `assets/templates/distribution/Hypergeometric Distribution.R`
 
-- Parameter annotation should also write `n`, `N`, `M`.
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
-- Use the shared book-derived plotting theme defined in `design-rules.md`.
-
-## Code Reference
-- Original development note: source example `Hypergeometric Distribution.txt` is not included in the public skill.
-
-#### Negative Binomial Distribution
+### Negative Binomial Distribution
 
 ![Negative Binomial Distribution](../assets/gallery/distribution/negative_binomial.png)
 
-**Applicable Data**
+**Statistical Methods and Features**
 
-- Discrete count theory distribution.
-- Focus on showing the distribution of the number of successes before reaching a predetermined number of non-successes, or the theoretical background of overdispersion count modeling.
+- In R’s parameterization, models the number of failures before a specified number of successes.
+- It is also widely used for overdispersed count outcomes because its variance exceeds its mean under standard parameterizations.
 
-**Mapping Logic**
+**Code Features**
 
-- `x`: discrete count.
-- `y`：`dnbinom(x, size = n, prob = π)`。
-- Use `geom_bar(stat = "identity")`.
-- Multiple panels compare different parameter combinations.
+- Generate non-negative integer support and calculate mass with `dnbinom(x, size = r, prob = p)` or a clearly specified mean-based parameterization.
+- Label the counting convention and parameters; choose the plotted support to retain nearly all probability mass.
 
-**Additional Requirements**
+**Code Reference**
+- `assets/templates/distribution/Negative Binomial Distribution.R`
 
-- Parameter annotation should also write `n` and `π`.
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
-- Use the shared book-derived plotting theme defined in `design-rules.md`.
-
-## Code Reference
-- Original development note: source example `Negative Binomial Distribution.txt` is not included in the public skill.
-
-#### Dirichlet Distribution
+### Dirichlet Distribution
 
 ![Dirichlet Distribution](../assets/gallery/distribution/dirichlet.png)
 
-**Applicable Data**
+**Statistical Methods and Features**
 
-- A probability vector distribution where multiple components are positive and sum to 1.
-- It focuses on showing the impact of `α` vector changes on the three-component joint density structure.
+- Generalizes the Beta distribution to a vector of non-negative proportions summing to `1`.
+- The normalized concentration vector determines the mean composition, while the total concentration controls dispersion around that composition.
 
-**Mapping Logic**
+**Code Features**
 
-- First generate Gamma random numbers and standardize them into three component ratios:
-  - `ry1`
-  - `ry2`
-  - `ry3`
-- Then calculate the corresponding density value `dy`.
-- Use `plotly` to make 3D point cloud or 3D display:
-  - `x = ry1`
-  - `y = ry2`
-  - `z = dy`
-- Essentially a representation of the density distribution on a probability simplex.
+- Generate independent Gamma variables with shapes `α1, ..., αK` and normalize each vector by its sum.
+- For three components, map the normalized values to `ggtern`; for higher dimensions, use an alternative compositional display.
 
-**Additional Requirements**
+**Code Reference**
+- `assets/templates/distribution/Dirichlet Distribution.R`
 
-- The Dirichlet distribution is not an ordinary ternary graph, but a continuous distribution defined on a probability vector. .
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
-- Use the shared book-derived plotting theme defined in `design-rules.md`.
-
-## Code Reference
-- Original development note: source example `Dirichlet Distribution.txt` is not included in the public skill.
-
-#### Cauchy Distribution
+### Cauchy Distribution
 
 ![Cauchy Distribution](../assets/gallery/distribution/cauchy.png)
 
-**Applicable Data**
+**Statistical Methods and Features**
 
-- Demonstration of theoretical continuous distributions.
-- Focus on showing the typical distribution shape with heavy tails, no mean and no variance.
+- Is a symmetric, extremely heavy-tailed distribution defined by location and scale.
+- Its mean and variance are undefined, so sample averages and variances do not stabilize in the usual way.
 
-**Mapping Logic**
+**Code Features**
 
-- `x`: continuous sequence.
-- `y`：`dcauchy(x, location, scale)`。
-- Use `geom_line()`.
-- Multi-parameter combination and multi-panel display.
+- Generate a wide symmetric grid and calculate density with `dcauchy(x, location = x0, scale = γ)`.
+- Use axis limits wide enough to show tail behavior and label both location and scale.
 
-**Additional Requirements**
+**Code Reference**
+- `assets/templates/distribution/Cauchy Distribution.R`
 
-- Parameter annotation should also write `x0` and `γ`.
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
-- Use the shared book-derived plotting theme defined in `design-rules.md`.
-
-## Code Reference
-- Original development note: source example `Cauchy Distribution.txt` is not included in the public skill.
-
-#### Weibull Distribution
+### Weibull Distribution
 
 ![Weibull Distribution](../assets/gallery/distribution/weibull.png)
 
-**Applicable Data**
+**Statistical Methods and Features**
 
-- Theoretical distribution of nonnegative continuous variables.
-- It is often used to display the theoretical background of life data and survival time.
-- Focus on showing the role of shape parameter `a` and scale parameter `b`.
+- Models positive event times with shape `k` and scale `λ`.
+- Its hazard decreases when `k < 1`, is constant when `k = 1`, and increases when `k > 1`, making it useful for parametric survival modeling.
 
-**Mapping Logic**
+**Code Features**
 
-- `x`: non-negative continuous sequence.
-- `y`：`dweibull(x, shape = a, scale = b)`。
-- Use `geom_line()`.
-- Multi-parameter combination and multi-panel display.
+- Generate a non-negative grid and calculate density with `dweibull(x, shape = k, scale = λ)`.
+- Compare parameter combinations in separate panels and retain the same shape/scale convention throughout.
 
-**Additional Requirements**
+**Code Reference**
+- `assets/templates/distribution/Weibull Distribution.R`
 
-- Parameter annotation should also write `a` and `b`.
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
-- Use the shared book-derived plotting theme defined in `design-rules.md`.
-
-## Code Reference
-- Original development note: source example `Weibull Distribution.txt` is not included in the public skill.
-
-#### Logistic Distribution
+### Logistic Distribution
 
 ![Logistic Distribution](../assets/gallery/distribution/logistic.png)
 
-**Applicable Data**
+**Statistical Methods and Features**
 
-- Continuous symmetry type theoretical distribution.
-- Focus on showing the influence of position parameter `mu` and scale parameter `s` on the curve shape.
+- Is a symmetric continuous distribution defined by location `μ` and scale `s`, with heavier tails than a normal distribution of comparable spread.
+- It is related to the logistic link but should not be confused with the Bernoulli outcome distribution used in logistic regression.
 
-**Mapping Logic**
+**Code Features**
 
-- `x`: continuous sequence.
-- `y`：`dlogis(x, location = mu, scale = s)`。
-- Use `geom_line()`.
-- Multi-parameter combinations are displayed in multiple panels.
+- Generate a symmetric grid and calculate density with `dlogis(x, location = μ, scale = s)`.
+- Display selected parameter combinations in comparable panels and label both location and scale.
 
-**Additional Requirements**
+## 7. QA Checklist
 
-- Parameter annotation should also write `μ` and `s`.
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
-- Use the shared book-derived plotting theme defined in `design-rules.md`.
-
-## Code Reference
-- Original development note: source script `1000-normal-distribution-finished.rmd` is not included in the public skill.
-
-## QA
-
-- Label parameters clearly.
-- Do not mix density, probability, and cumulative probability without clear y-axis labels.
-- Use facets when overlays become hard to read.
+- Verify the distribution support, parameter names, units, and R parameterization before calculating values.
+- Confirm that continuous densities integrate to `1` and discrete probability masses sum to `1` over the plotted support.
+- Label the y-axis as density or probability and avoid interpreting density height as direct event probability.
+- Check that the assumed data-generating conditions match the medical outcome, including independence, exposure, censoring, overdispersion, and sampling with or without replacement.
+- Use adequate x-axis coverage so clinically relevant tails are not silently omitted.
+- Treat theoretical curves as model illustrations and use empirical diagnostics before claiming distributional fit.

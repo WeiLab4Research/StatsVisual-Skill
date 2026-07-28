@@ -2,8 +2,6 @@
 
 Use this style when the user asks for `jama`, JAMA, JAMA Network, Journal of the American Medical Association, clinical research figures, rigorous statistical display, or a restrained editorial medical-journal style.
 
-This guidance combines public JAMA Network author instructions, common JAMA clinical figure conventions, and the local `ggsci` JAMA palette. Treat official author instructions as submission constraints and this file as R/ggplot2 production guidance. Do not copy official pages, PDFs, or source figures into generated project folders.
-
 ## Visual Rules
 
 - Use a white background, strong black or near-black axes, visible ticks, and no decorative grid.
@@ -50,13 +48,6 @@ For filled bars, boxes, and areas, use moderate alpha and dark outlines. For lin
 - Use uppercase panel labels and concise panel titles.
 - Avoid overloading a figure with too many subgroup panels; move exploratory panels to supplement-style outputs when needed.
 
-## Chart-Specific Overrides
-
-- Survival and cumulative-incidence figures should include number-at-risk context when it materially affects interpretation.
-- For KM curves, place number at risk below the plot, center risk counts under the matching x-axis ticks, right-align and bold `Number at risk` plus group names, and use black risk-table text by default.
-- Bar charts should show denominators or uncertainty intervals when displaying rates, proportions, or model summaries.
-- Scatter and regression figures should state smoothing/model method and avoid unlabelled trend lines.
-
 ## JAMA Forest Plot Rules
 
 - Use a forest plot only when each row has an effect estimate and uncertainty interval, or when these are computed from a declared model.
@@ -87,15 +78,6 @@ For filled bars, boxes, and areas, use moderate alpha and dark outlines. For lin
 - Use `rmg_format_ci()` and `rmg_format_p()` for visible CI and P-value text.
 - Prefer `svglite` for SVG, `cairo_pdf` for PDF, and `ragg` for TIFF/PNG.
 - Keep SVG/PDF text editable wherever feasible.
-
-## Official Submission Rules
-
-- Follow current JAMA Network author instructions when the target is final submission; check them again before submission because publisher requirements can change.
-- Submit figures as separate figure files when required by the journal workflow.
-- Prefer editable vector output for line art and statistical graphics; keep text selectable/editable where feasible.
-- Ensure raster artwork meets the journal's current resolution and file-format requirements. This skill's default 700 dpi TIFF is intentionally conservative for print raster export.
-- Do not convert low-resolution raster images to PDF/SVG and treat them as vector artwork.
-- Keep figure titles, legends, abbreviations, units, and statistical definitions consistent with the manuscript.
 
 ## QA
 

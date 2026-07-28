@@ -1,305 +1,259 @@
 # Line Chart
 
-## Use For
+## 1. Scope and Definition
 
-Use line charts for ordered x-values: time, dose, sequence, or another continuous/ordinal variable. Lines imply continuity or ordered connection.
+Line charts display change across an ordered variable such as time, dose, sequence, or another continuous or ordinal scale. Connecting observations emphasizes their order and trend; it does not by itself imply continuous measurement, causality, or statistical significance.
 
-## Variants
+Area, stacked area, stream, and step charts are related extensions of line charts. Radar plots use connected lines in polar coordinates to compare multivariable profiles rather than temporal trends.
 
-- Point-line chart for measured time points.
-- Time-series line chart.
-- Grouped longitudinal line chart.
-- Mean trend with confidence band.
-- Area chart for cumulative totals.
-- Stacked area chart for additive components.
-- Step chart for event/cumulative processes.
-- Radar/spider plot only for compact multivariate profiles; use cautiously.
+## 2. Selection Guide
 
-## Core Mapping Logic
+| Analytical purpose | Recommended chart |
+|---|---|
+| Show observed values across ordered measurement points | Line Plot with Point |
+| Display eigenvalues or explained variance across principal components | Scree Plot |
+| Show estimates with variability or uncertainty | Line Plot with Errorbar |
+| Examine trend, seasonality, or temporal change | Time Series Plot |
+| Compare observed data with a fitted or smoothed trend | Smooth Line Plot |
+| Emphasize magnitude relative to a baseline across an ordered axis | Area Graph |
+| Show an additive total and its changing composition | Stacked Area Graph |
+| Summarize the dynamics of many concurrent series | Stream Graph |
+| Show cumulative or piecewise-constant change at discrete events | Stepper Line Chart |
+| Compare standardized multivariable profiles across groups | Radar Plot |
+
+## 3. Required Data Structure
+
+- Standard line data should contain an ordered `x` variable, a numeric `y` variable, and an optional `group` identifier; longitudinal individual-level data should also retain `subject_id`.
+- Error-bar data require a point estimate and either explicit lower and upper limits or a clearly defined error measure. Time-series data require valid dates and a known observation frequency.
+- Stacked area and stream data require one row per time–component combination. Radar data require comparable or standardized indicators for each group.
+- Scree plots may start from a multivariable matrix, but plotting data must contain correctly ordered component labels and their eigenvalues or explained variance.
+
+## 4. Common Statistical Principles
+
+- Connect only observations with a meaningful order. Do not join nominal categories or unrelated subjects.
+- Distinguish individual trajectories, group summaries, and model-fitted values; each answers a different clinical or epidemiological question.
+- Account for repeated measurements, temporal dependence, irregular intervals, missing observations, and changes in measurement frequency when interpreting trends.
+- Define every interval as `SD`, `SE`, `95% CI`, or another prespecified measure. Interval overlap is not a substitute for formal inference.
+- State any transformation, smoothing, or differencing because it changes the scale and interpretation of the displayed outcome.
+
+## 5. Common Visual Rules
+
+- Use a true ordered axis with clinically meaningful breaks and units. Keep the same scale when panels or groups are intended for direct comparison.
+- Preserve gaps caused by missing periods unless interpolation is explicitly justified. Sort observations by `x` within each group before connecting them.
+- Use consistent color, line type, and point shape for the same group or estimation method across the figure.
+- The y-axis need not start at zero, but its range should not exaggerate small changes; add a clinically meaningful reference line when appropriate.
+- Limit the number of overlapping series. Use faceting or direct labels when multiple lines cannot be distinguished reliably.
+- Place the title and legend at the top and center them.
+- Do not add a gridline background.
+- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+
+## 6. Variants
 
 ### Line Plot with Point
 
 ![Line Plot with Point](../assets/gallery/line/point_line.png)
 
-**Applicable Data**
+**Statistical Features**
 
-- One-dimensional continuous trend data
-- Usually `x = time/dose/proportion/continuous value`, `y = continuous metric`
-- Can bring `group` to represent different models, queues, processing groups, and subgroups
+- Displays observed values or summary estimates across ordered measurement points and supports comparison of trends between groups.
+- Points identify the actual measurement locations; the connecting line represents ordered change rather than unobserved intermediate data.
 
-**Mapping Logic**
+**Visual Features**
 
-- `x` maps to the continuous horizontal axis
-- `y` is mapped to the vertical axis value
-- `color = group`
-- First `geom_point()` then `geom_line()` or both in parallel
-- If multiple groups are parallel, the line and point colors are unified, and the legend is controlled by `color`
-- The X-axis must be a continuous variable, and pure categorical variables must not be mistaken for a polyline horizontal axis.
+- Markers show individual measurement points, while straight segments connect adjacent points.
+- Multiple groups appear as separate point–line sequences with matched color or line encoding.
 
-**Additional Requirements**
+**Code Features**
 
-- It is recommended to limit the Y-axis range so that the line occupies about 2/3 of the height of the canvas to enhance readability.
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- Map the ordered variable to `x`, the numeric outcome to `y`, and the grouping variable to `color` or `group`.
+- Combine `geom_point()` with `geom_line()` and ensure observations are ordered within each group.
+- Code Reference: source script `\StatsVisual-Skill\assets\templates\line\Line Plot with Point.R`
 
 ### Scree Plot
 
 ![Scree Plot](../assets/gallery/line/scree.png)
 
-**Applicable Data**
+**Statistical Features**
 
-- Principal component analysis, factor analysis, and eigenvalue decomposition results
-- The original input is usually a multi-variable wide table; the mapping data is each principal component and its variance, eigenvalues ​​or variance contribution rate
+- Summarizes the eigenvalue or explained variance of each ordered principal component or factor.
+- The decline and possible elbow support dimension selection, but retention should also consider cumulative variance and prespecified analytical criteria.
 
-**Mapping Logic**
+**Visual Features**
 
-- `x = principal component index or name (PC1, PC2, ...)`
-- `y = eigenvalue / explained variance`
-- `group = 1` to ensure that wires can be wired on discrete X
-- Usually `geom_line()` + `geom_point()`
+- Components are arranged from the first to the last, with a point at each component joined by a descending line.
+- A steep initial decline followed by a flatter tail forms the characteristic scree pattern.
 
-**Additional Requirements**
+**Code Features**
 
-- If the user provides the original variable matrix, `prcomp(..., scale = TRUE/FALSE)` or other PCA methods should be executed first
-- Point shapes are recommended to be hollow or white with black edges to highlight the nodes.
-- The component naming order must be correct, and there must be no string sorting error with `PC10` before `PC2`.
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- When raw variables are supplied, first perform PCA or factor analysis and derive eigenvalues or explained variance.
+- Keep component labels in numeric order; use `group = 1` when a discrete component axis is connected by `geom_line()`.
+- code reference:source script `\StatsVisual-Skill\assets\templates\line\Scree Plot.R`
 
 ### Line Plot with Errorbar
 
 ![Line Plot with Errorbar](../assets/gallery/line/errorbar_line.png)
 
-**Applicable Data**
+**Statistical Features**
 
-- Means/estimates and their uncertainties at each point in time or at successive locations
+- Displays estimates over ordered time or dose together with variability or estimation uncertainty.
+- In longitudinal studies, observed and model-based estimates may be shown together, but the interval definition and missing-data method must be stated.
 
-**Mapping Logic**
+**Visual Features**
 
-- Main line: `x = continuous variable`, `y = mean/estimate/effect size/count`
-- Error bars: `ymin = y - se`, `ymax = y + se`, or use `lcl/ucl` directly
-- `color = main group`
-- If multiple estimation methods are superimposed on the same node, slight lateral misalignment (such as `x + 0.15`, `x + 0.30`) or `position_dodge()` should be used
-- Different estimation methods are more suitable to be distinguished by different point shapes, and the main grouping is still distinguished by color.
-- If a reference line is needed, it is usually `geom_hline(yintercept = 0)`, which means "no change relative to the baseline"
+- Each estimate is represented by a point and vertical interval, with adjacent estimates optionally connected by a line.
+- Different estimation methods can appear as distinct point shapes with slight horizontal separation; a zero line can indicate no change from baseline.
 
-**Additional Requirements**
+**Code Features**
 
-- If the legend contains both colors and point shapes, it is preferred to use the shared legend or manually extract the legend.
-- When lines represent observations only and other methods only show points and error bars, keep the mapping consistent in the code and avoid legend ambiguity
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- Draw intervals with `geom_errorbar()` using explicit `ymin` and `ymax`, then add the corresponding points and lines.
+- Separate estimates at the same time point by a small x-offset or compatible dodge, and add `geom_hline(yintercept = 0)` when zero has clinical meaning.
+- code reference:source script `\StatsVisual-Skill\assets\templates\line\Line Plot with Errorbar.R`
 
 ### Time Series Plot
 
 ![Time Series Plot](../assets/gallery/line/time_series.png)
 
-**Applicable Data**
+**Statistical Features**
 
-- Time-ordered observations of a single variable or a small number of multiple variables
-- Time granularity can be day, week, month, quarter, year
-- Can include multiple versions such as original sequence, logarithmic transformation sequence, difference sequence, seasonal difference sequence, etc.
+- Describes temporal trend, seasonality, abrupt change, and unusual observations in regularly or irregularly spaced measurements.
+- Log transformation and ordinary or seasonal differencing may support time-series diagnosis, but each produces a different outcome scale.
 
-**Mapping Logic**
+**Visual Features**
 
-- `x = date`
-- `y = numeric variable`
-- Commonly used `geom_line()`
-- The date axis uses `scale_x_date()`, combined with `date_labels`, `date_breaks`
-- When displaying multiple panels, it is common to combine different processed sequences into one image, and then use `patchwork` or `cowplot` to splice them together.
-- For differential sequences, `ts` or model output needs to be converted back to the data frame first
+- Observations follow a calendar axis, making peaks, troughs, cycles, and change points visible.
+- Diagnostic displays may use aligned panels for the original, transformed, and differenced series.
 
-**Additional Requirements**
+**Code Features**
 
-- When the task is "time series feature diagnosis" rather than "single picture display", priority should be given to multiple panels: original, log, first-order difference, seasonal difference
-- The starting time length of the sequence after differentiation will become shorter, so attention should be paid to date alignment.
-- If the numerical minimum is close to 0 and the fluctuation amplitude changes with the mean, a log transformation is often necessary
-- Multi-panel plots must be labeled with capital letters A / B / C / D
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- Convert the time variable to a valid date class and control calendar breaks with `scale_x_date()`.
+- For diagnostic panels, construct the series with its correct frequency, apply `log()` or `diff()` as required, realign dates, and combine panels consistently.
+- code reference:source script `\StatsVisual-Skill\assets\templates\line\Time Series Plot.R`
 
 ### Smooth Line Plot
 
 ![Smooth Line Plot](../assets/gallery/line/smooth_line.png)
 
-**Applicable Data**
+**Statistical Features**
 
-- Original observation points + a smoothing or model fitting result (to avoid the influence of certain outliers on the trend)
-- Suitable for time trend fitting, periodic pattern display, smoothing estimation, and ARIMA result visualization
+- Displays a model-estimated or smoothed trend over observed measurements, such as harmonic or ARIMA fitted values.
+- The fitted curve reflects model assumptions and should remain distinguishable from the observed data.
 
-**Mapping Logic**
+**Visual Features**
 
-- Raw data is usually represented by `geom_point()` or thin lines
-- The fitting results are represented by `geom_line()`
-- `x = time`
-- `y = observed value` and `fitted value`
+- Raw observations appear as points or a thin line, with a smoother fitted line superimposed.
+- Alternative models may be shown in separate aligned panels to compare fitted patterns without excessive overlap.
 
-**Additional Requirements**
+**Code Features**
 
-- A unified coordinate scale must be used when comparing multiple panels to avoid misjudgments due to different scales.
-- If comparing two fitting methods, it is recommended to have two panels or an upper and lower layout instead of one graph filled with too many fitting lines.
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- Fit the selected model first, extract fitted values, and align them with the original observation times.
+- Plot observations with `geom_point()` and fitted values with `geom_line()` using comparable axes across models.
+- code reference:source script `\StatsVisual-Skill\assets\templates\line\Smooth Line Plot.R`
 
 ### Area Graph
 
 ![Area Graph](../assets/gallery/line/area.png)
 
-**Applicable Data**
+**Statistical Features**
 
-- One-dimensional continuous trend data
-- Usually `x = time/dose/proportion/continuous value`, `y = continuous metric`
-- Can bring `group` to represent different groups
+- Emphasizes how the magnitude of a continuous outcome changes relative to a baseline across time or another ordered variable.
+- Overlapping series remain separate quantities; they should not be interpreted as additive unless a part-to-whole relationship is defined.
 
-**Mapping Logic**
+**Visual Features**
 
-- `x = continuous time/continuous variable`
-- `y = value`
-- `fill = series name`
-- Use `geom_area()`
+- The region between the line and baseline is filled, giving greater visual weight to magnitude than a line alone.
+- Multiple series may form overlapping translucent areas rather than stacked bands.
 
-**Additional Requirements**
+**Code Features**
 
-- Do not misuse stacked area charts if the series are not part-whole relationships.
-- Percent variables suggest `scale_y_continuous(labels = label_percent(...))` or explicitly displayed as 0–100
-- The X-axis label can be rotated when the dates are dense
-- When multiple sequences are not strictly additive, transparent overlay can be used instead of stacking.
-- When multi-sequence translucent overlay, alpha should be controlled to avoid occlusion
-- Draw groups with small values ​​at the back to avoid large areas blocking small areas.
-- Soft color scheme
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
-- code reference:source script `\StatsVisual-Skill\assets\templates\Area Graph.R`
+- Use `geom_area()` with the ordered variable on `x`, the value on `y`, and the series mapped to `fill`.
+- For overlapping areas, control transparency with `alpha`; display proportions on a consistent percentage scale.
+- code reference:source script `\StatsVisual-Skill\assets\templates\line\Area Graph.R`
 
 ### Stacked Area Graph
 
 ![Stacked Area Graph](../assets/gallery/line/stacked_area.png)
 
-**Applicable Data**
+**Statistical Features**
 
-- Multiple groups have additivity at each independent variable node
-- Each group has a clear overall meaning after being added together.
-- Commonly seen in regional composition, subtype composition, cumulative case division composition, income structure, etc.
+- Shows an additive total and the contribution of each component at every time point.
+- It is appropriate for overall composition change, but less suitable for precise comparison of components that do not share the baseline.
 
-**Mapping Logic**
+**Visual Features**
 
-- `x = time`
-- `y = each component`
-- If the input is a long table, `geom_area(aes(fill = group), position = "stack")` is commonly used
-- If the input is a wide table, you can also convert it to length first and then draw it; it is not recommended to maintain the manual addition writing method for a long time unless the stacking order needs to be strictly controlled.
-- `fill = component group`
-- Key events can be marked with `geom_vline()`
+- Components form contiguous colored bands; band thickness represents the component value and the upper boundary represents the total.
+- Changes in both total height and relative band width reveal overall growth and composition shifts.
 
-**Additional Requirements**
+**Code Features**
 
-- At a certain point in time, the values ​​of the stacked area chart should be additive and should have practical meaning after addition.
-- Must ensure that the stacking order is consistent with the legend order to avoid confusion in interpretation
-- This chart is preferred when the user's goal is "overall composition change" rather than "independent trend comparison between groups"
-- It is not recommended to have too many groups, otherwise it will be difficult to identify the ground floor area.
-- Draw groups with small values ​​at the back to avoid large areas blocking small areas.
-- Soft color scheme
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
-- code reference:source script `\StatsVisual-Skill\assets\templates\Stacked Area Graph.R`
+- Use long-format data with `geom_area(aes(fill = group), position = "stack")`; factor levels control stacking and legend order.
+- Add event markers with `geom_vline()` only when the corresponding date has a defined clinical or surveillance meaning.
+- code reference:source script `\StatsVisual-Skill\assets\templates\line\Stacked Area Graph.R`
 
 ### Stream Graph
 
 ![Stream Graph](../assets/gallery/line/stream.png)
 
-**Applicable Data**
+**Statistical Features**
 
-- Relative fluctuation display of multiple sets of sequences
-- The number of groups is usually larger
-- Emphasis on overall dynamics and the rise and fall of groups over time rather than precise readings
+- Summarizes the relative prominence and temporal dynamics of many concurrent series.
+- It is intended for pattern recognition rather than precise estimation or direct comparison of absolute values.
 
-**Mapping Logic**
+**Visual Features**
 
-- `x = time`
-- `y = value`
-- `group = category`
-- `fill = category`
-- Use `geom_stream()`
-- Often use a central baseline to show relative fluctuations, visually forming a "river"
+- Smooth stacked bands flow around a central or moving baseline, producing a river-like form.
+- Band thickness reflects the relative magnitude of each group over time.
 
-**Additional Requirements**
+**Code Features**
 
-- Suitable for scenes with high-density time points and many groups
-- Avoid using rainbow colors and excessively harsh color bands; control chromatic gradation and distinguishability
-- If the Y-axis uses centered positive and negative display, the label needs to be formatted as an absolute value display.
-- Place the title at the top and center it.
-- When there are many groups, the legend should be placed to the right and centered vertically.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
-- code reference:source script `\StatsVisual-Skill\assets\templates\Stream Graph.R`
+- Map time to `x`, magnitude to `y`, and category to both `group` and `fill`, then draw with `geom_stream()`.
+- When the display is centered around zero, a reference line and absolute-value axis labels may be used to preserve readable magnitudes.
+- code reference:source script `\StatsVisual-Skill\assets\templates\line\Stream Graph.R`
 
 ### Stepper Line Chart
 
 ![Stepper Line Chart](../assets/gallery/line/step.png)
 
-**Applicable Data**
+**Statistical Features**
 
-- Event-driven, cumulative counting, state changes, piecewise constant process
-- Each change occurs at a discrete point in time, and the original value between points remains until the next update.
+- Represents cumulative counts, states, or other piecewise-constant processes that change only when an event occurs.
+- It emphasizes the timing and magnitude of each update rather than continuous change between observations.
 
-**Mapping Logic**
+**Visual Features**
 
-- `x = continuous variable`
-- `y = cumulative value/status value`
-- Use `geom_step()`
-- For multiple sequences, use `color = metric name`
+- Horizontal plateaus show periods without change, and vertical segments show discrete jumps.
+- Multiple outcomes appear as separate staircase trajectories on the same ordered axis.
 
-**Additional Requirements**
+**Code Features**
 
-- Focus on “when the change occurred” and “magnitude of change”
-- The X-axis must be a truly continuous time axis
-- The number of multiple sequences should not be too large, otherwise it will be difficult to identify the steps after they overlap.
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- Use `geom_step()` with a continuous or date variable on `x` and the cumulative or state value on `y`.
+- Map the outcome name to `color` when several step series are displayed together.
+- code reference:source script `\StatsVisual-Skill\assets\templates\line\Stepper Line Chart.R`
 
 ### Radar Plot
 
 ![Radar Plot](../assets/gallery/line/radar.png)
 
-**Applicable Data**
+**Statistical Features**
 
-- Comparison of proportions, standardized scores, or indicators of the same scale among multiple groups on multiple dimensions
-- The dimensions of each dimension should be the same, usually on a 0–1 scale or in the same range.
+- Compares multivariable profiles across groups using indicators measured on a common or standardized scale.
+- Polygon shape is descriptive and depends on axis order; it should not be interpreted as a time trend or formal multivariate test.
 
-**Mapping Logic**
+**Visual Features**
 
-- Each dimension is mapped to a radial axis
-- Each group forms a closed polyline
-- `group = group`
-- Suitable for overall profile comparison of regions, countries, cohorts, and models on multiple indicators
+- Each indicator forms a radial axis, and values from the same group are joined into a closed polygon.
+- Differences between groups appear as contrasting profile shapes and radial distances from the center.
 
-**Additional Requirements**
+**Code Features**
 
-- It is only suitable for comprehensive comparison of a small number of dimensions and a small number of groups, and is not suitable for high-dimensional and wide tables.
-- Each dimension must be comparable, and original variables with different dimensions must not be directly placed into the radar chart.
-- Too many groups will lead to occlusion and should be strictly controlled
-- More suitable for displaying composition ratios, standardized risk spectra, and capability portraits rather than time trends
-- If the label is very long, larger margins should be reserved for the label
-- Place the title at the top and center it.
-- When there are many groups, the legend should be placed to the right and centered vertically.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
-- code reference:source script `\StatsVisual-Skill\assets\templates\rader_chart.R`
+- Arrange data with one row per group and one column per comparable indicator, retaining the group identifier as the first column.
+- Use `ggradar()` after scaling variables to a common range, then specify group colors, points, labels, and legend placement.
+- code reference:source script `\StatsVisual-Skill\assets\templates\line\Radar Plot.R`
 
-## Code Reference
-- Original development note: source script `0200-lineplot-finished.rmd` is not included in the public skill.
+## 7. QA Checklist
 
-## QA
-
-- Do not connect unordered categorical levels.
-- Use consistent time units and natural breaks.
-- Keep the number of lines readable; facet or directly label if many groups.
-- For stacked area, verify values are additive and the sum has meaning.
-- For repeated individuals, decide whether to show individual trajectories, group summaries, or both.
+- Confirm that `x` is ordered, correctly parsed, and sorted within each group.
+- Verify that lines do not connect unrelated subjects or bridge unjustified missing intervals.
+- Identify whether each series represents raw observations, individual trajectories, group summaries, or fitted estimates.
+- Define all error bars, transformations, smoothing methods, and reference lines.
+- Confirm additivity before using a stacked area graph and scale comparability before using a radar plot.
+- Check that units, date frequency, group encoding, and panel scales remain consistent.

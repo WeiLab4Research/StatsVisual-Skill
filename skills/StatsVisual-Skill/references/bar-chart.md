@@ -1,207 +1,218 @@
-# Bar Chart
+# Bar Charts
 
-## Use For
+## 1. Scope and Definition
 
-Use bar charts for counts, proportions, rates, means, or other pre-computed summaries across discrete categories. They are useful for group comparisons and ordered categories.
+Bar charts compare counts, proportions, rates, means, or other defined summaries across discrete categories. Bar length or height represents the magnitude of the displayed statistic.
 
-Do not use bars for arbitrary raw continuous observations when the distribution matters. Prefer box/violin/raincloud plots for grouped raw data.
+Use bar charts for category-level comparisons. When the distribution of individual continuous observations is clinically important, use dot, box, violin, or raincloud plots rather than a mean bar alone.
 
-## Variants
+## 2. Selection Guide
 
-- Basic bar: one categorical variable plus count or summary.
-- Grouped bar: category plus group.
-- Stacked bar: composition across categories.
-- 100% stacked bar: relative composition.
-- Diverging bar: positive/negative values around a meaningful zero.
-- Waterfall plot: ordered cumulative or individual changes.
-- Lollipop/bar-dot hybrid: cleaner alternative for many categories.
+| Statistical objective | Recommended variant | Main interpretation |
+|---|---|---|
+| Compare one summary across categories | Basic Bar Plot | Magnitude difference between categories |
+| Compare subgroups within each category | Grouped Bar Plot | Side-by-side subgroup difference |
+| Compare totals and internal composition | Stacked Bar Plot | Group total and component contribution |
+| Compare relative composition only | 100% Stacked Bar Plot | Percentage composition within each group |
+| Show a central estimate with variability or uncertainty | Bar Plot with Error Bars | Estimate with SD, SE, or confidence interval |
+| Show patient-level change from baseline | Oncology Waterfall Plot | Direction and magnitude of individual response |
+| Arrange many categories circularly | Polar Bar Plot | Overall pattern across categories |
 
-## Core Mapping Logic
+Choose the simplest variant that directly answers the clinical or statistical question.
 
-### Basic Bar Plot
+## 3. Required Data Structure
+
+Bar charts may use aggregated data directly or individual-level data after an explicit summarization step.
+
+**Aggregated data**
+
+```text
+category | subgroup/component | value | lower | upper | n
+```
+
+- `category`: main discrete or ordered variable
+- `subgroup/component`: optional subgroup or composition variable
+- `value`: count, proportion, rate, mean, or another summary
+- `lower`, `upper`: optional interval limits
+- `n`: optional sample size or denominator
+
+**Individual-level data**
+
+```text
+id | category | subgroup | outcome
+```
+
+Individual-level data should be summarized before plotting counts, proportions, rates, or means. In an oncology waterfall plot, each row instead represents one patient's change from baseline.
+
+## 4. Common Statistical Principles
+
+- Define the statistic represented by bar height and, for proportions or rates, define the denominator.
+- Start the quantitative axis at zero when magnitude is encoded by bar length or height.
+- Order categories by clinical sequence, dose, severity, time, or another prespecified rule.
+- A visible difference between bars is descriptive and does not establish statistical significance or interaction.
+- Define all error bars explicitly according to their statistical meaning.
+
+## 5. Common Visual Rules
+
+- Use a clean background, consistent bar width, and restrained colors.
+- Place the title and legend at the top and center them.
+- Do not add a gridline background.
+- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- Add value labels only when they improve interpretation without crowding the figure.
+- For many categories or long labels, prefer a horizontal Cartesian layout.
+
+## 6. Variants
+
+### 6.1 Basic Bar Plot
 
 ![Basic Bar Plot](../assets/gallery/bar/basic_bar.png)
 
-**Applicable Data**
+- Code Reference: source script `\StatsVisual-Skill\assets\templates\bar\Basic Bar Plot.R`
 
-- Aggregated data
-- Each group has a numerical indicator
+**Statistical Features**
 
-**Mapping Logic**
+- Each category is represented by one count, proportion, rate, mean, or other summary.
+- The main comparison is the magnitude of that summary across categories.
+- When bars represent means, within-group distribution and outliers are not shown.
 
-- `x`: Group variable, usually a categorical variable or an ordered rank variable
-- `y`: Frequency, rate, mean or percentage corresponding to the group
-- Generally use `geom_bar(stat = "identity")`
+**Visual Features**
 
-**Additional Requirements**
+- Separate rectangular bars rise from a common baseline.
+- Each bar corresponds to one category and its height directly represents the summary value.
 
-- If the groups have a hierarchical relationship, the factor order must be explicitly set first
-- If rates or percentages are shown, the y-axis must be clearly labeled `%`
-- If the value is an occurrence rate, a starting axis of 0 is recommended
-- When the frequency is 0 or extremely low, it is recommended to add numerical labels to avoid visual misreading
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+**Code Features**
+
+- Map the category to `x` and the pre-computed summary to `y`.
+- Use `geom_bar(stat = "identity")` and set factor levels when category order is meaningful.
 
 ---
 
-### Stacked Bar Plot
-
-![Stacked Bar Plot](../assets/gallery/bar/stacked_bar.png)
-
-**Applicable Data**
-
-- Individual-level data, or aggregated multi-category component data
-- A main grouping variable + a hierarchical component variable
-- Used to display the total amount and internal composition differences after adding up each component within the group
-
-**Mapping Logic**
-
-- `x`: Main group variable
-- `fill`: composition variable within the group
-- `geom_bar(position = "stack")`
-- The y-axis represents frequency or total quantity
-
-**Additional Requirements**
-
-- Suitable for simultaneous comparison:
-  - Total volume of each main group
-  - The composition of different categories within the group
-- If the main group category itself has a hierarchical order, the factor order must be set first
-- Not suitable for situations with too many categories and too many colors
-- If there are too many color levels within a group, consider using a grouped bar chart or other structural chart instead.
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
-
----
-
-### Stratified Bar Plot
+### 6.2 Grouped Bar Plot
 
 ![Stratified Bar Plot](../assets/gallery/bar/grouped_bar.png)
 
-**Applicable Data**
+- Code Reference: source script `\StatsVisual-Skill\assets\templates\bar\Stratified Bar Plot.R`
 
-- Aggregated data
-- A main group variable + a subgroup variable + a numeric variable
+**Statistical Features**
 
-**Mapping Logic**
+- Compares the same summary across subgroups within each main category.
+- Supports both within-category subgroup comparison and cross-category comparison of the same subgroup.
+- Apparent changes in subgroup differences do not by themselves demonstrate statistical interaction.
 
-- `x`: main group variable, such as age group
-- `y`: frequency, rate or mean
-- `fill`: Subgroup variables, such as gender, treatment group
-- Use `geom_bar(stat = "identity", position = position_dodge(...))`
+**Visual Features**
 
-**Additional Requirements**
+- Subgroup bars are placed side by side within each main category.
+- Color or fill distinguishes subgroups while all bars retain a common baseline.
 
-- Must ensure that `geom_bar()` and `geom_text()` use the same or compatible `position_dodge()` width, otherwise the labels will be misaligned
-- Comparisons between groups focus on "side-by-side" rather than "stack-on"
-- If the number of groups is small and the labels are important, it is recommended to add numerical labels at the top of the column.
-- If the main group has a natural order, it must be sorted explicitly
-- When a certain subgroup is missing some main group levels, the zero values ​​should be filled in first to avoid uneven column positions after dodge
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+**Code Features**
+
+- Map the main category to `x`, the summary to `y`, and the subgroup to `fill`.
+- Use `position_dodge()`; numerical labels or error bars must use a compatible dodge width.
 
 ---
 
-### Bar Plot with Error Bars
+### 6.3 Stacked and 100% Stacked Bar Plot
+
+![Stacked Bar Plot](../assets/gallery/bar/stacked_bar.png)
+
+- Code Reference: source script `\StatsVisual-Skill\assets\templates\bar\Stacked Bar Plot.R`
+
+**Statistical Features**
+
+- A stacked bar displays the total value and the contribution of each component.
+- A 100% stacked bar standardizes each group to 100% and displays relative composition only.
+- Absolute totals cannot be compared from a 100% stacked bar.
+
+**Visual Features**
+
+- Each bar is divided into colored segments representing component categories.
+- In a standard stacked bar, total bar height varies; in a 100% stacked bar, all bars have equal height.
+
+**Code Features**
+
+- Map the main group to `x` and the component variable to `fill`.
+- Use `position = "stack"` for totals and `position = "fill"` for within-group proportions; factor levels determine segment order.
+
+---
+
+### 6.4 Bar Plot with Error Bars
 
 ![Bar Plot with Error Bars](../assets/gallery/bar/error_bar.png)
 
-**Applicable Data**
+- Code Reference: source script `\StatsVisual-Skill\assets\templates\bar\Bar Plot with Error Bars.R`
 
-- Aggregated data
-- Each classification combination has a central value and an error value
+**Statistical Features**
 
-**Mapping Logic**
+- The bar represents a central estimate, usually a mean.
+- The error bar represents variability or estimation uncertainty and must be identified as `SD`, `SE`, `95% CI`, or another defined interval.
+- These error measures are not interchangeable and do not replace formal statistical testing.
 
-- `x`: attribute or main group variable
-- `y`: central value, usually the mean
-- `fill`: subgroup variable
-- `geom_bar(stat = "identity", position = position_dodge())`
-- `geom_errorbar(aes(ymin = ..., ymax = ...), position = position_dodge(...))`
+**Visual Features**
 
-**Additional Requirements**
+- A vertical line with terminal caps extends above and/or below each bar.
+- The bar shows the central value, while the error-line length shows the reported interval around it.
 
-- For data description tasks, standard deviation `SD` is preferred.
-- For parameter estimation or effect estimation tasks, use `SE` or `95% CI`
-- If the lower bound of the error line is less than 0, you need to decide whether to truncate or adjust the coordinate range based on the actual meaning of the variable.
-- Do not default to plotting without specifying the error definition.
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
-- Make the error bars clear in the figure legend (placed below the graph and centered), such as:
-  - `SD`: individual variation
-  - `SE`: Sampling error
-  - `95% CI`: interval estimate
+**Code Features**
+
+- Provide a central estimate and corresponding lower and upper limits.
+- Add `geom_errorbar(aes(ymin = ..., ymax = ...))`; in grouped plots, use a dodge position compatible with the bars.
 
 ---
 
-### Waterfall Plot
+### 6.5 Waterfall Plot
 
 ![Waterfall Plot](../assets/gallery/bar/waterfall_bar.png)
 
-**Applicable Data**
+- Code Reference: source script `\StatsVisual-Skill\assets\templates\bar\Waterfall Plot.R`
 
-- individual level data
-- Each individual corresponds to a change value, usually a percentage change from baseline.
+**Statistical Features**
 
-**Mapping Logic**
+- Each bar represents one patient and usually shows percentage change in tumor burden from baseline.
+- The plot displays the direction, magnitude, and heterogeneity of individual responses.
+- It does not describe response duration, survival benefit, or treatment causality.
 
-- `x`: individual number, usually sorted by change value to generate serial number
-- `y`: changing value, such as `% change from baseline`
-- `fill`: can be mapped according to positive and negative changes, response status or molecular type
-- Usually use `geom_bar(stat = "identity")`
+**Visual Features**
 
-**Additional Requirements**
+- Patients are arranged as a sequence of narrow bars ordered by change value.
+- Bars extend above or below the zero line to show increase or decrease from baseline.
+- Fill may distinguish positive and negative change or clinically defined response groups.
 
-- It is strongly recommended to sort by `change` first and then generate the drawing order.
-- The y-axis usually takes 0 as the reference line, and the upper and lower values ​​can contain both positive and negative values.
-- Positive and negative changes should use a contrasting but restrained color palette
-- Not suitable for displaying long text labels on the x-axis, usually represented by patient numbers
-- If the number of individuals is large, the x-axis scale density needs to be reduced
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
-- Code Reference: source script `\StatsVisual-Skill\assets\templates\Waterfall Plot.R`
+**Code Features**
+
+- Sort the change variable and generate the plotting order before drawing.
+- Map patient order to `x`, change from baseline to `y`, and optionally map change direction or response category to `fill`.
 
 ---
 
-### Polar Bar Plot
+### 6.6 Polar Bar Plot
 
 ![Polar Bar Plot](../assets/gallery/bar/polar_bar.png)
 
-**Applicable Data**
+- Code Reference: source script `\StatsVisual-Skill\assets\templates\bar\Polar Bar Plot.R`
 
-- Multi-category rate or frequency data
-- Commonly used in symptom spectrum, event spectrum, and circular comparison
+**Statistical Features**
 
-**Mapping Logic**
+- Displays the same counts, rates, proportions, or other summaries as a Cartesian bar chart.
+- It is mainly used to present an overall pattern across many categories rather than precise pairwise comparison.
 
-- Cartesian stage:
-  - `x`: category number or factor
-  - `y`: indicator value
-  - `fill`: Group label, such as Delta / Omicron
-- Then use `coord_polar()` to convert to polar coordinates
-- Label position and angle usually require additional auxiliary data table control
+**Visual Features**
 
-**Additional Requirements**
+- Bars are arranged radially around a circle instead of along a straight Cartesian axis.
+- Category labels follow the circular layout, and the quantitative scale is read in the radial direction.
+- Grouped bars can appear as adjacent radial bars within each category.
 
-- Only used when there are many categories and you want to form a circular visual contrast
-- Not suitable as the default preferred bar chart because the read cost is higher than that of a normal Cartesian bar chart
-- Label angles must be preprocessed to avoid text inversion and overlap.
-- Usually you need to turn off the Cartesian axis text and manually add the radius direction ruler annotation
-- `theme_minimal()` or lighter themes are often better than regular themes
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
-- Code Reference: source script `\StatsVisual-Skill\assets\templates\Polar Bar Plot.R`
+**Code Features**
 
-## QA
+- Build the bar chart with the usual `x`, `y`, and `fill` mappings, then apply `coord_polar()`.
+- Use auxiliary label data to control text position and rotation around the circle.
 
-- Start the y-axis at zero for length-encoded bars.
-- Define error bars: SD, SEM, CI, or other interval.
-- Sort categories intentionally: clinical order, dose order, effect size, or frequency.
-- Avoid stacked bars when exact subgroup comparison is the main task.
-- Use direct percentage labels only when they do not clutter the plot.
+## 7. QA Checklist
+
+- Is the displayed statistic, unit, and denominator clearly defined?
+- Does the quantitative axis start at zero where bar length represents magnitude?
+- Are category, subgroup, and stacking orders clinically or analytically justified?
+- Is the selected variant aligned with the intended comparison: magnitude, subgroup, composition, uncertainty, or patient-level change?
+- Are error bars identified as `SD`, `SE`, `95% CI`, or another defined interval?
+- Are visual differences described without implying untested significance or interaction?
+- For oncology waterfall plots, are patients sorted and clinically defined thresholds used correctly?
+- For polar bars, is the circular layout justified and are labels readable?

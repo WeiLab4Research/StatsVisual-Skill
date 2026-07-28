@@ -1,279 +1,228 @@
 # Regression Model Diagnostics
 
-## Use For
+## 1. Scope and Definition
 
-Use diagnostic plots to assess whether a fitted model is stable, appropriate, and not dominated by unusual observations.
+Regression diagnostics evaluate whether a fitted model adequately represents the data and whether its estimates are sensitive to unusual observations. For ordinary linear regression, the main concerns are linearity of the conditional mean, independence, residual variance, residual distribution for interval estimation, and influential observations.
 
-## Diagnostic Families
+No single diagnostic plot validates a model. Residual, leverage, and influence diagnostics should be interpreted together with the study design, model specification, and subject-matter knowledge.
 
-- Residuals vs fitted: linearity and equal variance.
-- Normal Q-Q of residuals: residual distribution.
-- Scale-location: heteroscedasticity.
-- Residuals vs leverage and Cook distance: influential observations.
-- DFBETA: term-specific influence.
-- VIF/correlation plot: multicollinearity.
+## 2. Selection Guide
 
-## Core Mapping Logic
+| Diagnostic purpose | Recommended chart |
+|---|---|
+| Assess nonlinearity and residual variance patterns | Residuals vs Fitted Plot |
+| Assess the distributional shape of residuals | Normal Q-Q Plot of Residuals |
+| Assess whether residual spread changes with fitted values | Scale-Location Plot |
+| Identify observations with unusually large residuals or order-related patterns | Standardized Residual Index Plot |
+| Examine unusual predictor configurations and partial regression structure | Leverage Plot |
+| Identify extreme leverage values | Half-normal Plot of Leverage |
+| Rank observations by overall influence on the fitted model | Cook's Distance Needle Plot |
+| Review several observation-level influence measures together | Influence Index Plot |
+| Examine observations with both high leverage and large Cook's distance | Leverage vs Cook's Distance Plot |
+| Combine leverage, residual magnitude, and Cook's distance | Leverage-Residual-Cook Bubble Plot |
+| Jointly identify outliers, high-leverage points, and influential observations | Influence Plot |
+
+## 3. Required Data Structure
+
+- Use a fitted model object together with the exact analysis data and a stable observation identifier. Preserve identifiers after missing-value exclusion so flagged cases can be traced to the source data.
+- Extract fitted values, residuals, standardized or studentized residuals, leverage, and Cook's distance from the same fitted model.
+- Record the sample size, number of estimated parameters, model formula, transformations, weights, clustering, and missing-data handling.
+- For generalized linear models, use model-appropriate residuals and diagnostics; ordinary linear-model assumptions and thresholds do not transfer unchanged.
+- Independence is primarily determined by the sampling and repeated-measure structure. It cannot be confirmed from residual plots alone.
+
+## 4. Common Statistical Principles
+
+- Residuals measure outcome-space disagreement with the fitted model; leverage measures unusual predictor configurations; influence measures how strongly an observation changes fitted results. These concepts are related but not interchangeable.
+- Diagnostic thresholds such as `|standardized residual| > 2`, leverage cutoffs, or Cook's distance rules are screening heuristics rather than automatic exclusion criteria.
+- Residual normality mainly affects small-sample tests and interval estimates; the outcome itself does not need to be normally distributed.
+- When assumptions fail, consider correcting the model structure, transformation, variance model, dependence structure, or model family before deleting observations.
+- Every flagged observation should be checked for data error and clinical plausibility, followed by documented sensitivity analysis when appropriate.
+- Multicollinearity is not diagnosed by residual or influence plots; assess it separately using the design matrix, correlations, condition indices, or variance inflation factors.
+
+## 5. Common Visual Rules
+
+- Do not add a gridline background.
+- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- Add value labels only when they improve interpretation without crowding the figure.
+- Keep observation identifiers consistent across all diagnostic plots and label only the most relevant flagged cases.
+- Show reference lines only when their statistical meaning or heuristic definition is stated clearly.
+
+## 6. Variants
 
 ### Residuals vs Fitted Plot
 
 ![Residuals vs Fitted Plot](../assets/gallery/regression_diagnostics/residual.png)
 
-**Applicable Data**
+**Statistical Methods and Features**
 
-- Fitted linear model object, such as `lmfit <- lm(y ~ x, data = df)`.
-- Focus on testing whether the linear assumption is reasonable and whether the residuals fluctuate randomly around 0.
+- Assesses whether the conditional mean is adequately modeled and whether residual variation is approximately stable across fitted values.
+- A satisfactory pattern is an unstructured cloud around zero. Curvature suggests missing nonlinear structure, while a funnel or changing spread suggests heteroscedasticity.
+- The plot does not assess residual normality or independence directly.
 
-**Mapping Logic**
+**Code Features**
 
-- `x`: Fitted value `.fitted`
-- `y`: Residual `.resid`
-- Use `geom_point()` to display the residual scatter.
-- Use `stat_smooth(method = "loess")` to draw a local trendline.
-- Use `geom_hline(yintercept = 0)` to add a zero reference line.
+- Map fitted values `.fitted` to `x` and residuals `.resid` to `y`.
+- Use `geom_point()`, add a zero reference with `geom_hline(yintercept = 0)`, and use a restrained `stat_smooth(method = "loess")` to reveal systematic structure.
+- Avoid restrictive axis limits that silently remove extreme residuals.
 
-**Additional Requirements**
-
-- If the LOESS curve shows a systematic deviation, it indicates that the linear model may be insufficient, and variable transformation, adding higher-order terms, or using other models need to be considered.
-- When the number of scatter points is large, the point size can be appropriately reduced or the transparency increased.
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- code reference: source script `\StatsVisual-Skill\assets\templates\regression_diagnostics\Residuals vs Fitted Plot.R`
 
 ### Normal Q-Q Plot of Residuals
 
-**Applicable Data**
+**Statistical Methods and Features**
 
-- Fitted linear model object.
-- Focus on testing whether the standardized residuals approximately obey a normal distribution.
+- Compares standardized or studentized residual quantiles with theoretical normal quantiles.
+- Central alignment with tail departure indicates that normality problems are concentrated in the extremes; isolated departures may indicate unusual observations.
+- A near-linear pattern supports approximate residual normality but does not validate linearity, constant variance, or independence.
 
-**Mapping Logic**
+**Code Features**
 
-- `aes(sample = .stdresid)` provides the sample quantiles.
-- Use `geom_qq()` to plot the residual quantile points.
-- Use `geom_abline()` or an equivalent reference line to represent the theoretical normal quantile reference line.
-- Horizontal axis: theoretical quantile.
-- Vertical axis: standardized residual quantiles.
-
-**Additional Requirements**
-
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- Map standardized residuals through `aes(sample = .stdresid)` and draw with `geom_qq()`.
+- Add a sample-based reference using `stat_qq_line()`; use a fixed `45°` line only when both axes have been standardized compatibly.
+- Do not clip tail observations when the purpose is to assess tail behavior.
 
 ### Scale-Location Plot
 
-**Applicable Data**
+**Statistical Methods and Features**
 
-- Fitted linear model object.
-- Focus on testing whether the residual variance changes with the fitted value, that is, the homoskedasticity assumption.
+- Assesses homoscedasticity by plotting `sqrt(|standardized residual|)` against fitted values.
+- An approximately horizontal trend with similar vertical spread supports constant residual variance; systematic increase, decrease, or curvature suggests a variance pattern.
+- It does not test residual normality.
 
-**Mapping Logic**
+**Code Features**
 
-- `x`: Fitted value `.fitted`
-- `y`：`sqrt(abs(.stdresid))`
-- Use `geom_point()`.
-- Use `stat_smooth(method = "loess")` to draw a trend line.
-- Reference lines such as `geom_hline(yintercept = 1)` can be added as a visual aid.
-
-**Additional Requirements**
-
-- Ideally, the LOESS trendline should be approximately horizontal or fluctuate only slightly.
-- If there is an obvious rise, fall or funnel shape, it indicates uneven variance.
-- Don't confuse this with a normal residual plot; it's specifically used to observe homogeneity of variances.
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- Map `.fitted` to `x` and `sqrt(abs(.stdresid))` to `y`.
+- Use `geom_point()` and a restrained LOESS trend to summarize changes in spread.
+- Any horizontal reference line is a visual guide, not a universal statistical threshold.
 
 ### Standardized Residual Index Plot
 
-**Applicable Data**
+**Statistical Methods and Features**
 
-- Fitted linear model object.
-- Focus on identifying possible outliers or outliers.
+- Displays standardized residuals by observation order to identify large residuals and possible sequence-related structure.
+- Values beyond approximately `±2` or `±3` warrant review, but the expected number of extreme residuals increases with sample size.
+- Runs, cycles, or clusters across observation order may suggest dependence or omitted time structure.
 
-**Mapping Logic**
+**Code Features**
 
-- `x`: observation serial number, such as `seq_along(.stdresid)`
-- `y`: Standardized residual `.stdresid`
-- Use `geom_point()` to draw scatter points.
-- Use `stat_smooth(method = "loess")` as an auxiliary trend line.
-- Add a threshold line using `geom_hline(yintercept = c(-3, 0, 3))` or `c(-2, 0, 2)`.
-
-**Additional Requirements**
-
-- It is generally believed that:
-  - `|standardized residual| > 2` requires attention;
-  - `> 2.5` requires special attention;
-  - `> 3` needs to be inspected carefully.
-- The trend line is not the point, the point is the observation point beyond the threshold.
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- Map `seq_along(.stdresid)` to `x` and `.stdresid` to `y`.
+- Add zero and prespecified screening lines with `geom_hline()`; emphasize observations rather than the optional smoothing curve.
+- Retain the original row or subject identifier for any labeled observation.
 
 ### Leverage Plot
 
 ![Leverage Plot](../assets/gallery/regression_diagnostics/leverage.png)
 
-**Applicable Data**
+**Statistical Methods and Features**
 
-- A fitted linear model object, especially suitable for models with multiple independent variables.
-- Focus on identifying high leverage points in the independent variable space.
+- Identifies observations with unusual predictor combinations and examines each predictor's adjusted relationship with the outcome in multivariable models.
+- High leverage alone does not imply a large residual or strong influence; influence depends on both leverage and model disagreement.
+- Thresholds based on the average leverage are heuristic and depend on the number of estimated parameters and sample size.
 
-**Mapping Logic**
+**Code Features**
 
-- Use `car::leveragePlots(lmfit)` or `car::avPlots(lmfit)`.
-- A single panel usually displays the partial regression relationship of an independent variable after controlling for other variables.
-- Leverage points typically appear as anomalies in the x direction away from most observations.
-- It can also be judged in combination with the `hatvalues(lmfit)` numerical threshold.
+- Calculate numerical leverage with `hatvalues(lmfit)`.
+- Use `car::leveragePlots(lmfit)` or `car::avPlots(lmfit)` for predictor-specific adjusted views, while interpreting them together with the hat values.
+- Preserve observation labels so extreme predictor configurations can be reviewed in the source data.
 
-**Additional Requirements**
-
-- The commonly used empirical threshold is `(p + 1) / n`, where `p` is the number of independent variables and `n` is the sample size.
-- Partial regression plots are suitable for multi-variable models and are not suitable for mechanical simple linear regression with a single independent variable.
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- code reference: source script `\StatsVisual-Skill\assets\templates\regression_diagnostics\Leverage Plot.R`
 
 ### Half-normal Plot of Leverage
 
-**Applicable Data**
+**Statistical Methods and Features**
 
-- Fitted linear model object.
-- The focus is on identifying potential strong influence points through a half-normal plot of leverage values.
+- Compares ordered leverage values with half-normal quantiles to identify leverage values that depart markedly from the overall pattern.
+- It diagnoses unusual predictor positions, not influence by itself; an extreme leverage point may have little effect if it follows the fitted relationship closely.
 
-**Mapping Logic**
+**Code Features**
 
-- Use `faraway::halfnorm(h, ylab = "leverage")`.
-- Horizontal axis: half-normal quantile.
-- Vertical axis: leverage value.
-- Points that deviate far from the overall pattern suggest potentially strong influence points.
+- Extract leverage with `influence(lmfit)$hat` or `hatvalues(lmfit)`.
+- Draw the diagnostic with `faraway::halfnorm(h, ylab = "leverage")` and label only observations that clearly depart from the reference pattern.
 
-**Additional Requirements**
-
-- This graph is not an ordinary scatter plot, but a specialized plot for diagnosing the extremes of leverage values.
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- code reference: source script `\StatsVisual-Skill\assets\templates\regression_diagnostics\Half-normal Plot of Leverage.R`
 
 ### Cook's Distance Needle Plot
 
 ![Cook's Distance Needle Plot](../assets/gallery/regression_diagnostics/cook.png)
 
-**Applicable Data**
+**Statistical Methods and Features**
 
-- Fitted linear model object.
-- Focus on identifying observations that have a greater impact on model parameter estimates.
+- Cook's distance summarizes the combined effect of residual magnitude and leverage on the fitted regression results when one observation is deleted.
+- Larger values indicate greater influence, but rules such as `4/n` or `4/(n - p - 1)` are screening heuristics, not universal decision boundaries.
+- Flagged observations should be assessed through coefficient, prediction, and sensitivity changes rather than removed automatically.
 
-**Mapping Logic**
+**Code Features**
 
-- Use `lindia::gg_cooksd(lmfit)`, or manually organize `.cooksd` and express it with a pin board diagram.
-- `x`: observation serial number.
-- `y`: Cook distance.
+- Draw Cook's distance by observation index with `lindia::gg_cooksd(lmfit)` or from `cooks.distance(lmfit)`.
+- Add a clearly defined heuristic threshold when required and retain the full y-range so the largest observations remain visible.
 
-**Additional Requirements**
-
-- The larger the Cook distance is, the stronger the influence of this point on the regression parameter estimation.
-- The threshold line should be clearly defined in the graph.
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- code reference: source script `\StatsVisual-Skill\assets\templates\regression_diagnostics\Cook's Distance Needle Plot.R`
 
 ### Influence Index Plot
 
-**Applicable Data**
+**Statistical Methods and Features**
 
-- Fitted linear model object.
-- Multiple diagnostic metrics such as outliers, leverage values, and Cook's distance need to be looked at comprehensively.
+- Reviews several casewise diagnostics, commonly studentized residuals, leverage, Cook's distance, and an outlier-test measure.
+- It helps distinguish observations that are unusual in outcome space, predictor space, or both.
+- A case flagged by one measure is not necessarily influential across all coefficients.
 
-**Mapping Logic**
+**Code Features**
 
-- Use `car::infIndexPlot(lmfit)`.
-- Each indicator is expanded according to the observation index to form a lollipop-style comprehensive diagnostic chart.
+- Use `car::infIndexPlot(lmfit)` for the combined index display.
+- Obtain numerical details with `influence.measures(lmfit)` and use the same observation identifiers in the plot and diagnostic table.
 
-**Additional Requirements**
+- code reference: source script `\StatsVisual-Skill\assets\templates\regression_diagnostics\Influence Index Plot.R`
 
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+### Leverage vs Cook's Distance Plot
 
-### Leverage vs Cook’s Distance Plot
+**Statistical Methods and Features**
 
-**Applicable Data**
+- Examines whether observations with unusual predictor positions also exert substantial overall influence.
+- High Cook's distance can arise from high leverage, a large residual, or both; the two axes should therefore be interpreted jointly.
+- Auxiliary diagonal lines are descriptive unless they are derived from a stated diagnostic formula.
 
-- Fitted linear model object.
-- Focus on comprehensively observing the relationship between leverage value and Cook distance to identify points that are abnormal in both dimensions.
+**Code Features**
 
-**Mapping Logic**
-
-- `x`: Leverage value `.hat`
-- `y`: Cook distance `.cooksd`
-- Use `geom_point()`.
-- Use `stat_smooth(method = "loess")` to draw a trend line.
-- Multiple sloping reference lines are available as visual aids to the standardized residual contours.
-
-**Additional Requirements**
-
-- This graph is suitable for identifying observations that have both high leverage and high impact.
-- Oblique auxiliary lines must be stated in the figure legend as a visual reference only and not as a direct statistical threshold.
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- Map leverage `.hat` to `x` and Cook's distance `.cooksd` to `y`, then draw with `geom_point()`.
+- Add labels for selected observations and use a smoothing curve only as a secondary descriptive aid.
+- Do not describe arbitrary `geom_abline()` slopes as standardized-residual contours unless they are calculated from the correct relationship.
 
 ### Leverage-Residual-Cook Bubble Plot
 
 ![Leverage-Residual-Cook Bubble Plot](../assets/gallery/regression_diagnostics/joint.png)
 
-**Applicable Data**
+**Statistical Methods and Features**
 
-- Fitted linear model object.
-- It is necessary to fuse the leverage value, standardized residuals and Cook's distance into one graph.
+- Combines leverage on the horizontal axis, standardized residuals on the vertical axis, and Cook's distance as bubble area.
+- Observations with high leverage and large absolute residuals are most likely to be influential, but the actual Cook's distance remains the relevant combined measure.
+- Bubble size is descriptive and should not replace the numerical diagnostic values.
 
-**Mapping Logic**
+**Code Features**
 
-- `x`: Leverage value `.hat`
-- `y`: Standardized residual `.stdresid`
-- `size`: Cook distance, such as `exp(.cooksd)` or directly zoom by `.cooksd`
-- Use `geom_point(shape = 1)` to draw hollow bubbles.
-- Use `geom_hline(yintercept = c(-2, 0, 2))` to add a residual threshold line.
-- `scale_size_continuous()` controls the Cook distance bubble size legend.
-
-**Additional Requirements**
-
-- It must be ensured that the `size` map does not exaggerate a few extreme points to the point of completely obscuring other observations.
-- It is recommended to use hollow points or low fill transparency to avoid overlapping bubbles.
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- Map `.hat` to `x`, `.stdresid` to `y`, and `.cooksd` directly to point size.
+- Use hollow or transparent points and a controlled area scale; avoid arbitrary transformations such as `exp(.cooksd)` that exaggerate differences.
+- Add zero and prespecified residual screening lines with `geom_hline()`.
 
 ### Influence Plot
 
 ![Influence Plot](../assets/gallery/regression_diagnostics/influence.png)
 
-**Applicable Data**
+**Statistical Methods and Features**
 
-- Fitted linear model object.
-- The goal is to jointly identify outliers, leverage points, and strong influence points using standardized residuals, leverage values, and Cook distance.
+- Jointly displays studentized residuals, leverage, and Cook's distance to separate response outliers, high-leverage observations, and strongly influential cases.
+- A response outlier has a large residual, a high-leverage point is unusual in predictor space, and an influential point materially changes the fitted model.
+- The same observation may satisfy one, two, or all three definitions.
 
-**Mapping Logic**
+**Code Features**
 
-- Use `car::influencePlot(lmfit)`.
-- Horizontal axis: hat-values/leverage.
-- Vertical axis: Studentized Residuals.
-- Bubble size: Cook’s D.
-- Automatically mark some abnormal observation numbers.
+- Use `car::influencePlot(lmfit)`, where the horizontal axis represents leverage, the vertical axis studentized residuals, and bubble size Cook's distance.
+- Retain automatic or selected case labels and verify all flagged observations against the numerical diagnostics and source data.
 
-**Additional Requirements**
+## 7. QA Checklist
 
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
-
-## Code Reference
-- Original development note: source script `1400-regression-diagnosis-finished.rmd` is not included in the public skill.
-
-## QA
-
-- Do not automatically delete influential points. Verify data accuracy, document decisions, and consider sensitivity analysis.
-- Distinguish outliers, high-leverage points, and influential points.
-- If assumptions fail, consider transformation, robust regression, nonlinear terms, or alternate model family.
+- Confirm that all diagnostic quantities come from the same fitted model and analysis sample.
+- Verify observation identifiers after missing-data exclusion, sorting, or data reshaping.
+- Inspect linearity, residual variance, residual distribution, dependence, leverage, and influence as separate questions.
+- Treat thresholds as screening rules and document any case review, correction, exclusion, or sensitivity analysis.
+- Refit the model with and without influential observations when scientifically justified and report whether conclusions change.
+- Assess multicollinearity separately and use model-specific diagnostics when extending beyond ordinary linear regression.

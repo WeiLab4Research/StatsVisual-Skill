@@ -2,8 +2,6 @@
 
 Use this style when the user asks for `lancet`, The Lancet, 柳叶刀, Lancet-family clinical presentation, clinical trial/profile figures, editable journal artwork, or a clinical epidemiology figure with high legibility and table-plus-estimate discipline.
 
-This guidance is distilled from Lancet example figures and official author/artwork guidance provided during style calibration. Keep the implementation concise and R/ggplot2-focused. Do not copy official PDFs, source images, or private examples into generated project folders or public skill references.
-
 ## Visual Rules
 
 - Use a white background, strong black or near-black axes, visible ticks, readable labels, and minimal decoration.
@@ -48,12 +46,6 @@ For filled bars, boxes, and areas, prefer the lighter colours in the sequence an
 - Use shared axes and consistent ticks for serial panels with the same measurement.
 - Use uppercase panel labels. Keep labels large enough to remain readable at final journal size.
 
-## Lancet Kaplan-Meier Curve Rules
-
-- Place a number-at-risk table directly below every KM curve.
-- Align each number-at-risk value to the center of the corresponding x-axis tick/time point.
-- Use black risk-table text by default unless colour has a stated encoding purpose.
-
 ## Lancet Forest Plot Rules
 
 - Use a forest plot only when each row has an effect estimate and uncertainty interval, or when they can be computed from a declared model.
@@ -92,16 +84,6 @@ For filled bars, boxes, and areas, prefer the lighter colours in the sequence an
 - Prefer `svglite` for SVG, `cairo_pdf` for PDF, and `ragg` for TIFF/PNG.
 - Keep SVG/PDF text editable wherever feasible. Do not deliberately outline or rasterize text.
 - Use final journal dimensions before export instead of scaling after export.
-
-## Official Submission Rules
-
-- Prefer original editable artwork files, especially editable vector outputs.
-- Accepted vector outputs include `.eps`, `.ps`, `.pdf`, `.svg`, and `.ai`; this skill exports PDF and SVG by default.
-- Text in vector files should remain selectable/editable text, not outlined objects, especially in forest plots with many labels.
-- PNG, JPEG, TIFF, and BMP are not vector formats; resaving them as PDF or EPS does not make them editable.
-- Bitmap or photographic images must be at least 300 dpi and at least 107 mm wide. The skill keeps its stricter 700 dpi TIFF export.
-- Figure headings and legends in manuscript submission material must remain readable at final size. Official guidance mentions 10 pt Times New Roman for main figure headings and 10 pt single-spaced legends; do not apply this as a blanket rule to all in-figure artwork labels.
-- If annotated photographic figures are required, keep annotation layers editable where possible or provide separate annotated and clean versions.
 
 ## QA
 

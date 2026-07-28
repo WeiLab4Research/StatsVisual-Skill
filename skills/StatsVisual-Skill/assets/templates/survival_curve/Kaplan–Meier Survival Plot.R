@@ -239,16 +239,68 @@ if (requireNamespace("ragg", quietly = TRUE)) {
 
 # Export to PNG (web, <1MB) - requires ragg
 if (requireNamespace("ragg", quietly = TRUE)) {
-  ggsave(png_file, plot = p_combined[[1]], width = 7, height = 7, units = "in", dpi = 300, device = ragg::agg_png)
+  ggsave(png_file, plot = p_combined[[1]], width = 7, height = 7, units = "in", dpi = 144, device = ragg::agg_png)
   
   # Ensure web image is under 1MB
   limit <- 1024 * 1024
   if (file.info(png_file)$size > limit) {
-    ggsave(png_file, plot = p_combined[[1]], width = 5, height = 5, units = "in", dpi = 300, device = ragg::agg_png)
+    ggsave(png_file, plot = p_combined[[1]], width = 6, height = 6, units = "in", dpi = 120, device = ragg::agg_png)
   }
   cat(sprintf("Web PNG saved: %s (%.0f KB)\n", png_file, file.info(png_file)$size / 1024))
 }
 
 cat("\nExport completed successfully!\n")
+
+# ------------------------------------------------------------------------------
+# Write figure rationale per SKILL.md requirement
+# ------------------------------------------------------------------------------
+rationale <- c(
+  "# Figure Rationale: Kaplan-Meier Survival Curve",
+  "",
+  "## Selected Figure",
+  "- **Type**: Kaplan-Meier survival curve with risk table",
+  "- **Style**: Lancet (per `references/styles/lancet.md`)",
+  "",
+  "## Book/Skill Basis",
+  "- Primary reference: `references/survival-curve.md` - Kaplan-Meier Survival Plot variant",
+  "- Style reference: `references/styles/lancet.md` - Lancet Kaplan-Meier Curve Rules",
+  "- Theme system: `assets/theme_medical_graphics.R` -> `rmg_theme('lancet')`, `rmg_palette(n, 'lancet')`",
+  "",
+  "## Data Mapping",
+  "- Time variable: `time_years` (follow-up time in years)",
+  "- Event variable: `event_death` (1 = death, 0 = censored)",
+  "- Group variable: `rx` (3 levels: Obs, Lev, Lev+5FU)",
+  "- Model: `survfit(Surv(time_years, event_death) ~ rx)`",
+  "",
+  "## Style Choices",
+  "- Palette: Lancet clinical colors via `rmg_palette(3, 'lancet')`",
+  "- Typography: Arial (Lancet in-figure default) via `rmg_font_family('lancet')`",
+  "- Theme: `rmg_theme('lancet', base_size = 10)` - white background, strong axes, minimal decoration",
+  "- Line width:", line_defaults$linewidth, "(Lancet default)",
+  "- Risk table: Included below KM curve (Lancet KM rule requirement)",
+  "- P-value format: Midline decimal points via `rmg_format_p()` (Lancet numeric rule)",
+  "",
+  "## Statistical Annotations",
+  "- Log-rank test for unadjusted group comparison",
+  sprintf("- P-value: %s (formatted per Lancet style)\n", p_formatted),
+  "",
+  "## Limitations",
+  "- Unadjusted analysis; does not control for age, sex, nodes, or other covariates",
+  "- Proportional hazards assumption not formally tested here",
+  "- Event coding assumed as 1=death, 0=censored (standard convention)",
+  "",
+  "## Output Files",
+  paste0("- figures/", figure_name, ".pdf (vector)"),
+  paste0("- figures/", figure_name, ".svg (editable vector)"),
+  paste0("- figures/", figure_name, "_700dpi.tiff (print, 700 dpi)"),
+  paste0("- figures/", figure_name, "_web.png (web, <1MB)")
+)
+
+writeLines(rationale, file.path(output_dir, "figure_rationale.md"))
+cat("Figure rationale written.\n")
+
+# Save session info
+writeLines(capture.output(sessionInfo()), file.path(output_dir, "session_info.txt"))
+
 cat("\n=== Lancet-style KM curve generation complete ===\n")
 cat("Output location:", figures_dir, "\n")

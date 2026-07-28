@@ -1,242 +1,221 @@
 # Scatter Plot
 
-## Use For
+## 1. Scope and Definition
 
-Use scatter plots for two continuous variables to show association, clusters, nonlinearity, heteroscedasticity, and outliers. Scatter plots show covariation, not causality.
+Scatter plots display the joint pattern of two numerical variables. The position of each observation can reveal direction, form, strength, clusters, heteroscedasticity, and potential outliers. A scatter plot shows association or covariation, not causality.
 
-## Variants
+Scatterplot matrices extend this logic to several variables. Marginal, smoothed, density, sunflower, bubble, and volcano plots add distributional, model-based, overlap, multivariable, or hypothesis-testing information.
 
-- Basic scatter.
-- Grouped scatter with color/shape.
-- Bubble plot with area mapped to a third variable.
-- Density/hexbin scatter for overplotting.
-- Sunflower plot for repeated identical coordinates.
-- Volcano plot for effect size vs p-value/FDR.
+## 2. Selection Guide
 
-## Core Mapping Logic
+| Analytical purpose | Recommended chart |
+|---|---|
+| Examine the relationship between two numerical variables | Scatter Plot |
+| Explore pairwise relationships among several numerical variables | Scatterplot Matrix |
+| Show the joint relationship and both marginal distributions | Scatter Plot with Marginal Distribution |
+| Add a descriptive or model-based trend to raw observations | Scatter Plot with Smooth Curve |
+| Display a dense point cloud with local point density | Smooth Scatter Plot |
+| Show repeated observations at identical or discrete coordinates | Sunflower Plot |
+| Encode a third numerical variable by point area | Bubble Plot |
+| Display effect magnitude and statistical evidence from omics comparisons | Volcano Plot |
+
+## 3. Required Data Structure
+
+- Standard scatter plots require paired numerical `x` and `y` values for each observation, with optional group, subject, or time identifiers.
+- Scatterplot matrices require several numerical variables measured on the same observational units. Marginal and smoothed variants use the same paired data as the main scatter plot.
+- Smooth Scatter Plot requires sufficiently dense paired observations. Sunflower Plot is most useful for discrete or rounded coordinates with repeated combinations.
+- Bubble Plot additionally requires a non-negative size variable and an optional categorical color variable. Volcano Plot requires one effect measure and one valid `P` value or adjusted `P` value per feature.
+
+## 4. Common Statistical Principles
+
+- Association does not imply causation. Consider study design, temporality, confounding, selection, and measurement error before making substantive conclusions.
+- Do not remove unusual observations solely because they appear isolated. Verify data quality and assess their influence using prespecified diagnostic methods.
+- Choose correlation and fitted models according to scale, distribution, linearity, and independence assumptions. Report the method used.
+- Preserve raw observations when displaying fitted trends. Smoothing summarizes pattern but does not remove outliers or establish a valid regression model.
+- For omics analyses, distinguish effect magnitude from statistical evidence and apply the prespecified multiple-testing procedure.
+
+## 5. Common Visual Rules
+
+- Place the title and legend at the top and center them.
+- Do not add a gridline background.
+- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- Add value labels only when they improve interpretation without crowding the figure.
+- State axis variables and units clearly, and use consistent group encodings across related panels.
+- Control overplotting with point size, transparency, sampling, or density-based methods without concealing clinically important observations.
+
+## 6. Variants
 
 ### Scatter Plot
 
 ![Scatter Plot](../assets/gallery/scatter/scatter.png)
 
-**Applicable Data**
+**Statistical Features**
 
-- Relational data between two continuous variables.
-- Commonly used in height and weight, exposure and outcome, dose and response, experimental values ​​and estimated values, etc.
+- Shows the joint distribution and empirical association between two numerical variables.
+- Patterns may suggest linearity, nonlinearity, clustering, unequal variance, or influential observations, but require formal analysis for inference.
 
-**Mapping Logic**
+**Visual Features**
 
-- `x`: independent variable or explanatory variable.
-- `y`: dependent variable or response variable.
-- Use `geom_point()` to draw scatter points.
-- If there are groups, you can add `color = group` or `shape = group`, but the conventional scatter plots in this chapter are mainly monochrome by default.
-- Usually a continuous scale is used and the units are clearly stated.
+- Each observation appears as one point positioned by its `x` and `y` values.
+- Point-cloud direction, curvature, spread, gaps, and isolated points provide the main visual evidence.
 
-**Additional Requirements**
+**Code Features**
 
-- Suitable for observing co-variation trends and outliers between two numerical variables.
-- If the sample size is extremely large, it is not appropriate to draw points directly mechanically. Sampling, transparency control, or a smooth scatter plot should be considered.
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- Map the two numerical variables to `x` and `y` and draw with `geom_point()`.
+- Add group to `color` or `shape` only when it represents a defined comparison; use transparency or sampling for dense data.
+
+- Code Reference: source script `\StatsVisual-Skill\assets\templates\scatter\Scatter Plot.R`
 
 ### Scatterplot Matrix
 
 ![Scatterplot Matrix](../assets/gallery/scatter/matrix.png)
 
-**Applicable Data**
+**Statistical Features**
 
-- Multiple continuous variables require an overview of pairwise relationships.
-- Commonly used in the exploration of correlations between physical signs, omics characteristics, and measurement indicators.
+- Provides an exploratory overview of pairwise relationships among several numerical variables measured on the same observations.
+- Correlation values should be interpreted according to the selected method and do not summarize nonlinear or confounded relationships completely.
 
-**Mapping Logic**
+**Visual Features**
 
-- Use `GGally::ggpairs()` to generate a matrix layout.
-- `lower`: Usually the original scatter plot is placed.
-- `diag`: usually displays density chart, histogram or histogram.
-- `upper`: Usually put correlation coefficients, smooth curves or other relationship summaries.
-- Continuous variables participating in the combination can be specified via `columns`.
+- Pairwise scatter plots occupy off-diagonal cells, while diagonal cells show each variable’s marginal distribution.
+- The opposite triangle may contain correlation coefficients or fitted trends, producing a symmetric matrix layout.
 
-**Additional Requirements**
+**Code Features**
 
-- The scatter plot matrix is ​​an extension of the high-dimensional scatter plot. The number of variables should be controlled. Too many variables will seriously reduce readability.
-- The display format of the diagonal and upper triangular areas must have clear statistical meaning and cannot be confused and superimposed.
-- It is suitable for exploratory display and not suitable for overloading complex conclusions as a single main result diagram.
-- Place the title at the top and center it.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- Use `GGally::ggpairs()` and specify the numerical variables through `columns`.
+- Define `lower`, `diag`, and `upper` layers explicitly so points, distributions, correlations, or smooths have distinct roles.
+
+- code reference:source script `\StatsVisual-Skill\assets\templates\scatter\Scatterplot Matrix.R`
 
 ### Scatter Plot with Marginal Distribution
 
 ![Scatter Plot with Marginal Distribution](../assets/gallery/scatter/marginal.png)
 
-**Applicable Data**
+**Statistical Features**
 
-- Two continuous variables, and their joint relationship and respective marginal distributions need to be shown simultaneously.
-- Commonly used in correlation display, distribution inspection and outlier identification.
+- Displays the bivariate association together with the separate distributions of `x` and `y`.
+- A reported correlation coefficient and fitted line should use the same observations and a method appropriate to the data.
 
-**Mapping Logic**
+**Visual Features**
 
-- The main graph is still a conventional scatter plot, and fitting lines and correlation coefficients can be added.
-- Margin layers are added at the edges of the x and y axes via `ggExtra::ggMarginal()`:
-  - histogram;
-  - density map;
-  - Box plot.
-- `x` and `y` are still two continuous variables.
+- The central panel contains the scatter plot, while histograms, densities, or box plots run along the upper and side margins.
+- The marginal panels reveal skewness, spread, and outliers that may influence the joint pattern.
 
-**Additional Requirements**
+**Code Features**
 
-- It is necessary to ensure that the main graph and the marginal graph use the same data subset.
-- If correlation coefficients and fitting lines have been added to the graph, the annotation position should avoid the interface area between the point cloud and the marginal graph.
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- Build the main scatter plot first and pass it to `ggExtra::ggMarginal()`.
+- Use the same data subset in all layers; add a fitted line or correlation annotation only when its method and placement are clearly defined.
+
+- Code Reference: source script `\StatsVisual-Skill\assets\templates\scatter\Marginal Distribution Scatter Plot.R`
 
 ### Scatter Plot with Smooth Curve
 
 ![Scatter Plot with Smooth Curve](../assets/gallery/scatter/smooth.png)
 
-**Applicable Data**
+**Statistical Features**
 
-- Two continuous variables and the trend needs to be observed through model fitting or non-parametric smoothing.
-- Commonly used in growth curves, dose-response, relationship between age and physiological indicators, etc.
+- Summarizes the mean trend between two numerical variables using a specified smoother or regression model.
+- `LOESS` is primarily descriptive for flexible local patterns, whereas `lm` represents a linear model whose interpretation depends on model assumptions.
 
-**Mapping Logic**
+**Visual Features**
 
-- The bottom layer uses `geom_point()` to display the original observation points.
-- The fit layer uses `geom_smooth()` to overlay the trend line.
-- `method` can be set to:
-  - `loess`: Local weighted regression;
-  - `lm`: linear regression;
-  - Other scalable models.
-- `se = TRUE` displays confidence bands.
+- Raw observations remain visible beneath a fitted line.
+- A shaded band may show uncertainty around the estimated mean trend; separate panels can contrast nonlinear and linear fits.
 
-**Additional Requirements**
+**Code Features**
 
-- A distinction must be made between "descriptive smoothing" and "formal regression models".
-- When comparing two fitting methods, it is preferable to use multiple panels for side-by-side comparison rather than overlaying too many curves on one graph.
-- LOESS is more suitable for nonlinear trends, and LM is more suitable for linear trends; the skill should be automatically judged based on the data structure or pointed out in the description.
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- Draw observations with `geom_point()` and add the fitted trend with `geom_smooth()`.
+- Set `method = "loess"` or `method = "lm"` deliberately, define smoothing parameters when needed, and use `se = TRUE` only when an uncertainty band is intended.
 
 ### Smooth Scatter Plot
 
 ![Smooth Scatter Plot](../assets/gallery/scatter/smooth_scatter.png)
 
-**Applicable Data**
+**Statistical Features**
 
-- Extremely high-density bicontinuous variable data, with serious overlapping of conventional scatter plot points.
-- Point cloud densities, clusters, or major agglomeration bands need to be observed.
+- Displays local two-dimensional point density when ordinary points overlap heavily.
+- Color represents concentration of observations, not a fitted outcome, probability, or regression effect.
 
-**Mapping Logic**
+**Visual Features**
 
-- `x`: Continuous variable 1.
-- `y`: Continuous variable 2.
-- Use `ggpointdensity::geom_pointdensity()` to map the local density of points to color.
-- `color`: Density value, not raw grouping.
+- Points retain their original coordinates but change color according to surrounding density.
+- Dense clusters and dominant bands appear more strongly than sparse regions.
 
-**Additional Requirements**
+**Code Features**
 
-- Smoothed scatter plots are used to account for point overlap, not as an alternative to trend fitting.
-- The color depth must clearly represent the density. Generally, "the darker the color, the denser the points."
-- Continuous color scales must choose perceptually uniform, journal-friendly color strips.
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- Map the two numerical variables to `x` and `y` and draw with `ggpointdensity::geom_pointdensity()`.
+- Tune the density adjustment when required and apply a perceptually ordered continuous color scale.
+
+- code reference:source script `\StatsVisual-Skill\assets\templates\scatter\Smooth Scatter Plot.R`
 
 ### Sunflower Plot
 
 ![Sunflower Plot](../assets/gallery/scatter/sunflower.png)
 
-**Applicable Data**
+**Statistical Features**
 
-- There is serious data overlap, especially the relationship between categorical variables and discrete numerical variables.
-- A typical example is the frequency of the combination of the number of children of the insured person and the region.
+- Represents the frequency of repeated observations at the same discrete or rounded coordinate.
+- It is suited to overlap counts rather than estimation of a continuous association or fitted trend.
 
-**Mapping Logic**
+**Visual Features**
 
-- `sunflowerplot()` using the base graphics system.
-- `x`: Discrete or semi-discrete variable, such as the number of children.
-- `y`: Categorical variable or coded category.
-- Overlapping observations at the same location are represented by the "number of petals" as the number of repetitions.
+- A single observation appears as a point, while repeated observations form a sunflower whose petal count reflects multiplicity.
+- Categories or discrete values occupy fixed axis positions.
 
-**Additional Requirements**
+**Code Features**
 
-- Sunflower plots are suitable for categorical variables or discrete data with many repeated values.
-- It must be stated in the legend that "the number of petals represents the number of overlaps".
-- If the categorical variable is a character type, you usually need to set the axis labels manually.
-- Compared with ordinary scatter plots, sunflower plots emphasize overlapping frequencies and are not suitable for displaying continuous trend fitting.
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- Use the base-graphics `sunflowerplot()` with the two discrete or semi-discrete variables.
+- Set factor or axis labels explicitly and retain a clear explanation that petals encode repeated observations.
+
+- code reference:source script `\StatsVisual-Skill\assets\templates\scatter\Sunflower Plot.R`
 
 ### Bubble Plot
 
 ![Bubble Plot](../assets/gallery/scatter/bubble.png)
 
-**Applicable Data**
+**Statistical Features**
 
-- Two continuous variables + a third numeric variable + an optional fourth categorical variable.
-- Typical ones are GDP, life expectancy, population size and region.
+- Extends a two-variable association by encoding a third non-negative numerical variable with point area and optionally a fourth categorical variable with color.
+- Bubble size can dominate perception, so the third variable should be substantively relevant and clearly scaled.
 
-**Mapping Logic**
+**Visual Features**
 
-- `x`: Continuous variable 1, such as GDP.
-- `y`: Continuous variable 2, such as life expectancy at birth.
-- `size`: The third dimension, such as population.
-- `color`: The fourth dimension, such as region.
-- Extend the 2D scatterplot with `size` and `color` using `geom_point()`.
-- `geom_smooth()` can be overlaid to show overall trends.
+- Point position represents `x` and `y`, bubble area represents magnitude, and color can distinguish groups.
+- Overlapping semi-transparent circles create a multivariable point cloud.
 
-**Additional Requirements**
+**Code Features**
 
-- Point size must reflect area perception rather than radius misleading, so the `scale_size()` range needs to be carefully controlled.
-- If the number of bubbles is large, the transparency `alpha` should be appropriately reduced.
-- When colors are coded into groups, the legend must be clear; if the legend is too complex, add explanations in your answer and simplify the figure legend.
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
-- code reference:source script `\StatsVisual-Skill\assets\templates\Bubble Plot.R`
+- Map the third variable to `size` and an optional grouping variable to `color` in `geom_point()`.
+- Control the area scale and maximum bubble size carefully; add `geom_smooth()` only when a trend across `x` and `y` is analytically justified.
+
+- code reference:source script `\StatsVisual-Skill\assets\templates\scatter\Bubble Plot.R`
 
 ### Volcano Plot
 
 ![Volcano Plot](../assets/gallery/scatter/volcano.png)
 
-**Applicable Data**
+**Statistical Features**
 
-- Difference analysis results comparing the two groups.
-- Commonly found in omics scenarios such as genome, transcriptome, proteome, and metabolome.
+- Displays feature-level effect magnitude on the horizontal axis and statistical evidence on the vertical axis.
+- Up- and down-regulation depend on the sign of the defined effect measure; significance should use the prespecified raw or adjusted threshold, preferably accounting for multiple testing.
 
-**Mapping Logic**
+**Visual Features**
 
-- `x`: The difference multiple value, usually `log2FC` or the difference value normalized by the standard deviation.
-- `y`：`-log10(P)`。
-- `color`: Can be mapped according to significance status, such as significant up-regulation, significant down-regulation, and non-significant.
-- Use `geom_point()` as the principal.
-- Often cooperates with:
-  - `geom_hline()` represents the significance threshold;
-  - `geom_vline()` represents the multiple threshold;
-  - `geom_text_repel()` marks key molecules.
+- Features with large positive or negative effects and strong evidence rise toward the upper left and upper right, producing a volcano-like shape.
+- Neutral features form the central body, while selected findings may be highlighted and labeled.
 
-**Additional Requirements**
+**Code Features**
 
-- There should not be too many key tags, usually only the most significant or important small part.
-- Color distinction:
-Red/orange dots: Significantly upregulated genes that meet thresholds (e.g. |log2FC| > 1 and -log10(P-value) > 1.3).
-Blue/green dots: significantly downregulated genes that meet the threshold.
-Gray/black dots: genes that do not meet either threshold (change is small or not significant).
-- If there are multiple comparison groups, it is preferred to juxtapose multiple panels instead of overlaying multiple volcano charts in the same coordinate system.
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- Map the defined effect measure to `x` and `-log10(P)` or `-log10(adjusted P)` to `y`; ensure all probability values are numeric and greater than zero.
+- Create significance groups from effect and probability thresholds, add `geom_hline()` and `geom_vline()`, and label only selected features with `geom_text_repel()`.
 
-## Code Reference
-- Original development note: source script `0700-scatterplot-finished.rmd` is not included in the public skill.
+- Code Reference: source script `\StatsVisual-Skill\assets\templates\scatter\Volcano Plot.R`
 
-## QA
+## 7. QA Checklist
 
-- Do not remove outliers without documented reason.
-- Map bubble size to area, not radius, when using bubble plots.
-- Use alpha or density methods for overplotting.
-- Include raw points when adding trend/model lines.
+- Confirm that `x` and `y` are paired measurements from the same observational units and that units are correct.
+- Check missing values, duplicated coordinates, influential observations, and whether transformations are clinically and statistically justified.
+- State the correlation, smoothing, or regression method and verify its assumptions before interpreting the fitted pattern.
+- Confirm that density color, sunflower petals, and bubble area encode the stated quantities.
+- For volcano plots, verify the effect definition, comparison direction, valid probability values, multiplicity adjustment, and threshold logic.
+- Ensure axis limits do not silently remove observations or distort the apparent association.

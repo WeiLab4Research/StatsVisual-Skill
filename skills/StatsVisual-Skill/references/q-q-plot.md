@@ -1,154 +1,173 @@
 # Q-Q Plot
 
-## Use For
+## 1. Scope and Definition
 
-Use Q-Q plots to compare sample quantiles with a theoretical distribution, most often normality. In GWAS and high-throughput testing, use Q-Q plots to assess p-value inflation and tail behavior.
+Q-Q plots compare observed sample quantiles with quantiles from a theoretical distribution or a second sample. Agreement with the reference line indicates approximate distributional agreement; systematic curvature, tail departure, or isolated points identifies where the distributions differ.
 
-## Core Mapping Logic
+P-P plots compare cumulative probabilities rather than quantile values. Symmetry plots assess balance around the median, and ladder-of-powers displays compare candidate transformations. These are diagnostic tools and should not be used as the sole evidence for model validity.
+
+## 2. Selection Guide
+
+| Analytical purpose | Recommended chart |
+|---|---|
+| Compare one continuous variable with a theoretical distribution | Theoretical QQ Plot |
+| Compare a Q-Q diagnosis with empirical and theoretical densities | QQ Plot with Density Comparison Panel |
+| Compare the distributions of two independent samples | Two-sample QQ Plot |
+| Compare empirical and theoretical cumulative probabilities | Probability–Probability Plot |
+| Assess symmetry around the sample median | Symmetry Plot |
+| Compare a sample with a chi-square distribution of known degrees of freedom | Chi-square Quantile Plot |
+| Compare candidate transformations for approximate normality | Ladder of Powers for Normal Distribution |
+| Assess calibration and upper-tail departure of GWAS `P` values | Theoretical QQ Plot |
+
+## 3. Required Data Structure
+
+- Theoretical Q-Q, P-P, symmetry, and transformation plots require individual observations from one continuous variable after prespecified exclusions and missing-value handling.
+- Two-sample Q-Q plots require two samples measured on the same scale and a common probability grid for calculating matched quantiles.
+- Chi-square Q-Q plots require a non-negative sample and a justified degrees-of-freedom parameter.
+- GWAS Q-Q plots require valid `P` values in `(0, 1]`; expected quantiles are derived from the uniform null distribution and are commonly displayed as `-log10(P)`.
+- Transformations require a valid mathematical domain. Logarithmic, square-root, and reciprocal transformations cannot be applied mechanically to incompatible values.
+
+## 4. Common Statistical Principles
+
+- A near-linear pattern supports approximate agreement with the target distribution; it does not prove that the distributional assumption is true.
+- Interpret the pattern, not only overall closeness: location shift, scale difference, skewness, heavy or light tails, and isolated observations produce different departures.
+- Q-Q plots are particularly sensitive to tail behavior, whereas P-P plots emphasize agreement in the central cumulative distribution.
+- Standardization changes location and scale but not distributional shape. It cannot make skewed or heavy-tailed data normal.
+- In GWAS, broad upward departure may indicate population structure, relatedness, technical artifacts, or model misspecification; upper-tail-only departure may reflect genuine associations. Genomic inflation must be interpreted with study size and analysis method.
+- Choose transformations using clinical meaning and the intended statistical model, not solely by selecting the visually straightest panel.
+
+## 5. Common Visual Rules
+
+- Place the title and legend at the top and center them.
+- Do not add a gridline background.
+- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- Add value labels only when they improve interpretation without crowding the figure.
+- Keep the reference line visually distinct from the points and use comparable axis ranges when panels are intended for direct comparison.
+- Label the theoretical distribution, transformation, degrees of freedom, and probability scale clearly.
+
+## 6. Variants
 
 ### Theoretical QQ Plot
 
 ![Theoretical QQ Plot](../assets/gallery/qq/qq.png)
 
-**Applicable Data**
+**Statistical Features**
 
-- A single continuous variable sample.
-- The goal is to test whether the variable obeys a certain theoretical distribution, mainly the normal distribution.
+- Compares sample quantiles with quantiles from a prespecified theoretical distribution, most commonly the normal distribution.
+- Systematic curvature indicates distributional mismatch; in GWAS, expected and observed `-log10(P)` quantiles assess calibration and upper-tail departure.
 
-**Mapping Logic**
+**Visual Features**
 
-- `aes(sample = variable)` maps the sample quantiles to the QQ chart dedicated interface.
-- Use `stat_qq()` to plot sample quantile points.
-- Use `stat_qq_line()` to add a theoretical reference line.
-- The horizontal axis is usually the theoretical quantile, and the vertical axis is the sample quantile.
-- When a manuscript uses standard normal comparison, the variables are often standardized by `scale()` first.
+- Ordered sample quantiles form a point sequence against theoretical quantiles.
+- A straight reference line provides the expected pattern under approximate distributional agreement.
 
-**Additional Requirements**
+**Code Features**
 
-- If the user's goal is "whether it obeys a normal distribution", priority is given to the conventional QQ chart.
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- Map the variable through `aes(sample = variable)` and draw points with `stat_qq()`.
+- Add `stat_qq_line()` and specify `distribution` and its parameters when the target is not the default normal distribution.
+
+- code reference:source script `\StatsVisual-Skill\assets\templates\qq\Theoretical QQ Plot.R`
 
 ### QQ Plot with Density Comparison Panel
 
-**Applicable Data**
+**Statistical Features**
 
-- A single continuous variable sample.
-- In addition to the QQ plot, you also want to show the density comparison of the sample distribution and the theoretical distribution at the same time.
+- Combines a quantile-based diagnosis with a direct comparison of the empirical and theoretical density shapes.
+- The density panel helps distinguish skewness, tail differences, and multimodality underlying the Q-Q departure.
 
-**Mapping Logic**
+**Visual Features**
 
-- Left: Regular QQ chart, using `stat_qq()` and `stat_qq_line()`.
-- Right picture: Theoretical distribution curve + sample density curve, usually `geom_line()` is used to draw the theoretical density, and `geom_density()` is used to draw the sample density.
-- The two pictures are spliced ​​horizontally through `cowplot::plot_grid()`.
-- Multiple panels need to be labeled `A / B`.
+- The first panel contains Q-Q points and a reference line; the second overlays the sample density and theoretical density.
+- Matched colors connect the observed and theoretical distributions across panels.
 
-**Additional Requirements**
+**Code Features**
 
-- Theoretical density and sample density must use the same standardized scale.
-- The theoretical curve and the sample density line should use a contrasting but restrained color scheme.
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- Construct the Q-Q panel with `stat_qq()` and `stat_qq_line()`.
+- Draw the theoretical curve with `geom_line()` and the empirical curve with `geom_density()` on the same transformed scale, then combine panels with `plot_grid()`.
+
+- code reference:source script `\StatsVisual-Skill\assets\templates\qq\QQ Plot with Density Comparison Panel.R`
 
 ### Two-sample QQ Plot
 
-**Applicable Data**
+**Statistical Features**
 
-- Two sets of continuous variable samples.
-- The goal is to compare whether the distributions of two sets of data are the same, not to compare to a theoretical distribution.
+- Compares corresponding quantiles from two samples to assess whether their distributions have similar location, scale, and shape.
+- A straight but non-identity pattern may indicate a location or scale difference; curvature indicates a shape difference.
 
-**Mapping Logic**
+**Visual Features**
 
-- First, calculate the sample quantiles at a common probability level for each of the two groups of samples.
-- `x`: Quantile of sample 1.
-- `y`: Quantile of sample 2.
-- Use `geom_point()` to plot two-sample quantile scatter points.
-- `geom_abline()` is often superimposed as a reference line, and the slope can be estimated by the sample quantile ratio or using an equal slope benchmark.
-- It is often used with two sets of `geom_density()` to make a distribution comparison chart on the right side, and spliced ​​through `plot_grid()`.
+- Quantiles from one sample are plotted against matched quantiles from the other.
+- The identity line represents equal quantiles across the full distribution.
 
-**Additional Requirements**
+**Code Features**
 
-- If the sample sizes of the two groups are different, the probability grid should be unified before taking the quantiles.
-- Sort the two sets of data from small to large, and calculate the quantile under the same cumulative probability (such as 1%, 5%, 10%...99%).
-- Plot the scatter points with the sample 1st percentile on the x-axis and the sample 2nd percentile on the y-axis.
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- Calculate both samples’ quantiles on the same probability grid, excluding unstable endpoints when appropriate.
+- Plot matched quantiles with `geom_point()` and use `geom_abline(intercept = 0, slope = 1)` as the equality reference.
+
+- code reference:source script `\StatsVisual-Skill\assets\templates\qq\Two-sample QQ Plot.R`
 
 ### Probability–Probability Plot
 
 ![Probability–Probability Plot](../assets/gallery/qq/pp.png)
 
-**Applicable Data**
+**Statistical Features**
 
-- A single continuous variable sample.
-- The goal is to compare whether the sample cumulative probability is consistent with the theoretical cumulative probability.
-- It can also be extended to compare the cumulative distribution of two groups of samples, but this chapter mainly shows the theoretical distribution of a single sample pair.
+- Compares empirical cumulative probabilities with probabilities expected under a target distribution.
+- It is useful for overall distributional agreement but is less sensitive than a Q-Q plot to extreme-tail differences.
 
-**Mapping Logic**
+**Visual Features**
 
-- Use this from `qqplotr`:
-  - `stat_pp_line()`
-  - `stat_pp_point()`
-- `aes(sample = variable)` provides sample data.
-- The horizontal axis is usually the theoretical cumulative probability, and the vertical axis is the sample cumulative probability.
-- If the points fall roughly near the reference line, the sample approximately obeys the target distribution.
+- Points lie within the unit square and are compared with the `45°` equality line.
+- Smooth systematic departure from the line indicates cumulative-distribution mismatch.
 
-**Additional Requirements**
+**Code Features**
 
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- Map the sample with `aes(sample = variable)`.
+- Draw the empirical probability points with `stat_pp_point()` and the equality reference with `stat_pp_line()`.
+
+- code reference:source script `\StatsVisual-Skill\assets\templates\qq\Probability–Probability Plot.R`
 
 ### Symmetry Plot
 
 ![Symmetry Plot](../assets/gallery/qq/symmetry.png)
 
-**Applicable Data**
+**Statistical Features**
 
-- A single continuous variable sample.
-- The goal is to determine whether the variable is approximately symmetric about the median.
+- Assesses whether observations at equal ranks below and above the median are approximately equidistant from the median.
+- Departure from the equality line indicates asymmetry but does not identify a specific parametric distribution.
 
-**Mapping Logic**
+**Visual Features**
 
-- Sort the samples first.
-- Calculate the distance from the upper and lower sides of the sample median to the median:
-  - `x`: distance below the median;
-  - `y`: Distance above the median.
-- Use `geom_point()` to draw distance pairs.
-- Use `geom_abline(slope = 1)` as the symmetry guide.
+- Distance below the median is plotted against the matched distance above the median.
+- A symmetric distribution produces points near the diagonal; directional curvature indicates skewness.
 
-**Additional Requirements**
+**Code Features**
 
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- Sort the observations and pair lower- and upper-tail distances from the sample median.
+- Plot the paired distances with `geom_point()` and add `geom_abline(intercept = 0, slope = 1)`.
+
+- code reference:source script `\StatsVisual-Skill\assets\templates\qq\Symmetry Plot.R`
 
 ### Chi-square Quantile Plot
 
 ![Chi-square Quantile Plot](../assets/gallery/qq/chi_square.png)
 
-**Applicable Data**
+**Statistical Features**
 
-- A single continuous variable sample.
-- A chi-square distribution that is known or assumed to come from a specific degree of freedom.
+- Compares a non-negative sample with a chi-square distribution having prespecified degrees of freedom.
+- Interpretation is valid only when the theoretical degrees of freedom and independence assumptions are scientifically justified.
 
-**Mapping Logic**
+**Visual Features**
 
-- QQ picture version:
-  - `aes(sample = y)`
-  - Specify the target distribution via `distribution = function(p) qchisq(p, df = k)` in `stat_qq()`.
-- PP diagram version:
-  - Observe cumulative probability consistency using `stat_pp_point()` and `stat_pp_line()`.
-- `plot_grid()` is commonly used to form a double-panel comparison.
+- The Q-Q panel compares observed and theoretical chi-square quantiles.
+- A paired P-P panel may show agreement between empirical and theoretical cumulative probabilities.
 
-**Additional Requirements**
+**Code Features**
 
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- Use `stat_qq(distribution = function(p) qchisq(p, df = k))` for the theoretical quantiles.
+- Add the P-P panel with `stat_pp_point()` and `stat_pp_line()`, and report the selected `df` in the axis label or legend.
+
+- code reference:source script `\StatsVisual-Skill\assets\templates\qq\Chi-square Quantile Plot.R`
 
 ### Ladder of Powers for Normal Distribution
 
@@ -156,40 +175,28 @@ Use Q-Q plots to compare sample quantiles with a theoretical distribution, most 
 
 ![Ladder of Powers for Normal Distribution (QQ)](../assets/gallery/qq/ladder_qq.png)
 
-**Applicable Data**
+**Statistical Features**
 
-- A single continuous variable sample.
-- The goal is to find an expression closer to a normal distribution after trying different powers or logarithmic transformations.
+- Compares a defined sequence of power, root, logarithmic, and reciprocal transformations to assess distributional shape.
+- A visually improved Q-Q pattern does not by itself justify a transformation; interpretability, variance structure, and downstream model assumptions also matter.
 
-**Mapping Logic**
+**Visual Features**
 
-- Apply a set of predefined transformations to the original variables, for example:
-  - `x^3`
-  - `x^2`
-  - `x`
-  - `sqrt(x)`
-  - `log(x)`
-  - `1/sqrt(x)`
-  - `1/x`
-  - `1/x^2`
-  - `1/x^3`
-- Organize each transformation result into a table.
-- Use `geom_qq()` and `geom_qq_line()` to make separate QQ plots for each transformation.
-- Use `facet_wrap()` to form a multi-panel comparison.
-- You can also call the `gladder()` or `qqladder()` helper function.
+- Faceted histograms or Q-Q plots display the same variable under several transformations.
+- The panel sequence makes changes in skewness, tail behavior, and linearity directly comparable.
 
-**Additional Requirements**
+**Code Features**
 
-- Multiple panels must maintain a unified style
-- Place both the title and legend at the top and center them.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- Generate each valid transformation in a separate column, reshape to long format, and facet by transformation.
+- Draw transformed Q-Q panels with `geom_qq()` and `geom_qq_line()`, or use the project `gladder()` and `qqladder()` helpers.
 
-## Code Reference
-- Original development note: source script `0900-QQplot-finished.rmd` is not included in the public skill.
+- code reference:source script `\StatsVisual-Skill\assets\templates\qq\Ladder of Powers for Normal Distribution.R`
 
-## QA
+## 7. QA Checklist
 
-- Do not use Q-Q plots as the only evidence for model validity.
-- Interpret tail deviations and systematic curvature separately.
-- For p-value Q-Q plots, remove invalid p-values and report genomic inflation if needed.
+- Confirm the target distribution, parameter values, sample definition, and missing-value handling.
+- Check whether deviations occur in the center, one tail, both tails, or only a few observations.
+- Use an identity reference for two-sample equality and matched probability grids when sample sizes differ.
+- For GWAS, remove invalid `P` values and verify genomic control, ancestry adjustment, relatedness handling, and the reported inflation metric.
+- Confirm that every transformation is mathematically valid and clinically interpretable.
+- Do not treat visual linearity as the sole criterion for normality, model adequacy, or inferential validity.

@@ -29,11 +29,8 @@ Use this order:
 
 Use `assets/plot_template.R` as the default starting point for a new figure script. When the task matches a common implementation, copy and adapt one of these starters into `<project_dir>/R/`:
 
-- `assets/templates/distribution_compare.R` for continuous outcomes by group, including boxplot plus jitter and subgrouped boxplots.
-- `assets/templates/scatter_association.R` for continuous-continuous association with optional grouping and smoothing.
-- `assets/templates/model_diagnostics.R` for linear model diagnostic panels.
-- `assets/templates/multipanel_helpers.R` for reusable patchwork/cowplot layout helpers.
-- `assets/templates/multipanel_figure.R` for planned multi-panel script scaffolds.
+- `assets/templates/multipanel/multipanel_helpers.R` for reusable patchwork/cowplot layout helpers.
+- `assets/templates/multipanel/multipanel_figure.R` for planned multi-panel script scaffolds.
 
 Before adapting a template, read `references/chart-index.md`, `references/design-rules.md`, the selected style reference, and the selected chart family's detailed reference so the copied script reflects the right variant, layers, packages, style, and QA notes.
 For multi-panel figures, also read `references/multipanel-figures.md` before coding the layout, because panel order, relative size, and shared legends should follow the evidence hierarchy.

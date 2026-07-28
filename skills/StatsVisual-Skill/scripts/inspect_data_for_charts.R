@@ -62,11 +62,30 @@ suggestions <- character()
 choice_menu <- character()
 book_basis <- character()
 multi_panel_notes <- character()
+format_multi_panel <- function(note) {
+  if (!grepl("Main message:", note)) {
+    return(c("", paste0("- ", note)))
+  }
+  extract <- function(pattern, text) {
+    if (!grepl(pattern, text, fixed = TRUE)) return("—")
+    result <- sub(paste0(".*", pattern, "(.+?)(\\. (Panels|Support logic|Use when|Limitation): |$)"), "\\1", text)
+    trimws(result)
+  }
+  c(
+    "### 可选多面板图",
+    "",
+    paste0("- 主信息：", extract("Main message: ", note)),
+    paste0("- A/B/C 面板角色：", extract("Panels: ", note)),
+    paste0("- 支持逻辑：", extract("Support logic: ", note)),
+    paste0("- 适用场景：", extract("Use when: ", note)),
+    paste0("- 局限性：", extract("Limitation: ", note)),
+    ""
+  )
+}
 add_choice <- function(title, book, why, best_for, style, limits) {
   c(
-    paste0("### ", title),
+    paste0("### Recommended: ", title),
     "",
-    paste0("- 参考依据：", book),
     paste0("- 适配原因：", why),
     paste0("- 最适合：", best_for),
     paste0("- 风格承诺：", style),
@@ -81,7 +100,7 @@ if (all(c("b", "se", "pval") %in% names(data)) && any(grepl("method", names(data
   choice_menu <- c(
     choice_menu,
     add_choice(
-      "Recommended: MR forest plot with 95% CI",
+      "MR forest plot with 95% CI",
       "`forest-plot.md` effect-size/CI family",
       "`b` and `se` provide effect size and uncertainty; `exposure` provides row labels.",
       "primary MR results and manuscript figures.",
@@ -232,12 +251,19 @@ if (length(multi_panel_notes) > 3) {
   multi_panel_notes <- multi_panel_notes[seq_len(3)]
 }
 
+high_missing <- names(data)[missing_pct > 20]
+constant_cols <- names(data)[unique_n <= 1]
+suspected_id <- names(data)[unique_n == nrow(data) & types %in% c("text/id", "continuous")]
+
 lines <- c(
   "# 数据画像",
   "",
   paste0("- 文件：`", normalizePath(data_file, winslash = "/", mustWork = FALSE), "`"),
   paste0("- 行数：", nrow(data)),
   paste0("- 列数：", ncol(data)),
+  paste0("- 关键字段：", paste(names(data), collapse = "、")),
+  paste0("- 变量角色：连续变量 ", length(continuous), " 个，分类变量 ", length(categorical), " 个，时间/日期变量 ", length(time_cols), " 个"),
+  paste0("- 缺失值和数据质量提示：", if (length(high_missing) > 0) paste0("高缺失列（>20%）有 ", paste(high_missing, collapse = "、")) else "无高缺失列（>20%）"),
   "",
   "## 列信息",
   "",
@@ -294,10 +320,6 @@ if (length(categorical) > 0) {
   }
 }
 
-high_missing <- names(data)[missing_pct > 20]
-constant_cols <- names(data)[unique_n <= 1]
-suspected_id <- names(data)[unique_n == nrow(data) & types %in% c("text/id", "continuous")]
-
 lines <- c(
   lines,
   "",
@@ -323,7 +345,7 @@ full_lines <- c(
   "",
   "## 多面板图选项",
   "",
-  paste0("- ", multi_panel_notes),
+  unlist(lapply(multi_panel_notes, format_multi_panel)),
   "",
   "## 图表选择菜单",
   "",

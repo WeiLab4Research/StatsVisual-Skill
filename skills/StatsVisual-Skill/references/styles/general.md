@@ -215,16 +215,6 @@ export::graph2pdf(
 - Avoid repeated legends in every facet or panel.
 - Avoid legend background boxes.
 
-## Statistical Display
-
-Always define:
-
-- `n` and what it counts.
-- Center statistic: mean, median, rate, proportion, model estimate.
-- Spread/interval: SD, SEM, IQR, 95% CI, prediction interval.
-- Test/model: exact test, rank test, t-test, ANOVA, regression model, Cox model, etc.
-- Adjustment: covariates and multiple-comparison correction when applicable.
-
 ## Forest Plot Rules
 
 - Use a forest plot only when each row has an effect estimate and uncertainty interval, or when these can be computed from a declared model. Do not force a forest plot from raw groups, counts, or percentages without an effect estimate.

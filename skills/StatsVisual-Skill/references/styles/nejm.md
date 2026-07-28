@@ -2,8 +2,6 @@
 
 Use this style when the user asks for `nejm`, NEJM, New England Journal of Medicine, 新英格兰医学杂志, clinical-trial survival figures, oncology time-to-event figures, or table-like subgroup forest plots matching the local NEJM examples.
 
-This guidance is distilled from NEJM-style example figures provided during style calibration. No official NEJM artwork or author guideline is bundled with this public skill, so treat this as an example-derived production style rather than an official submission specification.
-
 ## Visual Rules
 
 - Use a white background, strong black or near-black axes, visible ticks, and no decorative grid.

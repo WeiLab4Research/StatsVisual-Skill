@@ -1,300 +1,254 @@
 # Pie Chart
 
-## Use For
+## 1. Scope and Definition
 
-Use pie or donut charts only for a small number of mutually exclusive parts that sum to one meaningful whole. They show composition, not rates.
+Pie charts display how mutually exclusive categories contribute to one clearly defined whole at a single time point or within one population. Sector angle and area encode composition; they do not represent incidence, prevalence, mortality, risk, or other rates unless those values themselves form a valid partition of the same denominator.
 
-Prefer bar charts, Cleveland dot plots, or stacked bars when categories are numerous, values are close, or exact comparison matters.
+Doughnut and exploded pies retain the same part-to-whole logic. Nightingale rose charts, nested pies, circular polar heatmaps, and fourfold plots use different statistical encodings and should be selected according to their specific analytical purpose.
 
-## Variants
+## 2. Selection Guide
 
-- Pie chart.
-- Donut chart.
-- Rose chart for circular or many-category composition, used cautiously.
-- Sunburst for hierarchical composition.
-- Fourfold plot for 2x2 table frequency structure.
+| Analytical purpose | Recommended chart |
+|---|---|
+| Show a small number of categories forming one whole | Pie Plot |
+| Keep category and percentage labels outside crowded sectors | Pie Plot with External Labels |
+| Display the same composition with a central opening | Doughnut Plot |
+| Emphasize one prespecified category | Pie Plot with Exploded Slice |
+| Visually separate all sectors | Exploding Pie Plot |
+| Compare category magnitudes in polar coordinates | Nightingale Rose Chart |
+| Manage labels when rose-chart values vary widely | Rose Chart with Tiered Label Strategy |
+| Show parent–child composition across hierarchical levels | Nested Pie Plot |
+| Display a continuous metric across two discrete dimensions in a circular layout | Circular Polar Heatmap |
+| Display the frequency and association structure of a `2 × 2` or `2 × 2 × k` table | Fourfold Plot |
 
-## Core Mapping Logic
+## 3. Required Data Structure
+
+- Standard pie and doughnut charts require one row per mutually exclusive category, with a non-negative count or proportion and a clearly defined common denominator.
+- Exploded charts additionally require a prespecified displacement variable. Rose charts require one category and one magnitude; their values need not sum to 100%.
+- Nested pies require a valid node–parent hierarchy and node values. Circular polar heatmaps require two discrete dimensions and one continuous measure.
+- Fourfold plots require a `2 × 2` contingency table or a stratified `2 × 2 × k` array; individual-level binary data must first be tabulated.
+
+## 4. Common Statistical Principles
+
+- Use pie-based charts only for composition. Categories must be mutually exclusive and collectively represent the stated whole; report the denominator, population, and time frame.
+- Distinguish counts, proportions, and rates. A set of independently calculated incidence or mortality rates is not a valid pie because the values do not share one additive denominator.
+- Keep the number of categories small. When categories are numerous, values are similar, or exact comparison is important, prefer a bar chart or dot plot.
+- Treat missing, unknown, and residual categories explicitly. Do not remove them if doing so changes the denominator or makes displayed percentages sum to a misleading 100%.
+- Pie charts are descriptive and do not display sampling uncertainty or statistical significance. Provide counts and inferential results separately when required.
+
+## 5. Common Visual Rules
+
+- Place the title and legend at the top and center them.
+- Do not add a gridline background.
+- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- Add value labels only when they improve interpretation without crowding the figure.
+- Use a restrained categorical palette and keep category colors consistent across related figures.
+- Order sectors intentionally, usually by magnitude or a clinically meaningful sequence; avoid 3D effects and decorative gradients.
+
+## 6. Variants
 
 ### Pie Plot
 
 ![Pie Plot](../assets/gallery/pie/pie.png)
 
-**Applicable Data**
+**Statistical Features**
 
-- Aggregated multi-category constituent data.
-- Each category has a corresponding frequency, proportion or composition ratio.
+- Displays the composition of one population or total across a small number of mutually exclusive categories.
+- Sector percentages should be calculated from the same denominator and should sum to 100% apart from rounding.
 
-**Mapping Logic**
+**Visual Features**
 
-- The typical writing method is to first use `geom_bar(stat = "identity")` or `geom_col()` to generate a single column, and then use `coord_polar(theta = "y")` to convert it into a pie chart.
-- `x`: Usually set to the empty string `""`, indicating that all categories share a circle center.
-- `y`: The frequency, composition ratio or absolute value corresponding to the category.
-- `fill`: categorical variable.
-- If the label is placed inside the sector, `position_stack(vjust = 0.5)` is usually used.
-- If there are many categories, the cumulative position should be calculated first, and then the labels should be quoted externally.
+- Each category appears as a sector of one circle; sector angle and area increase with its share of the whole.
+- Labels may be placed inside large sectors, while a legend identifies categories when direct labels are not used.
 
-**Additional Requirements**
+**Code Features**
 
-- If the research question emphasizes "component ratio", the percentage label will be displayed first.
-- The order of each sector plate must be arranged according to the numerical value of each category.
-- For composition diagrams with fewer categories and obvious differences, labels can be placed inside sectors; for diagrams with many categories or long labels, external labels should be used instead.
-- If there are too many categories and the proportions are close, users should be proactively reminded that conventional pie charts have low differentiation.
-- Place the legend on the right and center it vertically.
-- Place the title at the top and center it.
-- Do not add a gridline background.
+- Create a single stacked bar with `geom_bar(stat = "identity")` or `geom_col()`, map category to `fill`, and convert it with `coord_polar(theta = "y")`.
+- Set factor levels before plotting to control sector order; use `position_stack(vjust = 0.5)` for internal percentage labels.
+
+- Code Reference: source script `\StatsVisual-Skill\assets\templates\pie\Pie Plot.R`
 
 ### Pie Plot with External Labels
 
-**Applicable Data**
+**Statistical Features**
 
-- Still aggregated constituent data.
-- There are many categories, long names, or internal tags are easy to overlap.
+- Uses the same part-to-whole data as a conventional pie chart but supports more or longer category labels.
+- External labeling improves identification but does not overcome the limited precision of angle and area comparisons.
 
-**Mapping Logic**
+**Visual Features**
 
-- The main image still uses `geom_bar(..., stat = "identity") + coord_polar(theta = "y")`.
-- First, calculate the label anchor point of each sector through the cumulative sum `cumsum()`, midpoint position `pos`, etc.
-- The label layer uses `geom_label_repel()` or `geom_text_repel()` external import.
-- `fill`: categorical variable.
-- `label`: Usually a combined string of "category + percentage".
+- Category names and percentages sit outside the circle and connect to their sectors with leader lines.
+- Sector boundaries remain visible while the central pie is kept free of crowded text.
 
-**Additional Requirements**
+**Code Features**
 
-- The midpoint of the label must be calculated in advance and cannot be directly mechanically introduced, otherwise the connecting line will be misaligned.
-- If the legend overlaps with the external label information, remove the legend first to reduce the sense of crowding.
-- When there are many categories, it is recommended to add white strokes to the sector boundaries to enhance slice separation.
-- The order of each sector plate must be arranged according to the numerical value of each category.
-- For composition diagrams with fewer categories and obvious differences, labels can be placed inside sectors; for diagrams with many categories or long labels, external labels should be used instead.
-- Place the legend on the right and center it vertically.
-- Place the title at the top and center it.
-- Do not add a gridline background.
+- Calculate each sector midpoint from cumulative values before plotting.
+- Add labels with `geom_label_repel()` or `geom_text_repel()`; remove a redundant legend when labels already identify every sector.
 
 ### Doughnut Plot
 
 ![Doughnut Plot](../assets/gallery/pie/doughnut.png)
 
-**Applicable Data**
+**Statistical Features**
 
-- Like a regular pie chart, the data is summarized.
-- Suitable for scenes where you want the picture to be simpler, or to leave a blank space in the center for subsequent annotations.
+- Represents the same composition as a pie chart; the central opening does not change the denominator or statistical interpretation.
+- The center may display a total sample size, study population, or time point without encoding an additional variable.
 
-**Mapping Logic**
+**Visual Features**
 
-- The essence is still single column + `coord_polar(theta = "y")`.
-- `x`: The empty string is no longer used. It can be set to a constant greater than 1, such as `3.5`, and then `xlim()` is used to form a hollow area.
-- `y`: frequency or composition ratio.
-- `fill`: categorical variable.
-- The label is mostly placed in the middle of the ring and is implemented through `position_stack(vjust = .5)`.
+- Categories form colored arcs around a hollow center rather than solid sectors meeting at one point.
+- Arc length and area represent each category share, while the opening creates visual space for a concise central annotation.
 
-**Additional Requirements**
+**Code Features**
 
-- A clear cavity must be formed through `xlim()` or radius control, and the ring cannot be made too thick or too thin.
-- The thickness of the ring should take into account the readability of the label.
-- Donut charts are usually better than regular pie charts if the user needs to place a total amount, study object, or year description in the center of the circle.
-- The order of each sector plate must be arranged according to the numerical value of each category.
-- For composition diagrams with fewer categories and obvious differences, labels can be placed inside sectors; for diagrams with many categories or long labels, external labels should be used instead.
-- Place the legend on the right and center it vertically.
-- Place the title at the top and center it.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- Build the chart as a stacked bar and apply `coord_polar(theta = "y")`.
+- Use a constant radial `x` value and `xlim()` to create the opening; place labels at the midpoint of each ring segment.
+
+- Code Reference: source script `\StatsVisual-Skill\assets\templates\pie\Doughnut Plot.R`
 
 ### Pie Plot with Exploded Slice
 
 ![Pie Plot with Exploded Slice](../assets/gallery/pie/exploded_slice.png)
 
-**Applicable Data**
+**Statistical Features**
 
-- The constituent data have been summarized.
-- Research focuses on highlighting one key category rather than emphasizing all categories simultaneously.
+- Retains the standard composition denominator while drawing attention to one prespecified category.
+- Displacement is an emphasis device only and must not imply a larger proportion, stronger effect, or statistical significance.
 
-**Mapping Logic**
+**Visual Features**
 
-- Use `ggforce::geom_arc_bar(stat = "pie")` instead of plain `coord_polar()`.
-- `x0`, `y0`: circle center coordinates.
-- `r0`, `r`: inner and outer radius; when `r0 = 0`, it is a solid pie chart, and if `r0 > 0`, it can be expanded into a circular Pac-Bean chart.
-- `amount`: Category corresponding value.
-- `fill`: categorical variable.
-- `explode`: Controls whether a certain category is moved out, usually from a control column such as `focus`.
+- One sector is shifted outward from the remaining circle, creating a visible gap around the highlighted category.
+- All other sectors retain the original circular arrangement and relative sizes.
 
-**Additional Requirements**
+**Code Features**
 
-- Only a few categories that really need to be emphasized should be highlighted, and it is not appropriate to allow multiple sectors to move out significantly at the same time.
-- `explode` The displacement must be restrained, as excessive displacement may easily damage the overall structure.
-- The order of each sector plate must be arranged according to the numerical value of each category.
-- For composition diagrams with fewer categories and obvious differences, labels can be placed inside sectors; for diagrams with many categories or long labels, external labels should be used instead.
-- Place the legend on the right and center it vertically.
-- Place the title at the top and center it.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- Use `ggforce::geom_arc_bar(stat = "pie")` with `amount` for category values and `fill` for categories.
+- Supply a restrained `explode` value through a focus variable; set `r0 = 0` for a solid pie or `r0 > 0` for a ring form.
+
+- Code Reference: source script `\StatsVisual-Skill\assets\templates\pie\Pie Plot with Exploded Slice.R`
 
 ### Exploding Pie Plot
 
 ![Exploding Pie Plot](../assets/gallery/pie/exploding.png)
 
-**Applicable Data**
+**Statistical Features**
 
-- The constituent data have been summarized.
-- Desire to moderately separate all sectors to enhance category boundaries and visual hierarchy.
+- Displays the same part-to-whole composition as a conventional pie while separating every category.
+- Because separation adds visual prominence, it should be used only when sector boundaries are central to the presentation.
 
-**Mapping Logic**
+**Visual Features**
 
-- First calculate the composition ratio of each category `fraction`, and then obtain `ymin` and `ymax` in sequence.
-- Use `geom_rect()` to generate a Cartesian representation of a rectangular sector.
-- Map the rectangle into separate sectors via `coord_polar(theta = "y")`.
-- `fill`: categorical variable.
-- `xmin` / `xmax`: Determine the horizontal position of each sector from the center of the circle to form an "explosion" effect.
+- All sectors are displaced from the center, producing separated wedge-like pieces.
+- Sector size still represents composition, while radial spacing distinguishes adjacent categories.
 
-**Additional Requirements**
+**Code Features**
 
-- The separation distance of each sector should be uniform or have clear rules.
-- The order of each sector plate must be arranged according to the numerical value of each category.
-- For composition diagrams with fewer categories and obvious differences, labels can be placed inside sectors; for diagrams with many categories or long labels, external labels should be used instead.
-- Place the legend on the right and center it vertically.
-- Place the title at the top and center it.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- Compute category fractions and cumulative `ymin` and `ymax` limits before plotting.
+- Draw sector bases with `geom_rect()` and map them into polar coordinates; control each sector’s displacement through `xmin` and `xmax`.
+
+- Code Reference: source script `\StatsVisual-Skill\assets\templates\pie\Exploding Pie Plot.R`
 
 ### Nightingale Rose Chart
 
 ![Nightingale Rose Chart](../assets/gallery/pie/rose.png)
 
-**Applicable Data**
+**Statistical Features**
 
-- Category data, each category has a numerical value, but the focus is on "magnitude difference" rather than "sum = 100%".
-- Commonly used to display the number of cases, deaths, event scale, etc.
+- Compares category magnitudes by radial length in equal-angle sectors; values do not need to form a 100% composition.
+- Because sector area increases with the square of the radius, interpret the encoded quantity according to the implementation and state clearly whether radius or area represents the value.
 
-**Mapping Logic**
+**Visual Features**
 
-- The rose chart is essentially an extension of `geom_col()` / `geom_bar(stat = "identity")` in polar coordinates, and is not an ordinary pie chart in the strict sense.
-- `x`: Category variable, the order needs to be set explicitly.
-- `y`: category value, determines the radius length.
-- `fill`: Can be mapped to category number, category variable or continuous color scale.
-- `coord_polar()`: Convert the column to a rose chart.
+- Equal-width sectors extend outward by different radii, forming a flower-like circular profile.
+- Large values create long petals and dominate the outer circumference; category labels are arranged around the circle.
 
-**Additional Requirements**
+**Code Features**
 
-- Preprocessing is required for label angles, such as the `angle` column, otherwise the text will be inverted or overlapped.
-- When there are many categories, labels should be processed hierarchically: large values ​​should be placed in sectors, and small values ​​should be quoted outside.
-- It is often necessary to leave a local negative `y` space to place the unit description.
-- The rose diagram is suitable for displaying large absolute differences, but is not suitable for explaining small differences in composition ratios.
-- The order of each sector plate must be arranged according to the numerical value of each category.
-- Place the title at the top and center it.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- Map ordered categories to `x`, magnitude to `y`, and category or value to `fill`, then apply `coord_polar()`.
+- Set factor order explicitly and precompute label angles and alignment when labels follow the circular axis.
+
+- Code Reference: source script `\StatsVisual-Skill\assets\templates\pie\Nightingale Rose Chart.R`
 
 ### Rose Chart with Tiered Label Strategy
 
-**Applicable Data**
+**Statistical Features**
 
-- There are many categories and the range of values ​​is huge.
-- Different labeling strategies need to be adopted depending on the value size.
+- Uses the same radial magnitude encoding as the Nightingale rose chart when category values span a wide range.
+- Label tiers communicate category identity only and must not introduce new statistical groupings.
 
-**Mapping Logic**
+**Visual Features**
 
-- Main layer: `geom_col()` + `coord_polar()`.
-- Label layer: Draw according to the threshold into multiple `geom_text()` layers.
-- Large value: The text is placed within the sector.
-- Medium value: The text is near the top of the sector.
-- Small value: text is quoted and rotated.
-- `angle`: must be precalculated.
-- `fill`: Can use continuous gradient color or color by category number
+- Large sectors carry internal labels, medium sectors place labels near their outer edge, and small sectors use external rotated labels.
+- The layered label arrangement preserves the circular profile while reducing overlap around short sectors.
 
-**Additional Requirements**
+**Code Features**
 
-- The internal labels of the sector usually use a font color that is significantly different from the background color of the graphics, and the external labels usually use dark gray or black fonts.
-- For Chinese label images, additional attention should be paid to font embedding and font weight.
-- The order of each sector plate must be arranged according to the numerical value of each category.
-- If the legend does not provide additional information, it should be removed to reduce distractions.
-- Place the title at the top and center it.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- Draw the main chart with `geom_col()` and `coord_polar()`.
+- Precompute label angle and divide categories by value thresholds into separate `geom_text()` layers for internal, edge, and external placement.
 
 ### Nested Pie Plot
 
 ![Nested Pie Plot](../assets/gallery/pie/nested.png)
 
-**Applicable Data**
+**Statistical Features**
 
-- Hierarchical structure data.
-- Each record contains at least the node name, parent node name and value.
+- Displays hierarchical composition in which each child category belongs to a defined parent.
+- Parent and child values must be internally consistent; with total-based branching, child values should reconcile with the parent total.
 
-**Mapping Logic**
+**Visual Features**
 
-- `plotly::plot_ly(type = "sunburst")` can be used.
-- `labels`: current node name
-- `parents`: Upper-level node name
-- `values`: Node corresponding value
-- `branchvalues = "total"`: Explanation of levels by total amount
+- Concentric rings represent successive hierarchy levels, with child sectors aligned beneath their parent sector.
+- Moving outward from the center reveals increasingly detailed subgroup composition.
 
-**Additional Requirements**
+**Code Features**
 
-- The data must satisfy a clear parent-child hierarchical relationship; if `parent` is empty, misspelled or broken, the graph will fail.
-- It is suitable for answering hierarchical questions such as "total composition + subgroup source", but not suitable for displaying only a single layer of composition.
-- The order of each sector plate must be arranged according to the numerical value of each category.
-- For composition diagrams with fewer categories and obvious differences, labels can be placed inside sectors; for diagrams with many categories or long labels, external labels should be used instead.
-- Place the legend on the right and center it vertically.
-- Place the title at the top and center it.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
-- code reference:source script `\StatsVisual-Skill\assets\templates\Nested Pie Plot.R`
+- Provide node names, parent names, and values to `plotly::plot_ly(type = "sunburst")`.
+- Use `branchvalues = "total"` only when parent values represent totals that include their descendants.
+
+- code reference:source script `\StatsVisual-Skill\assets\templates\pie\Nested Pie Plot.R`
 
 ### Circular Polar Heatmap
 
-**Applicable Data**
+**Statistical Features**
 
-- Two discrete dimensions + one continuous metric.
-- For example: the incidence change spectrum of "disease × year".
+- Displays a continuous measure across the combinations of two discrete dimensions, such as disease by year.
+- It is a circular heatmap rather than a composition chart; color represents magnitude and values do not need to sum to a whole.
 
-**Mapping Logic**
+**Visual Features**
 
-- First use `geom_tile()` to draw a two-dimensional heat map in Cartesian coordinates.
-- `x`: disease category.
-- `y`: year.
-- `fill`: Incidence rate or standardized value.
-- Then use `coord_polar(theta = "x")` to convert it into a circular year spectrum.
-- It is also often necessary to manually add year annotations, English labels, or polar scales.
+- One discrete dimension forms angular sectors and the other forms concentric rings.
+- Each tile is colored according to the measured value, creating a circular matrix of temporal or subgroup patterns.
 
-**Additional Requirements**
+**Code Features**
 
-- When there are many categories, `axis.text.x` should reduce the font size or use English abbreviation instead.
-- Place the legend on the right and center it vertically.
-- Place the title at the top and center it.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- Draw the rectangular matrix with `geom_tile()`, mapping the two discrete variables to `x` and `y` and the continuous measure to `fill`.
+- Convert the matrix with `coord_polar(theta = "x")` and add radial or angular annotations when default axes are insufficient.
 
 ### Fourfold Plot
 
 ![Fourfold Plot](../assets/gallery/pie/fourfold.png)
 
-**Applicable Data**
+**Statistical Features**
 
-- `2 × 2` contingency table, or `2 × 2 × k` hierarchical contingency table.
-- The summarized array can be used directly, or the individual-level binary data can be summarized first through `xtabs()`.
+- Displays the cell frequencies and association structure of two binary variables in a `2 × 2` table; stratified arrays allow comparison across levels.
+- Opposing quadrants correspond to the cross-products underlying the odds ratio, while confidence rings, when shown, support visual assessment of departure from independence.
 
-**Mapping Logic**
+**Visual Features**
 
-- `fourfoldplot()` using the base graphics system.
-- If it is individual-level data, first use `xtabs(~ row_var + col_var, data)` to summarize it into the `2 × 2` table.
-- If it is a `2 × 2 × k` layered table, it can be passed directly to `fourfoldplot()`, and the multi-panel layout can be controlled through `mfcol`.
-- Color is often used to differentiate between paired groups of quadrants.
+- Four quarter-circle sectors form a symmetric four-petal display; sector area reflects cell frequency.
+- Stratified `2 × 2 × k` data appear as repeated four-petal panels for direct comparison across strata.
 
-**Additional Requirements**
+**Code Features**
 
-- The row and column variables must all be binary categories; otherwise, the four-petal graph cannot be used directly.
-- If there are multiple layers (such as different departments), a multi-panel arrangement should be used.
-- Place the legend on the right and center it vertically.
-- Place the title at the top and center it.
-- Do not add a gridline background.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
-- code reference:source script `\StatsVisual-Skill\assets\templates\Fourfold Plot.R`
+- Use `xtabs()` to convert individual-level binary data into a `2 × 2` table, or supply an existing `2 × 2 × k` array.
+- Draw the display with `fourfoldplot()` and use a multi-panel layout when stratification levels are present.
 
-## Code Reference
-- Original development note: source script `0300-pieplot-finished.rmd` is not included in the public skill.
+- code reference:source script `\StatsVisual-Skill\assets\templates\pie\Fourfold Plot.R`
 
-## QA
+## 7. QA Checklist
 
-- Confirm values sum to a whole and are not independent rates.
-- Keep categories few, usually no more than 5-6.
-- Report percentages and counts in caption or labels.
-- Avoid 3D pies, exploded slices, gradients, and excessive colors.
+- Confirm that standard pie, doughnut, and exploded-pie categories are mutually exclusive and sum to the stated whole.
+- Verify the denominator, time point, population, units, and handling of missing or residual categories.
+- Check that rates have not been misrepresented as composition and that percentage labels agree with the source counts.
+- Confirm that rose-chart values, nested hierarchy, circular-heatmap scales, and fourfold-table dimensions match their distinct statistical encodings.
+- Ensure sector order, labels, colors, and legends remain consistent and readable without implying unsupported importance or significance.

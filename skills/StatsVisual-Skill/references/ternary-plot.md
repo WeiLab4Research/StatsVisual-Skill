@@ -1,137 +1,127 @@
 # Ternary Plot
 
-## Use For
+## 1. Scope and Definition
 
-Use ternary plots for three-part compositions where the components are non-negative and sum to a constant, such as 1 or 100%.
+Ternary plots display three non-negative components whose sum is constant, usually `1` or `100%`. Each observation is represented by one point inside an equilateral triangle: proximity to a vertex indicates a larger share of that component, proximity to an edge indicates a small share of the opposite component, and the center indicates broadly similar proportions.
 
-## Core Mapping Logic
+Ternary plots are descriptive displays of composition. Confidence, density, and interpolated variants add estimated regions or surfaces, but do not change the compositional constraint.
+
+## 2. Selection Guide
+
+| Analytical purpose | Recommended chart |
+|---|---|
+| Show individual three-part compositions and group patterns | Basic Ternary Plot |
+| Show estimated concentration regions of the observed compositions | Confidence Ternary Plot |
+| Identify dense and sparse regions in ternary space | Density Ternary Plot |
+| Show how an additional continuous outcome varies across compositions | Interpolated Ternary Plot |
+
+## 3. Required Data Structure
+
+- Each observation must contain three non-negative component variables measured on a common basis and summing to the same constant within an appropriate numerical tolerance.
+- If raw amounts are converted to proportions, the denominator must represent a scientifically meaningful total; retain the original total when absolute burden may also matter.
+- Optional variables may define clinical groups or a continuous target outcome. Confidence and density variants require adequate sample size across the ternary space.
+- Missing values and true zeros must be distinguished. Do not renormalize incomplete observations without a prespecified missing-data rule.
+
+## 4. Common Statistical Principles
+
+- The three components are compositionally dependent: increasing one share necessarily reduces at least one other share. Pairwise interpretations should therefore respect the constant-sum constraint.
+- Ternary position describes relative composition, not absolute concentration. Similar proportions can arise from very different total exposures or biomarker levels.
+- Normalization is appropriate only when the three variables form a coherent whole. Unrelated measurements should not be forced to sum to `100%`.
+- Confidence and density regions are estimated population-level summaries, not confidence intervals for individual observations and not formal tests of between-group differences.
+- For regression or inference with compositional predictors, use an appropriate compositional-data method; the ternary plot alone is exploratory.
+
+## 5. Common Visual Rules
+
+- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- Add value labels only when they improve interpretation without crowding the figure.
+- Retain only a light triangular reference mesh and label all three component axes clearly, including units or `%`.
+- Keep vertex assignment, axis direction, scale, and group colors consistent across related ternary plots.
+
+## 6. Variants
 
 ### Basic Ternary Plot
 
 ![Basic Ternary Plot](../assets/gallery/ternary/basic_ternary.png)
 
-**Applicable Data**
+**Statistical Features**
 
-- Three component variables, and the sum of the three for each observation is 1 or 100.
-- Commonly used for metabolite ratio, elemental composition, nutrient ratio, three-category component distribution, etc.
+- Displays each observation as a three-part composition and allows comparison of dominant components, mixtures, and group clustering.
+- Color may identify clinical groups, but visual overlap or separation does not establish a statistically significant group difference.
 
-**Mapping Logic**
+**Visual Features**
 
-- Use `ggtern(data, aes(x = comp1, y = comp2, z = comp3))`.
-- `x`, `y`, and `z` map three component variables respectively.
-- Point layers usually use `geom_point()`.
-- If grouping exists, `color = group` can be mapped.
-- Axis labels pass:
-  - `Tlab()`: top axis;
-  - `Llab()`: left axis;
-  - `Rlab()`: Right axis.
-- `theme_showarrows()` can be used to enhance the sense of three-dimensional direction.
+- Points lie within a triangular coordinate system, with each vertex representing `100%` of one component.
+- Points near the center have similar component shares; points near a vertex or edge indicate compositional dominance or near absence.
 
-**Additional Requirements**
+**Code Features**
 
-- The most critical premise of the ternary diagram is that the sum of the three variables must be a constant; if the original data is not a proportion, it must be standardized first.
-- It is recommended to keep clear three-axis labels and concise legends, and not to be disturbed by too many decorations.
-- A light gray triangle mesh is required as the background
-- Place the legend on the right and center it vertically.
-- Place the title at the top and center it.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- Use `ggtern(data, aes(x = comp1, y = comp2, z = comp3))` and add observations with `geom_point()`.
+- Map an optional group to `color`, label the axes with `Tlab()`, `Llab()`, and `Rlab()`, and use `theme_showarrows()` when axis direction needs emphasis.
+
+- code reference: source script `\StatsVisual-Skill\assets\templates\ternary\Ternary Plot.R`
 
 ### Confidence Ternary Plot
 
 ![Confidence Ternary Plot](../assets/gallery/ternary/interval.png)
 
-**Applicable Data**
+**Statistical Features**
 
-- The same is data for three components whose sum is a constant.
-- The focus of the study is to show the confidence range of the sample in the three-dimensional space, not just the single point position.
+- Summarizes estimated regions containing specified proportions of the observed compositional distribution.
+- The regions describe population concentration under the implemented estimator; they are not pointwise confidence intervals or evidence of group differences.
 
-**Mapping Logic**
+**Visual Features**
 
-- Use `stat_confidence_tern()` to overlay interval layers.
-- `x`, `y`, and `z` still map three component variables.
-- `mapping = aes(fill = ..level..)` fills the color horizontally with the interval.
-- `geom = "polygon"` plots regions with different confidence levels.
-- `breaks` specifies multiple interval levels, such as `0.5`, `0.8`, `0.9`, `0.95`, `0.99`.
-- Often superimposed:
-  - `geom_mask()` handles triangle boundaries;
-  - `geom_point()` displays the original point.
+- Nested polygon regions occupy progressively broader areas of the triangle as the stated level increases.
+- Original observations may be overlaid to show how the estimated regions relate to the actual data cloud.
 
-**Additional Requirements**
+**Code Features**
 
-- The confidence interval plot emphasizes the distribution range of the sample population, not the individual confidence interval of each point.
-- Interval layers usually gradient from shallow to deep or from low to high, and the level semantics must be clear.
-- Too many confidence layers will cause congestion in the triangle area. It is recommended to control the number of breaks.
-- If the original points are superimposed, the point color and fill color must form enough contrast to prevent the points from being engulfed by the interval layer.
-- A light gray triangle mesh is required as the background
-- Place the legend on the right and center it vertically.
-- Place the title at the top and center it.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- Add regions with `stat_confidence_tern(mapping = aes(fill = after_stat(level)), geom = "polygon", breaks = ...)`.
+- Use `geom_mask()` to respect the triangular boundary and overlay restrained points with `geom_point()`.
 
 ### Density Ternary Plot
 
 ![Density Ternary Plot](../assets/gallery/ternary/density.png)
 
-**Applicable Data**
+**Statistical Features**
 
-- Data where the sum of the three components is a constant.
-- The sample size is large, and we hope to observe the high-density areas and sparse areas in the ternary space.
+- Estimates the spatial density of compositions and identifies common and sparse mixtures within the simplex.
+- Density shape depends on sample size, smoothing, and contour breaks; apparent hot spots should be treated as exploratory.
 
-**Mapping Logic**
+**Visual Features**
 
-- Use `stat_density_tern()`.
-- `x`, `y`, `z` map three component variables.
-- `fill = after_stat(level)` maps density levels to fill colors.
-- `alpha = after_stat(level)` can synchronously map transparency and enhance density levels.
-- `geom = "polygon"` is commonly used to form a continuous density area.
-- `geom_point()` can be superimposed to display the original observation point.
+- Filled contours form continuous high- and low-density regions inside the triangle.
+- Warmer or darker regions indicate greater estimated concentration, while overlaid points retain the observed sample locations.
 
-**Additional Requirements**
+**Code Features**
 
-- Density ternary plots emphasize group distribution hot spots rather than individual observation point locations.
-- Setting `breaks` too finely will result in too many layers, slow rendering, and difficulty in interpreting; it should be controlled within a reasonable range.
-- Density color ramps should be monotonic, ensuring that darker or warmer colors represent higher density.
-- If original points are displayed at the same time, the point size must be restrained to avoid blocking the density structure.
-- A light gray triangle mesh is required as the background
-- Place the legend on the right and center it vertically.
-- Place the title at the top and center it.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- Use `stat_density_tern()` with `fill = after_stat(level)` and, when useful, `alpha = after_stat(level)`.
+- Draw polygon contours with a controlled set of `breaks` and overlay small points so the density surface remains visible.
 
 ### Interpolated Ternary Plot
 
 ![Interpolated Ternary Plot](../assets/gallery/ternary/interpolation.png)
 
-**Applicable Data**
+**Statistical Features**
 
-- Data where the sum of the three components is a constant.
-- In addition to the three components, a continuous target variable is included, such as total exposure, total content, or a certain biomarker level.
+- Displays a model-estimated surface for an additional continuous outcome across the three-part composition.
+- The surface represents predictions between observed compositions and depends on the chosen model; it should not be interpreted as measured data in poorly supported regions.
 
-**Mapping Logic**
+**Visual Features**
 
-- Use `geom_interpolate_tern()`.
-- `x`, `y`, and `z` still map three component variables.
-- `value` maps the target variable.
-- `color = ..level..` or similar is used to represent the interpolated intensity of the target variable.
-- Common fitting settings:
-  - `base = "identity"`
-  - `method = "glm"`
-  - `formula = value ~ poly(x, y, degree = k)`
-- `geom_point()` can be superimposed to display the original observation position.
+- Colored contour bands or lines spread across the triangle, with color representing the predicted target value.
+- Observed compositions can be superimposed to reveal where the fitted surface is supported by data.
 
-**Additional Requirements**
+**Code Features**
 
-- The interpolated ternary diagram is not a simple density diagram. Its core is "the trend surface of the target variable changing with the three components."
-- The fitting formula must match the amount of data; a polynomial degree that is too high may lead to overfitting.
-- If the distribution of the target variable is skewed, you should first consider whether transformation or standardization is needed.
-- A light gray triangle mesh is required as the background
-- Place the legend on the right and center it vertically.
-- Place the title at the top and center it.
-- Unless specifically requested, do not add subtitles or explanatory text outside the plot.
+- Map the target variable to `value` in `geom_interpolate_tern()` and specify the fitting `method`, `base`, and `formula`.
+- Keep polynomial complexity compatible with sample size and coverage; add `geom_point()` to show the observations used for interpolation.
 
-## Code Reference
-- source script `StatsVisual-Skill\assets\templates\Ternary Plot.R` 
+## 7. QA Checklist
 
-## QA
-
-- Verify components sum to a constant after missing-value handling.
-- Normalize only if normalization is scientifically valid.
-- Avoid ternary plots for audiences that need exact numeric reading; provide a table or alternative dot plot when needed.
+- Verify that all three components are non-negative and sum to the same constant after missing-value handling.
+- Confirm that normalization is scientifically valid and that absolute totals are retained when clinically relevant.
+- Check vertex labels, axis directions, units, scale consistency, and group encodings.
+- For confidence and density plots, review sample size, smoothing, contour levels, and whether original points remain visible.
+- For interpolated plots, inspect model specification, overfitting, extrapolation into sparse regions, and the distribution of the target outcome.
+- Avoid causal or inferential claims based only on visual separation, density, or an interpolated surface.

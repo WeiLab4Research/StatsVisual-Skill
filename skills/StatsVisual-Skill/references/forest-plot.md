@@ -105,6 +105,7 @@ plot_forest_light_category_bands <- function(
 ## Template Starter
 
 - Use `assets/templates/subgroup_forest.R` as the starter template for subgroup forest plots with table-aligned effect estimates, confidence intervals, sample-size columns, and optional interaction P values. Copy it into `<project_dir>/R/` and adapt the subgroup, level, estimate, CI, sample-size, and interaction columns before running.
+- Code Reference: source script `\StatsVisual-Skill\assets\templates\forest\subgroup_forest.R`
 
 ## Implementation Principle
 

@@ -387,7 +387,7 @@ Use these rules only when the selected style is `nature` or when the user asks f
 
 ## R Template Guidance
 
-Use `assets/templates/multipanel_helpers.R` and `assets/templates/multipanel_figure.R` only as starting points. Before adapting either template, write the layout plan and decide whether automatic `patchwork` composition is sufficient.
+Use `assets/templates/multipanel/multipanel_helpers.R` and `assets/templates/multipanel/multipanel_figure.R` only as starting points. Before adapting either template, write the layout plan and decide whether automatic `patchwork` composition is sufficient.
 
 For publication figures:
 
