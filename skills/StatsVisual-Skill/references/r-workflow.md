@@ -8,11 +8,10 @@ Create or use one explicit per-request project directory. Do not use the skill r
 <project_dir>/
   data/
   R/
-  output/
   figures/
 ```
 
-Write the plot script in `<project_dir>/R/plot_<chart_type>.R`. Keep data profiling output in `<project_dir>/output/data_profile.md` as an internal reproducibility artifact, figure explanation in `<project_dir>/output/figure_explanation.md` as a statistical and visual rationale, and figure files in `<project_dir>/figures/`. Summarize the profile and explanation directly in the assistant reply; do not make the user open `data_profile.md` or `figure_explanation.md` just to choose a chart or understand the figure.
+Write the plot script in `<project_dir>/R/plot_<chart_type>.R`. Keep figure files in `<project_dir>/figures/`. Summarize the data profile and figure explanation directly in the assistant reply.
 
 Do not enter the script-writing or export workflow on the first data-handling turn. First-turn work is limited to project setup, data copy, data inspection, and chart recommendation. Start this R workflow only after the user has replied with a concrete chart choice from the recommendation.
 
@@ -52,7 +51,7 @@ When calling `scripts/export_publication_figures.R`, pass the final `project_dir
 Always check local libraries before attempting CRAN/Bioconductor access. Generated scripts should not write a fresh ad hoc package installer unless the helper script is unavailable. The default pattern is:
 
 ```r
-skill_dir <- Sys.getenv("R_MEDICAL_GRAPHICS_SKILL", unset = "skills/r-medical-graphics")
+skill_dir <- Sys.getenv("R_MEDICAL_GRAPHICS_SKILL", unset = "skills/StatsVisual-Skill")
 source(file.path(skill_dir, "scripts", "setup_r_library.R"), local = TRUE)
 rmg_ensure_packages(c("ggplot2", "ragg"), project_dir = project_dir, skill_dir = skill_dir)
 ```

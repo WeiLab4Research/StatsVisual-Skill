@@ -1,27 +1,31 @@
-# Forest Plot with Dashed Null-Effect Reference Line and Light Category Bands
+# Forest Plot
 
 ## Purpose
 
-Create a publication-ready forest plot where:
-
-- The **X-axis includes a dashed reference line** marking the null-effect value.
-- The **Y-axis items are grouped by category**.
-- The background behind Y-axis items uses **alternating light category bands** to visually separate groups.
-- The category bands are intentionally subtle, for example `#F6F7F9`, so they support grouping without competing with points, confidence intervals, labels, or the null-effect line.
-
-This skill is intended for forest plots such as odds ratios, hazard ratios, risk ratios, beta coefficients, mean differences, or other effect estimates with confidence intervals.
+Create a publication-ready forest plot for effect estimates with confidence intervals, such as odds ratios, hazard ratios, risk ratios, beta coefficients, or mean differences.
 
 ![Forest Plot](../assets/gallery/forest/forest-plot.png)
 
----
+## Prerequisites
 
-## Visual Rules
+- Each row must have an effect estimate and uncertainty interval, or these must be computable from a declared model.
+- Do not force a forest plot from raw groups, counts, or percentages without an effect estimate.
+- Label the effect measure explicitly (`HR`, `OR`, `RR`, `risk difference`, `mean difference`, `SMD`, etc.) instead of hard-coding a single label.
 
-### 1. X-axis dashed reference line
+## Universal Rules
 
-Use a vertical dashed line to mark the null-effect value.
+The following rules apply to all styles.
 
-Typical null-effect values:
+### Layout
+
+- **Integrated table-and-forest**: Use one shared row coordinate system. Descriptor columns on the left, the estimate axis near the middle, numeric estimate/statistical columns on the right.
+- **Self-contained forest axis**: Ticks and tick labels must remain within the forest-axis column. They must not extend horizontally into the subgroup label column or event-count columns.
+- **Column choice from analysis**: Choose columns from the actual analysis (subgroup/level, counts, study weights, estimate with CI, P value, P for interaction). Do not add unused columns just to mimic a reference image.
+- Keep the null-effect line, CI marks, axis ticks, favour labels, and CI text aligned to the same row coordinate system.
+
+### Markers & Lines
+
+- Use a vertical dashed line to mark the null-effect value. Typical null-effect values:
 
 | Effect type | Null-effect value |
 |---|---:|
@@ -31,82 +35,82 @@ Typical null-effect values:
 | Mean difference | 0 |
 | Regression coefficient / beta | 0 |
 
-The reference line should be visible but not dominant.
+### Hierarchy & Text
 
-Recommended style:
+- Subgroup hierarchy is expressed through bold labels, indentation, and vertical spacing.
+- Keep column headers the same font size as body category labels; use bold weight for headers.
+- Place P-value and P-for-interaction columns at the far right of the table.
+- Include `P for interaction` only for subgroup interaction analyses; ordinary rows may need no P-value column.
 
-```r
-geom_vline(
-  xintercept = null_value,
-  linetype = "dashed",
-  linewidth = 0.45,
-  color = "grey45"
-)
+### Rejection Checklist
+
+Reject forest plots with:
+- Missing CI definitions or unclear reference group
+- Unreadable table text
+- Disconnected table and forest panels that only appear aligned by eye
+- Heavy boxed grids or heavy table-wide rules
+
+## Style-Specific Rules
+
+### General
+
+- Light row bands or subtle group shading are permitted only when they improve row tracking in dense tables.
+
+### Nature
+
+- Keep figures compact, column-aligned, and evidence-first. Avoid oversized titles or explanatory text inside the plot.
+- Use thin CI lines, modest square or point markers, and a pale or absent grid.
+- Use blue or muted journal palette colours only when colour carries meaning.
+- Use shallow row bands or fine column guides sparingly; they should not dominate the CI marks.
+- Place favour labels and axis ticks close to the forest axis.
+- Reject figures that are too wide, rely on a detached legend, use heavy table rules, or rasterize editable text.
+
+### Lancet
+
+- **Plain white table body**: Alternating row bands, shaded subgroup backgrounds, boxed grids, or any background fill are prohibited.
+- **Single header rule**: Only one horizontal rule is permitted — the header rule below the column headers. No additional separator lines, borders, or grids.
+- **Default black-and-white**: CI lines and the null-effect reference line shall be black. Point-estimate symbols shall be solid black squares (■) or white squares with black outlines (□). Colour only when it carries explicit scientific meaning.
+- **Square markers**: The default point-estimate symbol is a square.
+- **Midline decimal point**: All numeric text (axis labels, CI text, P values, in-table numbers) shall use the midline decimal point (·).
+- **Subgroup hierarchy by typography only**: Bold labels, indentation, and vertical spacing. No background shading or colour blocks.
+
+### NEJM
+
+- **Shallow alternating row bands**: Light-gray row bands are permitted for dense subgroup tables. Keep bands light enough that CI marks and text remain dominant.
+- **Subtle divider**: Do not draw a heavy table-wide rule above the column headers. Use a subtle local divider if a separator is needed.
+- **Default blue-and-black**: CI lines and null-effect reference line shall be black. Point-estimate symbols shall be theme-blue or black squares (■).
+- **Square markers**: The default point-estimate symbol is a square.
+- **Ordinary decimal point**: Do not use Lancet-style midline decimal points.
+- Add favour labels with directional arrows only when they clarify interpretation.
+
+### JAMA
+
+- White table body, aligned text columns, restrained black or palette-colour CI marks, and a clear null-effect reference line.
+- Use whitespace, indentation, and at most subtle row spacing or very light bands for dense subgroup displays.
+- Avoid boxed grids and heavy table-wide rules.
+- Reject figures with unclear effect-measure labels, detached table/forest alignment, or visually overemphasized P values.
+
+### BMJ
+
+- Plain labels, explicit denominators, restrained colours, and a white table body.
+- Use subtle row spacing only when it improves tracking in dense displays.
+- Avoid P-value-only emphasis; the estimate direction, CI width, denominator, and clinical meaning should remain easy to read.
+- Reject figures with unclear denominators, heavy boxed grids, or P values that visually dominate the effect estimates.
+
+## Column Structure Example
+
 ```
-
-### 2. Y-axis light category bands
-
-Group Y-axis rows by a category variable, then draw one horizontal background band per group.
-
-The bands should:
-
-- Cover the full X plotting range.
-- Align behind all rows belonging to the same group.
-- Alternate between a very light fill and transparent/no fill.
-- Use subtle colors such as `#F6F7F9`.
-- Sit behind the confidence intervals and points.
-
-Recommended approach:
-
-```r
-geom_rect(
-  data = band_data,
-  aes(xmin = -Inf, xmax = Inf, ymin = ymin, ymax = ymax, fill = band_fill),
-  inherit.aes = FALSE,
-  alpha = 1
-)
-```
-
-Use `scale_fill_identity()` so the exact band colors are respected.
-
----
-
-## R Function Template
-
-```r
-plot_forest_light_category_bands <- function(
-  data,
-  group_col = "group",
-  label_col = "label",
-  estimate_col = "estimate",
-  lower_col = "lower",
-  upper_col = "upper",
-  null_value = 1,
-  x_label = "Effect estimate",
-  point_size = 2.4,
-  ci_linewidth = 0.55,
-  band_color = "#F6F7F9",
-  empty_band_color = "transparent",
-  reference_line_color = "grey45",
-  reference_line_width = 0.45,
-  reference_line_type = "dashed"
-) {
-  required_packages <- c("ggplot2", "dplyr", "rlang")
-  missing_packages <- required_packages[!vapply(required_packages, requireNamespace, logical(1), quietly = TRUE)]
-  if (length(missing_packages) > 0) {
-    stop(
-      "Please install the following packages before using this function: ",
-      paste(missing_packages, collapse = ", "),
-      call. = FALSE
-    )
-  }
+| Subgroup / level | Treatment | Comparator | HR (95% CI)       | HR (95% CI)      | P interaction |
+|------------------|-----------|------------|--------------------|------------------|---------------|
+| Age              |           |            |                    |                  | 0.48          |
+|   <65 years      | 86/742    | 112/736    | ───■────           | 0.76 (0.58-0.99) |               |
+|   ≥65 years      | 74/658    | 89/662     | ─────■──           | 0.84 (0.62-1.13) |               |
+| Sex              |           |            |                    |                  | 0.71          |
+|   Male           | 96/812    | 121/806    | ───■────           | 0.79 (0.61-1.02) |               |
+|   Female         | 64/588    | 80/592     | ─────■──           | 0.81 (0.58-1.12) |               |
+|                  |           |            | └──0.5──1.0──2.0──┘ |                  |               |
 ```
 
 ## Template Starter
 
-- Use `assets/templates/subgroup_forest.R` as the starter template for subgroup forest plots with table-aligned effect estimates, confidence intervals, sample-size columns, and optional interaction P values. Copy it into `<project_dir>/R/` and adapt the subgroup, level, estimate, CI, sample-size, and interaction columns before running.
-- Code Reference: source script `\StatsVisual-Skill\assets\templates\forest\subgroup_forest.R`
-
-## Implementation Principle
-
-The category bands are a structural aid, not the main visual feature. The viewer should first notice the estimates, confidence intervals, and null-effect reference line. The light Y-axis bands should only help the viewer understand which rows belong to the same group.
+Use `assets/templates/forest/subgroup_forest.R` as the starter template for subgroup forest plots with table-aligned effect estimates, confidence intervals, sample-size columns, and optional interaction P values. Copy it into `<project_dir>/R/` and adapt the subgroup, level, estimate, CI, sample-size, and interaction columns before running.

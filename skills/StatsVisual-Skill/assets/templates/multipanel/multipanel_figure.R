@@ -12,23 +12,34 @@ arg4 <- if (length(args) >= 4 && nzchar(args[[4]])) args[[4]] else NA_character_
 arg5 <- if (length(args) >= 5 && nzchar(args[[5]])) args[[5]] else NA_character_
 
 figures_dir <- file.path(project_dir, "figures")
-output_dir <- file.path(project_dir, "output")
 dir.create(figures_dir, showWarnings = FALSE, recursive = TRUE)
-dir.create(output_dir, showWarnings = FALSE, recursive = TRUE)
 
 find_skill_dir <- function() {
   candidates <- c(
     Sys.getenv("R_MEDICAL_GRAPHICS_SKILL", unset = NA_character_),
-    file.path(getwd(), "skills", "r-medical-graphics"),
-    file.path(dirname(getwd()), "skills", "r-medical-graphics")
+    {
+      skills_dir <- file.path(getwd(), "skills")
+      if (dir.exists(skills_dir)) {
+        subdirs <- list.dirs(skills_dir, full.names = TRUE, recursive = FALSE)
+        subdirs[file.exists(file.path(subdirs, "SKILL.md"))]
+      }
+    },
+    {
+      skills_dir <- file.path(dirname(getwd()), "skills")
+      if (dir.exists(skills_dir)) {
+        subdirs <- list.dirs(skills_dir, full.names = TRUE, recursive = FALSE)
+        subdirs[file.exists(file.path(subdirs, "SKILL.md"))]
+      }
+    }
   )
+  candidates <- unique(unlist(candidates))
   candidates <- candidates[!is.na(candidates) & nzchar(candidates)]
   for (candidate in candidates) {
     if (file.exists(file.path(candidate, "SKILL.md"))) {
       return(normalizePath(candidate, winslash = "/", mustWork = TRUE))
     }
   }
-  stop("Cannot find r-medical-graphics skill. Set R_MEDICAL_GRAPHICS_SKILL to the skill directory.", call. = FALSE)
+  stop("Cannot find the skill directory. Set R_MEDICAL_GRAPHICS_SKILL to the skill directory.", call. = FALSE)
 }
 
 skill_dir <- find_skill_dir()
@@ -51,8 +62,7 @@ read_table_auto <- function(path) {
   ext <- tolower(tools::file_ext(path))
   if (ext == "csv") return(readr::read_csv(path, show_col_types = FALSE))
   if (ext %in% c("tsv", "txt")) return(readr::read_tsv(path, show_col_types = FALSE))
-  if (ext == "rds") return(readRDS(path))
-  stop("Template supports CSV, TSV, TXT, or RDS. Adapt read_table_auto() for other inputs.", call. = FALSE)
+  stop("Template supports CSV, TSV, or TXT. Adapt read_table_auto() for other inputs.", call. = FALSE)
 }
 
 data <- read_table_auto(data_file)
@@ -116,46 +126,5 @@ fig <- switch(
   make_quantitative_grid(list(p_distribution, p_effect), ncol = 2)
 )
 
-rds_file <- file.path(output_dir, paste0(figure_name, ".rds"))
-saveRDS(fig, rds_file)
-
-plan_file <- file.path(output_dir, "figure_plan.md")
-if (!file.exists(plan_file)) {
-  writeLines(c(
-    "# Figure Plan",
-    "",
-    "- Main message: TODO replace with one sentence from the recommendation stage.",
-    "- Primary result: Panel A.",
-    "- Supporting analyses: Panel B.",
-    "- Interpretation risk: TODO state the most likely limitation.",
-    "- Panel roles: A distribution; B effect estimate. Replace if the final panels differ.",
-    "- Shared encodings: TODO state group colors, units, scales, transformations, and denominators.",
-    paste0("- Style: ", rmg_style_label(style), "."),
-    "- Output set: PDF, SVG, 700 dpi TIFF, and web PNG at the selected final size."
-  ), plan_file)
-}
-
-export_script <- file.path(skill_dir, "scripts", "export_publication_figures.R")
-status <- system2("Rscript", c(export_script, rds_file, figures_dir, figure_name, "9", "5", "700", project_dir))
-if (!identical(status, 0L)) {
-  stop("Figure export failed.", call. = FALSE)
-}
-
-qa_script <- file.path(skill_dir, "scripts", "validate_figure_readability.R")
-qa_status <- system2("Rscript", c(qa_script, rds_file, figures_dir, figure_name, "9", "5", project_dir))
-if (!identical(qa_status, 0L)) {
-  stop("Figure readability QA failed.", call. = FALSE)
-}
-
-writeLines(c(
-  "# Multi-panel Figure Rationale",
-  "",
-  paste0("- Layout: ", layout),
-  paste0("- Style: ", rmg_style_label(style)),
-  "- Figure plan: see output/figure_plan.md.",
-  "- Panel roles: replace scaffold text with task-specific A/B/C panel descriptions.",
-  "- Shared encodings: keep group colors, units, scales, transformations, and denominators consistent across panels.",
-  "- Limitations: replace scaffold text with data-quality, model, or interpretation limits."
-), file.path(output_dir, "figure_rationale.md"))
-
-writeLines(capture.output(sessionInfo()), file.path(output_dir, "session_info.txt"))
+source(file.path(skill_dir, "scripts", "export_publication_figures.R"))
+export_publication_figures(fig, figures_dir, figure_name, 9, 5, 700, project_dir, skill_dir)

@@ -14,77 +14,101 @@ Use this style when the user asks for `jama`, JAMA, JAMA Network, Journal of the
 - Prefer 2D statistical graphics. Do not use 3D bars, shadows, glossy effects, or infographic decoration for manuscript figures.
 - Axis titles should be bold relative to tick labels.
 
-## Typography and Numeric Text
-
-- Use Arial or another clean sans-serif font for figure-internal labels, axes, legends, table columns, and annotations unless the user specifies a journal-supplied font requirement.
-- Use ordinary decimal points.
-- Use en dashes in confidence-interval ranges.
-- Format P values compactly and consistently, for example `P<0.001` or `P=0.005`. Avoid excess trailing zeros.
-- Show confidence intervals, denominators, model adjustment, and statistical test names in labels, legends, or the figure rationale when they affect interpretation.
-- Keep dense table-like figure text readable at final size; reduce columns before allowing unreadably small text.
-
 ## Palette
 
-Use the JAMA palette from `ggsci::pal_jama()` through `rmg_palette(n, "jama")`.
+> The categorical palettes below use the exact colors defined by `ggsci`.  
 
-Recommended role mapping:
+```r
+library(ggsci)
+library(scales)
 
-```text
-Primary clinical group: first JAMA palette colour
-Secondary comparator: second JAMA palette colour
-Additional groups: subsequent JAMA palette colours in stable order
-Reference/control/context: gray or black
-Risk/harm/highlight: use a red or warm colour only when direction is explicit
+# Shared neutral roles
+neutral <- c(
+  text       = "#1A1A1A",
+  axis       = "#222222",
+  border     = "#555555",
+  reference  = "#7F7F7F",
+  background = "#FFFFFF",
+  muted      = "#B3B3B3",
+  missing    = "#D9D9D9"
+)
+
+# Shared transparency roles
+alpha_roles <- c(
+  raw_points      = 0.55,
+  confidence_band = 0.20,
+  background      = 0.28,
+  highlight       = 1.00
+)
+
+# Derive ordered palettes from one ggsci anchor color
+derive_sequential <- function(high, n = 5, low = "#FFFFFF") {
+  grDevices::colorRampPalette(c(low, high))(n)
+}
+
+# Derive a midpoint-centered palette from two ggsci anchor colors
+derive_diverging <- function(low, high, n = 5, mid = "#F7F7F7") {
+  grDevices::colorRampPalette(c(low, mid, high))(n)
+}
 ```
 
-For filled bars, boxes, and areas, use moderate alpha and dark outlines. For lines and points, use saturated palette colours with consistent line widths. Check grayscale legibility when colour encodes a primary comparison.
+```r
+# Exact ggsci palette:
+# ggsci::pal_jama("default")(7)
+jama_base <- c(
+  "#374E55", "#DF8F44", "#00A1D5", "#B24745",
+  "#79AF97", "#6A6599", "#80796B"
+)
 
-## Multi-Panel Rules
+jama <- list(
+  categorical = jama_base,
 
-- A JAMA-style multi-panel figure should read as a tightly edited statistical argument, not a collage.
-- Start with the primary clinical result, then add supporting distribution, subgroup, or sensitivity panels.
-- Keep shared axes, scales, units, denominators, and encodings consistent across panels.
-- Attach dependent elements such as risk tables, legends, colour bars, and model summary text to their parent panel; do not give them separate panel labels unless they are scientific panels.
-- Use uppercase panel labels and concise panel titles.
-- Avoid overloading a figure with too many subgroup panels; move exploratory panels to supplement-style outputs when needed.
+  categorical_2 = jama_base[c(1, 2)],
+  categorical_3 = jama_base[c(1, 2, 3)],
+  categorical_4 = jama_base[c(1, 2, 3, 4)],
+  categorical_5_8 = jama_base,
+  categorical_extended = jama_base,
 
-## JAMA Forest Plot Rules
+  # StatsVisual derived from JAMA ggsci colors
+  sequential_blue   = derive_sequential(jama_base[3]),
+  sequential_orange = derive_sequential(jama_base[2]),
+  sequential_green  = derive_sequential(jama_base[5]),
 
-- Use a forest plot only when each row has an effect estimate and uncertainty interval, or when these are computed from a declared model.
-- Prefer an integrated table-and-estimate display when counts, estimates, CIs, P values, or interaction P values are shown together.
-- Choose columns from the analysis: subgroup/level, event count or denominator, effect estimate with CI, P value, and P for interaction are optional fields, not fixed template columns.
-- Align table text, CI lines, markers, null-effect reference line, estimate text, and P-value text on one shared row coordinate system.
-- Use a white table body, aligned text columns, restrained black or palette-colour CI marks, and a clear null-effect reference line.
-- Keep forest-plot column headers the same font size as the body category labels; use bold weight for headers if needed.
-- Use whitespace, indentation, and at most subtle row spacing or very light bands for dense subgroup displays. Avoid boxed grids and heavy table-wide rules.
-- Reject JAMA forest plots with unclear effect-measure labels, missing CI definitions, detached table/forest alignment, unreadable dense text, or visually overemphasized P values.
-- For example,the plot should be arranged as follows:
-| **Subgroup / level** | **Treatment** | **Comparator** | **HR (95% CI)** | **HR (95% CI)** | **P interaction** |
-|---|---:|---:|:---:|---:|---:|
-| **Age** |  |  |  |  | 0·48 |
-| &nbsp;&nbsp;<65 years | 86/742 | 112/736 | ───■──── | 0·76 (0·58–0·99) |  |
-| &nbsp;&nbsp;≥65 years | 74/658 | 89/662 | ─────■── | 0·84 (0·62–1·13) |  |
-| **Sex** |  |  |  |  | 0·71 |
-| &nbsp;&nbsp;Male | 96/812 | 121/806 | ───■──── | 0·79 (0·61–1·02) |  |
-| &nbsp;&nbsp;Female | 64/588 | 80/592 | ─────■── | 0·81 (0·58–1·12) |  |
-|  |  |  | └──0·5──1·0──2·0──┘ |  |  |
+  diverging_blue_red = derive_diverging(
+    low  = jama_base[3],
+    high = jama_base[4]
+  ),
+
+  diverging_green_purple = derive_diverging(
+    low  = jama_base[5],
+    high = jama_base[6]
+  ),
+
+  accent = c(
+    primary   = jama_base[1],
+    secondary = jama_base[2]
+  ),
+
+  neutral = neutral,
+  alpha = alpha_roles
+)
+```
+
+Direct `ggsci` scales:
+
+```r
+p + ggsci::scale_color_jama()
+p + ggsci::scale_fill_jama()
+```
+
+
 
 ## R Implementation
 
 - Source `assets/styles/theme_registry.R` through `assets/theme_medical_graphics.R`.
-- Use `rmg_theme("jama", base_size = 10)` for ordinary JAMA-style manuscript panels.
+- Use `rmg_theme("jama", base_size = 11)` for ordinary JAMA-style manuscript panels. The theme is identical to `general`; only the palette differs.
 - Use `rmg_palette(n, "jama")` for discrete groups.
-- Use `rmg_font_family("jama")` for English-only annotation layers such as `geom_text()`, `geom_label()`, and `ggrepel`; for Chinese/CJK labels, pass an explicit CJK-capable font.
+- Use `rmg_font_family("jama")` for annotation layers such as `geom_text()`, `geom_label()`, and `ggrepel`; it returns the system default font. For Chinese/CJK labels, pass an explicit CJK-capable font.
 - Use `rmg_format_ci()` and `rmg_format_p()` for visible CI and P-value text.
 - Prefer `svglite` for SVG, `cairo_pdf` for PDF, and `ragg` for TIFF/PNG.
 - Keep SVG/PDF text editable wherever feasible.
-
-## QA
-
-- Check that every plotted estimate has clear scale, unit, and uncertainty definition when applicable.
-- Check that P values, CIs, denominators, model adjustment, and subgroup definitions are visible or documented in the rationale.
-- Check that forest plots use one shared row coordinate system and clearly label the effect measure, CI definition, and null-effect value.
-- Check that panel labels are uppercase, bold, and consistently placed.
-- Check that dense tables remain readable and are not reduced below final-size readability.
-- Check that colour remains interpretable in grayscale and that controls/reference groups are not visually overemphasized.
-- Check that SVG/PDF text remains editable wherever feasible.

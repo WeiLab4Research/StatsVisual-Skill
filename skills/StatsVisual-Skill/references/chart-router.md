@@ -4,7 +4,7 @@ Use this guide for the first turn after the assistant receives or locates a data
 
 ## First-Turn Gate
 
-The first data-handling response must stop at data profile and recommendation. The first turn may create a project directory, copy the dataset into it, inspect the data, and write `output/data_profile.md`. It must not write plotting code, copy plotting templates, install plotting packages, build plot objects, export figures, validate figures, or choose a single/multi-panel figure on the user's behalf.
+The first data-handling response must stop at data profile and recommendation. The first turn may create a project directory, copy the dataset into it, and inspect the data. It must not write plotting code, copy plotting templates, install plotting packages, build plot objects, export figures, validate figures, or choose a single/multi-panel figure on the user's behalf.
 
 Proceed to plotting only after a follow-up user message selects a concrete chart option from the recommendation, such as the recommended single figure, a named alternative, or the optional multi-panel figure. Also ask the user to choose a style: `general` by default, `nature`, `lancet`, `nejm`, `jama`, or `bmj`. If the user selects a chart but omits style, proceed with `general` and state that default. If the original request names a specific chart type, inspect first, confirm suitability, present the recommendation, and ask for confirmation before coding.
 

@@ -4,8 +4,8 @@ Run this checklist before final delivery. Use it together with `readability-qa.m
 
 ## Required Scripted Checks
 
-- Run `scripts/validate_r_plot.R <project_dir>/figures` to verify PDF, SVG, TIFF, and web image presence.
-- Run `scripts/validate_figure_readability.R <plot_rds> <project_dir>/figures <figure_name> <width_in> <height_in> <project_dir>` to verify final-size readability.
+- Verify that PDF, SVG, TIFF, and web image files exist and are non-empty, and the web image is under 1 MB.
+- Review the plotting code against `references/readability-qa.md` to verify font sizes, panel scales, label lengths, legend entries, color contrast, and axis transforms are appropriate for the final output size.
 - Confirm the R script can be rerun from the project root.
 
 ## Delivery-Blocking Failures

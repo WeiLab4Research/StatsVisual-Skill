@@ -118,16 +118,24 @@ Boxenplots, violin plots, beeswarm plots, pirate plots, and raincloud plots exte
 
 - Extends the box plot with progressively deeper letter-value quantiles, providing more information about both tails in large samples.
 - It is more stable than displaying numerous isolated outlier points when group sizes are large, but deep quantiles remain unreliable in small groups.
+- Letter-value boxes must be computed from individual-level continuous observations within each plotted group; do not compute them from pre-aggregated summaries.
+- Choose `k` according to group sample size and the intended tail depth. For general use, let `lvplot::stat_lv()` determine `k` from `conf`/`percent`, or document an explicit `k`. Large fixed values such as `k = 9` should be used only when every group has enough observations for stable tail quantiles and the figure needs tail detail.
+- If outliers are shown separately, define the outlier rule before calculating letter values, usually Tukey `1.5 * IQR` fences within each group. Exclude those flagged observations from the letter-value quantile calculation and plot them as separate points using the same y-axis scale. State this rule in the figure explanation or caption.
+- If outliers are not separated, the outer letter-value bands include tail observations by design; do not also add ordinary boxplot outlier points, because that double-counts the tails visually.
 
 **Visual Features**
 
-- Nested boxes become narrower toward the tails, forming a layered distribution profile around the median.
-- Fill intensity can distinguish successive quantile levels beyond the conventional quartiles.
+- Draw letter-value bands as non-overlapping quantile intervals, not as full nested rectangles that cover the same vertical range repeatedly.
+- For `k` levels, the display contains lower-tail bands, upper-tail bands, and a central median reference from the letter-value algorithm; it should not include ordinary Tukey whiskers unless explicitly labeled as an added layer.
+- Band widths should narrow toward the tails. When manually reproducing `geom_lv()`, draw narrower tail bands first and wider central bands later, or otherwise ensure borders are not hidden in a way that reverses the visual hierarchy.
+- Fill intensity may distinguish successive letter-value levels, but group color identity should remain stable across all bands and any separated outlier points.
 
 **Code Features**
 
-- Map group to `x` and the continuous outcome to `y`, then draw with `lvplot::geom_lv()`.
-- Map `after_stat(LV)` to `fill`; use `k` to control the number of letter-value layers supported by the sample size.
+- Map group to `x` and the continuous outcome to `y`, then draw with `lvplot::geom_lv()` when it is compatible with the active `ggplot2` version.
+- Map `after_stat(LV)` to `fill`; use `k`, `conf`, or `percent` deliberately to control the number of letter-value layers supported by the sample size.
+- Do not layer `geom_boxplot()` whiskers, `stat_boxplot()` caps, or separate median crossbars on top of `geom_lv()` unless the figure is intentionally a composite and the added summaries are explained.
+- If manually implementing a letter-value plot, compute quantiles with the same depth logic as `lvplot` and render the upper and lower letter-value intervals as separate non-overlapping rectangles. Validate that the number of visible bands matches the selected `k` rule and that separated outliers are not included in the quantile input.
 
 - code reference:source script `\StatsVisual-Skill\assets\templates\box\Letter-value Box Plot.R`
 

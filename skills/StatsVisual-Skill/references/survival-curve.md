@@ -155,6 +155,13 @@ Survival graphics may also display cumulative hazard, numbers at risk, model-adj
 - Fit with `survfit2()` when using the `ggsurvfit` workflow, then add the table with `add_risktable()`.
 - Use `risktable_stats = "{n.risk} ({n.censor})"` only when the parenthetical value is clearly labeled as censoring.
 - Align time breaks, group order, colors, and units exactly with the main panel.
+- For publication-style manual risk tables, build the KM panel and risk table as separate `ggplot` objects, then combine them with `cowplot::plot_grid(main_plot, risk_plot, ncol = 1, align = "v", axis = "lr")`.
+- Use identical `xlim`, `time_breaks`, and `expand = expansion(mult = c(0, 0))` in both panels. Risk-table numbers must be placed at the true time points so each column sits directly under the corresponding KM-axis tick.
+- Do not widen the risk-table x scale to make room for labels. Keep numeric columns controlled by the same x scale as the KM panel; create label space only with `coord_cartesian(xlim = c(x_min, x_max), clip = "off")` and a sufficient left `plot.margin`.
+- Draw `No. at Risk` and all group names with one shared off-panel x anchor and `hjust = 0` so their left edges are identical. Choose the anchor far enough left that the full label column stays outside the y-axis line and does not overlap the 0-time risk counts.
+- Keep risk-table numeric text and group-name text the same size as the KM tick labels. Keep `No. at Risk` the same size and weight as the KM axis titles unless a target journal example clearly shows otherwise.
+- Use compact but non-overlapping row spacing. The risk table should read as one attached table block; increase table height only when group count or row text requires it.
+- Direct curve labels should sit near clear curve-adjacent whitespace, with consistent offset from their corresponding curves. Use regular-weight labels unless the journal style requires bold .
 
 - code reference: source script `\StatsVisual-Skill\assets\templates\survival_curve\Survival Plot with Risk Table.R`
 
@@ -269,3 +276,5 @@ Survival graphics may also display cumulative hazard, numbers at risk, model-adj
 - Prespecify the group-comparison method and report an effect estimate with confidence interval when appropriate.
 - For Cox models, check proportional hazards, influential observations, functional form, and missing-data handling.
 - Ensure every annotated `P` value, hazard ratio, confidence interval, event rate, and risk-table count matches the fitted analysis.
+- For manually composed KM curves with risk tables, verify that the risk-table numbers are vertically aligned under the KM-axis ticks at every displayed time point. If numbers are shifted, remove risk-table scale expansion and restore identical `xlim`, breaks, and `expand = 0` in both panels.
+- Verify that `No. at Risk` and all group labels share one strict left edge while the whole label column remains outside the y-axis line. Do not use different manual `hjust` values for different labels; use one shared off-panel x coordinate with `hjust = 0` and enough left margin.

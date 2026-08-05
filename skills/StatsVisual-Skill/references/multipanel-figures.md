@@ -2,10 +2,6 @@
 
 Use this reference when one publication figure must combine multiple panels into a coherent clinical or statistical result. A multi-panel figure is not a collage and not a default `patchwork` grid. It is a planned figure: the result hierarchy, panel geometry, legends, tables, whitespace, and export format must be specified before plotting.
 
-This is an extended publication workflow built on the manuscript-derived plotting style; it is not a separate RawText chapter. Keep the book-style foundation first: `theme_pubr`/`theme_egraphics`, `ggsci`-style restrained palettes, medical examples, clear axes, concise legends, and explicit statistical interpretation.
-
-For high-stakes manuscript figures, the target style is a restrained research figure: asymmetric when needed, editable, and built around a clear result hierarchy rather than equal-sized chart tiles.
-
 ## First Define The Figure Plan
 
 Before writing code, define:
@@ -394,7 +390,7 @@ For publication figures:
 - Prefer a custom function that assembles named panel groups with explicit relative widths/heights.
 - For survival panels, create a parent panel group containing the curve and risk table before adding tags.
 - Extract or build legends as independent grobs and place them in a reserved legend strip.
-- Save the combined object as an RDS, then export from that same object.
+- Export PDF, SVG, 700 dpi TIFF, and web PNG from the same final combined figure object.
 - Keep SVG text editable through `svglite`; do not rasterize text unless unavoidable.
 
 Key helpers in the template:
@@ -415,7 +411,7 @@ If the requested figure is a main manuscript figure, do not use the default bala
 - Use final journal dimensions when exporting; do not design at one size and scale later.
 - Keep web PNG under 1 MB when feasible, but never let the web preview drive the print layout.
 - For complex figures, optionally export separate panel source files in addition to the combined figure.
-- Summarize the figure plan, layout plan, panel roles, model/statistical definitions, limitations, and output paths in the final response or project notes when needed; do not require an `output/figure_rationale.md` file.
+- Summarize the figure plan, layout plan, panel roles, model/statistical definitions, limitations, and output paths in the final response or project notes when needed; do not require a `figure_rationale.md` file.
 
 ## QA Checklist
 

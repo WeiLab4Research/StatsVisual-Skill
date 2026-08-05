@@ -222,7 +222,7 @@ cat("Bioconductor packages ready:", paste(bioc_pkgs, collapse = ", "), "\n")
   Write-Host "Success. Log file:"
   Write-Host "  $LogFile"
   Write-Host "Verify with:"
-  Write-Host "  Rscript skills/r-medical-graphics/scripts/check_dependencies.R"
+  Write-Host "  Rscript skills/StatsVisual-Skill/scripts/check_dependencies.R"
 }
 catch {
   Write-Step "ERROR: $($_.Exception.Message)"

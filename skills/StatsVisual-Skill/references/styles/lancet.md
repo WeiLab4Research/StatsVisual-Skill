@@ -15,84 +15,105 @@ Use this style when the user asks for `lancet`, The Lancet, 柳叶刀, Lancet-fa
 - Prefer 2D graphics. Do not use 3D graphs for ordinary statistical data.
 - Axis titles should be bold relative to tick labels.
 - Use midline decimal points in Lancet numeric text, including axis labels, direct labels, CI text, P values, and table-like figure text. Use `rmg_format_number()`, `rmg_format_ci()`, `rmg_format_p()`, and `rmg_label_number("lancet")` instead of raw `sprintf()` or `scales::label_number()` for visible numbers.
-- Use Arial/Helvetica-like sans-serif typography for figure-internal labels, axes, legends, forest-plot columns, and table-like annotations unless the user explicitly requests another font. Do not use Times New Roman as the default in-figure Lancet artwork font.
+- Use a clean sans-serif font for figure-internal labels, axes, legends, forest-plot columns, and table-like annotations. The style does not force a specific font; the system default is used unless the user explicitly requests another font.
 - Treat the official 10 pt Times New Roman guidance as manuscript submission guidance for main figure headings, legends, and supplementary material, not as the default for all text inside generated figure artwork.
 
 ## Palette
 
-Use stable semantic group colours when the data map naturally to clinical or HDI-like categories:
+> The categorical palettes below use the exact colors defined by `ggsci`.  
 
-```text
-Low #2C5AA0
-Medium #D94632
-High #2F6F3E
-Very high #58A6C9
-NA #B9A5C8
+```r
+library(ggsci)
+library(scales)
+
+# Shared neutral roles
+neutral <- c(
+  text       = "#1A1A1A",
+  axis       = "#222222",
+  border     = "#555555",
+  reference  = "#7F7F7F",
+  background = "#FFFFFF",
+  muted      = "#B3B3B3",
+  missing    = "#D9D9D9"
+)
+
+# Shared transparency roles
+alpha_roles <- c(
+  raw_points      = 0.55,
+  confidence_band = 0.20,
+  background      = 0.28,
+  highlight       = 1.00
+)
+
+# Derive ordered palettes from one ggsci anchor color
+derive_sequential <- function(high, n = 5, low = "#FFFFFF") {
+  grDevices::colorRampPalette(c(low, high))(n)
+}
+
+# Derive a midpoint-centered palette from two ggsci anchor colors
+derive_diverging <- function(low, high, n = 5, mid = "#F7F7F7") {
+  grDevices::colorRampPalette(c(low, mid, high))(n)
+}
 ```
 
-Recommended order for general discrete groups:
+```r
+# Exact ggsci palette:
+# ggsci::pal_lancet("lanonc")(9)
+lancet_base <- c(
+  "#00468B", "#ED0000", "#42B540", "#0099B4", "#925E9F",
+  "#FDAF91", "#AD002A", "#ADB6B6", "#1B1919"
+)
 
-```text
-#2C5AA0, #D94632, #2F6F3E, #58A6C9, #B9A5C8, #E8B69F, #C9DDB2, #C7BDD8, #D2A8A3, #4B8785, #E8A942, #9D9D9D, #F0D94E
+lancet <- list(
+  categorical = lancet_base,
+
+  categorical_2 = lancet_base[c(1, 2)],
+  categorical_3 = lancet_base[c(1, 2, 3)],
+  categorical_4 = lancet_base[c(1, 2, 3, 4)],
+  categorical_5_8 = lancet_base[1:8],
+  categorical_extended = lancet_base,
+
+  # StatsVisual derived from Lancet ggsci colors
+  sequential_blue = derive_sequential(lancet_base[1]),
+  sequential_red  = derive_sequential(lancet_base[2]),
+  sequential_teal = derive_sequential(lancet_base[4]),
+
+  diverging_blue_red = derive_diverging(
+    low  = lancet_base[1],
+    high = lancet_base[2]
+  ),
+
+  diverging_green_purple = derive_diverging(
+    low  = lancet_base[3],
+    high = lancet_base[5]
+  ),
+
+  accent = c(
+    primary   = lancet_base[1],
+    secondary = lancet_base[2]
+  ),
+
+  neutral = neutral,
+  alpha = alpha_roles
+)
 ```
 
-For filled bars, boxes, and areas, prefer the lighter colours in the sequence and use dark outlines. For lines and points, prefer the stronger blue, red, green, and cyan colours.
+Direct `ggsci` scales:
 
-## Multi-Panel Rules
+```r
+p + ggsci::scale_color_lancet("lanonc")
+p + ggsci::scale_fill_lancet("lanonc")
+```
 
-- A multi-panel Lancet figure must read as a clinical evidence display, not as a collage.
-- Attach dependent elements to their parent panel: risk tables, event-count tables, HR text columns, absolute-risk-difference columns, legends, and colour bars should not receive separate panel labels unless they are scientific panels.
-- Align table text, event counts, forest estimates, HR text, and absolute-risk-difference text on shared rows where possible.
-- Use shared axes and consistent ticks for serial panels with the same measurement.
-- Use uppercase panel labels. Keep labels large enough to remain readable at final journal size.
 
-## Lancet Forest Plot Rules
-
-- Use a forest plot only when each row has an effect estimate and uncertainty interval, or when they can be computed from a declared model.
-- For Lancet-style forest plots, the forest axis must be embedded as a table column, not rendered as a detached side-by-side plot, unless the user explicitly requests a separated layout.
-- Choose columns from the analysis: subgroup/level labels, event or sample-size columns, study weights, HR/OR/RR/risk difference/mean difference/SMD with CI, P value, and P for interaction are optional fields, not required template columns.
-- Arrange the table so that the effect-estimate/CI section contains the forest axis and the numeric interval value. The forest axis should sit to the left, and the numeric effect estimate with CI should sit immediately to its right.
-- The forest-axis ticks and axis labels must stay within the forest-axis column only. They should not extend horizontally across subgroup labels, event/sample-size columns, P-value columns, or other table-header categories.
-- Place P value or P for interaction columns at the far right when included.
-- Build table text, CI lines, markers, reference line, estimate text, and P-value text on one shared row coordinate system.
-- Keep the table body pure white by default. Do not use alternating row bands, shaded subgroup backgrounds, boxed grids, decorative separator rules, or background grid lines.
-- Use square markers as the default point-estimate symbol in Lancet-style forest plots
-- Keep forest-plot column headers the same font size as the body category labels; use bold weight for headers if needed.
-- Column headers must be present and clearly aligned with their columns. The horizontal rule below the column headers must not be omitted.
-- Use one table-structure horizontal rule by default: the rule below the column headers. Short underlines are acceptable for grouped headers such as treatment/comparator subcolumns.
-- Express subgroup hierarchy with bold labels, indentation, vertical whitespace, and row alignment rather than shading.
-- Use a black-and-white style by default: black CI lines, black reference line, and black or white square markers with black outlines. Use colour only when it has explicit scientific meaning.
-- Keep the forest axis visually minimal: show the reference line and necessary tick labels only. Do not add panel background lines, dense grid lines, grey plotting backgrounds, or full-table grid lines.
-- For example,the plot should be arranged as follows:
-| **Subgroup / level** | **Treatment** | **Comparator** | **HR (95% CI)** | **HR (95% CI)** | **P interaction** |
-|---|---:|---:|:---:|---:|---:|
-| **Age** |  |  |  |  | 0·48 |
-| &nbsp;&nbsp;<65 years | 86/742 | 112/736 | ───■──── | 0·76 (0·58–0·99) |  |
-| &nbsp;&nbsp;≥65 years | 74/658 | 89/662 | ─────■── | 0·84 (0·62–1·13) |  |
-| **Sex** |  |  |  |  | 0·71 |
-| &nbsp;&nbsp;Male | 96/812 | 121/806 | ───■──── | 0·79 (0·61–1·02) |  |
-| &nbsp;&nbsp;Female | 64/588 | 80/592 | ─────■── | 0·81 (0·58–1·12) |  |
-|  |  |  | └──0·5──1·0──2·0──┘ |  |  |
 
 ## R Implementation
 
 - Source `assets/styles/theme_registry.R` through `assets/theme_medical_graphics.R`.
-- Use `rmg_theme("lancet", base_size = 10)` for ordinary manuscript panels; it defaults to Arial for the actual figure artwork.
+- Use `rmg_theme("lancet", base_size = 11)` for ordinary manuscript panels. The theme is identical to `general`; only the palette differs.
 - Use `rmg_palette(n, "lancet")` for discrete groups.
-- Use `rmg_font_family("lancet")` for English-only Lancet annotation layers such as `geom_text()`, `geom_label()`, and `ggrepel`; this returns Arial for compact Lancet-like in-figure text. Use `rmg_font_family("lancet", role = "submission")` only for manuscript heading/legend or supplementary text requirements. For Chinese/CJK labels, pass an explicit CJK-capable font instead.
+- Use `rmg_font_family("lancet")` for annotation layers such as `geom_text()`, `geom_label()`, and `ggrepel`; it returns the system default font. Use `rmg_font_family("lancet", role = "submission")` only for manuscript heading/legend or supplementary text requirements. For Chinese/CJK labels, pass an explicit CJK-capable font instead.
 - For dense forest plots and table-like panels, finished in-figure text around 7-8 pt is acceptable when readability QA passes; keep bold headers compact and numeric text regular.
 - Prefer `svglite` for SVG, `cairo_pdf` for PDF, and `ragg` for TIFF/PNG.
 - Keep SVG/PDF text editable wherever feasible. Do not deliberately outline or rasterize text.
 - Use final journal dimensions before export instead of scaling after export.
-
-## QA
-
-- Check that key elements are legible and not too small at final size.
-- Check that Lancet in-figure text uses Arial/Helvetica-like sans-serif typography by default, while any Times New Roman use is limited to explicit manuscript/submission text needs.
-- Check that serial panels use consistent scales and ticks when comparing the same measure.
-- Reject Lancet forest plots where the forest axis is outside the table as a separate side-by-side panel. The forest axis must be embedded as a table column unless the user explicitly requested separation.
-- Reject Lancet forest plots with alternating grey/white row bands, shaded subgroup backgrounds, or extra table separator rules. Each panel should have a white body and only the column-header horizontal rule unless the user explicitly requested more structure.
-- Check that forest plots, survival curves, trial profiles, and table-like figure elements keep editable text in SVG/PDF where feasible.
-- Check that line types are not overloaded; prefer solid colour contrast unless a dashed comparator/reference has explicit meaning.
-- Check that colours remain interpretable and that colour in forest/trial-profile displays has stated scientific meaning.
-- Check that bitmap or photographic outputs meet or exceed 300 dpi and 107 mm width; final print TIFF should remain 700 dpi or higher unless the user requests otherwise.

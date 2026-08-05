@@ -20,7 +20,34 @@ suppressPackageStartupMessages({
   library(grid)
 })
 
-source("E:/桌面/skill/R-plot-skill/skills/r-medical-graphics/assets/styles/theme_registry.R")
+find_skill_dir <- function() {
+  candidates <- c(
+    Sys.getenv("R_MEDICAL_GRAPHICS_SKILL", unset = NA_character_),
+    {
+      skills_dir <- file.path(getwd(), "skills")
+      if (dir.exists(skills_dir)) {
+        subdirs <- list.dirs(skills_dir, full.names = TRUE, recursive = FALSE)
+        subdirs[file.exists(file.path(subdirs, "SKILL.md"))]
+      }
+    },
+    {
+      skills_dir <- file.path(dirname(getwd()), "skills")
+      if (dir.exists(skills_dir)) {
+        subdirs <- list.dirs(skills_dir, full.names = TRUE, recursive = FALSE)
+        subdirs[file.exists(file.path(subdirs, "SKILL.md"))]
+      }
+    }
+  )
+  candidates <- unique(unlist(candidates))
+  candidates <- candidates[!is.na(candidates) & nzchar(candidates)]
+  for (candidate in candidates) {
+    if (file.exists(file.path(candidate, "SKILL.md"))) {
+      return(normalizePath(candidate, winslash = "/", mustWork = TRUE))
+    }
+  }
+  stop("Cannot find the skill directory. Set R_MEDICAL_GRAPHICS_SKILL to the skill directory.", call. = FALSE)
+}
+source(file.path(find_skill_dir(), "assets", "styles", "theme_registry.R"))
 
 # ---------- Format helpers (Lancet: midline decimal, en-dash) ----------
 fmt_num <- function(x, digits = 2) {
@@ -47,10 +74,8 @@ fmt_p <- function(p, threshold = 0.001) {
 # ---------- Paths ----------
 project_dir <- "E:/桌面/测试结果1/F"
 fig_dir     <- file.path(project_dir, "figures")
-out_dir     <- file.path(project_dir, "output")
 R_dir       <- file.path(project_dir, "R")
 dir.create(fig_dir, showWarnings = FALSE, recursive = TRUE)
-dir.create(out_dir, showWarnings = FALSE, recursive = TRUE)
 dir.create(R_dir,   showWarnings = FALSE, recursive = TRUE)
 
 data_path <- file.path(project_dir, "data/dt4.csv")
@@ -385,9 +410,6 @@ draw_full_figure <- function(plot_df, fig_w_in = 11.0, fig_h_in = 9.0) {
   grid.rect(gp = gpar(fill = "white", col = NA))
   popViewport()
 }
-
-# Save RDS
-saveRDS(plot_df, file.path(R_dir, "plot_df.rds"))
 
 # ---- Export figures ----
 FIG_W <- 11.0; FIG_H <- 9.0

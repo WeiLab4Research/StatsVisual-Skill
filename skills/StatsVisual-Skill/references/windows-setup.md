@@ -7,7 +7,7 @@ Use this when R package installation fails with Windows elevation errors, blocke
 Open PowerShell manually, `cd` to the repository root, then run this in a normal user PowerShell, not an elevated administrator shell:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File skills/r-medical-graphics/scripts/bootstrap_windows_dependencies.ps1
+powershell -ExecutionPolicy Bypass -File skills/StatsVisual-Skill/scripts/bootstrap_windows_dependencies.ps1
 ```
 
 Do not rely on right-click "Run with PowerShell" because the temporary window can close before you can read errors.
@@ -31,13 +31,13 @@ It also updates available `.Renviron` files with `R_MEDICAL_GRAPHICS_LIB` so fut
 Verify installation with:
 
 ```powershell
-Rscript skills/r-medical-graphics/scripts/check_dependencies.R
+Rscript skills/StatsVisual-Skill/scripts/check_dependencies.R
 ```
 
 Optional Bioconductor heatmap packages can be checked with:
 
 ```powershell
-Rscript skills/r-medical-graphics/scripts/check_dependencies.R --include-optional
+Rscript skills/StatsVisual-Skill/scripts/check_dependencies.R --include-optional
 ```
 
 ## Use A Different CRAN Mirror
@@ -45,25 +45,25 @@ Rscript skills/r-medical-graphics/scripts/check_dependencies.R --include-optiona
 If `cloud.r-project.org` is slow or blocked, choose a reachable mirror. The bootstrap tries several mirrors automatically, but you can still provide one:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File skills/r-medical-graphics/scripts/bootstrap_windows_dependencies.ps1 -CranRepo "https://cran.rstudio.com"
+powershell -ExecutionPolicy Bypass -File skills/StatsVisual-Skill/scripts/bootstrap_windows_dependencies.ps1 -CranRepo "https://cran.rstudio.com"
 ```
 
 For users in mainland China, try a local mirror if available in their environment, for example:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File skills/r-medical-graphics/scripts/bootstrap_windows_dependencies.ps1 -CranRepo "https://mirrors.tuna.tsinghua.edu.cn/CRAN/"
+powershell -ExecutionPolicy Bypass -File skills/StatsVisual-Skill/scripts/bootstrap_windows_dependencies.ps1 -CranRepo "https://mirrors.tuna.tsinghua.edu.cn/CRAN/"
 ```
 
 Or pass an explicit ordered mirror list:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File skills/r-medical-graphics/scripts/bootstrap_windows_dependencies.ps1 -CranRepos "https://mirrors.ustc.edu.cn/CRAN/","https://mirrors.tuna.tsinghua.edu.cn/CRAN/","https://cloud.r-project.org"
+powershell -ExecutionPolicy Bypass -File skills/StatsVisual-Skill/scripts/bootstrap_windows_dependencies.ps1 -CranRepos "https://mirrors.ustc.edu.cn/CRAN/","https://mirrors.tuna.tsinghua.edu.cn/CRAN/","https://cloud.r-project.org"
 ```
 
 If nested PowerShell treats the mirror list as one comma-separated string, this is also accepted:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File skills/r-medical-graphics/scripts/bootstrap_windows_dependencies.ps1 -CranRepos "https://mirrors.ustc.edu.cn/CRAN/,https://mirrors.tuna.tsinghua.edu.cn/CRAN/,https://cloud.r-project.org"
+powershell -ExecutionPolicy Bypass -File skills/StatsVisual-Skill/scripts/bootstrap_windows_dependencies.ps1 -CranRepos "https://mirrors.ustc.edu.cn/CRAN/,https://mirrors.tuna.tsinghua.edu.cn/CRAN/,https://cloud.r-project.org"
 ```
 
 ## Alternate Library Locations
@@ -71,13 +71,13 @@ powershell -ExecutionPolicy Bypass -File skills/r-medical-graphics/scripts/boots
 If you want each run to carry its own packages, use a run-specific project library:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File skills/r-medical-graphics/scripts/bootstrap_windows_dependencies.ps1 -Library "runs/mr_chd_trial/R-library"
+powershell -ExecutionPolicy Bypass -File skills/StatsVisual-Skill/scripts/bootstrap_windows_dependencies.ps1 -Library "runs/mr_chd_trial/R-library"
 ```
 
 The default repository-local library is equivalent to:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File skills/r-medical-graphics/scripts/bootstrap_windows_dependencies.ps1 -Library ".r-medical-graphics-library"
+powershell -ExecutionPolicy Bypass -File skills/StatsVisual-Skill/scripts/bootstrap_windows_dependencies.ps1 -Library ".r-medical-graphics-library"
 ```
 
 If a shell cannot read `.Renviron`, set the library explicitly before running R:

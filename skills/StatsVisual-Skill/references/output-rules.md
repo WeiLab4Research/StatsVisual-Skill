@@ -4,10 +4,10 @@
 
 Default output locations inside the project:
 
-- Figures: `skills/r-medical-graphics/output/figures/` or project-local`output/figures/`
-- Scripts: `skills/r-medical-graphics/output/script/` or project-local `output/script/`
+- Figures: `figures/`
+- Scripts: `R/`
 
-When generating a user-specific figure, prefer project-local `output/figures/` and `output/script/` unless the user asks to write inside the skill folder.
+When generating a user-specific figure, prefer project-local `figures/` and `R/` unless the user asks to write inside the skill folder.
 
 ## File Naming
 
@@ -29,7 +29,7 @@ Use:
 save_medical_figure(
   plot = p,
   filename = "fig01_grouped_bar",
-  output_dir = "output/figures",
+  output_dir = "figures",
   width = 6,
   height = 4.2
 )
@@ -114,7 +114,7 @@ Some objects are not ordinary ggplot objects:
 
 ## Figure Explanation
 
-After figures are exported and validated, write `output/figure_explanation.md` with the following content. 该文件记录所生成图形的统计和可视化原理，用于可复现性和同行评审。
+After figures are exported and validated, present the figure explanation directly in the conversation with the following content. 该内容记录所生成图形的统计和可视化原理，用于可复现性和同行评审。
 
 ### 内容模板
 
@@ -144,4 +144,4 @@ After figures are exported and validated, write `output/figure_explanation.md` w
 - 注意事项 / 局限性
 ```
 
-说明内容必须写入对话回复并保存到 `output/figure_explanation.md`。
+说明内容必须写入对话回复。

@@ -12,7 +12,7 @@ if (normalizePath(project_dir, winslash = "/", mustWork = FALSE) == normalizePat
 
 project_dir <- normalizePath(project_dir, winslash = "/", mustWork = FALSE)
 
-dirs <- file.path(project_dir, c("data", "R", "output", "figures"))
+dirs <- file.path(project_dir, c("data", "R", "figures"))
 created <- vapply(dirs, function(path) {
   dir.create(path, showWarnings = FALSE, recursive = TRUE) || dir.exists(path)
 }, logical(1))

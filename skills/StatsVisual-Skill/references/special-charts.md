@@ -1,17 +1,5 @@
 # Special Medical Charts
 
-Use this reference when the selected figure is an advanced or less common chart family. These charts can be effective in manuscripts, reviews, supplements, and high-impact medical journals, but they should be chosen only when the data structure makes the special geometry easier to read than a plain bar, dot, line, heatmap, or forest plot.
-
-This reference is derived from the local special-chart manuscript notes and calibrated to the visual habits of top medical journals: restrained color, clear denominators, explicit units, readable labels, uncertainty or thresholds when scientifically relevant, and no decorative geometry that weakens quantitative reading.
-
-## General Selection Rules
-
-- Prefer conventional charts when the reader needs exact value comparison, effect-size inference, or clinical decision thresholds.
-- Use special charts when the geometry carries meaning: cyclic time, dense categories, repeated periods, multi-axis profiles, 2 by 2 association, genome-wide scans, or severe point overlap.
-- State sample size, denominator, time window, genome build, model, threshold, or smoothing parameter in the caption or rationale.
-- Keep palettes color-blind-aware and avoid saturated rainbow defaults unless the encoding is categorical and labels remain readable.
-- For top-journal style, include a simpler companion panel or table when the special chart is visually rich but not sufficient for precise inference.
-
 ## Quick Router
 
 | Chart | Prefer when | Avoid when | Key data structure |
@@ -903,10 +891,4 @@ rmg_model_diagnostic_bubble <- function(model,
 ```
 
 
-## QA Checklist
 
-- Confirm the special chart improves interpretation compared with a bar, dot, line, heatmap, or forest plot.
-- Confirm all encoded variables are stated in the caption/rationale, including any transformation such as `sqrt(value)`, `-log10(P)`, area scaling, normalization, or LOWESS span.
-- Check labels at final export size; radial labels that look acceptable on screen often fail in print.
-- For clinical or genomic thresholds, draw the threshold and name it in the figure rationale.
-- For exploratory charts such as stream, spiral, bubble, sunflower, and LOWESS, do not overstate inference without a model or uncertainty estimate.

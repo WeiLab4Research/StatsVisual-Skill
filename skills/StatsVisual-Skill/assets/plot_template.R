@@ -12,23 +12,34 @@ style <- if (length(args) >= 4 && nzchar(args[[4]])) args[[4]] else "general"
 
 root <- project_dir
 figures_dir <- file.path(root, "figures")
-output_dir <- file.path(root, "output")
 dir.create(figures_dir, showWarnings = FALSE, recursive = TRUE)
-dir.create(output_dir, showWarnings = FALSE, recursive = TRUE)
 
 find_skill_dir <- function() {
   candidates <- c(
     Sys.getenv("R_MEDICAL_GRAPHICS_SKILL", unset = NA_character_),
-    file.path(getwd(), "skills", "r-medical-graphics"),
-    file.path(dirname(getwd()), "skills", "r-medical-graphics")
+    {
+      skills_dir <- file.path(getwd(), "skills")
+      if (dir.exists(skills_dir)) {
+        subdirs <- list.dirs(skills_dir, full.names = TRUE, recursive = FALSE)
+        subdirs[file.exists(file.path(subdirs, "SKILL.md"))]
+      }
+    },
+    {
+      skills_dir <- file.path(dirname(getwd()), "skills")
+      if (dir.exists(skills_dir)) {
+        subdirs <- list.dirs(skills_dir, full.names = TRUE, recursive = FALSE)
+        subdirs[file.exists(file.path(subdirs, "SKILL.md"))]
+      }
+    }
   )
+  candidates <- unique(unlist(candidates))
   candidates <- candidates[!is.na(candidates) & nzchar(candidates)]
   for (candidate in candidates) {
     if (file.exists(file.path(candidate, "SKILL.md"))) {
       return(normalizePath(candidate, winslash = "/", mustWork = TRUE))
     }
   }
-  stop("Cannot find r-medical-graphics skill. Set R_MEDICAL_GRAPHICS_SKILL to the skill directory.", call. = FALSE)
+  stop("Cannot find the skill directory. Set R_MEDICAL_GRAPHICS_SKILL to the skill directory.", call. = FALSE)
 }
 
 skill_dir <- find_skill_dir()
@@ -52,17 +63,5 @@ p <- ggplot2::ggplot(data, ggplot2::aes(x = group, y = value, fill = group)) +
   ggplot2::labs(x = "Group", y = "Value", fill = "Group") +
   rmg_theme(style)
 
-rds_file <- file.path(output_dir, paste0(figure_name, ".rds"))
-saveRDS(p, rds_file)
-
-export_script <- file.path(skill_dir, "scripts", "export_publication_figures.R")
-status <- system2("Rscript", c(export_script, rds_file, figures_dir, figure_name, "7", "5", "700", root))
-if (!identical(status, 0L)) {
-  stop("Figure export failed.", call. = FALSE)
-}
-
-qa_script <- file.path(skill_dir, "scripts", "validate_figure_readability.R")
-qa_status <- system2("Rscript", c(qa_script, rds_file, figures_dir, figure_name, "7", "5", root))
-if (!identical(qa_status, 0L)) {
-  stop("Figure readability QA failed.", call. = FALSE)
-}
+source(file.path(skill_dir, "scripts", "export_publication_figures.R"))
+export_publication_figures(p, figures_dir, figure_name, 7, 5, 700, project_dir, skill_dir)

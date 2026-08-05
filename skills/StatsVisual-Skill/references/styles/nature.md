@@ -16,46 +16,93 @@ Use this style when the user asks for `nature`, Nature-family presentation, high
 
 ## Palette
 
-- Use low-saturation, color-blind-aware colors.
-- Use gray for context/reference data, blue/teal for primary groups or estimates, muted red for risk/harm/highlight, and muted green for favorable or secondary signals.
-- Avoid rainbow palettes and saturated red/green-only contrasts.
-- Keep the same semantic group color across all panels and output reruns.
+> The categorical palettes below use the exact colors defined by `ggsci`.  
 
-Recommended order for discrete groups:
+```r
+library(ggsci)
+library(scales)
 
-```text
-#3B6EA8, #5E9C76, #B45A56, #7A6FA6, #C79A43, #6D8791, #8A8A8A
+# Shared neutral roles
+neutral <- c(
+  text       = "#1A1A1A",
+  axis       = "#222222",
+  border     = "#555555",
+  reference  = "#7F7F7F",
+  background = "#FFFFFF",
+  muted      = "#B3B3B3",
+  missing    = "#D9D9D9"
+)
+
+# Shared transparency roles
+alpha_roles <- c(
+  raw_points      = 0.55,
+  confidence_band = 0.20,
+  background      = 0.28,
+  highlight       = 1.00
+)
+
+# Derive ordered palettes from one ggsci anchor color
+derive_sequential <- function(high, n = 5, low = "#FFFFFF") {
+  grDevices::colorRampPalette(c(low, high))(n)
+}
+
+# Derive a midpoint-centered palette from two ggsci anchor colors
+derive_diverging <- function(low, high, n = 5, mid = "#F7F7F7") {
+  grDevices::colorRampPalette(c(low, mid, high))(n)
+}
 ```
 
-## Multi-Panel Rules
+```r
+# Exact ggsci palette:
+# ggsci::pal_npg("nrc")(10)
+nature_base <- c(
+  "#E64B35", "#4DBBD5", "#00A087", "#3C5488", "#F39B7F",
+  "#8491B4", "#91D1C2", "#DC0000", "#7E6148", "#B09C85"
+)
 
-- Write or save a concise figure plan before coding any multi-panel Nature-style figure.
-- The plan must state the main message, primary result, supporting analyses, interpretation risk, panel roles, shared encodings, final dimensions, and export formats.
-- Do not create a multi-panel figure by placing several redundant chart types together. Each panel must answer a distinct scientific question.
-- Attach dependent elements to their parent panel: risk tables, scale bars, inset labels, legend strips, and color bars should not receive separate panel labels unless they are scientific panels.
-- Use asymmetric layouts when one result is primary. Avoid equal tiled grids unless the panels have equal evidential weight.
+nature <- list(
+  categorical = nature_base,
 
-## Forest Plot Rules
+  categorical_2 = nature_base[c(1, 2)],
+  categorical_3 = nature_base[c(1, 2, 3)],
+  categorical_4 = nature_base[c(1, 2, 3, 4)],
+  categorical_5_8 = nature_base[1:8],
+  categorical_extended = nature_base,
 
-- Use a forest plot only when effect estimates and uncertainty intervals are present or can be computed from a declared model.
-- Keep Nature-style forest plots compact, column-aligned, and evidence-first; avoid oversized titles or explanatory text inside the plot.
-- Use descriptor columns only when needed: subgroup/level labels, counts, study weights, estimate with CI, and P for interaction are optional analysis-dependent fields.
-- Prefer a single integrated table-and-forest layout. The forest axis, text columns, and row labels should share one row coordinate system.
-- Use thin CI lines, modest square or point markers, and a pale or absent grid. Use blue or muted journal palette colours only when colour carries meaning.
-- Keep forest-plot column headers the same font size as the body category labels; use bold weight for headers if needed.
-- Use shallow row bands or fine column guides sparingly to support tracking; they should not dominate the CI marks.
-- Place favour labels and axis ticks close to the forest axis, and keep the effect-measure label explicit.
-- Reject Nature-style forest plots that are too wide, rely on a detached legend, use heavy table rules, or rasterize editable text.
-- For example,the plot should be arranged as follows:
-| **Subgroup / level** | **Treatment** | **Comparator** | **HR (95% CI)** | **HR (95% CI)** | **P interaction** |
-|---|---:|---:|:---:|---:|---:|
-| **Age** |  |  |  |  | 0·48 |
-| &nbsp;&nbsp;<65 years | 86/742 | 112/736 | ───■──── | 0·76 (0·58–0·99) |  |
-| &nbsp;&nbsp;≥65 years | 74/658 | 89/662 | ─────■── | 0·84 (0·62–1·13) |  |
-| **Sex** |  |  |  |  | 0·71 |
-| &nbsp;&nbsp;Male | 96/812 | 121/806 | ───■──── | 0·79 (0·61–1·02) |  |
-| &nbsp;&nbsp;Female | 64/588 | 80/592 | ─────■── | 0·81 (0·58–1·12) |  |
-|  |  |  | └──0·5──1·0──2·0──┘ |  |  |
+  # StatsVisual derived from NPG ggsci colors
+  sequential_red   = derive_sequential(nature_base[1]),
+  sequential_cyan  = derive_sequential(nature_base[2]),
+  sequential_green = derive_sequential(nature_base[3]),
+  sequential_blue  = derive_sequential(nature_base[4]),
+
+  diverging_blue_red = derive_diverging(
+    low  = nature_base[4],
+    high = nature_base[1]
+  ),
+
+  diverging_green_purple = derive_diverging(
+    low  = nature_base[3],
+    high = nature_base[6]
+  ),
+
+  accent = c(
+    primary   = nature_base[1],
+    secondary = nature_base[4]
+  ),
+
+  neutral = neutral,
+  alpha = alpha_roles
+)
+```
+
+Direct `ggsci` scales:
+
+```r
+p + ggsci::scale_color_npg("nrc")
+p + ggsci::scale_fill_npg("nrc")
+```
+
+
 
 ## R Implementation
 
@@ -64,11 +111,3 @@ Recommended order for discrete groups:
 - Use `rmg_palette(n, "nature")` for discrete groups.
 - Prefer `svglite` for SVG, `cairo_pdf` for PDF, and `ragg` for TIFF/PNG.
 - Use final journal dimensions before export instead of scaling after export.
-
-## QA
-
-- Check that all labels remain readable at final size.
-- Check that panel labels are present, aligned, and do not collide with data.
-- Check that SVG opens with editable text where feasible.
-- Check that colors remain interpretable in grayscale or when printed small.
-- Check that all statistics, intervals, denominators, and model definitions used in the figure are stated in the rationale.

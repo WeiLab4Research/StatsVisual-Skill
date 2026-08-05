@@ -66,12 +66,12 @@ rmg_style_base_size <- function(style = "general") {
   style <- rmg_normalize_style(style)
   switch(
     style,
-    general = 11,
-    nature = 9,
-    lancet = 10,
-    nejm = 11,
-    jama = 10,
-    bmj = 10.5
+    general  = 11,
+    nature   = 9,
+    lancet   = 11,
+    nejm     = 11,
+    jama     = 11,
+    bmj      = 11
   )
 }
 
@@ -87,11 +87,11 @@ rmg_font_family <- function(style = "general", role = "figure") {
   switch(
     style,
     general = "",
-    nature = "Arial",
-    lancet = "Arial",
-    nejm = "Arial",
-    jama = "Arial",
-    bmj = "Arial"
+    nature  = "Arial",
+    lancet  = "",
+    nejm    = "",
+    jama    = "",
+    bmj     = ""
   )
 }
 
@@ -204,125 +204,25 @@ rmg_palette <- function(n, style = "general") {
 
 rmg_line_defaults <- function(style = "general") {
   style <- rmg_normalize_style(style)
-  if (style == "lancet") {
-    return(
-      list(
-        linewidth = 0.85,
-        point_size = 2.2,
-        point_shape = 16,
-        point_fill = NA_character_,
-        point_stroke = 0.6,
-        legend_position = "top",
-        direct_label = TRUE
-      )
-    )
-  }
-  if (style == "nejm") {
-    return(
-      list(
-        linewidth = 0.95,
-        point_size = 2.3,
-        point_shape = 16,
-        point_fill = NA_character_,
-        point_stroke = 0.65,
-        legend_position = "top",
-        direct_label = TRUE
-      )
-    )
-  }
-  if (style == "jama") {
-    return(
-      list(
-        linewidth = 0.8,
-        point_size = 2.0,
-        point_shape = 16,
-        point_fill = NA_character_,
-        point_stroke = 0.55,
-        legend_position = "top",
-        direct_label = TRUE
-      )
-    )
-  }
-  if (style == "bmj") {
-    return(
-      list(
-        linewidth = 0.8,
-        point_size = 2.1,
-        point_shape = 16,
-        point_fill = NA_character_,
-        point_stroke = 0.55,
-        legend_position = "top",
-        direct_label = TRUE
-      )
-    )
-  }
   list(
-    linewidth = 0.7,
-    point_size = 1.8,
-    point_shape = 16,
-    point_fill = NA_character_,
-    point_stroke = 0.5,
+    linewidth      = 0.7,
+    point_size     = 1.8,
+    point_shape    = 16,
+    point_fill     = NA_character_,
+    point_stroke   = 0.5,
     legend_position = "right",
-    direct_label = FALSE
+    direct_label   = FALSE
   )
 }
 
 rmg_bar_defaults <- function(style = "general") {
   style <- rmg_normalize_style(style)
-  if (style == "lancet") {
-    return(
-      list(
-        width = 0.72,
-        linewidth = 0.45,
-        zero_line_width = 0.45,
-        legend_position = "top",
-        strip_background = FALSE,
-        shared_axis_titles = TRUE
-      )
-    )
-  }
-  if (style == "nejm") {
-    return(
-      list(
-        width = 0.7,
-        linewidth = 0.5,
-        zero_line_width = 0.55,
-        legend_position = "top",
-        strip_background = FALSE,
-        shared_axis_titles = TRUE
-      )
-    )
-  }
-  if (style == "jama") {
-    return(
-      list(
-        width = 0.68,
-        linewidth = 0.45,
-        zero_line_width = 0.5,
-        legend_position = "top",
-        strip_background = FALSE,
-        shared_axis_titles = TRUE
-      )
-    )
-  }
-  if (style == "bmj") {
-    return(
-      list(
-        width = 0.72,
-        linewidth = 0.45,
-        zero_line_width = 0.5,
-        legend_position = "top",
-        strip_background = FALSE,
-        shared_axis_titles = TRUE
-      )
-    )
-  }
   list(
-    width = 0.75,
-    linewidth = 0.1,
-    zero_line_width = 0.5,
-    legend_position = "right",
-    strip_background = TRUE,
+    width             = 0.75,
+    linewidth         = 0.1,
+    zero_line_width   = 0.5,
+    legend_position   = "right",
+    strip_background  = TRUE,
     shared_axis_titles = FALSE
   )
 }
@@ -331,9 +231,6 @@ rmg_theme <- function(style = "general", base_size = NULL, base_family = "") {
   style <- rmg_normalize_style(style)
   if (is.null(base_size)) {
     base_size <- rmg_style_base_size(style)
-  }
-  if (style %in% c("lancet", "nejm", "jama", "bmj") && (is.null(base_family) || !nzchar(base_family))) {
-    base_family <- rmg_font_family(style)
   }
   if (style == "nature") {
     return(
@@ -357,118 +254,6 @@ rmg_theme <- function(style = "general", base_size = NULL, base_family = "") {
           panel.grid.major = ggplot2::element_blank(),
           panel.grid.minor = ggplot2::element_blank(),
           plot.margin = ggplot2::margin(5, 5, 5, 5)
-        )
-    )
-  }
-
-  if (style == "lancet") {
-    return(
-      ggplot2::theme_classic(base_size = base_size, base_family = base_family) +
-        ggplot2::theme(
-          plot.title = ggplot2::element_text(face = "bold", hjust = 0, color = "grey10", size = ggplot2::rel(1.02)),
-          plot.subtitle = ggplot2::element_text(color = "grey20", size = ggplot2::rel(0.92)),
-          axis.title = ggplot2::element_text(face = "bold", color = "grey10"),
-          axis.title.x = ggplot2::element_text(margin = ggplot2::margin(t = 7)),
-          axis.title.y = ggplot2::element_text(margin = ggplot2::margin(r = 7)),
-          axis.text = ggplot2::element_text(color = "grey10"),
-          axis.line = ggplot2::element_line(linewidth = 0.55, colour = "grey10"),
-          axis.ticks = ggplot2::element_line(linewidth = 0.45, colour = "grey10"),
-          axis.ticks.length = grid::unit(0.13, "cm"),
-          legend.title = ggplot2::element_text(face = "bold", color = "grey10"),
-          legend.text = ggplot2::element_text(color = "grey10"),
-          legend.background = ggplot2::element_blank(),
-          legend.box.background = ggplot2::element_blank(),
-          legend.key = ggplot2::element_blank(),
-          strip.background = ggplot2::element_blank(),
-          strip.text = ggplot2::element_text(face = "bold", color = "grey10"),
-          panel.grid.major = ggplot2::element_blank(),
-          panel.grid.minor = ggplot2::element_blank(),
-          plot.tag = ggplot2::element_text(face = "bold", color = "grey10", size = ggplot2::rel(1.15)),
-          plot.margin = ggplot2::margin(6, 7, 6, 7)
-        )
-    )
-  }
-
-  if (style == "nejm") {
-    return(
-      ggplot2::theme_classic(base_size = base_size, base_family = base_family) +
-        ggplot2::theme(
-          plot.title = ggplot2::element_text(face = "bold", hjust = 0, color = "grey10", size = ggplot2::rel(1.05)),
-          plot.subtitle = ggplot2::element_text(color = "grey20", size = ggplot2::rel(0.92)),
-          axis.title = ggplot2::element_text(face = "bold", color = "grey10"),
-          axis.title.x = ggplot2::element_text(margin = ggplot2::margin(t = 8)),
-          axis.title.y = ggplot2::element_text(margin = ggplot2::margin(r = 8)),
-          axis.text = ggplot2::element_text(color = "grey10"),
-          axis.line = ggplot2::element_line(linewidth = 0.65, colour = "grey10"),
-          axis.ticks = ggplot2::element_line(linewidth = 0.5, colour = "grey10"),
-          axis.ticks.length = grid::unit(0.14, "cm"),
-          legend.title = ggplot2::element_text(face = "bold", color = "grey10"),
-          legend.text = ggplot2::element_text(color = "grey10"),
-          legend.background = ggplot2::element_blank(),
-          legend.box.background = ggplot2::element_blank(),
-          legend.key = ggplot2::element_blank(),
-          strip.background = ggplot2::element_blank(),
-          strip.text = ggplot2::element_text(face = "bold", color = "grey10"),
-          panel.grid.major = ggplot2::element_blank(),
-          panel.grid.minor = ggplot2::element_blank(),
-          plot.tag = ggplot2::element_text(face = "bold", color = "grey10", size = ggplot2::rel(1.18)),
-          plot.margin = ggplot2::margin(7, 8, 7, 8)
-        )
-    )
-  }
-
-  if (style == "jama") {
-    return(
-      ggplot2::theme_classic(base_size = base_size, base_family = base_family) +
-        ggplot2::theme(
-          plot.title = ggplot2::element_text(face = "bold", hjust = 0, color = "grey10", size = ggplot2::rel(1.02)),
-          plot.subtitle = ggplot2::element_text(color = "grey25", size = ggplot2::rel(0.9)),
-          axis.title = ggplot2::element_text(face = "bold", color = "grey10"),
-          axis.title.x = ggplot2::element_text(margin = ggplot2::margin(t = 7)),
-          axis.title.y = ggplot2::element_text(margin = ggplot2::margin(r = 7)),
-          axis.text = ggplot2::element_text(color = "grey10"),
-          axis.line = ggplot2::element_line(linewidth = 0.55, colour = "grey10"),
-          axis.ticks = ggplot2::element_line(linewidth = 0.4, colour = "grey10"),
-          axis.ticks.length = grid::unit(0.13, "cm"),
-          legend.title = ggplot2::element_text(face = "bold", color = "grey10"),
-          legend.text = ggplot2::element_text(color = "grey10"),
-          legend.background = ggplot2::element_blank(),
-          legend.box.background = ggplot2::element_blank(),
-          legend.key = ggplot2::element_blank(),
-          strip.background = ggplot2::element_blank(),
-          strip.text = ggplot2::element_text(face = "bold", color = "grey10"),
-          panel.grid.major = ggplot2::element_blank(),
-          panel.grid.minor = ggplot2::element_blank(),
-          plot.tag = ggplot2::element_text(face = "bold", color = "grey10", size = ggplot2::rel(1.12)),
-          plot.margin = ggplot2::margin(6, 7, 6, 7)
-        )
-    )
-  }
-
-  if (style == "bmj") {
-    return(
-      ggplot2::theme_classic(base_size = base_size, base_family = base_family) +
-        ggplot2::theme(
-          plot.title = ggplot2::element_text(face = "bold", hjust = 0, color = "grey10", size = ggplot2::rel(1.02)),
-          plot.subtitle = ggplot2::element_text(color = "grey25", size = ggplot2::rel(0.92)),
-          axis.title = ggplot2::element_text(face = "bold", color = "grey10"),
-          axis.title.x = ggplot2::element_text(margin = ggplot2::margin(t = 8)),
-          axis.title.y = ggplot2::element_text(margin = ggplot2::margin(r = 8)),
-          axis.text = ggplot2::element_text(color = "grey10"),
-          axis.line = ggplot2::element_line(linewidth = 0.5, colour = "grey10"),
-          axis.ticks = ggplot2::element_line(linewidth = 0.38, colour = "grey10"),
-          axis.ticks.length = grid::unit(0.13, "cm"),
-          legend.title = ggplot2::element_text(face = "bold", color = "grey10"),
-          legend.text = ggplot2::element_text(color = "grey10"),
-          legend.background = ggplot2::element_blank(),
-          legend.box.background = ggplot2::element_blank(),
-          legend.key = ggplot2::element_blank(),
-          strip.background = ggplot2::element_blank(),
-          strip.text = ggplot2::element_text(face = "bold", color = "grey10"),
-          panel.grid.major = ggplot2::element_blank(),
-          panel.grid.minor = ggplot2::element_blank(),
-          plot.tag = ggplot2::element_text(face = "bold", color = "grey10", size = ggplot2::rel(1.12)),
-          plot.margin = ggplot2::margin(7, 8, 7, 8)
         )
     )
   }

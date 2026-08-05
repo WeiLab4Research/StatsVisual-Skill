@@ -113,16 +113,21 @@ This chapter also includes related relationship plots. Contour plots display a c
 
 - Represents levels of a two-dimensional density estimate or continuous surface across two numerical variables.
 - With `stat_density2d()`, contours describe estimated observation density and depend on kernel and bandwidth choices.
+- For measured response surfaces with a known `z` value, build or supply a regular `x-y-z` grid first, then draw isolines with `geom_contour()`.
+- For sparse experimental grids, such as 6 by 6 dose-response matrices, state whether the surface uses raw grid values, interpolation, LOESS, GAM, or another smoothing method. The contours are descriptive, not statistical evidence of synergy or significance.
 
 **Visual Features**
 
 - Curved isolines connect locations with equal estimated density or equal `z` value.
 - Raw observations may remain visible beneath the contour lines.
+- Keep raw measured points visible when the surface is smoothed or interpolated, so readers can see the data support behind the curves.
+- Increase contour density only enough to reveal shape; overly dense lines can imply precision that the source grid does not support.
 
 **Code Features**
 
 - Map the two continuous variables to `x` and `y` and use `stat_density2d()` for kernel-density contours.
 - Map `after_stat(level)` to line color and add `geom_point()` when the source observations should remain visible.
+- For gridded response data, map `x`, `y`, and `z` to `geom_contour()`. Use a dense prediction grid when a smooth surface is requested, but keep axis tick labels tied to the original measurement scale.
 
 - code reference:source script `\StatsVisual-Skill\assets\templates\heatmap\Contour Line Plot.R`
 
@@ -134,16 +139,22 @@ This chapter also includes related relationship plots. Contour plots display a c
 
 - Displays intervals of a continuous surface or estimated density using filled contour bands.
 - The number and boundaries of contour levels determine the apparent hot spots and should be chosen deliberately.
+- `geom_contour_filled()` produces discrete filled bands by design. Use it when interval classes are desired and the legend should report ranges.
+- If the user asks for a continuous response surface or continuous color scale, use a dense gridded/smoothed `z` surface with `geom_raster(interpolate = TRUE)` or `geom_tile()` plus `geom_contour()` for isolines, rather than forcing a discrete filled-contour legend.
 
 **Visual Features**
 
 - Adjacent colored regions represent ranges of `z`, separated by contour boundaries.
 - The filled surface emphasizes broad high- and low-intensity regions more strongly than contour lines alone.
+- For continuous response surfaces, use a continuous colorbar and overlay thin contour lines; optionally add raw measured points on top.
+- Do not hide sparse source data behind a highly smooth surface. Keep smoothing/interpolation choices explicit in the script and final explanation.
 
 **Code Features**
 
 - Supply gridded `x`, `y`, and `z` values and draw with `geom_contour_filled()`.
 - Limit the number of contour bands and use an ordered palette whose legend clearly reports the interval scale.
+- For continuous color response surfaces, create a dense prediction grid, draw `geom_raster(aes(fill = z), interpolate = TRUE)`, add `geom_contour(aes(z = z))`, and use `scale_fill_gradientn()` or another continuous scale.
+- For dose matrices containing zero concentrations, avoid log-transforming axes unless zero is handled explicitly. Prefer ordered dose levels with labels showing the original concentrations.
 
 - code reference:source script `\StatsVisual-Skill\assets\templates\heatmap\Contour with Filled Areas.R`
 
