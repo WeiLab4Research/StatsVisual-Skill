@@ -67,7 +67,6 @@ assets/
     r-medical-graphics-mark.svg
     statistical-graphics-art.jpg
     statsvisual.png
-demo/
 skills/
   StatsVisual-Skill/
     SKILL.md
