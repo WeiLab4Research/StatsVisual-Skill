@@ -8,15 +8,15 @@ Use bar charts for category-level comparisons. When the distribution of individu
 
 ## 2. Selection Guide
 
-| Statistical objective | Recommended variant | Main interpretation |
-|---|---|---|
-| Compare one summary across categories | Basic Bar Plot | Magnitude difference between categories |
-| Compare subgroups within each category | Grouped Bar Plot | Side-by-side subgroup difference |
-| Compare totals and internal composition | Stacked Bar Plot | Group total and component contribution |
-| Compare relative composition only | 100% Stacked Bar Plot | Percentage composition within each group |
-| Show a central estimate with variability or uncertainty | Bar Plot with Error Bars | Estimate with SD, SE, or confidence interval |
-| Show patient-level change from baseline | Oncology Waterfall Plot | Direction and magnitude of individual response |
-| Arrange many categories circularly | Polar Bar Plot | Overall pattern across categories |
+| Statistical objective | Recommended variant |
+|---|---|
+| Compare one summary across categories | Basic Bar Plot |
+| Compare subgroups within each category | Grouped Bar Plot |
+| Compare totals and internal composition | Stacked Bar Plot |
+| Compare relative composition only | 100% Stacked Bar Plot |
+| Show a central estimate with variability or uncertainty | Bar Plot with Error Bars |
+| Show patient-level change from baseline | Oncology Waterfall Plot |
+| Arrange many categories circularly | Polar Bar Plot |
 
 Choose the simplest variant that directly answers the clinical or statistical question.
 
