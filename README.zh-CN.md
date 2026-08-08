@@ -2,9 +2,12 @@
 
 <p align="center">
   <img src="assets/brand/statsvisual-skill-hero.svg" alt="StatsVisual-Skill" width="100%">
+  <br><br>
+  <a href="LICENSE"><img alt="License" src="https://img.shields.io/badge/license-MIT-2ea44f"></a>
+  <a href="#安装"><img alt="Install" src="https://img.shields.io/badge/install-CodeBuddy%20%7C%20Codex-111827"></a>
+  <a href="#图形大类概览"><img alt="Skills" src="https://img.shields.io/badge/skills-2-0ea5e9"></a>
+  <a href="README.md"><img alt="Language" src="https://img.shields.io/badge/language-中文%20%7C%20English-1f6feb"></a>
 </p>
-
-**语言：** [English](README.md) | 简体中文
 
 Team:  
 开发人员：江昊天，杜文晓，王邦宇  
