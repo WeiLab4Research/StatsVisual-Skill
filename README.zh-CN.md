@@ -62,8 +62,6 @@ StatsVisual-Skill 是一组面向医学统计绘图的 AI skills，旨在帮助 
 ```text
 assets/
   brand/
-    r-medical-graphics-logo.svg
-    r-medical-graphics-mark.svg
     statistical-graphics-art.jpg
     statsvisual.png
 skills/

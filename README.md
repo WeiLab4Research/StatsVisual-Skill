@@ -63,8 +63,6 @@ This skill covers **16 statistical chart families**. All figure examples are fro
 ```text
 assets/
   brand/
-    r-medical-graphics-logo.svg
-    r-medical-graphics-mark.svg
     statistical-graphics-art.jpg
     statsvisual.png
 skills/
