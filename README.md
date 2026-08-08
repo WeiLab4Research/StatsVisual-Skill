@@ -1,7 +1,7 @@
 # Statistical Visualization Skill
 
 <p align="center">
-  <img src="assets/brand/statsvisual-skill-hero.svg" alt="StatsVisual-Skill" width="100%">
+  <img src="assets/brand/statsvisual.png" alt="StatsVisual-Skill" width="100%">
   <br><br>
   <a href="LICENSE"><img alt="License" src="https://img.shields.io/badge/license-MIT-2ea44f"></a>
   <a href="#installation"><img alt="Install" src="https://img.shields.io/badge/install-CodeBuddy%20%7C%20Codex-111827"></a>
