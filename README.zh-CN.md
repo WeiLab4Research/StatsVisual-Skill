@@ -9,10 +9,13 @@
   <a href="README.md"><img alt="Language" src="https://img.shields.io/badge/language-中文%20%7C%20English-1f6feb"></a>
 </p>
 
-Team:  
-开发人员：江昊天，杜文晓，王邦宇  
-指导老师：Prof. Yongyue Wei, Peking University  
-内部测试: 崔淼、魏翘楚、奚梓玮
+## 团队
+
+| 角色 | 成员 |
+|------|------|
+| **开发人员** | 江昊天 · 杜文晓 · 王邦宇 |
+| **指导教师** | Prof. Yongyue Wei, Peking University |
+| **内部测试** | 崔淼 · 魏翘楚 · 奚梓玮 |
 
 ## Motivation
 

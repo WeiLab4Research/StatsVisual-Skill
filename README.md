@@ -9,10 +9,13 @@
   <a href="README.zh-CN.md"><img alt="Language" src="https://img.shields.io/badge/language-中文%20%7C%20English-1f6feb"></a>
 </p>
 
-Team:  
-Developer：Haotian Jiang, Wenxiao Du, Bangyu Wang  
-Supervisor and Sponsor：Prof. Yongyue Wei, Peking University  
-tester: Miao Cui, Qiaochu Wei, Ziwei Xi
+## Team
+
+| Role | Members |
+|------|---------|
+| **Developer** | Haotian Jiang · Wenxiao Du · Bangyu Wang |
+| **Supervisor & Sponsor** | Prof. Yongyue Wei, Peking University |
+| **Tester** | Miao Cui · Qiaochu Wei · Ziwei Xi |
 
 ## Motivation
 
