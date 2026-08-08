@@ -5,7 +5,7 @@
   <br><br>
   <a href="LICENSE"><img alt="License" src="https://img.shields.io/badge/license-MIT-2ea44f"></a>
   <a href="#installation"><img alt="Install" src="https://img.shields.io/badge/install-CodeBuddy%20%7C%20Codex-111827"></a>
-  <a href="#chart-types-overview"><img alt="Skills" src="https://img.shields.io/badge/skills-2-0ea5e9"></a>
+  <a href="#chart-types-overview"><img alt="Chart Types" src="https://img.shields.io/badge/Chart%20Types-16-0ea5e9"></a>
   <a href="README.zh-CN.md"><img alt="Language" src="https://img.shields.io/badge/language-中文%20%7C%20English-1f6feb"></a>
 </p>
 
