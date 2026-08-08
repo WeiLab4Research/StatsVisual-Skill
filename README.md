@@ -66,19 +66,24 @@ assets/
     r-medical-graphics-logo.svg
     r-medical-graphics-mark.svg
     statistical-graphics-art.jpg
-  gallery/
-    journal-km-lancet.png ... art-rose-with-guidance.png
+    statsvisual.png
+demo/
 skills/
   StatsVisual-Skill/
     SKILL.md
-    agents/openai.yaml
+    agents/
     assets/
+      gallery/
+      templates/
     references/
     scripts/
   r-journal-style-calibrator/
     SKILL.md
-    agents/openai.yaml
+    agents/
     references/
+LICENSE
+README.md
+README.zh-CN.md
 ```
 
 ## Installation
