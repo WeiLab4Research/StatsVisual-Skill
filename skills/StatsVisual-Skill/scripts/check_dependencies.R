@@ -12,7 +12,7 @@ if (length(required) == 0) {
     "ggridges", "ggbeeswarm", "ggdist", "ggpointdensity", "GGally", "ggExtra",
     "pheatmap", "corrplot", "forestplot", "broom",
     "survival", "survminer", "ggsurvfit",
-    "ggtern", "svglite", "magick"
+    "ggtern", "svglite", "magick", "showtext", "sysfonts"
   )
 }
 optional <- c("ComplexHeatmap", "circlize")

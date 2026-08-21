@@ -85,6 +85,8 @@ Doughnut and exploded pies retain the same part-to-whole logic. Nightingale rose
 - Calculate each sector midpoint from cumulative values before plotting.
 - Add labels with `geom_label_repel()` or `geom_text_repel()`; remove a redundant legend when labels already identify every sector.
 
+- Code Reference: source script `\StatsVisual-Skill\assets\templates\pie\Pie Plot with External Labels.R`
+
 ### Doughnut Plot
 
 ![Doughnut Plot](../assets/gallery/pie/doughnut.png)

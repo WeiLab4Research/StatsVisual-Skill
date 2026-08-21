@@ -1,42 +1,29 @@
 ---
 name: StatsVisual-Skill
-description: Create publication-ready medical and biostatistical graphics with R. Use when Codex needs to inspect tabular data, produce a data-profile-first chart recommendation, ask which chart and visual style to use, support general book-derived style, Nature-style figures, Lancet-style clinical figures, NEJM-style clinical trial figures, JAMA-style clinical research figures, or BMJ-style pragmatic clinical figures, then only after the user confirms a chart choice write and run R plotting code, export vector PDF, editable SVG, 700 dpi or higher TIFF, and a web image under 1 MB, or apply medical research visualization conventions for ggplot2, survival curves, heatmaps, regression diagnostics, distribution graphics, and multi-panel figures.
+description: Create publication-ready medical and biostatistical graphics with R. Use when Codex needs to inspect tabular data, profile it, recommend charts and visual styles, and only after the user confirms a chart choice write and run R plotting code to export vector PDF, editable SVG, 700+ dpi TIFF, and a web image under 1 MB. Supports general/Nature/Lancet/NEJM/JAMA/BMJ styles for ggplot2, survival curves, heatmaps, regression diagnostics, distribution graphics, and multi-panel figures.
 ---
 
-# R Medical Graphics
+# Core Workflow
 
-## Core Workflow
+Follow this five-step flow in order. Never skip ahead.
 
-Use this skill to turn user data and research intent into reproducible R code and publication-ready figures.
+1. **Inspect and profile the data.** Read the data file directly to analyze its structure, columns, types, missingness, and distributions. Use `scripts/data_profile.R <data_file>` (prints a Markdown profile to stdout) or profile inline. Summarize the data profile in the conversation: rows, columns, key fields, variable roles, missingness highlights, and any data-quality limits that affect chart choice.
+2. **Recommend charts (and wait).** Recommend one primary single figure plus up to two single-figure alternatives, and an optional multi-panel figure when the data supports complementary analyses. Ask the user to choose, and ask which style to use. Follow `## Recommendation Reply Format`.
+3. **Wait for the user's chart choice.** Do not write plotting code in the same turn that first receives the data. Only a follow-up user message can authorize plotting. See `## First-Turn Gate`.
+4. **Write and run the R script.** Write one complete script (not snippets) from `assets/plot_template.R` or the closest starter in `assets/templates/`. Locate the skill directory, source `scripts/setup_r_library.R`, prepare the local R library, check packages, read data, validate columns, build the plot, and export figures. For multi-panel figures, write a short figure plan first.
+5. **Export, verify, and explain.** Export every final figure in four forms, verify the files exist and are non-empty, then present the figure explanation in the conversation using `## Figure Explanation`.
 
-## Many-Category Circular Chart Rule
+# First-Turn Gate
 
-When data profiling finds a categorical numeric variable with `>25` categories, prioritize a rose chart or polar plot only when the main goal is to show frequency, proportion, composition, absolute contribution, burden magnitude, or overview ranking.
+When a user first provides, attaches, names, or points to a dataset, stop after data profiling and chart recommendation. This is true no matter what extra wording is in the same message, including "plot my data", "draw it", "visualize it", "帮我画图", "给我的数据画图", "直接画", or "自动选择".
 
-Do not prioritize a rose chart or polar plot when the main goal is significance-value or correlation-coefficient precision, threshold judgment, P value, CI, significance marking, or adjusted-versus-unadjusted differences, even when the category count is `>25`.
-
-- Use a polar bar plot for non-negative numeric summaries when the message is compact pattern, subgroup overview, composition, burden, or overview ranking.
-- Use a grouped polar bar plot when there are several readable groups and the grouped categories together exceed 25 for an overview message.
-- Use a polar dot plot or annular polar scatter for dense multi-encoding overview displays where radius, color, and size need to encode separate variables.
-- Use a rose chart first for non-negative counts, rates, proportions, burden magnitudes, cause-specific totals, regional totals, or absolute contributions when the goal is a ranked/editorial overview.
-- For both polar plots and rose charts, reserve a clear circular blank center, keep the angle of every label one-to-one with its category.
-- For rose charts, place outside labels close to each bar tip; do not put all labels on a single outer concentric circle when bar lengths differ seriously, because that separates labels from their marks.
-
-## Calibration Curve Shape Rule
-
-Calibration curve figures must use a square plotting area. Use equal x and y limits, keep the ideal calibration line at 45 degrees with a fixed aspect ratio such as `coord_equal()`, and export the figure with equal width and height unless the calibration panel is part of a planned multi-panel figure.
-
-## Non-Negotiable First-Turn Gate
-
-When a user first provides, attaches, names, or points to a dataset, stop after data profiling and chart recommendation. This is true no matter what extra wording is in the same message, including requests like "plot my data", "draw it", "visualize it", "帮我画图", "给我的数据画图", "直接画", or "自动选择".
-
-Allowed before the first recommendation reply:
+**Allowed before the first recommendation reply:**
 - create the per-request project folder;
 - copy the source data into that project folder when needed;
 - inspect/profile the data;
 - write a project-local data profile or recommendation log.
 
-Forbidden before the user replies with a chart choice:
+**Forbidden before the user replies with a chart choice:**
 - do not write or copy an R plotting script;
 - do not adapt templates;
 - do not install plotting packages;
@@ -45,32 +32,13 @@ Forbidden before the user replies with a chart choice:
 - do not validate generated figures;
 - do not choose a single or multi-panel figure on the user's behalf.
 
-Only a follow-up user message after the recommendation can authorize plotting. Valid authorization must select a concrete option, for example "按推荐单图绘制", "选择组图", "用方案 B", "画 forest plot", or an equivalent explicit chart choice. If the same first message includes both data and an apparent plotting instruction, treat the plotting instruction as the user's goal for after the recommendation, not as permission to bypass the gate.
+**What counts as authorization:** only a follow-up user message after the recommendation can authorize plotting. Valid authorization must select a concrete option, for example "按推荐单图绘制", "选择组图", "用方案 B", "画 forest plot", or an equivalent explicit chart choice. If the same first message includes both data and an apparent plotting instruction, treat the plotting instruction as the user's goal for after the recommendation, not as permission to bypass the gate. If the user names an exact chart type in the original request, still inspect the data first, confirm whether that chart is appropriate, mention any serious mismatch, recommend the best single-figure and optional multi-panel choices, then ask for confirmation before coding. Treat automatic selection as disabled during the first data-handling turn.
 
-1. Create or use one explicit per-request project directory. Never write task artifacts to the skill repository root or the caller's current directory by default. Use `scripts/create_plot_project.R <project_dir>`, then keep all data copies, R scripts, outputs, and figures inside that directory.
-2. First inspect the data and produce a data-profile-based recommendation before any plotting code, figure export, package-heavy plotting work, or template copying. Read the data file directly to analyze its structure, columns, types, missingness, and distributions, then summarize the data profile in the conversation.
-3. In the first user-facing reply after data inspection, summarize the data profile directly in the conversation. Include rows, columns, key fields, variable roles, missingness highlights, matched chart families, and any data-quality limits that affect chart choice. State how the data profile drives chart choice, including variable types, category count, grouping, time/outcome/model fields, missingness, and whether complementary analyses support a multi-panel figure.
-4. Before writing plotting code or exporting figures, recommend charts from the data profile. Always provide one recommended single figure and up to two single-figure alternatives. For every recommended or alternative figure, include `Reason`so the user can see why the chart fits, which skill rules or references support it, and where it is weaker. Always ask whether the user wants the recommended single figure, an alternative single figure, or the optional multi-panel figure when available. Also ask which style to use: `general`/通用风格 by default, `nature`/Nature 风格, `lancet`/Lancet 风格, `nejm`/NEJM 风格, `jama`/JAMA 风格, or `bmj`/BMJ 风格. If the data can support complementary analyses, also provide an optional multi-panel figure. If a categorical variable paired with a numeric variable has `>25` categories and the main goal is frequency, proportion, composition, absolute contribution, burden, or overview ranking, proactively prioritize a polar plot or rose chart in the recommendation. If the main goal is significance-value or correlation-coefficient precision, threshold judgment, P value, CI, significance marking, or adjusted-versus-unadjusted differences, do not prioritize a polar plot or rose chart even when category count is `>25`. Skill basis should cite loaded or directly relevant skill content, such as `references/chart-router.md`, `references/chart-index.md`, `references/design-rules.md`, `references/styles/style-router.md`, the selected style reference, the relevant detailed chart reference, `references/special-charts.md`, or `references/multipanel-figures.md` when relevant.
-5. Format the recommendation so the user can choose without opening files. Use the Chinese recommendation reply format below. Except for professional medical/statistical English terms, chart names, package/function names, style names, file/path names, and exact field names from the user's data, write the user-facing recommendation in Chinese. A multi-panel recommendation must include the main message, A/B/C panel roles, support logic, suitable use case, key limitation, expected outputs.
-6. Wait for the user's chart choice after the recommendation response. Do not start plotting in the same turn that first receives or locates the data, even if the user adds a general request such as "plot this data", "draw a figure", "make charts", "visualize it", "help me plot", "帮我画图", "给我的数据画图", or "生成图片". These phrases only express the overall task, not permission to bypass the recommendation stage. If the user names an exact chart type in the original request, still inspect the data first, confirm whether that chart is appropriate, mention any serious mismatch, recommend the best single-figure and optional multi-panel choices, then ask for confirmation before coding. Only a follow-up user message after the recommendation stage can authorize plotting.
-7. Treat automatic selection as disabled during the first data-handling turn. A first-turn instruction like "use this folder/project and plot my data" still requires data profiling, chart recommendation, and a choice question. The user can authorize plotting only after seeing the recommendation, for example by replying "按推荐单图绘制", "选择组图", "用方案 B", or an equivalent explicit chart choice.
-8. If the user chooses or requests a multi-panel figure, write a short figure plan before coding. Include main message, primary result, supporting analyses, interpretation risk, panel roles, shared encodings, output size, and export formats. Do not write the R script until this plan is explicit in the conversation.
-9. Write a complete R script rather than disconnected snippets after the user chooses. Use `assets/plot_template.R` as the default shape, or copy the closest starter from `assets/templates/` for distribution comparison, scatter/association, model diagnostics, or multi-panel figures. Pass the selected style to the starter or call `rmg_theme(style)` and `rmg_palette(n, style)` directly; if the user chose a chart but not a style, use `general`. For multi-panel figures, source `assets/templates/multipanel/multipanel_helpers.R` or copy only the needed helpers; do not reuse synthetic demo panels as final analysis. Find the skill directory, source `scripts/setup_r_library.R`, load the repository/project R library, check packages, read data, validate columns, build plot, and export figures.
-10. Export every final figure in four forms inside `<project_dir>/figures/` unless the user asks otherwise:
-   - Vector: `<name>.pdf`
-   - Editable: `<name>.svg`
-   - Print: `<name>_700dpi.tiff` at 700 dpi or higher
-   - Web: `<name>_web.png` or `<name>_web.jpg`, target under 1 MB
-11. Before any CRAN/Bioconductor access, verify installed packages from the active environment by sourcing `scripts/setup_r_library.R` and calling `rmg_prepare_library(project_dir, skill_dir)`. This must happen before deciding a package is missing. Install missing R packages only after that local-library check, using the repository-local `.r-medical-graphics-library/` by default and `<project_dir>/R-library` or a writable user library as fallback. Use `scripts/install_required_packages.R` or call `rmg_ensure_packages()` from generated scripts. In restricted Codex environments, CRAN/Bioconductor access may require an escalated network approval; if installation fails with network, repository, DNS, proxy, SSL, or permission errors, request the needed approval and retry the same installation command. If Windows reports `740` or "requested operation requires elevation", first switch to the repository-local or project-local library; do not misreport this as a CRAN access problem. Do not silently downgrade figure quality or switch away from the intended plotting package because a library is missing.
-12. Run the script when feasible. After export, verify that PDF, SVG, TIFF, and web image files exist, are non-empty, and the web image is under 1 MB. Use `references/publication-qa.md` for the delivery checklist. Review the plotting code against `references/readability-qa.md` before delivery: verify font sizes, panel scales, label lengths, legend entries, color contrast, and axis transforms are appropriate for the final output size. When image viewing is available, inspect the final web PNG or TIFF preview directly and check that the plotted data are large enough, text is readable, labels/legends do not overlap, panels are balanced, and shared axes do not visually collapse any subgroup.
-13. After validation passes, present the key statistical and visual interpretation points directly in the conversation, following the template in `references/output-rules.md## Figure Explanation`.
-14. Report output paths under the project directory and any unresolved design decisions. If package installation still fails after the appropriate approval/retry path, stop and report the exact installation failure instead of producing a lower-quality fallback.
-
-## Recommendation Reply Format
-
+# Recommendation Reply Format
 
 Use this structure for the first recommendation reply after profiling data. Keep entries concise and omit a second alternative when it would be weak or repetitive. Keep professional medical/statistical English terms in English when that is clearer or conventional, such as `hazard ratio`, `odds ratio`, `risk ratio`, `confidence interval`, `Kaplan-Meier`, `forest plot`, `ROC curve`, `calibration curve`, `Cleveland dot plot`, `polar plot`, `rose chart`, `SHAP`, `P value`, `95% CI`, `ggplot2`, and journal/style names. Write all non-technical explanations, reasons, limitations, prompts, and transitions in Chinese.
-Reference to `## Common Routes`in`references/chart-router.md` for the recommendation logic.
+
+Reference `## Common Routes` in `references/chart-index.md` for the recommendation logic.
 
 ```markdown
 数据画像摘要
@@ -96,19 +64,37 @@ Reference to `## Common Routes`in`references/chart-router.md` for the recommenda
 - 局限性：
 
 风格选项
-- 可选风格：`general` `nature` `lancet` `nejm` `jama` `bmj` 
+- 可选风格：`general` `nature` `lancet` `nejm` `jama` `bmj`
 
 请确认
 - 选择“推荐的单图”、备选方案 1 或 2、或“可选多面板图”。
 - 同时选择风格；如果只选择图形，我将默认使用 `general` 通用风格。
 ```
 
-## Reference Loading
+# Special Chart Rules
+
+## Many-Category Circular Chart Rule
+
+When data profiling finds a categorical numeric variable with `>25` categories, prioritize a rose chart or polar plot only when the main goal is to show frequency, proportion, composition, absolute contribution, burden magnitude, or overview ranking.
+
+Do not prioritize a rose chart or polar plot when the main goal is significance-value or correlation-coefficient precision, threshold judgment, P value, CI, significance marking, or adjusted-versus-unadjusted differences, even when the category count is `>25`.
+
+- Use a polar bar plot for non-negative numeric summaries when the message is compact pattern, subgroup overview, composition, burden, or overview ranking.
+- Use a grouped polar bar plot when there are several readable groups and the grouped categories together exceed 25 for an overview message.
+- Use a polar dot plot or annular polar scatter for dense multi-encoding overview displays where radius, color, and size need to encode separate variables.
+- Use a rose chart first for non-negative counts, rates, proportions, burden magnitudes, cause-specific totals, regional totals, or absolute contributions when the goal is a ranked/editorial overview.
+- For both polar plots and rose charts, reserve a clear circular blank center, keep the angle of every label one-to-one with its category.
+- For rose charts, place outside labels close to each bar tip; do not put all labels on a single outer concentric circle when bar lengths differ seriously, because that separates labels from their marks.
+
+## Calibration Curve Shape Rule
+
+Calibration curve figures must use a square plotting area. Use equal x and y limits, keep the ideal calibration line at 45 degrees with a fixed aspect ratio such as `coord_equal()`, and export the figure with equal width and height unless the calibration panel is part of a planned multi-panel figure.
+
+# Reference Loading
 
 Load only the references needed for the task:
 
-- Use `references/chart-router.md` for the optimized workflow: inspect data, recommend one single figure, offer a constrained optional multi-panel figure only when the profile supports complementary analyses, ask for style, and wait for user choice.
-- Use `references/chart-index.md` to map a selected chart family to the detailed chart reference.
+- Use `references/chart-index.md` to route from data structure and research intent to a chart family (`## Common Routes`), then map the selected chart family to its detailed chart reference (`## Chart Family → Reference`).
 - Use the relevant detailed chart reference after the chart family is chosen: `bar-chart.md`, `line-chart.md`, `pie-chart.md`, `histogram.md`, `cleveland-dot-plot.md`, `box-plot.md`, `scatter-plot.md`, `heatmap.md`, `ternary-plot.md`, `q-q-plot.md`, `probability-distribution-plot.md`, `smoothing-curve.md`, `linear-regression.md`, `nonlinear-regression.md`, `regression-diagnostics.md`, `survival-curve.md`, `forest-plot.md`, or `special-charts.md`.
 - Use `references/special-charts.md` for advanced special figures: polar plot, signed polar plot, annular polar scatter, radar, stream/river, rose, fourfold, spiral histogram, Manhattan, sunflower density, bubble, LOWESS smooth, density ternary, and model-diagnostic bubble charts.
 - Use `references/multipanel-figures.md` when the requested output is a multi-panel figure, composite clinical/statistical figure, image plus measurement figure, workflow-led figure, shared-legend layout, or any A/B/C panel figure. A multi-panel figure must be a coherent manuscript figure with a figure plan, not a simple collage.
@@ -121,7 +107,7 @@ Load only the references needed for the task:
 - Use `references/publication-qa.md` before final delivery or when debugging figure quality.
 - Use `references/readability-qa.md` before final delivery, when validating subgroups/facets with shared axes, or when scripted QA reports `WARN` or `FAIL`.
 
-## Default R Choices
+# Default R Choices
 
 Use `ggplot2` for most plots. Prefer tidy data tools for preprocessing, `patchwork` for ggplot composition, `cowplot` when extracting legends or mixing table/plot grobs, `ggrepel` and `ggpubr` for labels/annotation, `forcats` for factor ordering, `stringr` for string cleanup, `survival` plus `survminer` or `ggsurvfit` for survival graphics, `ComplexHeatmap` for serious heatmaps, `pheatmap` for simple heatmaps, and `ggtern` for ternary plots.
 
@@ -129,18 +115,29 @@ Treat these packages as installable requirements, not optional suggestions. If a
 
 Use conservative publication defaults: white background, readable axis labels, explicit units, color-blind-aware palettes, direct statistical annotation only when computed or provided, and no decorative effects that obscure data.
 
-## Useful Scripts
+## Project layout and exports
+
+- Create or use one explicit per-request project directory. Never write task artifacts to the skill repository root or the caller's current directory by default. Use `scripts/create_plot_project.R <project_dir>`, then keep all data copies, R scripts, outputs, and figures inside that directory.
+- Export every final figure in four forms inside `<project_dir>/figures/` unless the user asks otherwise:
+  - Vector: `<name>.pdf`
+  - Editable: `<name>.svg`
+  - Print: `<name>_700dpi.tiff` at 700 dpi or higher
+  - Web: `<name>_web.png` or `<name>_web.jpg`, target under 1 MB
+- Before any CRAN/Bioconductor access, verify installed packages from the active environment by sourcing `scripts/setup_r_library.R` and calling `rmg_prepare_library(project_dir, skill_dir)`. This must happen before deciding a package is missing. Install missing R packages only after that local-library check, using the repository-local `.r-medical-graphics-library/` by default and `<project_dir>/R-library` or a writable user library as fallback. Use `scripts/install_required_packages.R` or call `rmg_ensure_packages()` from generated scripts. In restricted Codex environments, CRAN/Bioconductor access may require an escalated network approval; if installation fails with network, repository, DNS, proxy, SSL, or permission errors, request the needed approval and retry the same installation command. If Windows reports `740` or "requested operation requires elevation", first switch to the repository-local or project-local library; do not misreport this as a CRAN access problem. Do not silently downgrade figure quality or switch away from the intended plotting package because a library is missing.
+- Run the script when feasible. After export, verify that PDF, SVG, TIFF, and web image files exist, are non-empty, and the web image is under 1 MB. Use `references/publication-qa.md` for the delivery checklist. Review the plotting code against `references/readability-qa.md` before delivery: verify font sizes, panel scales, label lengths, legend entries, color contrast, and axis transforms are appropriate for the final output size. When image viewing is available, inspect the final web PNG or TIFF preview directly and check that the plotted data are large enough, text is readable, labels/legends do not overlap, panels are balanced, and shared axes do not visually collapse any subgroup.
+- Report output paths under the project directory and any unresolved design decisions. If package installation still fails after the appropriate approval/retry path, stop and report the exact installation failure instead of producing a lower-quality fallback.
+
+# Useful Scripts
 
 - `scripts/create_plot_project.R <project_dir>` creates a required per-request project directory with `data/`, `R/`, and `figures/`.
 - `scripts/bootstrap_windows_dependencies.ps1` performs one-time Windows package setup in the repository-local `.r-medical-graphics-library/` by default when Codex cannot install packages inside a restricted session.
 - `scripts/check_dependencies.R` verifies that required packages are visible to the active R session.
 - `scripts/setup_r_library.R` is the shared R library bootstrap. Source this before package checks in every generated plotting/export script.
 - `scripts/install_required_packages.R <pkg1> [pkg2 ...]` installs missing CRAN packages; use `BIOC::<pkg>` for Bioconductor packages.
-
 - `scripts/export_publication_figures.R` provides the `export_publication_figures()` function, which exports PDF, SVG, TIFF, and web PNG from a ggplot object. Source this file and call the function directly; pass `project_dir` to enforce project-local output.
+- `scripts/data_profile.R <data_file>` profiles a CSV/TSV/RDS/Excel file and prints a Markdown data profile to stdout (no files are written). Use it to inspect structure, column roles, types, missingness, numeric summaries, categorical distributions, wide-format columns, and bivariate relationships before recommending charts.
 
-
-## Useful Templates
+# Useful Templates
 
 Copy these into `<project_dir>/R/` and adapt column names, labels, statistics, and figure-specific annotations:
 
@@ -165,7 +162,7 @@ Copy these into `<project_dir>/R/` and adapt column names, labels, statistics, a
 
 Treat templates as starting points, not fixed outputs. Read `references/chart-index.md` and the relevant detailed chart reference before adapting them for variants such as violin, raincloud, density scatter, coefficient plots, or longitudinal charts. Read `references/design-rules.md` and the selected style reference before finalizing visual choices. Read `references/multipanel-figures.md` before adapting any A/B/C or composite figure.
 
-## Output Standard
+# Output Standard
 
 For each completed figure, prefer this artifact set:
 
@@ -178,3 +175,37 @@ figures/<name>_web.png
 ```
 
 These paths are relative to the per-request project directory, not the skill repository root.
+
+# Figure Explanation
+
+After figures are exported and validated, present the figure explanation directly in the conversation with the following content. 该内容记录所生成图形的统计和可视化原理，用于可复现性和同行评审。
+
+## 内容模板
+
+```markdown
+# 图形说明
+
+## 图形标识
+- 图形名称
+- 图表类型
+- 风格（general / nature / lancet / nejm / jama / bmj）
+
+## 统计摘要
+- 变量角色（结局 / 预测变量 / 分组 / 分层）
+- 样本量（总 N，各组 N）
+- 效应估计值（HR / OR / beta / MD + 95% CI）
+- P 值或显著性阈值
+- 使用的模型或检验（Cox / log-rank / 线性回归 / 等）
+
+## 视觉编码
+- 各轴代表的含义（如单位、是否做了变换）
+- 颜色 / 形状 / 线型编码的内容
+- 图例解读
+
+## 解读说明
+- 图表核心结论
+- 关键比较或趋势
+- 注意事项 / 局限性
+```
+
+说明内容必须写入对话回复。

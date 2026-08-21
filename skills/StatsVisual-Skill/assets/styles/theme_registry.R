@@ -86,12 +86,12 @@ rmg_font_family <- function(style = "general", role = "figure") {
   }
   switch(
     style,
-    general = "",
+    general = "Arial",
     nature  = "Arial",
-    lancet  = "",
-    nejm    = "",
-    jama    = "",
-    bmj     = ""
+    lancet  = "Arial",
+    nejm    = "Arial",
+    jama    = "Arial",
+    bmj     = "Arial"
   )
 }
 
@@ -227,10 +227,26 @@ rmg_bar_defaults <- function(style = "general") {
   )
 }
 
-rmg_theme <- function(style = "general", base_size = NULL, base_family = "") {
+rmg_theme <- function(style = "general", base_size = NULL, base_family = NULL) {
   style <- rmg_normalize_style(style)
   if (is.null(base_size)) {
     base_size <- rmg_style_base_size(style)
+  }
+  if (is.null(base_family)) {
+    base_family <- rmg_font_family(style)
+  }
+  # 字体回退：英文使用 base_family（默认 Arial），中文自动回退到宋体（SimSun）。
+  # 仅在 showtext 可用且 SimSun 存在时启用，避免无字体环境报错。
+  if (requireNamespace("showtext", quietly = TRUE) &&
+      requireNamespace("sysfonts", quietly = TRUE) &&
+      nzchar(base_family)) {
+    available <- sysfonts::font_files()
+    if ("SimSun" %in% available$family && !("SimSun" %in% sysfonts::font_families())) {
+      sysfonts::font_add("SimSun", "simsun.ttc")
+    }
+    if ("SimSun" %in% sysfonts::font_families()) {
+      showtext::showtext_auto()
+    }
   }
   if (style == "nature") {
     return(
@@ -266,7 +282,7 @@ rmg_theme <- function(style = "general", base_size = NULL, base_family = "") {
       axis.title.x = ggplot2::element_text(
         margin = ggplot2::margin(t = 10, r = 0, b = 0, l = 0)
       ),
-      axis.title = ggplot2::element_text(size = 13, face = "bold"),
+      axis.title = ggplot2::element_text(size = 12, face = "bold"),
       axis.line = ggplot2::element_line(linewidth = 0.6, color = "black"),
       axis.ticks = ggplot2::element_line(linewidth = 0.3),
       axis.ticks.length = grid::unit(0.15, "cm"),

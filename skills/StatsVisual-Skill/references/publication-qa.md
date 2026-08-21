@@ -31,18 +31,6 @@ Run this checklist before final delivery. Use it together with `readability-qa.m
 - Group sizes, missing-value handling, transformations, scaling, clustering, denominators, interval definitions, or model/test sources are not explicit.
 - Web image size can only be kept under 1 MB by making the preview hard to read.
 
-## Visual Review
-
-When image viewing is available, inspect the final web PNG or TIFF preview directly. Check whether:
-
-- plotted data are large enough to read;
-- text is readable at the final size;
-- labels, legends, and statistical annotations do not overlap the data;
-- multi-panel labels are consistent and aligned;
-- shared legends are collected or deliberately repeated only when encodings differ;
-- colors encode the same group, method, or cohort consistently across panels;
-- shared axes do not visually collapse any subgroup.
-
 ## Delivery Note
 
 Mention any unresolved warning, such as package installation failure, a borderline readability issue, or a web image that could not fit under 1 MB without hurting readability. Do not present fallback output as equivalent to the requested publication output.

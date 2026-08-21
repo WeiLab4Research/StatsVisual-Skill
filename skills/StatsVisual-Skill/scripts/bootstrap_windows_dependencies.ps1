@@ -10,7 +10,7 @@ param(
     "ggridges", "ggbeeswarm", "ggdist", "ggpointdensity", "GGally", "ggExtra",
     "pheatmap", "corrplot", "forestplot", "broom",
     "survival", "survminer", "ggsurvfit",
-    "ggtern", "ragg", "svglite", "magick"
+    "ggtern", "svglite", "magick", "showtext", "sysfonts"
   ),
   [string[]]$BiocPackages = @("ComplexHeatmap", "circlize"),
   [string[]]$BiocRepos = @("https://bioconductor.org/packages/3.22/bioc", "https://mirrors.tuna.tsinghua.edu.cn/bioconductor/packages/3.22/bioc", "https://mirrors.ustc.edu.cn/bioc/packages/3.22/bioc"),

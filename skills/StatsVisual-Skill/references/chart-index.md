@@ -2,6 +2,39 @@
 
 Use this index to move from data structure and scientific intent to a chart reference. Load the detailed chart file only after the route is clear.
 
+## First Questions
+
+Before routing to a chart, answer these questions from the data profile:
+
+- What is the target message: comparison, trend, relationship, distribution, composition, diagnosis, survival, or model fit?
+- Which variables are continuous, categorical, ordered categorical, time/date, event status, or high-dimensional features?
+- Is the unit of analysis individual-level, aggregated, repeated-measure, or matrix-like?
+- Does the plot need to show uncertainty, sample size, statistical tests, or model predictions?
+
+## Common Routes
+
+Map the data structure and research intent to a recommended chart family first, then use the `Chart family → Reference` table below to load the detailed reference.
+
+| Data / intent | Prefer | Good alternatives | Notes |
+| --- | --- | --- | --- |
+| One continuous variable | Histogram or density plot | Boxplot, violin, QQ plot | Show distribution shape before summary-only graphics. |
+| Continuous outcome by 2+ groups | Boxplot plus jitter or violin | Raincloud, dot plot with CI | Use raw points when sample size is not too large. |
+| Mean/rate/proportion by groups | Bar chart with CI or count labels | Dot plot, forest-style interval plot | Avoid bars for raw continuous observations. |
+| Two continuous variables | Scatter plot | Scatter with regression, density scatter, bubble plot | Add smoothing only when it supports the question. |
+| Many pairwise continuous variables | Scatterplot matrix | Correlation heatmap | Use only selected variables for readability. |
+| Time or ordered x variable | Line plot | Area, step, calendar, streamgraph | Use points when observations are sparse. |
+| Cumulative event over time | Step plot | Survival curve | Be explicit about risk set and censoring. |
+| Time-to-event outcome | Kaplan-Meier curve | Cumulative hazard, forest plot for Cox model | Include risk table when useful. |
+| Categorical composition | Stacked bar | 100% stacked bar, mosaic-like plot | Label denominators or percentages. |
+| Categorical numeric summaries with `>25` categories where the goal is frequency, proportion, composition, absolute contribution, burden, or overview ranking | Polar plot or rose chart | | Use circular layouts for compact overview messages, not for significance-value precision, correlation-coefficient comparison, thresholds, P values, CIs, significance marks, or adjusted-versus-unadjusted differences. |
+| Part-to-whole with few categories | Bar chart | Pie/donut only for simple composition | Prefer bars when comparing slices matters. |
+| High-dimensional numeric matrix | Heatmap | Clustered heatmap, annotated heatmap | Standardize rows/columns only when scientifically justified. |
+| Three components summing to one | Ternary plot | Stacked bar if groups are discrete | Validate that components sum to a constant. |
+| Model diagnostics | Residual plot | QQ plot, influence plot, calibration curve | Tie chart to model assumptions. |
+| Regression estimates | Forest plot | Coefficient dot-whisker plot | Show effect size, CI, reference group, and scale. |
+
+## Chart Family → Reference
+
 | Chart family | Suitable data structure | Main message | Reference |
 |---|---|---|---|
 | Bar chart | One categorical variable plus count, proportion, rate, mean, or other summary; optional grouping | Compare magnitudes across categories or ordered groups | `bar-chart.md` |
