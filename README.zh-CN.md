@@ -90,7 +90,9 @@ README.zh-CN.md
 
 ```powershell
 git clone https://github.com/HaotianJiang056/R-plot-skill.git StatsVisual-Skill
+New-Item -ItemType Directory -Force "$env:USERPROFILE\.codex\skills\StatsVisual-Skill" | Out-Null
 Copy-Item ".\StatsVisual-Skill\skills\StatsVisual-Skill\*" "$env:USERPROFILE\.codex\skills\StatsVisual-Skill" -Recurse -Force
+New-Item -ItemType Directory -Force "$env:USERPROFILE\.codex\skills\r-journal-style-calibrator" | Out-Null
 Copy-Item ".\StatsVisual-Skill\skills\r-journal-style-calibrator\*" "$env:USERPROFILE\.codex\skills\r-journal-style-calibrator" -Recurse -Force
 ```
 
@@ -102,7 +104,9 @@ CodeBuddy 体验版每月提供 500 credits 基础积分，供大家免费使用
 
 ```powershell
 git clone https://github.com/HaotianJiang056/R-plot-skill.git StatsVisual-Skill
+New-Item -ItemType Directory -Force "$env:USERPROFILE\.codebuddy\skills\StatsVisual-Skill" | Out-Null
 Copy-Item ".\StatsVisual-Skill\skills\StatsVisual-Skill\*" "$env:USERPROFILE\.codebuddy\skills\StatsVisual-Skill" -Recurse -Force
+New-Item -ItemType Directory -Force "$env:USERPROFILE\.codebuddy\skills\r-journal-style-calibrator" | Out-Null
 Copy-Item ".\StatsVisual-Skill\skills\r-journal-style-calibrator\*" "$env:USERPROFILE\.codebuddy\skills\r-journal-style-calibrator" -Recurse -Force
 ```
 
