@@ -1,4 +1,0 @@
-interface:
-  display_name: "R Journal Style Calibrator"
-  short_description: "Calibrate journal styles for R figures"
-  default_prompt: "Use $r-journal-style-calibrator to add an NEJM-style visual profile to r-medical-graphics from example figures and guidelines."

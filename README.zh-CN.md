@@ -47,7 +47,7 @@ StatsVisual-Skill 是一组面向医学统计绘图的 AI skills，旨在帮助 
 ## 包含的 Skills
 
 - `StatsVisual-Skill`：以数据画像为起点，创建医学统计图和生物统计图。
-- `r-journal-style-calibrator`：基于期刊例图和作者指南，为 `StatsVisual-Skill` 扩展期刊风格。
+- `StatsVisual-Skill-Extension`：提出并应用经确认的更新，扩展 `StatsVisual-Skill` 的图表参考、绘图模板和技能索引。
 
 ## 核心能力
 
@@ -73,9 +73,8 @@ skills/
       templates/
     references/
     scripts/
-  r-journal-style-calibrator/
+  StatsVisual-Skill-Extension/
     SKILL.md
-    agents/
     references/
 LICENSE
 README.md
@@ -92,8 +91,8 @@ README.zh-CN.md
 git clone https://github.com/HaotianJiang056/R-plot-skill.git StatsVisual-Skill
 New-Item -ItemType Directory -Force "$env:USERPROFILE\.codex\skills\StatsVisual-Skill" | Out-Null
 Copy-Item ".\StatsVisual-Skill\skills\StatsVisual-Skill\*" "$env:USERPROFILE\.codex\skills\StatsVisual-Skill" -Recurse -Force
-New-Item -ItemType Directory -Force "$env:USERPROFILE\.codex\skills\r-journal-style-calibrator" | Out-Null
-Copy-Item ".\StatsVisual-Skill\skills\r-journal-style-calibrator\*" "$env:USERPROFILE\.codex\skills\r-journal-style-calibrator" -Recurse -Force
+New-Item -ItemType Directory -Force "$env:USERPROFILE\.codex\skills\StatsVisual-Skill-Extension" | Out-Null
+Copy-Item ".\StatsVisual-Skill\skills\StatsVisual-Skill-Extension\*" "$env:USERPROFILE\.codex\skills\StatsVisual-Skill-Extension" -Recurse -Force
 ```
 
 如果设置了 `CODEX_HOME`，请把 `$env:USERPROFILE\.codex` 替换为 `$env:CODEX_HOME`。
@@ -106,8 +105,8 @@ CodeBuddy 体验版每月提供 500 credits 基础积分，供大家免费使用
 git clone https://github.com/HaotianJiang056/R-plot-skill.git StatsVisual-Skill
 New-Item -ItemType Directory -Force "$env:USERPROFILE\.codebuddy\skills\StatsVisual-Skill" | Out-Null
 Copy-Item ".\StatsVisual-Skill\skills\StatsVisual-Skill\*" "$env:USERPROFILE\.codebuddy\skills\StatsVisual-Skill" -Recurse -Force
-New-Item -ItemType Directory -Force "$env:USERPROFILE\.codebuddy\skills\r-journal-style-calibrator" | Out-Null
-Copy-Item ".\StatsVisual-Skill\skills\r-journal-style-calibrator\*" "$env:USERPROFILE\.codebuddy\skills\r-journal-style-calibrator" -Recurse -Force
+New-Item -ItemType Directory -Force "$env:USERPROFILE\.codebuddy\skills\StatsVisual-Skill-Extension" | Out-Null
+Copy-Item ".\StatsVisual-Skill\skills\StatsVisual-Skill-Extension\*" "$env:USERPROFILE\.codebuddy\skills\StatsVisual-Skill-Extension" -Recurse -Force
 ```
 
 ## Windows R 环境
@@ -160,7 +159,7 @@ Rscript skills/StatsVisual-Skill/scripts/validate_r_plot.R demo/figures
 ```
 
 ```text
-请使用 $r-journal-style-calibrator，根据期刊例图和官方指南，为 StatsVisual-Skill 新增 JAMA 风格。
+请使用 $StatsVisual-Skill-Extension 为 StatsVisual-Skill 新增一种图表类型，例如地理地图。
 ```
 
 即使用户直接提出绘图请求，第一次回复也应先检查数据，确认请求图形是否合适，推荐最佳单图和可选组图，然后等待用户确认再生成 R 代码。

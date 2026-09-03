@@ -47,7 +47,7 @@ This skill covers **16 statistical chart families**. All figure examples are fro
 ## Included Skills
 
 - `StatsVisual-Skill`: creates data-profile-first medical statistics figures and biostatistical graphics with R.
-- `r-journal-style-calibrator`: extends `StatsVisual-Skill` with journal-specific visual styles based on example figures and author guidance.
+- `StatsVisual-Skill-Extension`: proposes and applies confirmed updates to chart references, plotting templates, and skill indexes for `StatsVisual-Skill`.
 
 ## What It Does
 
@@ -74,9 +74,8 @@ skills/
       templates/
     references/
     scripts/
-  r-journal-style-calibrator/
+  StatsVisual-Skill-Extension/
     SKILL.md
-    agents/
     references/
 LICENSE
 README.md
@@ -93,8 +92,8 @@ Clone the repository and copy both skill folders into the skills directory for y
 git clone https://github.com/HaotianJiang056/R-plot-skill.git StatsVisual-Skill
 New-Item -ItemType Directory -Force "$env:USERPROFILE\.codex\skills\StatsVisual-Skill" | Out-Null
 Copy-Item ".\StatsVisual-Skill\skills\StatsVisual-Skill\*" "$env:USERPROFILE\.codex\skills\StatsVisual-Skill" -Recurse -Force
-New-Item -ItemType Directory -Force "$env:USERPROFILE\.codex\skills\r-journal-style-calibrator" | Out-Null
-Copy-Item ".\StatsVisual-Skill\skills\r-journal-style-calibrator\*" "$env:USERPROFILE\.codex\skills\r-journal-style-calibrator" -Recurse -Force
+New-Item -ItemType Directory -Force "$env:USERPROFILE\.codex\skills\StatsVisual-Skill-Extension" | Out-Null
+Copy-Item ".\StatsVisual-Skill\skills\StatsVisual-Skill-Extension\*" "$env:USERPROFILE\.codex\skills\StatsVisual-Skill-Extension" -Recurse -Force
 ```
 
 If `CODEX_HOME` is set, replace `$env:USERPROFILE\.codex` with `$env:CODEX_HOME`.
@@ -107,8 +106,8 @@ The CodeBuddy trial provides 500 base credits each month for free use.
 git clone https://github.com/HaotianJiang056/R-plot-skill.git StatsVisual-Skill
 New-Item -ItemType Directory -Force "$env:USERPROFILE\.codebuddy\skills\StatsVisual-Skill" | Out-Null
 Copy-Item ".\StatsVisual-Skill\skills\StatsVisual-Skill\*" "$env:USERPROFILE\.codebuddy\skills\StatsVisual-Skill" -Recurse -Force
-New-Item -ItemType Directory -Force "$env:USERPROFILE\.codebuddy\skills\r-journal-style-calibrator" | Out-Null
-Copy-Item ".\StatsVisual-Skill\skills\r-journal-style-calibrator\*" "$env:USERPROFILE\.codebuddy\skills\r-journal-style-calibrator" -Recurse -Force
+New-Item -ItemType Directory -Force "$env:USERPROFILE\.codebuddy\skills\StatsVisual-Skill-Extension" | Out-Null
+Copy-Item ".\StatsVisual-Skill\skills\StatsVisual-Skill-Extension\*" "$env:USERPROFILE\.codebuddy\skills\StatsVisual-Skill-Extension" -Recurse -Force
 ```
 
 ## Windows R Setup
@@ -161,7 +160,7 @@ Use $StatsVisual-Skill to draw a publication-ready Kaplan-Meier curve with risk 
 ```
 
 ```text
-Use $r-journal-style-calibrator to add a JAMA-style visual profile to StatsVisual-Skill from example figures and official guidelines.
+Use $StatsVisual-Skill-Extension to add a new chart type to StatsVisual-Skill, for example a geographic map.
 ```
 
 Even for direct drawing requests, the first response should inspect the data, confirm whether the requested chart is suitable, recommend the best single figure and any optional multi-panel figure, then ask for confirmation before generating R code.
