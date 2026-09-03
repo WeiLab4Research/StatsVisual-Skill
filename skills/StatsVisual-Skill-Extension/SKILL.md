@@ -51,6 +51,8 @@ references/statsvisual_skill_registry.md
 
 to determine whether the capability already exists.
 
+Review whether the requested modification is reasonable. Agree to modify only when the request is justified and consistent with the extension principles; otherwise explain the concern and ask the user to revise the request.
+
 ---
 
 # Step 2. Proposal First (Mandatory)

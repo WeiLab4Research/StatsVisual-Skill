@@ -6,6 +6,7 @@
 2. Preserve existing medical statistical standards.
 3. Avoid duplicate chart creation.
 4. Maintain reproducible templates.
+5. Review whether the requested modification is reasonable; agree to modify only when it is justified.
 
 ## New Chart Requirements
 

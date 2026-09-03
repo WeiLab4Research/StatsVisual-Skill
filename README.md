@@ -47,7 +47,7 @@ This skill covers **16 statistical chart families**. All figure examples are fro
 ## Included Skills
 
 - `StatsVisual-Skill`: creates data-profile-first medical statistics figures and biostatistical graphics with R.
-- `StatsVisual-Skill-Extension`: proposes and applies confirmed updates to chart references, plotting templates, and skill indexes for `StatsVisual-Skill`.
+- `StatsVisual-Skill-Extension`: adds plotting references and code templates for chart types `StatsVisual-Skill` does not yet support, and refines existing charts when a better style is available.
 
 ## What It Does
 

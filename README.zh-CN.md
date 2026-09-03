@@ -47,7 +47,7 @@ StatsVisual-Skill 是一组面向医学统计绘图的 AI skills，旨在帮助 
 ## 包含的 Skills
 
 - `StatsVisual-Skill`：以数据画像为起点，创建医学统计图和生物统计图。
-- `StatsVisual-Skill-Extension`：提出并应用经确认的更新，扩展 `StatsVisual-Skill` 的图表参考、绘图模板和技能索引。
+- `StatsVisual-Skill-Extension`：为 `StatsVisual-Skill` 补充尚无的图种（绘图规范与代码模板），并在有更优绘图风格时改进已有图形。
 
 ## 核心能力
 
