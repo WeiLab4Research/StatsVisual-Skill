@@ -41,7 +41,7 @@ Ternary plots are descriptive displays of composition. Confidence, density, and 
 
 ### Basic Ternary Plot
 
-![Basic Ternary Plot](../assets/gallery/ternary/basic_ternary.png)
+![Basic Ternary Plot](../assets/gallery/ternary_plot/basic_ternary.png)
 
 **Statistical Features**
 
@@ -58,11 +58,11 @@ Ternary plots are descriptive displays of composition. Confidence, density, and 
 - Use `ggtern(data, aes(x = comp1, y = comp2, z = comp3))` and add observations with `geom_point()`.
 - Map an optional group to `color`, label the axes with `Tlab()`, `Llab()`, and `Rlab()`, and use `theme_showarrows()` when axis direction needs emphasis.
 
-- code reference: source script `\StatsVisual-Skill\assets\templates\ternary\Ternary Plot.R`
+- code reference: source script `\StatsVisual-Skill\assets\templates\ternary_plot\Ternary Plot.R`
 
 ### Confidence Ternary Plot
 
-![Confidence Ternary Plot](../assets/gallery/ternary/interval.png)
+![Confidence Ternary Plot](../assets/gallery/ternary_plot/interval.png)
 
 **Statistical Features**
 
@@ -81,7 +81,7 @@ Ternary plots are descriptive displays of composition. Confidence, density, and 
 
 ### Density Ternary Plot
 
-![Density Ternary Plot](../assets/gallery/ternary/density.png)
+![Density Ternary Plot](../assets/gallery/ternary_plot/density.png)
 
 **Statistical Features**
 
@@ -100,7 +100,7 @@ Ternary plots are descriptive displays of composition. Confidence, density, and 
 
 ### Interpolated Ternary Plot
 
-![Interpolated Ternary Plot](../assets/gallery/ternary/interpolation.png)
+![Interpolated Ternary Plot](../assets/gallery/ternary_plot/interpolation.png)
 
 **Statistical Features**
 

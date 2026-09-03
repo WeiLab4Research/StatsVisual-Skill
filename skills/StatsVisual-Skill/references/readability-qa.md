@@ -1,6 +1,24 @@
-﻿# Figure Readability QA
+﻿# Figure Readability & Publication QA
 
-Use this reference before final delivery and whenever a plot looks technically valid but may be hard to read at final size.
+Use this reference before final delivery, when a plot looks technically valid but may be hard to read at final size, and whenever scripted QA reports `WARN` or `FAIL`. It defines both the delivery gate (required checks and delivery-blocking failures) and the detailed readability thresholds and fixes.
+
+## Required Scripted Checks
+
+- Verify that PDF, SVG, TIFF, and web image files exist and are non-empty, and the web image is under 1 MB.
+- Confirm the R script can be rerun from the project root.
+
+## Delivery-Blocking Failures
+
+- Missing or empty PDF, SVG, TIFF, or web image.
+- TIFF exported below the requested DPI.
+- SVG or PDF text is not editable when editable vector text is feasible for the chart type.
+- Readability QA reports `FAIL`, including a visually collapsed subgroup or panel.
+- A bar chart uses a truncated length axis without a clear scientific reason.
+- Statistical annotations contradict computed/provided values.
+- Survival event coding, censoring, or time unit is unverified for survival graphics.
+- A multi-panel figure is only a collage and does not match the figure plan.
+- A categorical numeric summary with `>25` categories and a frequency, proportion, composition, absolute contribution, burden, or overview-ranking message uses a tall bar/dot layout when a polar plot or rose chart would be more legible.
+- A categorical numeric summary uses a rose chart or polar plot as the primary figure for significance-value precision, correlation-coefficient precision, threshold judgment, P values, CIs, significance marks, or adjusted-versus-unadjusted differences.
 
 ## Scale And Panel Policy
 
@@ -33,11 +51,8 @@ Treat overlap and layout as publication-readability issues, not cosmetic prefere
 - Multi-panel layouts look intentional: panel sizes, spacing, alignment, and shared legends should support the figure's message.
 - Every statistical panel states or implies sample size, interval definition, and model/test source.
 - No background grid lines (major or minor) are present unless they carry explicit scientific meaning, such as a null-effect reference line in a forest plot. Grid lines that serve only as visual decoration must be removed.
-- SVG/PDF text should remain editable when feasible.
 
 ## Required QA Loop
-
-After export, verify that PDF, SVG, TIFF, and web image files exist and are non-empty, and the web image is under 1 MB.
 
 Review the plotting code against the checks above. If any readability issues are found, revise the plot code and export again. Do not deliver a figure with known readability problems as publication-ready output.
 

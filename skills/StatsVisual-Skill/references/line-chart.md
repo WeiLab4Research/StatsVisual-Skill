@@ -51,7 +51,7 @@ Area, stacked area, stream, and step charts are related extensions of line chart
 
 ### Line Plot with Point
 
-![Line Plot with Point](../assets/gallery/line/point_line.png)
+![Line Plot with Point](../assets/gallery/line_plot/point_line.png)
 
 **Statistical Features**
 
@@ -67,11 +67,11 @@ Area, stacked area, stream, and step charts are related extensions of line chart
 
 - Map the ordered variable to `x`, the numeric outcome to `y`, and the grouping variable to `color` or `group`.
 - Combine `geom_point()` with `geom_line()` and ensure observations are ordered within each group.
-- Code Reference: source script `\StatsVisual-Skill\assets\templates\line\Line Plot with Point.R`
+- Code Reference: source script `\StatsVisual-Skill\assets\templates\line_chart\Line Plot with Point.R`
 
 ### Scree Plot
 
-![Scree Plot](../assets/gallery/line/scree.png)
+![Scree Plot](../assets/gallery/line_plot/scree.png)
 
 **Statistical Features**
 
@@ -87,11 +87,11 @@ Area, stacked area, stream, and step charts are related extensions of line chart
 
 - When raw variables are supplied, first perform PCA or factor analysis and derive eigenvalues or explained variance.
 - Keep component labels in numeric order; use `group = 1` when a discrete component axis is connected by `geom_line()`.
-- code reference:source script `\StatsVisual-Skill\assets\templates\line\Scree Plot.R`
+- code reference:source script `\StatsVisual-Skill\assets\templates\line_chart\Scree Plot.R`
 
 ### Line Plot with Errorbar
 
-![Line Plot with Errorbar](../assets/gallery/line/errorbar_line.png)
+![Line Plot with Errorbar](../assets/gallery/line_plot/errorbar_line.png)
 
 **Statistical Features**
 
@@ -107,11 +107,11 @@ Area, stacked area, stream, and step charts are related extensions of line chart
 
 - Draw intervals with `geom_errorbar()` using explicit `ymin` and `ymax`, then add the corresponding points and lines.
 - Separate estimates at the same time point by a small x-offset or compatible dodge, and add `geom_hline(yintercept = 0)` when zero has clinical meaning.
-- code reference:source script `\StatsVisual-Skill\assets\templates\line\Line Plot with Errorbar.R`
+- code reference:source script `\StatsVisual-Skill\assets\templates\line_chart\Line Plot with Errorbar.R`
 
 ### Time Series Plot
 
-![Time Series Plot](../assets/gallery/line/time_series.png)
+![Time Series Plot](../assets/gallery/line_plot/time_series.png)
 
 **Statistical Features**
 
@@ -127,11 +127,11 @@ Area, stacked area, stream, and step charts are related extensions of line chart
 
 - Convert the time variable to a valid date class and control calendar breaks with `scale_x_date()`.
 - For diagnostic panels, construct the series with its correct frequency, apply `log()` or `diff()` as required, realign dates, and combine panels consistently.
-- code reference:source script `\StatsVisual-Skill\assets\templates\line\Time Series Plot.R`
+- code reference:source script `\StatsVisual-Skill\assets\templates\line_chart\Time Series Plot.R`
 
 ### Smooth Line Plot
 
-![Smooth Line Plot](../assets/gallery/line/smooth_line.png)
+![Smooth Line Plot](../assets/gallery/line_plot/smooth_line.png)
 
 **Statistical Features**
 
@@ -147,11 +147,11 @@ Area, stacked area, stream, and step charts are related extensions of line chart
 
 - Fit the selected model first, extract fitted values, and align them with the original observation times.
 - Plot observations with `geom_point()` and fitted values with `geom_line()` using comparable axes across models.
-- code reference:source script `\StatsVisual-Skill\assets\templates\line\Smooth Line Plot.R`
+- code reference:source script `\StatsVisual-Skill\assets\templates\line_chart\Smooth Line Plot.R`
 
 ### Area Graph
 
-![Area Graph](../assets/gallery/line/area.png)
+![Area Graph](../assets/gallery/line_plot/area.png)
 
 **Statistical Features**
 
@@ -167,11 +167,11 @@ Area, stacked area, stream, and step charts are related extensions of line chart
 
 - Use `geom_area()` with the ordered variable on `x`, the value on `y`, and the series mapped to `fill`.
 - For overlapping areas, control transparency with `alpha`; display proportions on a consistent percentage scale.
-- code reference:source script `\StatsVisual-Skill\assets\templates\line\Area Graph.R`
+- code reference:source script `\StatsVisual-Skill\assets\templates\line_chart\Area Graph.R`
 
 ### Stacked Area Graph
 
-![Stacked Area Graph](../assets/gallery/line/stacked_area.png)
+![Stacked Area Graph](../assets/gallery/line_plot/stacked_area.png)
 
 **Statistical Features**
 
@@ -187,11 +187,11 @@ Area, stacked area, stream, and step charts are related extensions of line chart
 
 - Use long-format data with `geom_area(aes(fill = group), position = "stack")`; factor levels control stacking and legend order.
 - Add event markers with `geom_vline()` only when the corresponding date has a defined clinical or surveillance meaning.
-- code reference:source script `\StatsVisual-Skill\assets\templates\line\Stacked Area Graph.R`
+- code reference:source script `\StatsVisual-Skill\assets\templates\line_chart\Stacked Area Graph.R`
 
 ### Stream Graph
 
-![Stream Graph](../assets/gallery/line/stream.png)
+![Stream Graph](../assets/gallery/line_plot/stream.png)
 
 **Statistical Features**
 
@@ -207,11 +207,11 @@ Area, stacked area, stream, and step charts are related extensions of line chart
 
 - Map time to `x`, magnitude to `y`, and category to both `group` and `fill`, then draw with `geom_stream()`.
 - When the display is centered around zero, a reference line and absolute-value axis labels may be used to preserve readable magnitudes.
-- code reference:source script `\StatsVisual-Skill\assets\templates\line\Stream Graph.R`
+- code reference:source script `\StatsVisual-Skill\assets\templates\line_chart\Stream Graph.R`
 
 ### Stepper Line Chart
 
-![Stepper Line Chart](../assets/gallery/line/step.png)
+![Stepper Line Chart](../assets/gallery/line_plot/step.png)
 
 **Statistical Features**
 
@@ -227,11 +227,11 @@ Area, stacked area, stream, and step charts are related extensions of line chart
 
 - Use `geom_step()` with a continuous or date variable on `x` and the cumulative or state value on `y`.
 - Map the outcome name to `color` when several step series are displayed together.
-- code reference:source script `\StatsVisual-Skill\assets\templates\line\Stepper Line Chart.R`
+- code reference:source script `\StatsVisual-Skill\assets\templates\line_chart\Stepper Line Chart.R`
 
 ### Radar Plot
 
-![Radar Plot](../assets/gallery/line/radar.png)
+![Radar Plot](../assets/gallery/line_plot/radar.png)
 
 **Statistical Features**
 
@@ -247,7 +247,7 @@ Area, stacked area, stream, and step charts are related extensions of line chart
 
 - Arrange data with one row per group and one column per comparable indicator, retaining the group identifier as the first column.
 - Use `ggradar()` after scaling variables to a common range, then specify group colors, points, labels, and legend placement.
-- code reference:source script `\StatsVisual-Skill\assets\templates\line\Radar Plot.R`
+- code reference:source script `\StatsVisual-Skill\assets\templates\line_chart\Radar Plot.R`
 
 ## 7. QA Checklist
 

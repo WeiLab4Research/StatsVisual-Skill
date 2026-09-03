@@ -65,9 +65,9 @@ Individual-level data should be summarized before plotting counts, proportions, 
 
 ### 6.1 Basic Bar Plot
 
-![Basic Bar Plot](../assets/gallery/bar/basic_bar.png)
+![Basic Bar Plot](../assets/gallery/bar_plot/basic_bar.png)
 
-- Code Reference: source script `\StatsVisual-Skill\assets\templates\bar\Basic Bar Plot.R`
+- Code Reference: source script `\StatsVisual-Skill\assets\templates\bar_plot\Basic Bar Plot.R`
 
 **Statistical Features**
 
@@ -89,9 +89,9 @@ Individual-level data should be summarized before plotting counts, proportions, 
 
 ### 6.2 Grouped Bar Plot
 
-![Stratified Bar Plot](../assets/gallery/bar/grouped_bar.png)
+![Stratified Bar Plot](../assets/gallery/bar_plot/grouped_bar.png)
 
-- Code Reference: source script `\StatsVisual-Skill\assets\templates\bar\Stratified Bar Plot.R`
+- Code Reference: source script `\StatsVisual-Skill\assets\templates\bar_plot\Stratified Bar Plot.R`
 
 **Statistical Features**
 
@@ -113,9 +113,9 @@ Individual-level data should be summarized before plotting counts, proportions, 
 
 ### 6.3 Stacked and 100% Stacked Bar Plot
 
-![Stacked Bar Plot](../assets/gallery/bar/stacked_bar.png)
+![Stacked Bar Plot](../assets/gallery/bar_plot/stacked_bar.png)
 
-- Code Reference: source script `\StatsVisual-Skill\assets\templates\bar\Stacked Bar Plot.R`
+- Code Reference: source script `\StatsVisual-Skill\assets\templates\bar_plot\Stacked Bar Plot.R`
 
 **Statistical Features**
 
@@ -137,9 +137,9 @@ Individual-level data should be summarized before plotting counts, proportions, 
 
 ### 6.4 Bar Plot with Error Bars
 
-![Bar Plot with Error Bars](../assets/gallery/bar/error_bar.png)
+![Bar Plot with Error Bars](../assets/gallery/bar_plot/error_bar.png)
 
-- Code Reference: source script `\StatsVisual-Skill\assets\templates\bar\Bar Plot with Error Bars.R`
+- Code Reference: source script `\StatsVisual-Skill\assets\templates\bar_plot\Bar Plot with Error Bars.R`
 
 **Statistical Features**
 
@@ -161,9 +161,9 @@ Individual-level data should be summarized before plotting counts, proportions, 
 
 ### 6.5 Waterfall Plot
 
-![Waterfall Plot](../assets/gallery/bar/waterfall_bar.png)
+![Waterfall Plot](../assets/gallery/bar_plot/waterfall_bar.png)
 
-- Code Reference: source script `\StatsVisual-Skill\assets\templates\bar\Waterfall Plot.R`
+- Code Reference: source script `\StatsVisual-Skill\assets\templates\bar_plot\Waterfall Plot.R`
 
 **Statistical Features**
 
@@ -186,9 +186,9 @@ Individual-level data should be summarized before plotting counts, proportions, 
 
 ### 6.6 Polar Bar Plot
 
-![Polar Bar Plot](../assets/gallery/bar/polar_bar.png)
+![Polar Bar Plot](../assets/gallery/bar_plot/polar_bar.png)
 
-- Code Reference: source script `\StatsVisual-Skill\assets\templates\bar\Polar Bar Plot.R`
+- Code Reference: source script `\StatsVisual-Skill\assets\templates\bar_plot\Polar Bar Plot.R`
 
 **Statistical Features**
 

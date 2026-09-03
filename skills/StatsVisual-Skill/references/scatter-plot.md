@@ -47,7 +47,7 @@ Scatterplot matrices extend this logic to several variables. Marginal, smoothed,
 
 ### Scatter Plot
 
-![Scatter Plot](../assets/gallery/scatter/scatter.png)
+![Scatter Plot](../assets/gallery/scatter_plot/scatter.png)
 
 **Statistical Features**
 
@@ -64,11 +64,11 @@ Scatterplot matrices extend this logic to several variables. Marginal, smoothed,
 - Map the two numerical variables to `x` and `y` and draw with `geom_point()`.
 - Add group to `color` or `shape` only when it represents a defined comparison; use transparency or sampling for dense data.
 
-- Code Reference: source script `\StatsVisual-Skill\assets\templates\scatter\Scatter Plot.R`
+- Code Reference: source script `\StatsVisual-Skill\assets\templates\scatter_plot\Scatter Plot.R`
 
 ### Scatterplot Matrix
 
-![Scatterplot Matrix](../assets/gallery/scatter/matrix.png)
+![Scatterplot Matrix](../assets/gallery/scatter_plot/matrix.png)
 
 **Statistical Features**
 
@@ -85,11 +85,11 @@ Scatterplot matrices extend this logic to several variables. Marginal, smoothed,
 - Use `GGally::ggpairs()` and specify the numerical variables through `columns`.
 - Define `lower`, `diag`, and `upper` layers explicitly so points, distributions, correlations, or smooths have distinct roles.
 
-- code reference:source script `\StatsVisual-Skill\assets\templates\scatter\Scatterplot Matrix.R`
+- code reference:source script `\StatsVisual-Skill\assets\templates\scatter_plot\Scatterplot Matrix.R`
 
 ### Scatter Plot with Marginal Distribution
 
-![Scatter Plot with Marginal Distribution](../assets/gallery/scatter/marginal.png)
+![Scatter Plot with Marginal Distribution](../assets/gallery/scatter_plot/marginal.png)
 
 **Statistical Features**
 
@@ -106,11 +106,11 @@ Scatterplot matrices extend this logic to several variables. Marginal, smoothed,
 - Build the main scatter plot first and pass it to `ggExtra::ggMarginal()`.
 - Use the same data subset in all layers; add a fitted line or correlation annotation only when its method and placement are clearly defined.
 
-- Code Reference: source script `\StatsVisual-Skill\assets\templates\scatter\Marginal Distribution Scatter Plot.R`
+- Code Reference: source script `\StatsVisual-Skill\assets\templates\scatter_plot\Marginal Distribution Scatter Plot.R`
 
 ### Scatter Plot with Smooth Curve
 
-![Scatter Plot with Smooth Curve](../assets/gallery/scatter/smooth.png)
+![Scatter Plot with Smooth Curve](../assets/gallery/scatter_plot/smooth.png)
 
 **Statistical Features**
 
@@ -129,7 +129,7 @@ Scatterplot matrices extend this logic to several variables. Marginal, smoothed,
 
 ### Smooth Scatter Plot
 
-![Smooth Scatter Plot](../assets/gallery/scatter/smooth_scatter.png)
+![Smooth Scatter Plot](../assets/gallery/scatter_plot/smooth_scatter.png)
 
 **Statistical Features**
 
@@ -146,11 +146,11 @@ Scatterplot matrices extend this logic to several variables. Marginal, smoothed,
 - Map the two numerical variables to `x` and `y` and draw with `ggpointdensity::geom_pointdensity()`.
 - Tune the density adjustment when required and apply a perceptually ordered continuous color scale.
 
-- code reference:source script `\StatsVisual-Skill\assets\templates\scatter\Smooth Scatter Plot.R`
+- code reference:source script `\StatsVisual-Skill\assets\templates\scatter_plot\Smooth Scatter Plot.R`
 
 ### Sunflower Plot
 
-![Sunflower Plot](../assets/gallery/scatter/sunflower.png)
+![Sunflower Plot](../assets/gallery/scatter_plot/sunflower.png)
 
 **Statistical Features**
 
@@ -167,11 +167,11 @@ Scatterplot matrices extend this logic to several variables. Marginal, smoothed,
 - Use the base-graphics `sunflowerplot()` with the two discrete or semi-discrete variables.
 - Set factor or axis labels explicitly and retain a clear explanation that petals encode repeated observations.
 
-- code reference:source script `\StatsVisual-Skill\assets\templates\scatter\Sunflower Plot.R`
+- code reference:source script `\StatsVisual-Skill\assets\templates\scatter_plot\Sunflower Plot.R`
 
 ### Bubble Plot
 
-![Bubble Plot](../assets/gallery/scatter/bubble.png)
+![Bubble Plot](../assets/gallery/scatter_plot/bubble.png)
 
 **Statistical Features**
 
@@ -188,11 +188,11 @@ Scatterplot matrices extend this logic to several variables. Marginal, smoothed,
 - Map the third variable to `size` and an optional grouping variable to `color` in `geom_point()`.
 - Control the area scale and maximum bubble size carefully; add `geom_smooth()` only when a trend across `x` and `y` is analytically justified.
 
-- code reference:source script `\StatsVisual-Skill\assets\templates\scatter\Bubble Plot.R`
+- code reference:source script `\StatsVisual-Skill\assets\templates\scatter_plot\Bubble Plot.R`
 
 ### Volcano Plot
 
-![Volcano Plot](../assets/gallery/scatter/volcano.png)
+![Volcano Plot](../assets/gallery/scatter_plot/volcano.png)
 
 **Statistical Features**
 
@@ -209,7 +209,7 @@ Scatterplot matrices extend this logic to several variables. Marginal, smoothed,
 - Map the defined effect measure to `x` and `-log10(P)` or `-log10(adjusted P)` to `y`; ensure all probability values are numeric and greater than zero.
 - Create significance groups from effect and probability thresholds, add `geom_hline()` and `geom_vline()`, and label only selected features with `geom_text_repel()`.
 
-- Code Reference: source script `\StatsVisual-Skill\assets\templates\scatter\Volcano Plot.R`
+- Code Reference: source script `\StatsVisual-Skill\assets\templates\scatter_plot\Volcano Plot.R`
 
 ## 7. QA Checklist
 

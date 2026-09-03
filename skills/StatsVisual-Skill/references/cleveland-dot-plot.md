@@ -47,7 +47,7 @@ Related variants use line segments, paired points, interaction links, genomic po
 
 ### Cleveland's Dot Plot
 
-![Cleveland's Dot Plot](../assets/gallery/dot/cleveland.png)
+![Cleveland's Dot Plot](../assets/gallery/cleveland_dot_dot/cleveland.png)
 
 **Statistical Features**
 
@@ -64,11 +64,11 @@ Related variants use line segments, paired points, interaction links, genomic po
 - Map the estimate to `x` and the category to `y`, then draw with `geom_point()`.
 - Use `reorder()` or explicit factor levels to control order, and add a zero reference line when the estimate can be positive or negative.
 
-- code reference:source script `\StatsVisual-Skill\assets\templates\dot\Cleveland's Dot Plot.R`
+- code reference:source script `\StatsVisual-Skill\assets\templates\cleveland_dot_plot\Cleveland's Dot Plot.R`
 
 ### Lollipop Plot
 
-![Lollipop Plot](../assets/gallery/dot/lollipop.png)
+![Lollipop Plot](../assets/gallery/cleveland_dot_dot/lollipop.png)
 
 **Statistical Features**
 
@@ -85,11 +85,11 @@ Related variants use line segments, paired points, interaction links, genomic po
 - Use `geom_segment()` from the baseline to each estimate, followed by `geom_point()` at the endpoint.
 - Add `geom_vline(xintercept = 0)` or another prespecified reference and use a separate data subset only for justified highlighting.
 
-- code reference:source script `\StatsVisual-Skill\assets\templates\dot\Lollipop Plot.R`
+- code reference:source script `\StatsVisual-Skill\assets\templates\cleveland_dot_plot\Lollipop Plot.R`
 
 ### Lollipop Plot with Interaction Effect
 
-![Lollipop Plot with Interaction Effect](../assets/gallery/dot/interaction_lollipop.png)
+![Lollipop Plot with Interaction Effect](../assets/gallery/cleveland_dot_dot/interaction_lollipop.png)
 
 **Statistical Features**
 
@@ -106,11 +106,11 @@ Related variants use line segments, paired points, interaction links, genomic po
 - Keep the main estimate data and interaction-link data in separate objects and layers.
 - Draw stems and points with `geom_segment()` and `geom_point()`, then add selected links with `geom_bezier()` using explicit endpoints and control points.
 
-- code reference:source script `\StatsVisual-Skill\assets\templates\dot\Lollipop Plot with Interaction Effect.R`
+- code reference:source script `\StatsVisual-Skill\assets\templates\cleveland_dot_plot\Lollipop Plot with Interaction Effect.R`
 
 ### Dumbbell Plot
 
-![Dumbbell Plot](../assets/gallery/dot/dumbbell.png)
+![Dumbbell Plot](../assets/gallery/cleveland_dot_dot/dumbbell.png)
 
 **Statistical Features**
 
@@ -127,11 +127,11 @@ Related variants use line segments, paired points, interaction links, genomic po
 - Reshape paired columns into long format with one row per category–estimate type.
 - Map value to `x`, category to `y`, connect observations by category, and map estimate type to point color.
 
-- code reference:source script `\StatsVisual-Skill\assets\templates\dot\Dumbbell Plot.R`
+- code reference:source script `\StatsVisual-Skill\assets\templates\cleveland_dot_plot\Dumbbell Plot.R`
 
 ### Stratified Dot Plot
 
-![Stratified Dot Plot](../assets/gallery/dot/stratified.png)
+![Stratified Dot Plot](../assets/gallery/cleveland_dot_dot/stratified.png)
 
 **Statistical Features**
 
@@ -148,7 +148,7 @@ Related variants use line segments, paired points, interaction links, genomic po
 - Map category and value to the axes and map the stratifying variable to `color` or `group`.
 - Use `ggdotchart()` or `geom_point()`, and control category order explicitly before applying `coord_flip()` or rotation.
 
-- code reference: source script `\StatsVisual-Skill\assets\templates\dot\Stratified Dot Plot.R`
+- code reference: source script `\StatsVisual-Skill\assets\templates\cleveland_dot_plot\Stratified Dot Plot.R`
 
 ### Dual-metric Stratified Dot Plot
 
@@ -167,11 +167,11 @@ Related variants use line segments, paired points, interaction links, genomic po
 - Draw each metric in a separate `geom_point()` layer and use `ggnewscale::new_scale_color()` when independent color scales are required.
 - Add indicator-specific `geom_hline()` thresholds and preserve accurate legend titles for both metrics.
 
-- code reference:source script `\StatsVisual-Skill\assets\templates\dot\Stratified Dot Plot.R`
+- code reference:source script `\StatsVisual-Skill\assets\templates\cleveland_dot_plot\Stratified Dot Plot.R`
 
 #### Manhattan Plot
 
-![Manhattan Plot](../assets/gallery/dot/manhattan.png)
+![Manhattan Plot](../assets/gallery/cleveland_dot_dot/manhattan.png)
 
 **Statistical Features**
 
@@ -188,11 +188,11 @@ Related variants use line segments, paired points, interaction links, genomic po
 - Validate chromosome, position, and positive numeric `P` values, then compute or supply cumulative genomic position and `-log10(P)`.
 - Add the significance line with `geom_hline()`, label only selected loci with `geom_text_repel()`, and mark any y-axis break explicitly.
 
-- code reference:source script `\StatsVisual-Skill\assets\templates\dot\Manhattan Plot.R`
+- code reference:source script `\StatsVisual-Skill\assets\templates\cleveland_dot_plot\Manhattan Plot.R`
 
 #### Epidemic Trend Dot Plot
 
-![Epidemic Trend Dot Plot](../assets/gallery/dot/epidemic_trend.png)
+![Epidemic Trend Dot Plot](../assets/gallery/cleveland_dot_dot/epidemic_trend.png)
 
 **Statistical Features**
 
@@ -209,7 +209,7 @@ Related variants use line segments, paired points, interaction links, genomic po
 - Parse dates explicitly, fix the region order, and map event count to `size` in `geom_point()`.
 - Use `scale_x_date()` for the study period, provide a readable size legend, and add light row bands with `geom_rect()` when needed.
 
-- code reference:source script `\StatsVisual-Skill\assets\templates\dot\Epidemic Trend Dot Plot.R`
+- code reference:source script `\StatsVisual-Skill\assets\templates\cleveland_dot_plot\Epidemic Trend Dot Plot.R`
 
 ## 7. QA Checklist
 

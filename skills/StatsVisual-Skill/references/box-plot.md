@@ -49,7 +49,7 @@ Boxenplots, violin plots, beeswarm plots, pirate plots, and raincloud plots exte
 
 ### Box Plot
 
-![Box Plot](../assets/gallery/box/box.png)
+![Box Plot](../assets/gallery/box_plot/box.png)
 
 **Statistical Features**
 
@@ -66,11 +66,11 @@ Boxenplots, violin plots, beeswarm plots, pirate plots, and raincloud plots exte
 - Map the continuous outcome to `y` and use a single `x` level for an overall distribution.
 - Draw whisker caps with `stat_boxplot(geom = "errorbar")` and the summary with `geom_boxplot()`; control outlier appearance separately.
 
-- code reference:source script `\StatsVisual-Skill\assets\templates\box\Box Plot.R`
+- code reference:source script `\StatsVisual-Skill\assets\templates\box_plot\Box Plot.R`
 
 ### Stratified Box Plot
 
-![Stratified Box Plot](../assets/gallery/box/stratified.png)
+![Stratified Box Plot](../assets/gallery/box_plot/stratified.png)
 
 **Statistical Features**
 
@@ -87,11 +87,11 @@ Boxenplots, violin plots, beeswarm plots, pirate plots, and raincloud plots exte
 - Map the main grouping variable to `x`, the continuous outcome to `y`, and the subgroup to `fill` or `color`.
 - Use `geom_boxplot()` with consistent dodge and scales; combine related panels with `plot_grid()` or `patchwork`.
 
-- code reference:source script `\StatsVisual-Skill\assets\templates\box\Stratified Box Plot.R`
+- code reference:source script `\StatsVisual-Skill\assets\templates\box_plot\Stratified Box Plot.R`
 
 ### Notched Box Plot
 
-![Notched Box Plot](../assets/gallery/box/notched.png)
+![Notched Box Plot](../assets/gallery/box_plot/notched.png)
 
 **Statistical Features**
 
@@ -108,11 +108,11 @@ Boxenplots, violin plots, beeswarm plots, pirate plots, and raincloud plots exte
 - Use the standard box-plot mappings and set `notch = TRUE` in `geom_boxplot()`.
 - Control the horizontal notch shape with `notchwidth`; retain sufficient y-axis range so the notch is not visually distorted.
 
-- code reference:source script `\StatsVisual-Skill\assets\templates\box\Notched Box Plot.R`
+- code reference:source script `\StatsVisual-Skill\assets\templates\box_plot\Notched Box Plot.R`
 
 ### Boxenplot(enhanced box plot)
 
-![Boxenplot (enhanced box plot)](../assets/gallery/box/enhanced.png)
+![Boxenplot (enhanced box plot)](../assets/gallery/box_plot/enhanced.png)
 
 **Statistical Features**
 
@@ -137,11 +137,11 @@ Boxenplots, violin plots, beeswarm plots, pirate plots, and raincloud plots exte
 - Do not layer `geom_boxplot()` whiskers, `stat_boxplot()` caps, or separate median crossbars on top of `geom_lv()` unless the figure is intentionally a composite and the added summaries are explained.
 - If manually implementing a letter-value plot, compute quantiles with the same depth logic as `lvplot` and render the upper and lower letter-value intervals as separate non-overlapping rectangles. Validate that the number of visible bands matches the selected `k` rule and that separated outliers are not included in the quantile input.
 
-- code reference:source script `\StatsVisual-Skill\assets\templates\box\Letter-value Box Plot.R`
+- code reference:source script `\StatsVisual-Skill\assets\templates\box_plot\Letter-value Box Plot.R`
 
 ### Pagoda Plot
 
-![Boxenplot (LV plot)](../assets/gallery/box/lvplot.png)
+![Boxenplot (LV plot)](../assets/gallery/box_plot/lvplot.png)
 
 **Statistical Features**
 
@@ -158,11 +158,11 @@ Boxenplots, violin plots, beeswarm plots, pirate plots, and raincloud plots exte
 - Create a transformed outcome that preserves the selected side and sets observations on the opposite side to the chosen center or boundary.
 - Draw the transformed variable with `geom_lv()` and map the letter-value level to `fill`; document the transformation explicitly.
 
-- code reference:source script `\StatsVisual-Skill\assets\templates\box\Pagoda Plot.R`
+- code reference:source script `\StatsVisual-Skill\assets\templates\box_plot\Pagoda Plot.R`
 
 ### Violin Plot
 
-![Violin Plot](../assets/gallery/box/violin.png)
+![Violin Plot](../assets/gallery/box_plot/violin.png)
 
 **Statistical Features**
 
@@ -179,11 +179,11 @@ Boxenplots, violin plots, beeswarm plots, pirate plots, and raincloud plots exte
 - Draw the density with `geom_violin()` and optionally overlay a narrow `geom_boxplot()` and `stat_boxplot()`.
 - Keep bandwidth, trimming, and scale settings comparable across groups when shapes are interpreted jointly.
 
-- code reference:source script `\StatsVisual-Skill\assets\templates\box\Violin Plot.R`
+- code reference:source script `\StatsVisual-Skill\assets\templates\box_plot\Violin Plot.R`
 
 ### Beeswarm Plot
 
-![Beeswarm Plot](../assets/gallery/box/beeswarm.png)
+![Beeswarm Plot](../assets/gallery/box_plot/beeswarm.png)
 
 **Statistical Features**
 
@@ -200,11 +200,11 @@ Boxenplots, violin plots, beeswarm plots, pirate plots, and raincloud plots exte
 - Add raw observations with `geom_beeswarm()` for structured non-overlap or `geom_jitter()` for random displacement.
 - Map the outcome to `y`, group to `x`, and an optional subgroup to point color; use restrained transparency.
 
-- code reference:source script `\StatsVisual-Skill\assets\templates\box\Beeswarm Plot.R`
+- code reference:source script `\StatsVisual-Skill\assets\templates\box_plot\Beeswarm Plot.R`
 
 ### Pirate Plot
 
-![Pirate Plot](../assets/gallery/box/pirate.png)
+![Pirate Plot](../assets/gallery/box_plot/pirate.png)
 
 **Statistical Features**
 
@@ -221,11 +221,11 @@ Boxenplots, violin plots, beeswarm plots, pirate plots, and raincloud plots exte
 - Combine `geom_violin()`, `geom_jitter()`, and `geom_boxplot()` on the same grouped outcome.
 - Calculate the selected central statistic before plotting and add it in a separate layer with an encoding that does not obscure the raw data.
 
-- code reference:source script `\StatsVisual-Skill\assets\templates\box\Pirate Plot.R`
+- code reference:source script `\StatsVisual-Skill\assets\templates\box_plot\Pirate Plot.R`
 
 ### Raincloud Plot
 
-![Raincloud Plot](../assets/gallery/box/raincloud.png)
+![Raincloud Plot](../assets/gallery/box_plot/raincloud.png)
 
 **Statistical Features**
 
@@ -242,11 +242,11 @@ Boxenplots, violin plots, beeswarm plots, pirate plots, and raincloud plots exte
 - Draw the half-density with `ggdist::stat_halfeye()`, add `geom_boxplot()`, and display observations with `stat_dots()`.
 - Match `adjust`, interval width, and dot `binwidth` to the data scale; use `coord_flip()` when a horizontal layout is required.
 
-- code reference:source script `\StatsVisual-Skill\assets\templates\box\Raincloud Plot.R`
+- code reference:source script `\StatsVisual-Skill\assets\templates\box_plot\Raincloud Plot.R`
 
 ### Grouped Raincloud Plot
 
-![Grouped Raincloud Plot](../assets/gallery/box/stacked_raincloud.png)
+![Grouped Raincloud Plot](../assets/gallery/box_plot/stacked_raincloud.png)
 
 **Statistical Features**
 
@@ -263,7 +263,7 @@ Boxenplots, violin plots, beeswarm plots, pirate plots, and raincloud plots exte
 - Draw half-violins with `geom_flat_violin()` or the project custom function, raw points with jitter, and summaries with `geom_boxplot()`.
 - Map subgroup to `fill` and `color`, and coordinate `position_nudge()` and jitter widths so corresponding layers remain aligned.
 
-- code reference:source script `\StatsVisual-Skill\assets\templates\box\Grouped Raincloud Plot.R`
+- code reference:source script `\StatsVisual-Skill\assets\templates\box_plot\Grouped Raincloud Plot.R`
 
 ## 7. QA Checklist
 

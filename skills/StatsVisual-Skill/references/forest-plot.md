@@ -4,7 +4,7 @@
 
 Create a publication-ready forest plot for effect estimates with confidence intervals, such as odds ratios, hazard ratios, risk ratios, beta coefficients, or mean differences.
 
-![Forest Plot](../assets/gallery/forest/forest-plot.png)
+![Forest Plot](../assets/gallery/forest_plot/forest-plot.png)
 
 ## Prerequisites
 
@@ -113,4 +113,4 @@ Reject forest plots with:
 
 ## Template Starter
 
-Use `assets/templates/forest/subgroup_forest.R` as the starter template for subgroup forest plots with table-aligned effect estimates, confidence intervals, sample-size columns, and optional interaction P values. Copy it into `<project_dir>/R/` and adapt the subgroup, level, estimate, CI, sample-size, and interaction columns before running.
+Use `assets/templates/forest_plot/subgroup_forest.R` as the starter template for subgroup forest plots with table-aligned effect estimates, confidence intervals, sample-size columns, and optional interaction P values. Copy it into `<project_dir>/R/` and adapt the subgroup, level, estimate, CI, sample-size, and interaction columns before running.

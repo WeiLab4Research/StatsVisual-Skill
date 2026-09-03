@@ -53,7 +53,7 @@ Survival graphics may also display cumulative hazard, numbers at risk, model-adj
 
 ### Kaplan–Meier Survival Plot
 
-![Kaplan–Meier Survival Plot](../assets/gallery/survival/km.png)
+![Kaplan–Meier Survival Plot](../assets/gallery/survival_curve/km.png)
 
 **Statistical Methods and Features**
 
@@ -71,7 +71,7 @@ Survival graphics may also display cumulative hazard, numbers at risk, model-adj
 
 ### Truncated Survival Plot
 
-![Truncated Survival Plot](../assets/gallery/survival/truncated.png)
+![Truncated Survival Plot](../assets/gallery/survival_curve/truncated.png)
 
 **Statistical Methods and Features**
 
@@ -89,7 +89,7 @@ Survival graphics may also display cumulative hazard, numbers at risk, model-adj
 
 ### Median Survival Reference Plot
 
-![Median Survival Reference Plot](../assets/gallery/survival/median.png)
+![Median Survival Reference Plot](../assets/gallery/survival_curve/median.png)
 
 **Statistical Methods and Features**
 
@@ -106,7 +106,7 @@ Survival graphics may also display cumulative hazard, numbers at risk, model-adj
 
 ### Survival Plot with Confidence Band
 
-![Survival Plot with Confidence Band](../assets/gallery/survival/band.png)
+![Survival Plot with Confidence Band](../assets/gallery/survival_curve/band.png)
 
 **Statistical Methods and Features**
 
@@ -124,7 +124,7 @@ Survival graphics may also display cumulative hazard, numbers at risk, model-adj
 
 ### Cumulative Hazard Plot
 
-![Cumulative Hazard Plot](../assets/gallery/survival/cumulative_hazard.png)
+![Cumulative Hazard Plot](../assets/gallery/survival_curve/cumulative_hazard.png)
 
 **Statistical Methods and Features**
 
@@ -142,7 +142,7 @@ Survival graphics may also display cumulative hazard, numbers at risk, model-adj
 
 ### Survival Plot with Risk Table
 
-![Survival Plot with Risk Table](../assets/gallery/survival/risk_table.png)
+![Survival Plot with Risk Table](../assets/gallery/survival_curve/risk_table.png)
 
 **Statistical Methods and Features**
 
@@ -181,7 +181,7 @@ Survival graphics may also display cumulative hazard, numbers at risk, model-adj
 
 ### Survival Curve Comparison Methods Plot
 
-![Survival Curve Comparison Methods Plot](../assets/gallery/survival/comparison.png)
+![Survival Curve Comparison Methods Plot](../assets/gallery/survival_curve/comparison.png)
 
 **Statistical Methods and Features**
 
@@ -199,7 +199,7 @@ Survival graphics may also display cumulative hazard, numbers at risk, model-adj
 
 ### Integrated Survival-and-Comparison Plot
 
-![Integrated Survival-and-Comparison Plot](../assets/gallery/survival/joint.png)
+![Integrated Survival-and-Comparison Plot](../assets/gallery/survival_curve/joint.png)
 
 **Statistical Methods and Features**
 
@@ -216,7 +216,7 @@ Survival graphics may also display cumulative hazard, numbers at risk, model-adj
 
 ### Schoenfeld Residual Plot
 
-![Schoenfeld Residual Plot](../assets/gallery/survival/ph_assumption.png)
+![Schoenfeld Residual Plot](../assets/gallery/survival_curve/ph_assumption.png)
 
 **Statistical Methods and Features**
 
@@ -234,7 +234,7 @@ Survival graphics may also display cumulative hazard, numbers at risk, model-adj
 
 ### Cox Deviance Residual Plot
 
-![Cox Deviance Residual Plot](../assets/gallery/survival/outlier.png)
+![Cox Deviance Residual Plot](../assets/gallery/survival_curve/outlier.png)
 
 **Statistical Methods and Features**
 
@@ -252,7 +252,7 @@ Survival graphics may also display cumulative hazard, numbers at risk, model-adj
 
 ### Adjusted Survival Curve
 
-![Adjusted Survival Curve](../assets/gallery/survival/adjusted.png)
+![Adjusted Survival Curve](../assets/gallery/survival_curve/adjusted.png)
 
 **Statistical Methods and Features**
 

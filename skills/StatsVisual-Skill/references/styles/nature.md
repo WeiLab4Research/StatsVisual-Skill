@@ -102,8 +102,6 @@ p + ggsci::scale_color_npg("nrc")
 p + ggsci::scale_fill_npg("nrc")
 ```
 
-
-
 ## R Implementation
 
 - Source `assets/styles/theme_registry.R` through `assets/theme_medical_graphics.R`.

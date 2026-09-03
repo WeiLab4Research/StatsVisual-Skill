@@ -49,7 +49,7 @@ P-P plots compare cumulative probabilities rather than quantile values. Symmetry
 
 ### Theoretical QQ Plot
 
-![Theoretical QQ Plot](../assets/gallery/qq/qq.png)
+![Theoretical QQ Plot](../assets/gallery/qq_plot/qq.png)
 
 **Statistical Features**
 
@@ -66,7 +66,7 @@ P-P plots compare cumulative probabilities rather than quantile values. Symmetry
 - Map the variable through `aes(sample = variable)` and draw points with `stat_qq()`.
 - Add `stat_qq_line()` and specify `distribution` and its parameters when the target is not the default normal distribution.
 
-- code reference:source script `\StatsVisual-Skill\assets\templates\qq\Theoretical QQ Plot.R`
+- code reference:source script `\StatsVisual-Skill\assets\templates\qq_plot\Theoretical QQ Plot.R`
 
 ### QQ Plot with Density Comparison Panel
 
@@ -85,7 +85,7 @@ P-P plots compare cumulative probabilities rather than quantile values. Symmetry
 - Construct the Q-Q panel with `stat_qq()` and `stat_qq_line()`.
 - Draw the theoretical curve with `geom_line()` and the empirical curve with `geom_density()` on the same transformed scale, then combine panels with `plot_grid()`.
 
-- code reference:source script `\StatsVisual-Skill\assets\templates\qq\QQ Plot with Density Comparison Panel.R`
+- code reference:source script `\StatsVisual-Skill\assets\templates\qq_plot\QQ Plot with Density Comparison Panel.R`
 
 ### Two-sample QQ Plot
 
@@ -104,11 +104,11 @@ P-P plots compare cumulative probabilities rather than quantile values. Symmetry
 - Calculate both samples’ quantiles on the same probability grid, excluding unstable endpoints when appropriate.
 - Plot matched quantiles with `geom_point()` and use `geom_abline(intercept = 0, slope = 1)` as the equality reference.
 
-- code reference:source script `\StatsVisual-Skill\assets\templates\qq\Two-sample QQ Plot.R`
+- code reference:source script `\StatsVisual-Skill\assets\templates\qq_plot\Two-sample QQ Plot.R`
 
 ### Probability–Probability Plot
 
-![Probability–Probability Plot](../assets/gallery/qq/pp.png)
+![Probability–Probability Plot](../assets/gallery/qq_plot/pp.png)
 
 **Statistical Features**
 
@@ -125,11 +125,11 @@ P-P plots compare cumulative probabilities rather than quantile values. Symmetry
 - Map the sample with `aes(sample = variable)`.
 - Draw the empirical probability points with `stat_pp_point()` and the equality reference with `stat_pp_line()`.
 
-- code reference:source script `\StatsVisual-Skill\assets\templates\qq\Probability–Probability Plot.R`
+- code reference:source script `\StatsVisual-Skill\assets\templates\qq_plot\Probability–Probability Plot.R`
 
 ### Symmetry Plot
 
-![Symmetry Plot](../assets/gallery/qq/symmetry.png)
+![Symmetry Plot](../assets/gallery/qq_plot/symmetry.png)
 
 **Statistical Features**
 
@@ -146,11 +146,11 @@ P-P plots compare cumulative probabilities rather than quantile values. Symmetry
 - Sort the observations and pair lower- and upper-tail distances from the sample median.
 - Plot the paired distances with `geom_point()` and add `geom_abline(intercept = 0, slope = 1)`.
 
-- code reference:source script `\StatsVisual-Skill\assets\templates\qq\Symmetry Plot.R`
+- code reference:source script `\StatsVisual-Skill\assets\templates\qq_plot\Symmetry Plot.R`
 
 ### Chi-square Quantile Plot
 
-![Chi-square Quantile Plot](../assets/gallery/qq/chi_square.png)
+![Chi-square Quantile Plot](../assets/gallery/qq_plot/chi_square.png)
 
 **Statistical Features**
 
@@ -167,13 +167,13 @@ P-P plots compare cumulative probabilities rather than quantile values. Symmetry
 - Use `stat_qq(distribution = function(p) qchisq(p, df = k))` for the theoretical quantiles.
 - Add the P-P panel with `stat_pp_point()` and `stat_pp_line()`, and report the selected `df` in the axis label or legend.
 
-- code reference:source script `\StatsVisual-Skill\assets\templates\qq\Chi-square Quantile Plot.R`
+- code reference:source script `\StatsVisual-Skill\assets\templates\qq_plot\Chi-square Quantile Plot.R`
 
 ### Ladder of Powers for Normal Distribution
 
-![Ladder of Powers for Normal Distribution (Histogram)](../assets/gallery/qq/ladder_hist.png)
+![Ladder of Powers for Normal Distribution (Histogram)](../assets/gallery/qq_plot/ladder_hist.png)
 
-![Ladder of Powers for Normal Distribution (QQ)](../assets/gallery/qq/ladder_qq.png)
+![Ladder of Powers for Normal Distribution (QQ)](../assets/gallery/qq_plot/ladder_qq.png)
 
 **Statistical Features**
 
@@ -190,7 +190,7 @@ P-P plots compare cumulative probabilities rather than quantile values. Symmetry
 - Generate each valid transformation in a separate column, reshape to long format, and facet by transformation.
 - Draw transformed Q-Q panels with `geom_qq()` and `geom_qq_line()`, or use the project `gladder()` and `qqladder()` helpers.
 
-- code reference:source script `\StatsVisual-Skill\assets\templates\qq\Ladder of Powers for Normal Distribution.R`
+- code reference:source script `\StatsVisual-Skill\assets\templates\qq_plot\Ladder of Powers for Normal Distribution.R`
 
 ## 7. QA Checklist
 

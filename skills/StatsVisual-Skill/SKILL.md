@@ -101,11 +101,9 @@ Load only the references needed for the task:
 - Use `references/design-rules.md` as the style entrypoint. Load `references/styles/general.md` for the default book-derived general style, `references/styles/nature.md` for Nature-style figures, `references/styles/lancet.md` for Lancet-style clinical figures, `references/styles/nejm.md` for example-derived NEJM clinical-trial figures, `references/styles/jama.md` for JAMA-style clinical research figures, or `references/styles/bmj.md` for BMJ-style pragmatic clinical figures.
 - For `lancet` forest plots, `references/styles/lancet.md` overrides generic `forest-plot.md` layout defaults: the forest axis must be embedded as a table column, not rendered as a separate side-by-side panel, and must not inherit generic light category bands or extra table separator rules unless the user explicitly requested them.
 - Use `references/styles/style-router.md` during the first recommendation turn so chart and style are requested together.
-- Use `references/output-rules.md` for file naming, output folders, export formats, CJK PDF guidance, and output bundle rules.
 - Use `references/r-workflow.md` for package choices, project layout, R script structure, local-library behavior, and export behavior.
 - Use `references/windows-setup.md` when Windows package installation fails with elevation, blocked library paths, or CRAN mirror access problems.
-- Use `references/publication-qa.md` before final delivery or when debugging figure quality.
-- Use `references/readability-qa.md` before final delivery, when validating subgroups/facets with shared axes, or when scripted QA reports `WARN` or `FAIL`.
+- Use `references/readability-qa.md` before final delivery or when debugging figure quality: it defines the delivery gate (required checks and delivery-blocking failures) plus readability thresholds, shared-axis validation, and the QA loop.
 
 # Default R Choices
 
@@ -124,7 +122,7 @@ Use conservative publication defaults: white background, readable axis labels, e
   - Print: `<name>_700dpi.tiff` at 700 dpi or higher
   - Web: `<name>_web.png` or `<name>_web.jpg`, target under 1 MB
 - Before any CRAN/Bioconductor access, verify installed packages from the active environment by sourcing `scripts/setup_r_library.R` and calling `rmg_prepare_library(project_dir, skill_dir)`. This must happen before deciding a package is missing. Install missing R packages only after that local-library check, using the repository-local `.r-medical-graphics-library/` by default and `<project_dir>/R-library` or a writable user library as fallback. Use `scripts/install_required_packages.R` or call `rmg_ensure_packages()` from generated scripts. In restricted Codex environments, CRAN/Bioconductor access may require an escalated network approval; if installation fails with network, repository, DNS, proxy, SSL, or permission errors, request the needed approval and retry the same installation command. If Windows reports `740` or "requested operation requires elevation", first switch to the repository-local or project-local library; do not misreport this as a CRAN access problem. Do not silently downgrade figure quality or switch away from the intended plotting package because a library is missing.
-- Run the script when feasible. After export, verify that PDF, SVG, TIFF, and web image files exist, are non-empty, and the web image is under 1 MB. Use `references/publication-qa.md` for the delivery checklist. Review the plotting code against `references/readability-qa.md` before delivery: verify font sizes, panel scales, label lengths, legend entries, color contrast, and axis transforms are appropriate for the final output size. When image viewing is available, inspect the final web PNG or TIFF preview directly and check that the plotted data are large enough, text is readable, labels/legends do not overlap, panels are balanced, and shared axes do not visually collapse any subgroup.
+- Run the script when feasible. After export, verify that PDF, SVG, TIFF, and web image files exist, are non-empty, and the web image is under 1 MB. Review the plotting code against `references/readability-qa.md` before delivery (including the delivery checklist): verify font sizes, panel scales, label lengths, legend entries, color contrast, and axis transforms are appropriate for the final output size. When image viewing is available, inspect the final web PNG or TIFF preview directly and check that the plotted data are large enough, text is readable, labels/legends do not overlap, panels are balanced, and shared axes do not visually collapse any subgroup.
 - Report output paths under the project directory and any unresolved design decisions. If package installation still fails after the appropriate approval/retry path, stop and report the exact installation failure instead of producing a lower-quality fallback.
 
 # Useful Scripts
@@ -141,24 +139,24 @@ Use conservative publication defaults: white background, readable axis labels, e
 
 Copy these into `<project_dir>/R/` and adapt column names, labels, statistics, and figure-specific annotations:
 
-- `assets/templates/bar/` for basic, error-bar, stacked, stratified, waterfall, and polar bar plots.
-- `assets/templates/box/` for box, violin, notched, letter-value, stratified, beeswarm, pirate, pagoda, raincloud, and grouped raincloud plots.
-- `assets/templates/dot/` for Cleveland's dot, stratified dot, lollipop, interaction lollipop, dumbbell, epidemic trend, and Manhattan plots.
-- `assets/templates/distribution/` for 23 probability distributions (Normal, t, F, Chi-square, Beta, Gamma, Poisson, Binomial, etc.).
-- `assets/templates/forest/` for subgroup forest plots with table-aligned effect estimates and interaction columns.
+- `assets/templates/bar_plot/` for basic, error-bar, stacked, stratified, waterfall, and polar bar plots.
+- `assets/templates/box_plot/` for box, violin, notched, letter-value, stratified, beeswarm, pirate, pagoda, raincloud, and grouped raincloud plots.
+- `assets/templates/cleveland_dot_plot/` for Cleveland's dot, stratified dot, lollipop, interaction lollipop, dumbbell, epidemic trend, and Manhattan plots.
+- `assets/templates/probability_distribution/` for 23 probability distributions (Normal, t, F, Chi-square, Beta, Gamma, Poisson, Binomial, etc.).
+- `assets/templates/forest_plot/` for subgroup forest plots with table-aligned effect estimates and interaction columns.
 - `assets/templates/heatmap/` for basic, clustered, contour, filled contour, Sankey, Venn, UpSet, and calendar heatmaps.
 - `assets/templates/histogram/` for basic, variable-bin, gradient, grouped, stacked, symmetric, pyramid, ridgeline, epidemic ridgeline, and spiral histograms.
-- `assets/templates/line/` for time series, point-line, errorbar-line, step, smooth, area, stacked area, stream, scree, and radar plots.
+- `assets/templates/line_chart/` for time series, point-line, errorbar-line, step, smooth, area, stacked area, stream, scree, and radar plots.
 - `assets/templates/linear_regression/` for linear regression, deviations, bivariate ellipse, response surface, and performance radar plots.
-- `assets/templates/multipanel/` for reusable patchwork/cowplot layout helpers and multi-panel script scaffolds.
+- `assets/templates/multipanel_plot/` for reusable patchwork/cowplot layout helpers and multi-panel script scaffolds.
 - `assets/templates/nonlinear_regression/` for polynomial, convex-concave, sigmoid, and quantile regression plots.
-- `assets/templates/pie/` for pie, exploding, exploded-slice, doughnut, nested, rose, and fourfold plots.
-- `assets/templates/qq/` for theoretical QQ, P-P, Chi-square quantile, symmetry, and ladder-of-powers plots.
+- `assets/templates/pie_plot/` for pie, exploding, exploded-slice, doughnut, nested, rose, and fourfold plots.
+- `assets/templates/qq_plot/` for theoretical QQ, P-P, Chi-square quantile, symmetry, and ladder-of-powers plots.
 - `assets/templates/regression_diagnostics/` for residuals-vs-fitted, leverage, Cook's distance, influence index, and half-normal leverage plots.
-- `assets/templates/scatter/` for scatter, smooth-scatter, marginal-distribution, scatterplot matrix, smooth, sunflower, bubble, and volcano plots.
+- `assets/templates/scatter_plot/` for scatter, smooth-scatter, marginal-distribution, scatterplot matrix, smooth, sunflower, bubble, and volcano plots.
 - `assets/templates/smoothing_curve/` for LOWESS smooth and LOWESS regression plots.
 - `assets/templates/survival_curve/` for Kaplan-Meier, truncated, median-reference, confidence-band, cumulative-hazard, risk-table, comparison, integrated, Schoenfeld, Cox deviance, and adjusted survival plots.
-- `assets/templates/ternary/` for ternary plots.
+- `assets/templates/ternary_plot/` for ternary plots.
 
 Treat templates as starting points, not fixed outputs. Read `references/chart-index.md` and the relevant detailed chart reference before adapting them for variants such as violin, raincloud, density scatter, coefficient plots, or longitudinal charts. Read `references/design-rules.md` and the selected style reference before finalizing visual choices. Read `references/multipanel-figures.md` before adapting any A/B/C or composite figure.
 
@@ -178,34 +176,28 @@ These paths are relative to the per-request project directory, not the skill rep
 
 # Figure Explanation
 
-After figures are exported and validated, present the figure explanation directly in the conversation with the following content. 该内容记录所生成图形的统计和可视化原理，用于可复现性和同行评审。
+After figures are exported and validated, present the figure explanation directly in the conversation with the following content. 
 
 ## 内容模板
 
 ```markdown
-# 图形说明
 
-## 图形标识
-- 图形名称
-- 图表类型
-- 风格（general / nature / lancet / nejm / jama / bmj）
+# 图形解释
 
-## 统计摘要
-- 变量角色（结局 / 预测变量 / 分组 / 分层）
-- 样本量（总 N，各组 N）
-- 效应估计值（HR / OR / beta / MD + 95% CI）
-- P 值或显著性阈值
-- 使用的模型或检验（Cox / log-rank / 线性回归 / 等）
+## 图形：[图形类型]｜[图形名称]｜[风格名称]
 
-## 视觉编码
-- 各轴代表的含义（如单位、是否做了变换）
-- 颜色 / 形状 / 线型编码的内容
-- 图例解读
+## 数据与方法：
+- N = [样本量]；[数据分层/分组说明]
+- 采用 [详细统计方法]
 
-## 解读说明
-- 图表核心结论
-- 关键比较或趋势
-- 注意事项 / 局限性
+## 关键结果：
+- [主要发现1]
+- [主要发现2]
+
+## 结论：[总结核心统计学发现]
+
+## 说明：[图形阅读提示]
+
 ```
 
 说明内容必须写入对话回复。

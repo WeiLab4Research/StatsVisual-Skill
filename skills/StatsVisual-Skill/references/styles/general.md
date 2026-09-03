@@ -2,24 +2,7 @@
 
 Use this as the default `general` style for medical and statistical graphics. This style is derived from the plotting principles summarized from Peking University Professor Yongyue Wei's edited book *The Art of Statistical Graphics* (`统计图形艺术`). Keep chart choice, statistical honesty, and readability ahead of decoration.
 
-## Core Principles
-
-- Make the figure simple, not simplistic: every line, color, annotation, and panel must carry information.
-- Prefer position on a common scale over angle, area, volume, or 3D perspective.
-- Use whitespace to group information and reduce clutter.
-- Use direct labels when they reduce legend lookup.
-- Keep axes, units, sample sizes, error definitions, and statistical annotations explicit.
-- Use consistent visual encoding across panels: the same group must keep the same color, line type, symbol, and label.
-
 ## Axes And Axis Titles
-
-- Use clear axis titles with units: `Time since randomization (months)`, `Body mass index (kg/m^2)`.
-- Use sensible breaks. For months, prefer `0, 6, 12, 18` or similar natural intervals.
-- Do not truncate bar chart baselines unless the chart is not encoding magnitude by bar length and the break is explicit.
-- For line, scatter, and regression plots, choose limits that show the data honestly without excessive empty space.
-- Remove top and right spines for routine publication charts.
-- Do not use legend background boxes.
-- Use light grid lines only when they help read values; keep them pale and sparse.
 
 Default theme function:
 
@@ -124,93 +107,3 @@ ggsci::scale_fill_npg()
 
 Keep palette choice secondary to data clarity. Avoid rainbow palettes and avoid red/green as the only distinction.
 
-## Export Rules
-
-Use white background for statistical plots. Increase width and height for multi-panel figures so labels, legends, and panels do not crowd.
-
-PNG preview export must use `ggsave()`:
-
-```r
-ggplot2::ggsave(
-  filename = file.path(output_dir, "figure_basic_bar_web.png"),
-  plot = p,
-  width = 6,
-  height = 4.2,
-  units = "in",
-  dpi = 300,
-  bg = "white"
-)
-```
-
-TIFF submission export must use `ggsave()` at 700 dpi:
-
-```r
-ggplot2::ggsave(
-  filename = file.path(output_dir, "figure_basic_bar_web.tiff"),
-  plot = p,
-  width = 6,
-  height = 4.2,
-  units = "in",
-  dpi = 700,
-  bg = "white"
-)
-```
-
-For English-only or non-CJK PDF labels, use `ggsave()` with a PDF device:
-
-```r
-ggplot2::ggsave(
-  filename = file.path(output_dir, "figure_basic_bar_web.pdf"),
-  plot = p,
-  width = 6,
-  height = 4.2,
-  units = "in",
-  device = grDevices::cairo_pdf,
-  bg = "white"
-)
-```
-
-## Chinese PDF Font Handling
-
-R's default `pdf()` device often cannot render Chinese labels reliably. For Chinese PDF export, use `export::graph2pdf()` with an explicit CJK font.
-
-Windows:
-
-```r
-library(export)
-library(ggplot2)
-
-export::graph2pdf(
-  p,
-  file = "file_name.pdf",
-  font = "SimSun"
-)
-```
-
-macOS:
-
-```r
-library(export)
-library(ggplot2)
-
-export::graph2pdf(
-  p,
-  file = "file_name.pdf",
-  font = "PingFang SC"
-)
-```
-
-## Labels And Annotations
-
-- Use concise labels; avoid repeating units in every tick label when an axis title can carry the unit.
-- Align labels with their marks where possible.
-- Use `ggrepel` for crowded point labels.
-- Use arrows sparingly. A label connector line usually does not need an arrowhead.
-- In biomedical diagrams, avoid arrow styles with specialized molecular meanings unless intended.
-
-## Legends
-
-- Remove legend title only when labels are self-explanatory.
-- Collect shared legends in multi-panel figures.
-- Avoid repeated legends in every facet or panel.
-- Avoid legend background boxes.

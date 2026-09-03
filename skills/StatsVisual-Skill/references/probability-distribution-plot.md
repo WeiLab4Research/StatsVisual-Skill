@@ -54,7 +54,7 @@ The plots in this chapter are primarily generated from distribution functions ra
 
 ### Normal Distribution
 
-![Normal Distribution](../assets/gallery/distribution/normal.png)
+![Normal Distribution](../assets/gallery/probability_distribution/normal.png)
 
 **Statistical Methods and Features**
 
@@ -67,11 +67,11 @@ The plots in this chapter are primarily generated from distribution functions ra
 - Draw parameter-specific curves with `geom_line()` and use `geom_vline()` only when the mean locations need explicit emphasis.
 
 **Code Reference**
-- `assets/templates/distribution/Normal Distribution.R`
+- `assets/templates/probability_distribution/Normal Distribution.R`
 
 ### Log-normal Distribution
 
-![Log-normal Distribution](../assets/gallery/distribution/lognormal.png)
+![Log-normal Distribution](../assets/gallery/probability_distribution/lognormal.png)
 
 **Statistical Methods and Features**
 
@@ -84,11 +84,11 @@ The plots in this chapter are primarily generated from distribution functions ra
 - Generate parameter combinations separately and combine them with `plot_grid()` or `patchwork` using comparable axes.
 
 **Code Reference**
-- `assets/templates/distribution/Log-normal Distribution.R`
+- `assets/templates/probability_distribution/Log-normal Distribution.R`
 
 ### Multivariate Normal Distribution
 
-![Multivariate Normal Distribution](../assets/gallery/distribution/multivariate_normal.png)
+![Multivariate Normal Distribution](../assets/gallery/probability_distribution/multivariate_normal.png)
 
 **Statistical Methods and Features**
 
@@ -101,11 +101,11 @@ The plots in this chapter are primarily generated from distribution functions ra
 - Display the density matrix with `plotly::add_surface()` and retain projected contours only when they clarify the covariance structure.
 
 **Code Reference**
-- `assets/templates/distribution/Multivariate Normal Distribution.R`
+- `assets/templates/probability_distribution/Multivariate Normal Distribution.R`
 
 ### Student's t Distribution
 
-![Student's t Distribution](../assets/gallery/distribution/t.png)
+![Student's t Distribution](../assets/gallery/probability_distribution/t.png)
 
 **Statistical Methods and Features**
 
@@ -118,11 +118,11 @@ The plots in this chapter are primarily generated from distribution functions ra
 - Use one panel per selected `df` or overlay only a small number of curves; label the degrees of freedom explicitly.
 
 **Code Reference**
-- `assets/templates/distribution/Student's t Distribution.R`
+- `assets/templates/probability_distribution/Student's t Distribution.R`
 
 ### F Distribution
 
-![F Distribution](../assets/gallery/distribution/f.png)
+![F Distribution](../assets/gallery/probability_distribution/f.png)
 
 **Statistical Methods and Features**
 
@@ -135,11 +135,11 @@ The plots in this chapter are primarily generated from distribution functions ra
 - Display parameter combinations in separate panels and annotate both degrees of freedom.
 
 **Code Reference**
-- `assets/templates/distribution/F Distribution.R`
+- `assets/templates/probability_distribution/F Distribution.R`
 
 ### Chi-square Distribution
 
-![Chi-square Distribution](../assets/gallery/distribution/chi_square.png)
+![Chi-square Distribution](../assets/gallery/probability_distribution/chi_square.png)
 
 **Statistical Methods and Features**
 
@@ -152,11 +152,11 @@ The plots in this chapter are primarily generated from distribution functions ra
 - Use multiple panels for different degrees of freedom and avoid truncating the right tail without clear indication.
 
 **Code Reference**
-- `assets/templates/distribution/Chi-square Distribution.R`
+- `assets/templates/probability_distribution/Chi-square Distribution.R`
 
 ### Beta Distribution
 
-![Beta Distribution](../assets/gallery/distribution/beta.png)
+![Beta Distribution](../assets/gallery/probability_distribution/beta.png)
 
 **Statistical Methods and Features**
 
@@ -169,11 +169,11 @@ The plots in this chapter are primarily generated from distribution functions ra
 - Plot each parameter pair in a separate panel and label both shape parameters.
 
 **Code Reference**
-- `assets/templates/distribution/Beta Distribution.R`
+- `assets/templates/probability_distribution/Beta Distribution.R`
 
 ### Uniform Distribution
 
-![Uniform Distribution](../assets/gallery/distribution/uniform.png)
+![Uniform Distribution](../assets/gallery/probability_distribution/uniform.png)
 
 **Statistical Methods and Features**
 
@@ -186,11 +186,11 @@ The plots in this chapter are primarily generated from distribution functions ra
 - Do not use unsorted `runif()` samples to draw the theoretical density curve.
 
 **Code Reference**
-- `assets/templates/distribution/Uniform Distribution.R`
+- `assets/templates/probability_distribution/Uniform Distribution.R`
 
 ### Discrete Uniform Distribution
 
-![Discrete Uniform Distribution](../assets/gallery/distribution/discrete_uniform.png)
+![Discrete Uniform Distribution](../assets/gallery/probability_distribution/discrete_uniform.png)
 
 **Statistical Methods and Features**
 
@@ -203,11 +203,11 @@ The plots in this chapter are primarily generated from distribution functions ra
 - Draw vertical masses with `geom_linerange()` or equivalent stems.
 
 **Code Reference**
-- `assets/templates/distribution/Discrete Uniform Distribution.R`
+- `assets/templates/probability_distribution/Discrete Uniform Distribution.R`
 
 ### Gamma Distribution
 
-![Gamma Distribution](../assets/gallery/distribution/gamma.png)
+![Gamma Distribution](../assets/gallery/probability_distribution/gamma.png)
 
 **Statistical Methods and Features**
 
@@ -220,11 +220,11 @@ The plots in this chapter are primarily generated from distribution functions ra
 - State whether the second parameter is a rate or scale and apply the same parameterization in labels and interpretation.
 
 **Code Reference**
-- `assets/templates/distribution/Gamma Distribution.R`
+- `assets/templates/probability_distribution/Gamma Distribution.R`
 
 ### Exponential Distribution
 
-![Exponential Distribution](../assets/gallery/distribution/exponential.png)
+![Exponential Distribution](../assets/gallery/probability_distribution/exponential.png)
 
 **Statistical Methods and Features**
 
@@ -237,11 +237,11 @@ The plots in this chapter are primarily generated from distribution functions ra
 - Compare selected rates in separate panels and label `λ` consistently.
 
 **Code Reference**
-- `assets/templates/distribution/Exponential Distribution.R`
+- `assets/templates/probability_distribution/Exponential Distribution.R`
 
 ### Inverse Gamma Distribution
 
-![Inverse Gamma Distribution](../assets/gallery/distribution/inverse_gamma.png)
+![Inverse Gamma Distribution](../assets/gallery/probability_distribution/inverse_gamma.png)
 
 **Statistical Methods and Features**
 
@@ -254,11 +254,11 @@ The plots in this chapter are primarily generated from distribution functions ra
 - Exclude zero from the grid and use named Gamma parameters to avoid division and parameterization errors.
 
 **Code Reference**
-- `assets/templates/distribution/Inverse Gamma Distribution.R`
+- `assets/templates/probability_distribution/Inverse Gamma Distribution.R`
 
 ### Bernoulli Distribution
 
-![Bernoulli Distribution](../assets/gallery/distribution/bernoulli.png)
+![Bernoulli Distribution](../assets/gallery/probability_distribution/bernoulli.png)
 
 **Statistical Methods and Features**
 
@@ -271,11 +271,11 @@ The plots in this chapter are primarily generated from distribution functions ra
 - Draw the two masses with `geom_linerange()` or discrete bars and label `p` explicitly.
 
 **Code Reference**
-- `assets/templates/distribution/Bernoulli Distribution.R`
+- `assets/templates/probability_distribution/Bernoulli Distribution.R`
 
 ### Binomial Distribution
 
-![Binomial Distribution](../assets/gallery/distribution/binomial.png)
+![Binomial Distribution](../assets/gallery/probability_distribution/binomial.png)
 
 **Statistical Methods and Features**
 
@@ -288,11 +288,11 @@ The plots in this chapter are primarily generated from distribution functions ra
 - Draw the PMF with `geom_bar(stat = "identity")` and annotate both `n` and `p`.
 
 **Code Reference**
-- `assets/templates/distribution/Binomial Distribution.R`
+- `assets/templates/probability_distribution/Binomial Distribution.R`
 
 ### Poisson Distribution
 
-![Poisson Distribution](../assets/gallery/distribution/poisson.png)
+![Poisson Distribution](../assets/gallery/probability_distribution/poisson.png)
 
 **Statistical Methods and Features**
 
@@ -305,11 +305,11 @@ The plots in this chapter are primarily generated from distribution functions ra
 - Draw with `geom_bar(stat = "identity")` and choose the upper support from the tail probability rather than an arbitrary fixed limit.
 
 **Code Reference**
-- `assets/templates/distribution/Poisson Distribution.R`
+- `assets/templates/probability_distribution/Poisson Distribution.R`
 
 ### Beta-binomial Distribution
 
-![Beta-binomial Distribution](../assets/gallery/distribution/beta_binomial.png)
+![Beta-binomial Distribution](../assets/gallery/probability_distribution/beta_binomial.png)
 
 **Statistical Methods and Features**
 
@@ -322,11 +322,11 @@ The plots in this chapter are primarily generated from distribution functions ra
 - Confirm the package-specific parameterization before plotting and label all three parameters.
 
 **Code Reference**
-- `assets/templates/distribution/Beta-binomial Distribution.R`
+- `assets/templates/probability_distribution/Beta-binomial Distribution.R`
 
 ### Multinomial Distribution
 
-![Multinomial Distribution](../assets/gallery/distribution/multinomial.png)
+![Multinomial Distribution](../assets/gallery/probability_distribution/multinomial.png)
 
 **Statistical Methods and Features**
 
@@ -339,11 +339,11 @@ The plots in this chapter are primarily generated from distribution functions ra
 - Display the discrete probability masses with stems or the manuscript’s `scatterplot3d(type = "h")`; do not convert them into a continuous surface.
 
 **Code Reference**
-- `assets/templates/distribution/Multinomial Distribution.R`
+- `assets/templates/probability_distribution/Multinomial Distribution.R`
 
 ### Geometric Distribution
 
-![Geometric Distribution](../assets/gallery/distribution/geometric.png)
+![Geometric Distribution](../assets/gallery/probability_distribution/geometric.png)
 
 **Statistical Methods and Features**
 
@@ -356,11 +356,11 @@ The plots in this chapter are primarily generated from distribution functions ra
 - Draw with `geom_bar(stat = "identity")` and state the counting convention explicitly.
 
 **Code Reference**
-- `assets/templates/distribution/Geometric Distribution.R`
+- `assets/templates/probability_distribution/Geometric Distribution.R`
 
 ### Hypergeometric Distribution
 
-![Hypergeometric Distribution](../assets/gallery/distribution/hypergeometric.png)
+![Hypergeometric Distribution](../assets/gallery/probability_distribution/hypergeometric.png)
 
 **Statistical Methods and Features**
 
@@ -373,11 +373,11 @@ The plots in this chapter are primarily generated from distribution functions ra
 - Use named arguments in `dhyper(x, m = target_count, n = other_count, k = sample_size)` and draw the PMF with discrete bars.
 
 **Code Reference**
-- `assets/templates/distribution/Hypergeometric Distribution.R`
+- `assets/templates/probability_distribution/Hypergeometric Distribution.R`
 
 ### Negative Binomial Distribution
 
-![Negative Binomial Distribution](../assets/gallery/distribution/negative_binomial.png)
+![Negative Binomial Distribution](../assets/gallery/probability_distribution/negative_binomial.png)
 
 **Statistical Methods and Features**
 
@@ -390,11 +390,11 @@ The plots in this chapter are primarily generated from distribution functions ra
 - Label the counting convention and parameters; choose the plotted support to retain nearly all probability mass.
 
 **Code Reference**
-- `assets/templates/distribution/Negative Binomial Distribution.R`
+- `assets/templates/probability_distribution/Negative Binomial Distribution.R`
 
 ### Dirichlet Distribution
 
-![Dirichlet Distribution](../assets/gallery/distribution/dirichlet.png)
+![Dirichlet Distribution](../assets/gallery/probability_distribution/dirichlet.png)
 
 **Statistical Methods and Features**
 
@@ -407,11 +407,11 @@ The plots in this chapter are primarily generated from distribution functions ra
 - For three components, map the normalized values to `ggtern`; for higher dimensions, use an alternative compositional display.
 
 **Code Reference**
-- `assets/templates/distribution/Dirichlet Distribution.R`
+- `assets/templates/probability_distribution/Dirichlet Distribution.R`
 
 ### Cauchy Distribution
 
-![Cauchy Distribution](../assets/gallery/distribution/cauchy.png)
+![Cauchy Distribution](../assets/gallery/probability_distribution/cauchy.png)
 
 **Statistical Methods and Features**
 
@@ -424,11 +424,11 @@ The plots in this chapter are primarily generated from distribution functions ra
 - Use axis limits wide enough to show tail behavior and label both location and scale.
 
 **Code Reference**
-- `assets/templates/distribution/Cauchy Distribution.R`
+- `assets/templates/probability_distribution/Cauchy Distribution.R`
 
 ### Weibull Distribution
 
-![Weibull Distribution](../assets/gallery/distribution/weibull.png)
+![Weibull Distribution](../assets/gallery/probability_distribution/weibull.png)
 
 **Statistical Methods and Features**
 
@@ -441,11 +441,11 @@ The plots in this chapter are primarily generated from distribution functions ra
 - Compare parameter combinations in separate panels and retain the same shape/scale convention throughout.
 
 **Code Reference**
-- `assets/templates/distribution/Weibull Distribution.R`
+- `assets/templates/probability_distribution/Weibull Distribution.R`
 
 ### Logistic Distribution
 
-![Logistic Distribution](../assets/gallery/distribution/logistic.png)
+![Logistic Distribution](../assets/gallery/probability_distribution/logistic.png)
 
 **Statistical Methods and Features**
 

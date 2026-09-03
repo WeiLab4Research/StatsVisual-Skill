@@ -42,7 +42,7 @@ export_publication_figures <- function(p, figures_dir, name,
   attempt <- 1
   while (file.exists(web_file) && file.info(web_file)$size > limit && attempt <= 6) {
     scale <- 0.85 ^ attempt
-    save_web(web_file, max(3, web_width * scale), max(2.2, web_height * scale), max(96, round(web_dpi * scale)))
+    save_web(web_file, max(3, web_width * scale), max(2.2, web_height * scale), web_dpi)
     attempt <- attempt + 1
   }
 

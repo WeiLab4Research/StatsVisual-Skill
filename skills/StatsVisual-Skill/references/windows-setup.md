@@ -88,7 +88,7 @@ $env:R_MEDICAL_GRAPHICS_LIB = "C:\absolute\path\to\.r-medical-graphics-library"
 
 ## Interpreting Errors
 
-- `Os code 740` or `请求的操作需要提升。`: Windows tried to use a location or process needing elevation. Use the repository-local `.r-medical-graphics-library/` or a project library; do not treat this as a CRAN mirror error.
+- `Os code 740`: Windows tried to use a location or process needing elevation. Use the repository-local `.r-medical-graphics-library/` or a project library; do not treat this as a CRAN mirror error.
 - `cannot open URL .../PACKAGES`: R cannot reach that CRAN repository. Let the bootstrap try multiple mirrors, provide a mirror reachable from the user's network, or use an approved network/proxy context.
 - VPNs can change which mirrors are reachable. With a VPN on, overseas mirrors such as `https://cloud.r-project.org` or `https://cran.rstudio.com` may work better; with a VPN off in mainland China, local mirrors may work better. A `403 Forbidden` from a mirror usually means that mirror rejected the current network route, not that the package is unavailable.
 - package compile errors: install Rtools for packages that need compilation, or use binary packages from a compatible CRAN mirror.

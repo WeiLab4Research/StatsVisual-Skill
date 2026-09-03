@@ -49,7 +49,7 @@ Doughnut and exploded pies retain the same part-to-whole logic. Nightingale rose
 
 ### Pie Plot
 
-![Pie Plot](../assets/gallery/pie/pie.png)
+![Pie Plot](../assets/gallery/pie_plot/pie.png)
 
 **Statistical Features**
 
@@ -66,7 +66,7 @@ Doughnut and exploded pies retain the same part-to-whole logic. Nightingale rose
 - Create a single stacked bar with `geom_bar(stat = "identity")` or `geom_col()`, map category to `fill`, and convert it with `coord_polar(theta = "y")`.
 - Set factor levels before plotting to control sector order; use `position_stack(vjust = 0.5)` for internal percentage labels.
 
-- Code Reference: source script `\StatsVisual-Skill\assets\templates\pie\Pie Plot.R`
+- Code Reference: source script `\StatsVisual-Skill\assets\templates\pie_plot\Pie Plot.R`
 
 ### Pie Plot with External Labels
 
@@ -85,11 +85,11 @@ Doughnut and exploded pies retain the same part-to-whole logic. Nightingale rose
 - Calculate each sector midpoint from cumulative values before plotting.
 - Add labels with `geom_label_repel()` or `geom_text_repel()`; remove a redundant legend when labels already identify every sector.
 
-- Code Reference: source script `\StatsVisual-Skill\assets\templates\pie\Pie Plot with External Labels.R`
+- Code Reference: source script `\StatsVisual-Skill\assets\templates\pie_plot\Pie Plot with External Labels.R`
 
 ### Doughnut Plot
 
-![Doughnut Plot](../assets/gallery/pie/doughnut.png)
+![Doughnut Plot](../assets/gallery/pie_plot/doughnut.png)
 
 **Statistical Features**
 
@@ -106,11 +106,11 @@ Doughnut and exploded pies retain the same part-to-whole logic. Nightingale rose
 - Build the chart as a stacked bar and apply `coord_polar(theta = "y")`.
 - Use a constant radial `x` value and `xlim()` to create the opening; place labels at the midpoint of each ring segment.
 
-- Code Reference: source script `\StatsVisual-Skill\assets\templates\pie\Doughnut Plot.R`
+- Code Reference: source script `\StatsVisual-Skill\assets\templates\pie_plot\Doughnut Plot.R`
 
 ### Pie Plot with Exploded Slice
 
-![Pie Plot with Exploded Slice](../assets/gallery/pie/exploded_slice.png)
+![Pie Plot with Exploded Slice](../assets/gallery/pie_plot/exploded_slice.png)
 
 **Statistical Features**
 
@@ -127,11 +127,11 @@ Doughnut and exploded pies retain the same part-to-whole logic. Nightingale rose
 - Use `ggforce::geom_arc_bar(stat = "pie")` with `amount` for category values and `fill` for categories.
 - Supply a restrained `explode` value through a focus variable; set `r0 = 0` for a solid pie or `r0 > 0` for a ring form.
 
-- Code Reference: source script `\StatsVisual-Skill\assets\templates\pie\Pie Plot with Exploded Slice.R`
+- Code Reference: source script `\StatsVisual-Skill\assets\templates\pie_plot\Pie Plot with Exploded Slice.R`
 
 ### Exploding Pie Plot
 
-![Exploding Pie Plot](../assets/gallery/pie/exploding.png)
+![Exploding Pie Plot](../assets/gallery/pie_plot/exploding.png)
 
 **Statistical Features**
 
@@ -148,11 +148,11 @@ Doughnut and exploded pies retain the same part-to-whole logic. Nightingale rose
 - Compute category fractions and cumulative `ymin` and `ymax` limits before plotting.
 - Draw sector bases with `geom_rect()` and map them into polar coordinates; control each sector’s displacement through `xmin` and `xmax`.
 
-- Code Reference: source script `\StatsVisual-Skill\assets\templates\pie\Exploding Pie Plot.R`
+- Code Reference: source script `\StatsVisual-Skill\assets\templates\pie_plot\Exploding Pie Plot.R`
 
 ### Nightingale Rose Chart
 
-![Nightingale Rose Chart](../assets/gallery/pie/rose.png)
+![Nightingale Rose Chart](../assets/gallery/pie_plot/rose.png)
 
 **Statistical Features**
 
@@ -169,7 +169,7 @@ Doughnut and exploded pies retain the same part-to-whole logic. Nightingale rose
 - Map ordered categories to `x`, magnitude to `y`, and category or value to `fill`, then apply `coord_polar()`.
 - Set factor order explicitly and precompute label angles and alignment when labels follow the circular axis.
 
-- Code Reference: source script `\StatsVisual-Skill\assets\templates\pie\Nightingale Rose Chart.R`
+- Code Reference: source script `\StatsVisual-Skill\assets\templates\pie_plot\Nightingale Rose Chart.R`
 
 ### Rose Chart with Tiered Label Strategy
 
@@ -190,7 +190,7 @@ Doughnut and exploded pies retain the same part-to-whole logic. Nightingale rose
 
 ### Nested Pie Plot
 
-![Nested Pie Plot](../assets/gallery/pie/nested.png)
+![Nested Pie Plot](../assets/gallery/pie_plot/nested.png)
 
 **Statistical Features**
 
@@ -207,7 +207,7 @@ Doughnut and exploded pies retain the same part-to-whole logic. Nightingale rose
 - Provide node names, parent names, and values to `plotly::plot_ly(type = "sunburst")`.
 - Use `branchvalues = "total"` only when parent values represent totals that include their descendants.
 
-- code reference:source script `\StatsVisual-Skill\assets\templates\pie\Nested Pie Plot.R`
+- code reference:source script `\StatsVisual-Skill\assets\templates\pie_plot\Nested Pie Plot.R`
 
 ### Circular Polar Heatmap
 
@@ -228,7 +228,7 @@ Doughnut and exploded pies retain the same part-to-whole logic. Nightingale rose
 
 ### Fourfold Plot
 
-![Fourfold Plot](../assets/gallery/pie/fourfold.png)
+![Fourfold Plot](../assets/gallery/pie_plot/fourfold.png)
 
 **Statistical Features**
 
@@ -245,7 +245,7 @@ Doughnut and exploded pies retain the same part-to-whole logic. Nightingale rose
 - Use `xtabs()` to convert individual-level binary data into a `2 × 2` table, or supply an existing `2 × 2 × k` array.
 - Draw the display with `fourfoldplot()` and use a multi-panel layout when stratification levels are present.
 
-- code reference:source script `\StatsVisual-Skill\assets\templates\pie\Fourfold Plot.R`
+- code reference:source script `\StatsVisual-Skill\assets\templates\pie_plot\Fourfold Plot.R`
 
 ## 7. QA Checklist
 

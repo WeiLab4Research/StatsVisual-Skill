@@ -105,8 +105,6 @@ p + ggsci::scale_color_nejm()
 p + ggsci::scale_fill_nejm()
 ```
 
-
-
 ## R Implementation
 
 - Source `assets/styles/theme_registry.R` through `assets/theme_medical_graphics.R`.
