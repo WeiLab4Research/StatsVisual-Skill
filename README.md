@@ -165,9 +165,11 @@ Use $StatsVisual-Skill-Extension to add a new chart type to StatsVisual-Skill, f
 
 Even for direct drawing requests, the first response should inspect the data, confirm whether the requested chart is suitable, recommend the best single figure and any optional multi-panel figure, then ask for confirmation before generating R code.
 
-## Community And Use
+## Co-creation And Sharing Statement
 
-We welcome everybody to co-build, test, and share improvements to this skill. The skill materials, documentation, examples, and visual assets are protected by copyright. If you plan to cite, reproduce, adapt, redistribute, or use these materials in a public work, please contact the development team in advance.
+We encourage everyone to jointly improve, test, and share this skill, making medical statistical graphics more standardized, clear, and elegant. The skill materials, documentation, examples, and visual assets are protected by copyright; if you plan to cite, reproduce, adapt, redistribute, or use these materials in a public work, please contact the development team in advance.
+
+In addition, we provide an online web platform [statsvisual.baibu.tech](https://statsvisual.baibu.tech). Without installing the skill, agent, or code execution environment locally, you can experience the complete statistical plotting workflow right in your browser. Welcome to try it out!
 
 ## Acknowledgements
 

@@ -168,6 +168,8 @@ Rscript skills/StatsVisual-Skill/scripts/validate_r_plot.R demo/figures
 
 我们鼓励大家共同完善、测试和共享这个 skill，让医学统计图形更加规范、清晰和美观。Skill 材料、说明文档、示例和视觉资产均受版权保护；如需引用、转载、改编、再发布或用于公开作品，请提前与开发团队联系。
 
+此外，我们还提供了在线 Web 平台 [statsvisual.baibu.tech](https://statsvisual.baibu.tech)，无需本地安装Skill、智能体、代码执行环境，即可在浏览器中体验完整的统计绘图流程，欢迎体验！
+
 ## 致谢
 
 本项目灵感亦参考 [Yuan1z0825/nature-skills](https://github.com/Yuan1z0825/nature-skills)，但定位有所不同。本项目主要聚焦四大医学期刊（The Lancet、NEJM、JAMA、BMJ）的医学统计绘图原则，并结合《统计图形与艺术》的知识框架，覆盖更丰富的图形类型。同时，在用户初次绘图时，可根据数据结构与统计意图推荐合适的图形绘制方案。
