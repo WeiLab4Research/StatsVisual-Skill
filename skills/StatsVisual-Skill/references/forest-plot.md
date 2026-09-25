@@ -43,11 +43,28 @@ Use a forest plot to present effect estimates and confidence intervals, includin
 
 **Required template review:** Before writing or modifying any forest-plot code, read the selected journal's R template in full and inspect its matching gallery image carefully. Do not infer the journal layout from the general rules alone. Preserve the template's column order, header hierarchy, rule extents, forest-axis construction, marker and reference-line treatment, P-value placement, direction labels, and margin logic unless the user's explicit request or the data requires a justified change.
 
-Each journal template has a matching gallery image:
+### Lancet
 
-- `assets/templates/forest_plot/lancet_subgroup_forest.R` → `assets/gallery/forest_plot/lancet_subgroup_forest.png`
-- `assets/templates/forest_plot/nejm_subgroup_forest.R` → `assets/gallery/forest_plot/nejm_subgroup_forest.png`
-- `assets/templates/forest_plot/jama_subgroup_forest.R` → `assets/gallery/forest_plot/jama_subgroup_forest.png`
-- `assets/templates/forest_plot/bmj_subgroup_forest.R` → `assets/gallery/forest_plot/bmj_subgroup_forest.png`
+![Lancet Subgroup Forest Plot](../assets/gallery/forest_plot/lancet_subgroup_forest.png)
+
+Template: `assets/templates/forest_plot/lancet_subgroup_forest.R`
+
+### NEJM
+
+![NEJM Subgroup Forest Plot](../assets/gallery/forest_plot/nejm_subgroup_forest.png)
+
+Template: `assets/templates/forest_plot/nejm_subgroup_forest.R`
+
+### JAMA
+
+![JAMA Subgroup Forest Plot](../assets/gallery/forest_plot/jama_subgroup_forest.png)
+
+Template: `assets/templates/forest_plot/jama_subgroup_forest.R`
+
+### BMJ
+
+![BMJ Subgroup Forest Plot](../assets/gallery/forest_plot/bmj_subgroup_forest.png)
+
+Template: `assets/templates/forest_plot/bmj_subgroup_forest.R`
 
 Treat each template as a layout starting point. Replace treatment labels, outcomes, models, subgroups, effect measures, axis limits, column titles, and direction labels according to the actual analysis.
