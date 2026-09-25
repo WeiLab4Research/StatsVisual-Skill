@@ -1,116 +1,53 @@
 # Forest Plot
 
-## Purpose
+Use a forest plot to present effect estimates and confidence intervals, including hazard ratios (HRs), odds ratios (ORs), risk ratios (RRs), risk differences (RDs), mean differences, standardized mean differences, and regression coefficients. Statistical results, table columns, and graphical marks must share one row coordinate system.
 
-Create a publication-ready forest plot for effect estimates with confidence intervals, such as odds ratios, hazard ratios, risk ratios, beta coefficients, or mean differences.
+## Statistical and Data Requirements
 
-![Forest Plot](../assets/gallery/forest_plot/forest-plot.png)
+- **Effect measure:** State the effect measure explicitly in the header and axis title. The null value is 1 for ratio measures and 0 for difference measures.
+- **Model:** Match the model to the outcome. Common choices include Cox regression for time-to-event outcomes and logistic, log-binomial, or Poisson regression for binary outcomes. Overall and subgroup estimates must use the same estimand. Report adjustment variables, stratification factors, and reference levels.
+- **Confidence interval:** Report two-sided 95% CIs unless another level is prespecified. Use consistent decimal precision. Ratio estimates and their limits must be positive, and the axis transformation must suit the effect measure.
+- **Interaction test:** Derive `P for interaction` from a formal treatment-by-subgroup interaction term using a Wald or likelihood-ratio test. Do not infer interaction from differences between subgroup-specific P values. Display one interaction P value per subgroup variable.
+- **Reference and direction:** Define the treatment group, comparator, reference levels, and effect direction. `Favours/Better` labels must agree with the coded contrast.
+- **Missing data:** State whether missing values are excluded, imputed, or displayed as `Not reported/Unknown`. A displayed missing category must not enter the interaction test unless it was modeled explicitly.
+- **Event coding:** Define event, censoring, and non-event codes. For survival outcomes, also define the time origin. Event counts, denominators, and percentages must use the same analysis population as the model.
 
-## Prerequisites
+## General Plotting Rules
 
-- Each row must have an effect estimate and uncertainty interval, or these must be computable from a declared model.
-- Do not force a forest plot from raw groups, counts, or percentages without an effect estimate.
-- Label the effect measure explicitly (`HR`, `OR`, `RR`, `risk difference`, `mean difference`, `SMD`, etc.) instead of hard-coding a single label.
+1. **Shared rows:** Align subgroup names, levels, counts, estimates, CIs, and P values on one row coordinate system. Do not assemble visually aligned but independent table and forest panels.
+2. **Columns:** Include only columns supported by the analysis, such as subgroup, treatment and comparator counts, forest axis, numeric estimate, and interaction P value.
+3. **Hierarchy and alignment:** Use bold subgroup labels and indented, left-aligned levels. Align numeric columns consistently. Center each header over its column and define the span of multilevel headers precisely.
+4. **Typography:** Use Arial 10 pt by default. Headers and body labels use the same point size; headers are bold. Use italics only when required by the selected journal style.
+5. **Axis:** Ratio measures usually use a logarithmic axis; difference measures use a linear axis. A journal-specific linear ratio axis is acceptable when declared explicitly. The range must retain the null value and cover the principal estimates.
+6. **Truncation:** Draw an arrow when a CI extends beyond the axis. Do not force an out-of-range point estimate onto the boundary.
+7. **Marker size:** Marker area may reflect inverse-variance weight. Use a constant size when reliable weights are unavailable. The overall estimate may be moderately emphasized.
+8. **Margins and clipping:** Balance the left and right outer margins. Keep the rightmost statistical column clear of the edge, and ensure that ticks and direction labels are not clipped.
+9. **Titles and direction labels:** Center the effect-measure title over the relevant forest or numeric column. Place direction labels close to the axis and ensure that they match the treatment contrast.
+10. **Number formatting:** Use one numeric convention for estimates, CIs, P values, and ticks. Report very small P values as thresholds, such as `<0.001`.
 
-## Universal Rules
+## Journal Style Matrix
 
-The following rules apply to all styles.
+| Element | Lancet | NEJM | JAMA | BMJ |
+|---|---|---|---|---|
+| Body background | Plain white; no row shading | Shallow alternating light-gray bands | Plain white | Plain white |
+| Rules and borders | One header rule only; no row rules or outer border | No heavy header rule; use only a subtle local divider when needed | Fine gray row rules in the left table; main header rule ends after the numeric HR/OR column | One header divider; a light rounded border around the forest region only; no whole-figure border |
+| Markers and CIs | Black squares with thin black CIs | Black squares with thin black CIs | Teal squares with gray CIs | Blue diamonds with blue CIs; the overall marker may be larger |
+| Null reference line | Thin solid line | Dark-gray dashed line | Gray dotted line | Thin gray solid line |
+| Count columns | `events/patients` under a two-level header | Patient totals with italic `no. of patients` | `events/total patients (%)` | `events/total patients (%)` |
+| P-value placement | Far right, aligned with the subgroup-variable row | Usually omitted; if required, place at the far right | Far right and close to the forest; vertically centered across the subgroup levels | Close to the numeric effect column; aligned with the first level of each subgroup |
+| Header structure | Compact two-level header; effect title centered | Treatment headers above an italic patient-count descriptor; effect title centered | Two-level bold header; main rule stops after the numeric effect column; P-value header may be bold italic | Two-level bold header; separate centered titles above the forest and numeric effect columns |
+| Direction labels | Bottom bidirectional arrows using `Favours ...` | Bottom bidirectional arrows with bold `... Better` labels | `Favors` labels placed immediately on either side of the null line | `... better` labels centered on the left and right axis endpoints |
+| Number format | Midline decimal point `·` | Standard decimal point; en dash within CIs | Standard decimal point; leading zero may be omitted for P values | Standard decimal point; CI format such as `0.44 (0.36 to 0.53)` |
 
-### Layout
+## Templates and Gallery Examples
 
-- **Integrated table-and-forest**: Use one shared row coordinate system. Descriptor columns on the left, the estimate axis near the middle, numeric estimate/statistical columns on the right.
-- **Self-contained forest axis**: Ticks and tick labels must remain within the forest-axis column. They must not extend horizontally into the subgroup label column or event-count columns.
-- **Column choice from analysis**: Choose columns from the actual analysis (subgroup/level, counts, study weights, estimate with CI, P value, P for interaction). Do not add unused columns just to mimic a reference image.
-- Keep the null-effect line, CI marks, axis ticks, favour labels, and CI text aligned to the same row coordinate system.
+**Required template review:** Before writing or modifying any forest-plot code, read the selected journal's R template in full and inspect its matching gallery image carefully. Do not infer the journal layout from the general rules alone. Preserve the template's column order, header hierarchy, rule extents, forest-axis construction, marker and reference-line treatment, P-value placement, direction labels, and margin logic unless the user's explicit request or the data requires a justified change.
 
-### Markers & Lines
+Each journal template has a matching gallery image:
 
-- Use a vertical dashed line to mark the null-effect value. Typical null-effect values:
+- `assets/templates/forest_plot/lancet_subgroup_forest.R` → `assets/gallery/forest_plot/lancet_subgroup_forest.png`
+- `assets/templates/forest_plot/nejm_subgroup_forest.R` → `assets/gallery/forest_plot/nejm_subgroup_forest.png`
+- `assets/templates/forest_plot/jama_subgroup_forest.R` → `assets/gallery/forest_plot/jama_subgroup_forest.png`
+- `assets/templates/forest_plot/bmj_subgroup_forest.R` → `assets/gallery/forest_plot/bmj_subgroup_forest.png`
 
-| Effect type | Null-effect value |
-|---|---:|
-| Odds ratio | 1 |
-| Risk ratio | 1 |
-| Hazard ratio | 1 |
-| Mean difference | 0 |
-| Regression coefficient / beta | 0 |
-
-### Hierarchy & Text
-
-- Subgroup hierarchy is expressed through bold labels, indentation, and vertical spacing.
-- Keep column headers the same font size as body category labels; use bold weight for headers.
-- Place P-value and P-for-interaction columns at the far right of the table.
-- Include `P for interaction` only for subgroup interaction analyses; ordinary rows may need no P-value column.
-
-### Rejection Checklist
-
-Reject forest plots with:
-- Missing CI definitions or unclear reference group
-- Unreadable table text
-- Disconnected table and forest panels that only appear aligned by eye
-- Heavy boxed grids or heavy table-wide rules
-
-## Style-Specific Rules
-
-### General
-
-- Light row bands or subtle group shading are permitted only when they improve row tracking in dense tables.
-
-### Nature
-
-- Keep figures compact, column-aligned, and evidence-first. Avoid oversized titles or explanatory text inside the plot.
-- Use thin CI lines, modest square or point markers, and a pale or absent grid.
-- Use blue or muted journal palette colours only when colour carries meaning.
-- Use shallow row bands or fine column guides sparingly; they should not dominate the CI marks.
-- Place favour labels and axis ticks close to the forest axis.
-- Reject figures that are too wide, rely on a detached legend, use heavy table rules, or rasterize editable text.
-
-### Lancet
-
-- **Plain white table body**: Alternating row bands, shaded subgroup backgrounds, boxed grids, or any background fill are prohibited.
-- **Single header rule**: Only one horizontal rule is permitted — the header rule below the column headers. No additional separator lines, borders, or grids.
-- **Default black-and-white**: CI lines and the null-effect reference line shall be black. Point-estimate symbols shall be solid black squares (■) or white squares with black outlines (□). Colour only when it carries explicit scientific meaning.
-- **Square markers**: The default point-estimate symbol is a square.
-- **Midline decimal point**: All numeric text (axis labels, CI text, P values, in-table numbers) shall use the midline decimal point (·).
-- **Subgroup hierarchy by typography only**: Bold labels, indentation, and vertical spacing. No background shading or colour blocks.
-
-### NEJM
-
-- **Shallow alternating row bands**: Light-gray row bands are permitted for dense subgroup tables. Keep bands light enough that CI marks and text remain dominant.
-- **Subtle divider**: Do not draw a heavy table-wide rule above the column headers. Use a subtle local divider if a separator is needed.
-- **Default blue-and-black**: CI lines and null-effect reference line shall be black. Point-estimate symbols shall be theme-blue or black squares (■).
-- **Square markers**: The default point-estimate symbol is a square.
-- **Ordinary decimal point**: Do not use Lancet-style midline decimal points.
-- Add favour labels with directional arrows only when they clarify interpretation.
-
-### JAMA
-
-- White table body, aligned text columns, restrained black or palette-colour CI marks, and a clear null-effect reference line.
-- Use whitespace, indentation, and at most subtle row spacing or very light bands for dense subgroup displays.
-- Avoid boxed grids and heavy table-wide rules.
-- Reject figures with unclear effect-measure labels, detached table/forest alignment, or visually overemphasized P values.
-
-### BMJ
-
-- Plain labels, explicit denominators, restrained colours, and a white table body.
-- Use subtle row spacing only when it improves tracking in dense displays.
-- Avoid P-value-only emphasis; the estimate direction, CI width, denominator, and clinical meaning should remain easy to read.
-- Reject figures with unclear denominators, heavy boxed grids, or P values that visually dominate the effect estimates.
-
-## Column Structure Example
-
-```
-| Subgroup / level | Treatment | Comparator | HR (95% CI)       | HR (95% CI)      | P interaction |
-|------------------|-----------|------------|--------------------|------------------|---------------|
-| Age              |           |            |                    |                  | 0.48          |
-|   <65 years      | 86/742    | 112/736    | ───■────           | 0.76 (0.58-0.99) |               |
-|   ≥65 years      | 74/658    | 89/662     | ─────■──           | 0.84 (0.62-1.13) |               |
-| Sex              |           |            |                    |                  | 0.71          |
-|   Male           | 96/812    | 121/806    | ───■────           | 0.79 (0.61-1.02) |               |
-|   Female         | 64/588    | 80/592     | ─────■──           | 0.81 (0.58-1.12) |               |
-|                  |           |            | └──0.5──1.0──2.0──┘ |                  |               |
-```
-
-## Template Starter
-
-Use `assets/templates/forest_plot/subgroup_forest.R` as the starter template for subgroup forest plots with table-aligned effect estimates, confidence intervals, sample-size columns, and optional interaction P values. Copy it into `<project_dir>/R/` and adapt the subgroup, level, estimate, CI, sample-size, and interaction columns before running.
+Treat each template as a layout starting point. Replace treatment labels, outcomes, models, subgroups, effect measures, axis limits, column titles, and direction labels according to the actual analysis.

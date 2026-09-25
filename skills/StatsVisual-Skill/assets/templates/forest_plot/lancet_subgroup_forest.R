@@ -1,0 +1,279 @@
+suppressPackageStartupMessages({
+  library(readxl)
+  library(survival)
+  library(ggplot2)
+  library(dplyr)
+  library(tibble)
+})
+
+format_lancet_number <- function(x, digits = 2, trim = FALSE, na_label = "NA") {
+  out <- rep(na_label, length(x))
+  ok <- !is.na(x)
+  if (any(ok)) {
+    values <- formatC(round(x[ok], digits = digits), format = "f", digits = digits)
+    if (isTRUE(trim)) {
+      values <- sub("\\.?0+$", "", values)
+      values <- sub("\\.$", "", values)
+    }
+    out[ok] <- gsub(".", "\u00b7", values, fixed = TRUE)
+  }
+  out
+}
+
+format_lancet_ci <- function(estimate, lower, upper, digits = 2) {
+  paste0(
+    format_lancet_number(estimate, digits = digits),
+    " (",
+    format_lancet_number(lower, digits = digits),
+    "\u2013",
+    format_lancet_number(upper, digits = digits),
+    ")"
+  )
+}
+
+dir.create(file.path(project_dir, "figures"), recursive = TRUE, showWarnings = FALSE)
+dir.create(file.path(project_dir, "output"), recursive = TRUE, showWarnings = FALSE)
+
+dat <- read_excel(data_file, sheet = "Figure3_Data")
+required <- c(
+  "USUBJID", "TRT01P", "AVAL", "CNSR", "AGEGR1", "BLECOG", "RSFA", "RSFB",
+  "VISCMNY", "LIVERMNY", "LUNGMNY", "ADJTRTFL", "HER2CAT", "TFIMCAT"
+)
+missing_cols <- setdiff(required, names(dat))
+if (length(missing_cols) > 0L) {
+  stop("Missing required columns: ", paste(missing_cols, collapse = ", "), call. = FALSE)
+}
+
+dat <- dat %>%
+  mutate(
+    trt = if_else(TRT01P == "Pyrotinib group", 1, 0),
+    event = 1 - as.integer(CNSR)
+  )
+
+if (any(!dat$CNSR %in% c(0, 1)) || any(dat$event < 0 | dat$event > 1)) {
+  stop("CNSR must use 0=event and 1=censored coding.", call. = FALSE)
+}
+
+subgroups <- list(
+  list(var = "AGEGR1", label = "Age", levels = c("<65 years", ">=65 years"), labels = c("<65 years", "\u226565 years")),
+  list(var = "RSFB", label = "Hormone receptor status", levels = c("Negative", "Positive"), labels = c("Negative", "Positive")),
+  list(var = "HER2CAT", label = "HER2 status", levels = c("1+/2+", "3+"), labels = c("1+/2+", "3+")),
+  list(var = "VISCMNY", label = "Visceral metastasis", levels = c("N", "Y"), labels = c("No", "Yes")),
+  list(var = "LIVERMNY", label = "Liver metastasis", levels = c("N", "Y"), labels = c("No", "Yes")),
+  list(var = "LUNGMNY", label = "Lung metastasis", levels = c("N", "Y"), labels = c("No", "Yes")),
+  list(var = "ADJTRTFL", label = "Prior adjuvant therapy", levels = c("No", "Yes"), labels = c("No", "Yes")),
+  list(var = "RSFA", label = "Prior anti-HER2 therapy", levels = c("No", "Yes"), labels = c("No", "Yes")),
+  list(var = "BLECOG", label = "ECOG performance status", levels = c("0", "1"), labels = c("0", "1")),
+  list(
+    var = "TFIMCAT",
+    label = "Time from diagnosis to randomization",
+    levels = c("X >= 24 months", "12 months <= X < 24 months", NA_character_),
+    labels = c("\u226524 months", "12 to <24 months", "Not reported")
+  )
+)
+
+fit_hr <- function(d, stratified = FALSE) {
+  if (nrow(d) < 2L || length(unique(d$trt)) < 2L || sum(d$event) < 2L) {
+    return(c(hr = NA_real_, lower = NA_real_, upper = NA_real_, se = NA_real_))
+  }
+  form <- if (stratified) {
+    Surv(AVAL, event) ~ trt + strata(RSFA, RSFB)
+  } else {
+    Surv(AVAL, event) ~ trt
+  }
+  fit <- tryCatch(coxph(form, data = d, ties = "efron"), error = function(e) NULL)
+  if (is.null(fit) || !"trt" %in% names(coef(fit))) {
+    return(c(hr = NA_real_, lower = NA_real_, upper = NA_real_, se = NA_real_))
+  }
+  b <- unname(coef(fit)["trt"])
+  s <- sqrt(unname(vcov(fit)["trt", "trt"]))
+  c(hr = exp(b), lower = exp(b - 1.96 * s), upper = exp(b + 1.96 * s), se = s)
+}
+
+interaction_p <- function(d, var, levels) {
+  keep <- if (anyNA(levels)) !is.na(d[[var]]) else d[[var]] %in% levels
+  z <- d[keep, , drop = FALSE]
+  lev <- levels[!is.na(levels)]
+  z$subgroup_factor <- factor(z[[var]], levels = lev)
+  z <- z[!is.na(z$subgroup_factor), , drop = FALSE]
+  if (nlevels(droplevels(z$subgroup_factor)) < 2L) return(NA_real_)
+  m0 <- tryCatch(coxph(Surv(AVAL, event) ~ trt + subgroup_factor, data = z, ties = "efron"), error = function(e) NULL)
+  m1 <- tryCatch(coxph(Surv(AVAL, event) ~ trt * subgroup_factor, data = z, ties = "efron"), error = function(e) NULL)
+  if (is.null(m0) || is.null(m1)) return(NA_real_)
+  a <- tryCatch(anova(m0, m1, test = "LRT"), error = function(e) NULL)
+  if (is.null(a)) return(NA_real_)
+  p_col <- grep("P", names(a), value = TRUE)[1]
+  if (is.na(p_col)) NA_real_ else as.numeric(a[2, p_col])
+}
+
+arm_summary <- function(d) {
+  py <- d[d$TRT01P == "Pyrotinib group", , drop = FALSE]
+  pl <- d[d$TRT01P == "Placebo group", , drop = FALSE]
+  c(
+    pyro_events = sum(py$event), pyro_n = nrow(py),
+    placebo_events = sum(pl$event), placebo_n = nrow(pl)
+  )
+}
+
+overall_hr <- fit_hr(dat, stratified = TRUE)
+overall_n <- arm_summary(dat)
+rows <- list(tibble(
+  row_type = "estimate", group = "Overall", label = "Overall",
+  pyro_events = overall_n[["pyro_events"]], pyro_n = overall_n[["pyro_n"]],
+  placebo_events = overall_n[["placebo_events"]], placebo_n = overall_n[["placebo_n"]],
+  hr = overall_hr[["hr"]], lower = overall_hr[["lower"]], upper = overall_hr[["upper"]],
+  se = overall_hr[["se"]], p_interaction = NA_real_
+))
+
+for (sg in subgroups) {
+  p_int <- interaction_p(dat, sg$var, sg$levels)
+  rows[[length(rows) + 1L]] <- tibble(
+    row_type = "header", group = sg$label, label = sg$label,
+    pyro_events = NA_real_, pyro_n = NA_real_, placebo_events = NA_real_, placebo_n = NA_real_,
+    hr = NA_real_, lower = NA_real_, upper = NA_real_, se = NA_real_, p_interaction = p_int
+  )
+  for (i in seq_along(sg$levels)) {
+    lev <- sg$levels[[i]]
+    z <- if (is.na(lev)) {
+      dat[is.na(dat[[sg$var]]), , drop = FALSE]
+    } else {
+      dat[!is.na(dat[[sg$var]]) & dat[[sg$var]] == lev, , drop = FALSE]
+    }
+    h <- fit_hr(z, stratified = FALSE)
+    n <- arm_summary(z)
+    rows[[length(rows) + 1L]] <- tibble(
+      row_type = "estimate", group = sg$label, label = sg$labels[[i]],
+      pyro_events = n[["pyro_events"]], pyro_n = n[["pyro_n"]],
+      placebo_events = n[["placebo_events"]], placebo_n = n[["placebo_n"]],
+      hr = h[["hr"]], lower = h[["lower"]], upper = h[["upper"]], se = h[["se"]],
+      p_interaction = NA_real_
+    )
+  }
+}
+
+plot_df <- bind_rows(rows) %>%
+  mutate(
+    row_id = rev(seq_len(n())),
+    count_pyro = if_else(row_type == "estimate", paste0(pyro_events, "/", pyro_n), ""),
+    count_placebo = if_else(row_type == "estimate", paste0(placebo_events, "/", placebo_n), ""),
+    hr_text = if_else(row_type == "estimate" & !is.na(hr), format_lancet_ci(hr, lower, upper, 2), ""),
+    p_text = if_else(
+      row_type == "header" & !is.na(p_interaction),
+      if_else(
+        p_interaction < 0.001,
+        paste0("<", format_lancet_number(0.001, digits = 3)),
+        if_else(
+          p_interaction < 0.01,
+          format_lancet_number(p_interaction, digits = 3),
+          format_lancet_number(p_interaction, digits = 2)
+        )
+      ),
+      ""
+    ),
+    display_label = label,
+    weight = if_else(!is.na(se) & se > 0, 1 / se^2, NA_real_)
+  )
+
+write.csv(plot_df, file.path(project_dir, "output", "subgroup_estimates.csv"), row.names = FALSE, na = "")
+
+forest_x0 <- 0.35
+forest_x1 <- 0.54
+x_limits_hr <- c(0.10, 2.00)
+map_hr <- function(x) {
+  forest_x0 + (log(x) - log(x_limits_hr[[1]])) /
+    (log(x_limits_hr[[2]]) - log(x_limits_hr[[1]])) * (forest_x1 - forest_x0)
+}
+
+est_df <- plot_df %>%
+  filter(row_type == "estimate", !is.na(hr)) %>%
+  mutate(
+    x_est = map_hr(pmin(pmax(hr, x_limits_hr[[1]]), x_limits_hr[[2]])),
+    x_low = map_hr(pmin(pmax(lower, x_limits_hr[[1]]), x_limits_hr[[2]])),
+    x_high = map_hr(pmin(pmax(upper, x_limits_hr[[1]]), x_limits_hr[[2]])),
+    marker_size = scales::rescale(sqrt(weight), to = c(2.2, 4.0))
+  )
+
+x_desc <- 0.015
+x_pyro <- 0.225
+x_placebo <- 0.285
+x_hr_text <- 0.565
+x_hr_header <- 0.625
+x_p <- 0.720
+y_header <- max(plot_df$row_id) + 3.0
+y_subheader <- max(plot_df$row_id) + 2.1
+y_rule <- max(plot_df$row_id) + 1.35
+y_axis <- 0.15
+y_favour <- -0.75
+ticks <- c(0.10, 0.25, 0.50, 1.00, 2.00)
+tick_x <- map_hr(ticks)
+tick_df <- tibble(x = tick_x, xend = tick_x, y = y_axis, yend = y_axis - 0.18)
+font_family <- "Arial"
+text_size_mm <- 10 / ggplot2::.pt
+plot_df <- plot_df %>%
+  mutate(label_x = x_desc)
+
+p <- ggplot() +
+  annotate("segment", x = 0.01, xend = 0.755, y = y_rule, yend = y_rule, linewidth = 0.55, colour = "black") +
+  annotate("segment", x = 0.190, xend = 0.320, y = y_subheader + 0.47, yend = y_subheader + 0.47, linewidth = 0.45) +
+  annotate("segment", x = forest_x0, xend = forest_x1, y = y_axis, yend = y_axis, linewidth = 0.45) +
+  annotate("segment", x = map_hr(1), xend = map_hr(1), y = y_axis, yend = max(plot_df$row_id) + 0.55, linewidth = 0.45, colour = "grey35") +
+  geom_segment(
+    data = est_df,
+    aes(x = x_low, xend = x_high, y = row_id, yend = row_id),
+    linewidth = 0.52, colour = "black"
+  ) +
+  geom_point(data = est_df, aes(x = x_est, y = row_id, size = marker_size), shape = 15, colour = "black") +
+  scale_size_identity() +
+  geom_text(
+    data = plot_df,
+    aes(x = label_x, y = row_id, label = display_label, fontface = ifelse(row_type == "header" | group == "Overall", "bold", "plain")),
+    hjust = 0, family = font_family, size = text_size_mm
+  ) +
+  geom_text(data = plot_df, aes(y = row_id, label = count_pyro), x = x_pyro, family = font_family, size = text_size_mm) +
+  geom_text(data = plot_df, aes(y = row_id, label = count_placebo), x = x_placebo, family = font_family, size = text_size_mm) +
+  geom_text(data = plot_df, aes(y = row_id, label = hr_text), x = x_hr_text, hjust = 0, family = font_family, size = text_size_mm) +
+  geom_text(data = plot_df, aes(y = row_id, label = p_text), x = x_p, family = font_family, size = text_size_mm) +
+  annotate("text", x = x_desc, y = y_header, label = "Subgroup", hjust = 0, family = font_family, fontface = "bold", size = text_size_mm) +
+  annotate("text", x = mean(c(x_pyro, x_placebo)), y = y_header, label = "Numbers of events/patients", family = font_family, fontface = "bold", size = text_size_mm) +
+  annotate("text", x = x_pyro, y = y_subheader, label = "Pyrotinib", family = font_family, size = text_size_mm) +
+  annotate("text", x = x_placebo, y = y_subheader, label = "Placebo", family = font_family, size = text_size_mm) +
+  annotate("text", x = x_hr_header, y = y_header, label = "Hazard ratio (95% CI)", family = font_family, fontface = "bold", size = text_size_mm) +
+  annotate("text", x = x_p, y = y_header, label = "P for\ninteraction", family = font_family, fontface = "bold", size = text_size_mm, lineheight = 0.92) +
+  geom_segment(data = tick_df, aes(x = x, xend = xend, y = y, yend = yend), linewidth = 0.40) +
+  annotate("text", x = tick_x, y = y_axis - 0.38, label = format_lancet_number(ticks, digits = 2, trim = TRUE), family = font_family, size = text_size_mm) +
+  annotate("segment", x = map_hr(0.95), xend = map_hr(0.16), y = y_favour, yend = y_favour, arrow = arrow(length = grid::unit(0.10, "inches"), type = "closed"), linewidth = 0.42) +
+  annotate("segment", x = map_hr(1.05), xend = map_hr(1.85), y = y_favour, yend = y_favour, arrow = arrow(length = grid::unit(0.10, "inches"), type = "closed"), linewidth = 0.42) +
+  annotate("text", x = map_hr(0.28), y = y_favour - 0.38, label = "Favours pyrotinib", family = font_family, size = text_size_mm) +
+  annotate("text", x = map_hr(1.55), y = y_favour - 0.38, label = "Favours placebo", family = font_family, size = text_size_mm) +
+  scale_x_continuous(expand = expansion(mult = 0, add = 0)) +
+  scale_y_continuous(expand = expansion(mult = 0, add = 0)) +
+  coord_cartesian(xlim = c(0, 0.77), ylim = c(y_favour - 0.85, y_header + 0.60), clip = "off") +
+  theme_void(base_family = font_family) +
+  theme(
+    plot.background = element_rect(fill = "white", colour = NA),
+    panel.background = element_rect(fill = "white", colour = NA),
+    plot.margin = margin(6, 6, 6, 6)
+  )
+
+plot_rds <- file.path(project_dir, "output", paste0(figure_name, ".rds"))
+saveRDS(p, plot_rds)
+
+fig_dir <- file.path(project_dir, "figures")
+width_in <- 11.5
+height_in <- 11.4
+
+ggsave(file.path(fig_dir, paste0(figure_name, ".pdf")), p, width = width_in, height = height_in, units = "in", device = cairo_pdf, bg = "white")
+ggsave(file.path(fig_dir, paste0(figure_name, ".svg")), p, width = width_in, height = height_in, units = "in", device = svglite::svglite, bg = "white")
+ragg::agg_tiff(file.path(fig_dir, paste0(figure_name, "_700dpi.tiff")), width = width_in, height = height_in, units = "in", res = 700, compression = "lzw", background = "white")
+print(p)
+dev.off()
+ragg::agg_png(file.path(fig_dir, paste0(figure_name, "_web.png")), width = width_in, height = height_in, units = "in", res = 120, background = "white")
+print(p)
+dev.off()
+
+web_file <- file.path(fig_dir, paste0(figure_name, "_web.png"))
+if (file.info(web_file)$size > 1024^2) {
+  ragg::agg_png(web_file, width = width_in, height = height_in, units = "in", res = 300, background = "white")
+  print(p)
+  dev.off()
+}
