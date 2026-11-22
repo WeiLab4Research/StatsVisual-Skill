@@ -155,7 +155,7 @@ Copy these into `<project_dir>/R/` and adapt column names, labels, statistics, a
 - `assets/templates/regression_diagnostics/` for residuals-vs-fitted, leverage, Cook's distance, influence index, and half-normal leverage plots.
 - `assets/templates/scatter_plot/` for scatter, smooth-scatter, marginal-distribution, scatterplot matrix, smooth, sunflower, bubble, and volcano plots.
 - `assets/templates/smoothing_curve/` for LOWESS smooth and LOWESS regression plots.
-- `assets/templates/survival_curve/` for Kaplan-Meier, truncated, median-reference, confidence-band, cumulative-hazard, risk-table, comparison, integrated, Schoenfeld, Cox deviance, and adjusted survival plots.
+- `assets/templates/survival_curve/` for Kaplan-Meier, truncated, median-reference, confidence-band, cumulative-hazard, cumulative-incidence, risk-table, comparison, integrated, Schoenfeld, Cox deviance, and adjusted survival plots.
 - `assets/templates/ternary_plot/` for ternary plots.
 
 Treat templates as starting points, not fixed outputs. Read `references/chart-index.md` and the relevant detailed chart reference before adapting them for variants such as violin, raincloud, density scatter, coefficient plots, or longitudinal charts. Read `references/design-rules.md` and the selected style reference before finalizing visual choices. Read `references/multipanel-figures.md` before adapting any A/B/C or composite figure.

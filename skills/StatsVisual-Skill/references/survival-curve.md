@@ -15,6 +15,7 @@ Survival graphics may also display cumulative hazard, numbers at risk, model-adj
 | Mark the time at which estimated survival reaches `0.50` | Median Survival Reference Plot |
 | Display uncertainty around Kaplan–Meier estimates | Survival Plot with Confidence Band |
 | Display accumulated hazard over follow-up | Cumulative Hazard Plot |
+| Display cumulative event probability `1 - S(t)` by time | Cumulative Incidence Probability Plot |
 | Show the remaining risk set at clinically meaningful times | Survival Plot with Risk Table |
 | Magnify low event probabilities or small early differences | Survival Curve with Inset Plot |
 | Compare prespecified survival-curve tests | Survival Curve Comparison Methods Plot |
@@ -139,6 +140,24 @@ Survival graphics may also display cumulative hazard, numbers at risk, model-adj
 - Use a cumulative-event transformation instead when the axis is labeled as event incidence or percentage.
 
 - code reference: source script `\StatsVisual-Skill\assets\templates\survival_curve\Cumulative Hazard Plot.R`
+
+### Cumulative Incidence Probability Plot
+
+![Cumulative Incidence Probability Plot](../assets/gallery/survival_curve/cumulative_incidence_probability_plot.png)
+
+**Statistical Methods and Features**
+
+- Displays the cumulative probability of experiencing the event by time `t`, `F(t) = 1 - S(t)`, from a Kaplan–Meier fit in a single-event setting. This is an event probability, not the cumulative hazard `H(t)`.
+- Choose the layout using the largest group-specific estimated event probability at a prespecified common follow-up time `t*`. If `max F(t*) < 0.30`, show the full-range curve with an enlarged inset; if `max F(t*) >= 0.30`, show the main curve alone. The `30%` cutoff is a StatsVisual display rule, not a threshold prescribed by a medical journal.
+- When competing events preclude the event of interest, estimate its cumulative incidence with a competing-risks method such as Aalen–Johansen rather than treating competing events as censored in `1 - S(t)`.
+
+**Code Features**
+
+- For a single-event outcome, use `fun = "event"` in `ggsurvplot()` or `type = "risk"` in `ggsurvfit()`. Label the y-axis `Cumulative incidence (%)` or `Cumulative event probability (%)` when displaying percentages; convert the `0–1` estimate to a percentage only once.
+- For `max F(t*) < 0.30`, keep a `0–100%` main panel and add a labeled inset beginning at `0%`, with an upper limit near `30%` or high enough to include the curves and confidence intervals. Use the same data, estimator, time scale, colors, and event definition in both views. Place the inset away from curves, labels, and the number-at-risk table.
+- For `max F(t*) >= 0.30`, use one panel without an inset. Keep step curves, time units, confidence intervals when shown, and risk counts legible; ensure the y-axis contains all displayed estimates and intervals. Explain the chosen display range and any inset in the figure legend.
+
+- code reference: source script `\StatsVisual-Skill\assets\templates\survival_curve\Cumulative Incidence Probability Plot.R`
 
 ### Survival Plot with Risk Table
 
