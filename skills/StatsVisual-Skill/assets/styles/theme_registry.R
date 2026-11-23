@@ -37,12 +37,20 @@ rmg_normalize_style <- function(style = "general") {
     "british medical journal" = "bmj",
     "bmj风格" = "bmj",
     "英国医学杂志" = "bmj",
-    "英国医学杂志风格" = "bmj"
+    "英国医学杂志风格" = "bmj",
+    "cma-style" = "cma",
+    "cma journals" = "cma",
+    "chinese medical association journals" = "cma",
+    "chinese medical association journal series" = "cma",
+    "中华医学会杂志" = "cma",
+    "中华医学会杂志风格" = "cma",
+    "中华医学会系列杂志" = "cma",
+    "cma（中华医学会杂志）" = "cma"
   )
   if (style %in% names(aliases)) {
     style <- aliases[[style]]
   }
-  if (!style %in% c("general", "nature", "lancet", "nejm", "jama", "bmj")) {
+  if (!style %in% c("general", "nature", "lancet", "nejm", "jama", "bmj", "cma")) {
     warning("Unknown style '", style, "'. Falling back to 'general'.", call. = FALSE)
     style <- "general"
   }
@@ -58,7 +66,8 @@ rmg_style_label <- function(style = "general") {
     lancet = "Lancet style",
     nejm = "NEJM style",
     jama = "JAMA style",
-    bmj = "BMJ style"
+    bmj = "BMJ style",
+    cma = "Chinese Medical Association journals style"
   )
 }
 
@@ -71,7 +80,8 @@ rmg_style_base_size <- function(style = "general") {
     lancet   = 11,
     nejm     = 11,
     jama     = 11,
-    bmj      = 11
+    bmj      = 11,
+    cma      = 9.5
   )
 }
 
@@ -91,7 +101,8 @@ rmg_font_family <- function(style = "general", role = "figure") {
     lancet  = "Arial",
     nejm    = "Arial",
     jama    = "Arial",
-    bmj     = "Arial"
+    bmj     = "Arial",
+    cma     = "SimSun"
   )
 }
 
@@ -182,6 +193,11 @@ rmg_label_number <- function(style = "general", accuracy = NULL, digits = NULL, 
 
 rmg_palette <- function(n, style = "general") {
   style <- rmg_normalize_style(style)
+  if (style == "cma") {
+    palette <- c("#155A80", "#B65B35", "#287A72", "#725E85", "#9B762A")
+    if (n <= length(palette)) return(palette[seq_len(n)])
+    return(grDevices::colorRampPalette(palette)(n))
+  }
   palettes <- list(
     general = c(
       "#0072B2", "#D55E00", "#009E73", "#CC79A7",
@@ -235,9 +251,16 @@ rmg_theme <- function(style = "general", base_size = NULL, base_family = NULL) {
   if (is.null(base_family)) {
     base_family <- rmg_font_family(style)
   }
-  # 字体回退：英文使用 base_family（默认 Arial），中文自动回退到宋体（SimSun）。
-  # 仅在 showtext 可用且 SimSun 存在时启用，避免无字体环境报错。
-  if (requireNamespace("showtext", quietly = TRUE) &&
+  if (style == "cma" && identical(base_family, "")) {
+    base_family <- rmg_font_family(style)
+  }
+  # Keep SimSun as editable SVG text for CMA-style figures when the font is installed.
+  if (style == "cma" && requireNamespace("showtext", quietly = TRUE)) {
+    showtext::showtext_auto(FALSE)
+  }
+  # Other styles retain the existing optional SimSun fallback via showtext.
+  # CMA uses the installed SimSun directly so SVG text can remain editable.
+  if (style != "cma" && requireNamespace("showtext", quietly = TRUE) &&
       requireNamespace("sysfonts", quietly = TRUE) &&
       nzchar(base_family)) {
     available <- sysfonts::font_files()
@@ -270,6 +293,32 @@ rmg_theme <- function(style = "general", base_size = NULL, base_family = NULL) {
           panel.grid.major = ggplot2::element_blank(),
           panel.grid.minor = ggplot2::element_blank(),
           plot.margin = ggplot2::margin(5, 5, 5, 5)
+        )
+    )
+  }
+
+  if (style == "cma") {
+    return(
+      ggplot2::theme_classic(base_size = base_size, base_family = base_family) +
+        ggplot2::theme(
+          plot.background = ggplot2::element_rect(fill = "white", colour = NA),
+          panel.background = ggplot2::element_rect(fill = "white", colour = NA),
+          plot.title = ggplot2::element_text(face = "plain", size = ggplot2::rel(1.05)),
+          axis.title = ggplot2::element_text(face = "plain", colour = "#222222"),
+          axis.title.x = ggplot2::element_text(margin = ggplot2::margin(t = 5)),
+          axis.title.y = ggplot2::element_text(margin = ggplot2::margin(r = 5)),
+          axis.text = ggplot2::element_text(size = ggplot2::rel(0.90), colour = "#222222"),
+          axis.line = ggplot2::element_line(linewidth = 0.40, colour = "#222222"),
+          axis.ticks = ggplot2::element_line(linewidth = 0.30, colour = "#222222"),
+          axis.ticks.length = grid::unit(1.5, "mm"),
+          panel.grid.major = ggplot2::element_blank(),
+          panel.grid.minor = ggplot2::element_blank(),
+          legend.title = ggplot2::element_blank(),
+          legend.background = ggplot2::element_blank(),
+          legend.key = ggplot2::element_blank(),
+          strip.background = ggplot2::element_blank(),
+          strip.text = ggplot2::element_text(face = "plain"),
+          plot.margin = ggplot2::margin(4, 4, 4, 4, "mm")
         )
     )
   }

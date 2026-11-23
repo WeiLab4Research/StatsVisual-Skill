@@ -54,7 +54,7 @@ This skill covers **16 statistical chart families**. All figure examples are fro
 - Profiles CSV, TSV, XLSX, and RDS datasets before plotting.
 - Recommends a primary single figure, up to two alternatives, and an optional multi-panel figure when complementary analyses are useful.
 - Uses a first-turn gate: when data are first provided, the assistant profiles and recommends before writing plotting code.
-- Supports `general`, `nature`, `lancet`, `nejm`, `jama`, and `bmj` figure styles.
+- Supports `general`, `nature`, `lancet`, `nejm`, `jama`, `bmj`, and `cma` (Chinese Medical Association journals) figure styles.
 - Exports PDF, editable SVG, high-resolution TIFF, and a compact web preview.
 - Records reproducibility artifacts such as the plotting script, data profile, figure rationale, readability QA, and R session information.
 

@@ -54,7 +54,7 @@ StatsVisual-Skill 是一组面向医学统计绘图的 AI skills，旨在帮助 
 - 在绘图前分析 CSV、TSV、XLSX 和 RDS 数据。
 - 推荐一个首选单图、最多两个备选单图；当互补分析有价值时，推荐可选组图。
 - 使用首轮推荐门槛：第一次收到数据时，只做数据画像和图形推荐，不直接写绘图代码。
-- 支持 `general`、`nature`、`lancet`、`nejm`、`jama` 和 `bmj` 图形风格。
+- 支持 `general`、`nature`、`lancet`、`nejm`、`jama`、`bmj` 和 `cma（中华医学会杂志）` 图形风格。
 - 导出 PDF、可编辑 SVG、700dpi TIFF 和 300dpi PNG 以及可复现的 R 脚本。
 
 ## 仓库结构

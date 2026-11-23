@@ -10,6 +10,7 @@ Use this file as the style entrypoint. The detailed rules live in `references/st
 - `nejm` / NEJM 风格: example-derived New England Journal of Medicine clinical-trial style with white backgrounds, strong axes, direct curve labels, risk tables, and light-gray table bands. Load `styles/nejm.md`.
 - `jama` / JAMA 风格: JAMA-style clinical research figures with restrained editorial colour, strong statistical labeling, readable tables, and vector-first submission discipline. Load `styles/jama.md`.
 - `bmj` / BMJ 风格: BMJ-style pragmatic clinical figures with high readability, plain-language evidence displays, conservative colour, and accessible publication outputs. Load `styles/bmj.md`.
+- `cma` / 中华医学会杂志风格: a suggested cross-journal theme with SimSun text, white background, restrained colors, and clear statistical labeling. Load `styles/cma.md`; follow the named member journal's current submission rules.
 
 ## Selection Rules
 
@@ -20,6 +21,7 @@ Use this file as the style entrypoint. The detailed rules live in `references/st
 - If the user requests NEJM, New England Journal of Medicine, 新英格兰医学杂志, survival curves with risk tables, clinical-trial subgroup forest plots, or explicitly says `nejm`, use `nejm`.
 - If the user requests JAMA, JAMA Network, Journal of the American Medical Association, clinical research style, or explicitly says `jama`, use `jama`.
 - If the user requests BMJ, The BMJ, British Medical Journal, pragmatic clinical or health-services style, or explicitly says `bmj`, use `bmj`.
+- If the user requests 中华医学会杂志, 中华医学会系列杂志, Chinese Medical Association journals, CMA journals, or explicitly says `cma`, use `cma`. Do not treat one member journal's artwork requirements as series-wide rules.
 - Use `assets/styles/theme_registry.R` in plotting scripts and call `rmg_theme(style)` plus `rmg_palette(n, style)`.
 - Keep chart-specific statistical rules in the detailed chart reference; keep style-specific typography, palette, panel, and layout rules in the selected style document.
 

@@ -1,6 +1,6 @@
 ---
 name: StatsVisual-Skill
-description: Create publication-ready medical and biostatistical graphics with R. Use when Codex needs to inspect tabular data, profile it, recommend charts and visual styles, and only after the user confirms a chart choice write and run R plotting code to export vector PDF, editable SVG, 700+ dpi TIFF, and a web image under 1 MB. Supports general/Nature/Lancet/NEJM/JAMA/BMJ styles for ggplot2, survival curves, heatmaps, regression diagnostics, distribution graphics, and multi-panel figures.
+description: Create publication-ready medical and biostatistical graphics with R. Use when Codex needs to inspect tabular data, profile it, recommend charts and visual styles, and only after the user confirms a chart choice write and run R plotting code to export vector PDF, editable SVG, 700+ dpi TIFF, and a web image under 1 MB. Supports general/Nature/Lancet/NEJM/JAMA/BMJ/Chinese Medical Association journals styles for ggplot2, survival curves, heatmaps, regression diagnostics, distribution graphics, and multi-panel figures.
 ---
 
 # Core Workflow
@@ -64,7 +64,7 @@ Reference `## Common Routes` in `references/chart-index.md` for the recommendati
 - 局限性：
 
 风格选项
-- 可选风格：`general` `nature` `lancet` `nejm` `jama` `bmj`
+- 可选风格：`general` `nature` `lancet` `nejm` `jama` `bmj` `cma（中华医学会杂志）`
 
 请确认
 - 选择“推荐的单图”、备选方案 1 或 2、或“可选多面板图”。
@@ -98,7 +98,7 @@ Load only the references needed for the task:
 - Use the relevant detailed chart reference after the chart family is chosen: `bar-chart.md`, `line-chart.md`, `pie-chart.md`, `histogram.md`, `cleveland-dot-plot.md`, `box-plot.md`, `scatter-plot.md`, `heatmap.md`, `ternary-plot.md`, `q-q-plot.md`, `probability-distribution-plot.md`, `smoothing-curve.md`, `linear-regression.md`, `nonlinear-regression.md`, `regression-diagnostics.md`, `survival-curve.md`, `forest-plot.md`, or `special-charts.md`.
 - Use `references/special-charts.md` for advanced special figures: polar plot, signed polar plot, annular polar scatter, radar, stream/river, rose, fourfold, spiral histogram, Manhattan, sunflower density, bubble, LOWESS smooth, density ternary, and model-diagnostic bubble charts.
 - Use `references/multipanel-figures.md` when the requested output is a multi-panel figure, composite clinical/statistical figure, image plus measurement figure, workflow-led figure, shared-legend layout, or any A/B/C panel figure. A multi-panel figure must be a coherent manuscript figure with a figure plan, not a simple collage.
-- Use `references/design-rules.md` as the style entrypoint. Load `references/styles/general.md` for the default book-derived general style, `references/styles/nature.md` for Nature-style figures, `references/styles/lancet.md` for Lancet-style clinical figures, `references/styles/nejm.md` for example-derived NEJM clinical-trial figures, `references/styles/jama.md` for JAMA-style clinical research figures, or `references/styles/bmj.md` for BMJ-style pragmatic clinical figures.
+- Use `references/design-rules.md` as the style entrypoint. Load `references/styles/general.md` for the default book-derived general style, `references/styles/nature.md` for Nature-style figures, `references/styles/lancet.md` for Lancet-style clinical figures, `references/styles/nejm.md` for example-derived NEJM clinical-trial figures, `references/styles/jama.md` for JAMA-style clinical research figures, `references/styles/bmj.md` for BMJ-style pragmatic clinical figures, or `references/styles/cma.md` for the Chinese Medical Association journal series.
 - For `lancet` forest plots, `references/styles/lancet.md` overrides generic `forest-plot.md` layout defaults: the forest axis must be embedded as a table column, not rendered as a separate side-by-side panel, and must not inherit generic light category bands or extra table separator rules unless the user explicitly requested them.
 - Use `references/styles/style-router.md` during the first recommendation turn so chart and style are requested together.
 - Use `references/r-workflow.md` for package choices, project layout, R script structure, local-library behavior, and export behavior.
