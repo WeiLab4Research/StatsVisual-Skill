@@ -1,0 +1,186 @@
+{
+  "schema_version": "2.4",
+  "metadata": {
+    "type": "07-analysis-model-workflow",
+    "purpose": "Development and external-validation sample selection — draft",
+    "study_design": "Prediction model sample selection",
+    "journal": "general",
+    "proposal_version": "v1",
+    "guidance": [],
+    "unresolved": [
+      "替换所有未知计数、研究标签和占位原因；核验实际规范和来源后更新方案"
+    ]
+  },
+  "nodes": [
+    {
+      "id": "source_dev",
+      "label": "Development source population\nInstitution and dates: not reported",
+      "count": null,
+      "unit": "participants",
+      "source": "待用户研究材料替换：此为结构模板",
+      "x": -210.0,
+      "y": 0.0,
+      "w": 185,
+      "align": "center",
+      "count_position": "prefix",
+      "width_group": "main-column--210.0"
+    },
+    {
+      "id": "source_val",
+      "label": "External-validation source population\nInstitution and dates: not reported",
+      "count": null,
+      "unit": "participants",
+      "source": "待用户研究材料替换：此为结构模板",
+      "x": 210.0,
+      "y": 0.0,
+      "w": 185,
+      "align": "center",
+      "count_position": "prefix",
+      "width_group": "main-column-210.0"
+    },
+    {
+      "id": "eligible_dev",
+      "label": "Eligible development participants",
+      "count": null,
+      "unit": "participants",
+      "source": "待用户研究材料替换：此为结构模板",
+      "x": -210.0,
+      "y": 110.0,
+      "w": 185,
+      "align": "center",
+      "count_position": "prefix",
+      "width_group": "main-column--210.0"
+    },
+    {
+      "id": "excluded_dev",
+      "label": "Excluded from development source\nReasons and counts: not reported",
+      "count": null,
+      "unit": "participants",
+      "source": "待用户研究材料替换：此为结构模板",
+      "x": -420.0,
+      "y": 110.0,
+      "w": 185,
+      "align": "left",
+      "count_position": "prefix"
+    },
+    {
+      "id": "eligible_val",
+      "label": "Eligible external-validation participants",
+      "count": null,
+      "unit": "participants",
+      "source": "待用户研究材料替换：此为结构模板",
+      "x": 210.0,
+      "y": 110.0,
+      "w": 185,
+      "align": "center",
+      "count_position": "prefix",
+      "width_group": "main-column-210.0"
+    },
+    {
+      "id": "excluded_val",
+      "label": "Excluded from validation source\nReasons and counts: not reported",
+      "count": null,
+      "unit": "participants",
+      "source": "待用户研究材料替换：此为结构模板",
+      "x": 420.0,
+      "y": 110.0,
+      "w": 185,
+      "align": "left",
+      "count_position": "prefix"
+    },
+    {
+      "id": "development",
+      "label": "Development analysis cohort\nEvents: not reported\nNon-events: not reported",
+      "count": null,
+      "unit": "participants",
+      "source": "待用户研究材料替换：此为结构模板",
+      "x": -210.0,
+      "y": 220.0,
+      "w": 185,
+      "align": "center",
+      "count_position": "prefix",
+      "width_group": "main-column--210.0"
+    },
+    {
+      "id": "validation",
+      "label": "External-validation analysis cohort\nEvents: not reported\nNon-events: not reported",
+      "count": null,
+      "unit": "participants",
+      "source": "待用户研究材料替换：此为结构模板",
+      "x": 210.0,
+      "y": 220.0,
+      "w": 185,
+      "align": "center",
+      "count_position": "prefix",
+      "width_group": "main-column-210.0"
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "from": "source_dev",
+      "to": "eligible_dev",
+      "relation": "flow",
+      "source": "结构模板，需按研究材料确认"
+    },
+    {
+      "id": "e2",
+      "from": "source_dev",
+      "to": "excluded_dev",
+      "relation": "exclusion",
+      "source": "结构模板，需按研究材料确认",
+      "branch_from": "e1"
+    },
+    {
+      "id": "e3",
+      "from": "source_val",
+      "to": "eligible_val",
+      "relation": "flow",
+      "source": "结构模板，需按研究材料确认"
+    },
+    {
+      "id": "e4",
+      "from": "source_val",
+      "to": "excluded_val",
+      "relation": "exclusion",
+      "source": "结构模板，需按研究材料确认",
+      "branch_from": "e3"
+    },
+    {
+      "id": "e5",
+      "from": "eligible_dev",
+      "to": "development",
+      "relation": "flow",
+      "source": "结构模板，需按研究材料确认"
+    },
+    {
+      "id": "e6",
+      "from": "eligible_val",
+      "to": "validation",
+      "relation": "flow",
+      "source": "结构模板，需按研究材料确认"
+    }
+  ],
+  "equations": [
+    {
+      "total": "source_dev",
+      "parts": [
+        "eligible_dev",
+        "excluded_dev"
+      ],
+      "disjoint": true,
+      "exhaustive": true,
+      "source": "模板分割关系，需核对是否适用于当前研究"
+    },
+    {
+      "total": "source_val",
+      "parts": [
+        "eligible_val",
+        "excluded_val"
+      ],
+      "disjoint": true,
+      "exhaustive": true,
+      "source": "模板分割关系，需核对是否适用于当前研究"
+    }
+  ]
+}

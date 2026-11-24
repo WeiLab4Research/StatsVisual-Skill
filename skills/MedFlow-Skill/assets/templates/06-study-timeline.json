@@ -1,0 +1,82 @@
+{
+  "schema_version": "2.4",
+  "metadata": {
+    "type": "06-study-timeline",
+    "purpose": "研究设计与随访时间轴图：仅示范结构",
+    "study_design": "synthetic layout example, replace with actual design",
+    "journal": "general",
+    "proposal_version": "v1",
+    "guidance": [],
+    "unresolved": [
+      "此为合成布局示例，不是已确认研究或期刊范例；按研究材料重建"
+    ]
+  },
+  "nodes": [
+    {
+      "id": "n1",
+      "label": "Baseline / time zero",
+      "source": "合成结构示例；不是研究事实",
+      "x": 0,
+      "y": 0,
+      "w": 120,
+      "shape": "text"
+    },
+    {
+      "id": "n2",
+      "label": "Intervention period",
+      "source": "合成结构示例；不是研究事实",
+      "x": 145,
+      "y": 60,
+      "w": 170,
+      "shape": "rect",
+      "h": 35,
+      "count_position": "prefix"
+    },
+    {
+      "id": "n3",
+      "label": "Follow-up assessment",
+      "source": "合成结构示例；不是研究事实",
+      "x": 350,
+      "y": 0,
+      "w": 140,
+      "shape": "text"
+    },
+    {
+      "id": "t0",
+      "label": "0 months",
+      "source": "合成时间示例",
+      "shape": "text",
+      "x": 0,
+      "y": 140,
+      "w": 120
+    },
+    {
+      "id": "t6",
+      "label": "6 months",
+      "source": "合成时间示例",
+      "shape": "text",
+      "x": 350,
+      "y": 140,
+      "w": 140
+    }
+  ],
+  "edges": [
+    {
+      "id": "time_axis",
+      "from": "t0",
+      "to": "t6",
+      "relation": "temporal",
+      "source": "合成时间轴，实际刻度需按方案",
+      "points": [
+        [
+          60,
+          120
+        ],
+        [
+          420,
+          120
+        ]
+      ]
+    }
+  ]
+}

@@ -1,0 +1,213 @@
+{
+  "schema_version": "2.4",
+  "metadata": {
+    "type": "03-review-selection",
+    "purpose": "Identification of studies via databases and registers",
+    "study_design": "Systematic review",
+    "journal": "general",
+    "proposal_version": "v1",
+    "guidance": [],
+    "unresolved": [
+      "替换所有未知计数、研究标签和占位原因；核验实际规范和来源后更新方案"
+    ]
+  },
+  "nodes": [
+    {
+      "id": "identified",
+      "label": "Records identified from databases and registers\nDatabases: n =\nRegisters: n =",
+      "count": null,
+      "unit": "records/reports/studies",
+      "source": "待用户研究材料替换：此为结构模板",
+      "x": 0.0,
+      "y": 0.0,
+      "w": 185,
+      "align": "center",
+      "count_position": "prefix",
+      "width_group": "main-column-0.0"
+    },
+    {
+      "id": "removed",
+      "label": "Records removed before screening\nDuplicate records: n =\nOther reasons: n =",
+      "count": null,
+      "unit": "records/reports/studies",
+      "source": "待用户研究材料替换：此为结构模板",
+      "x": 210.0,
+      "y": 110.0,
+      "w": 185,
+      "align": "left",
+      "count_position": "prefix"
+    },
+    {
+      "id": "screened",
+      "label": "Records screened",
+      "count": null,
+      "unit": "records/reports/studies",
+      "source": "待用户研究材料替换：此为结构模板",
+      "x": 0.0,
+      "y": 110.0,
+      "w": 185,
+      "align": "center",
+      "count_position": "prefix",
+      "width_group": "main-column-0.0"
+    },
+    {
+      "id": "screen_excluded",
+      "label": "Records excluded",
+      "count": null,
+      "unit": "records/reports/studies",
+      "source": "待用户研究材料替换：此为结构模板",
+      "x": 210.0,
+      "y": 220.0,
+      "w": 185,
+      "align": "left",
+      "count_position": "prefix"
+    },
+    {
+      "id": "sought",
+      "label": "Reports sought for retrieval",
+      "count": null,
+      "unit": "records/reports/studies",
+      "source": "待用户研究材料替换：此为结构模板",
+      "x": 0.0,
+      "y": 220.0,
+      "w": 185,
+      "align": "center",
+      "count_position": "prefix",
+      "width_group": "main-column-0.0"
+    },
+    {
+      "id": "not_retrieved",
+      "label": "Reports not retrieved",
+      "count": null,
+      "unit": "records/reports/studies",
+      "source": "待用户研究材料替换：此为结构模板",
+      "x": 210.0,
+      "y": 330.0,
+      "w": 185,
+      "align": "left",
+      "count_position": "prefix"
+    },
+    {
+      "id": "assessed",
+      "label": "Reports assessed for eligibility",
+      "count": null,
+      "unit": "records/reports/studies",
+      "source": "待用户研究材料替换：此为结构模板",
+      "x": 0.0,
+      "y": 330.0,
+      "w": 185,
+      "align": "center",
+      "count_position": "prefix",
+      "width_group": "main-column-0.0"
+    },
+    {
+      "id": "reports_excluded",
+      "label": "Reports excluded\n[Reason 1]: n =\n[Reason 2]: n =",
+      "count": null,
+      "unit": "records/reports/studies",
+      "source": "待用户研究材料替换：此为结构模板",
+      "x": 210.0,
+      "y": 440.0,
+      "w": 185,
+      "align": "left",
+      "count_position": "prefix"
+    },
+    {
+      "id": "included",
+      "label": "Studies included in review\nReports of included studies: n =",
+      "count": null,
+      "unit": "records/reports/studies",
+      "source": "待用户研究材料替换：此为结构模板",
+      "x": 0.0,
+      "y": 440.0,
+      "w": 185,
+      "align": "center",
+      "count_position": "prefix",
+      "width_group": "main-column-0.0"
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "from": "identified",
+      "to": "screened",
+      "relation": "flow",
+      "source": "结构模板，需按研究材料确认"
+    },
+    {
+      "id": "e2",
+      "from": "identified",
+      "to": "removed",
+      "relation": "exclusion",
+      "source": "结构模板，需按研究材料确认",
+      "branch_from": "e1"
+    },
+    {
+      "id": "e3",
+      "from": "screened",
+      "to": "sought",
+      "relation": "flow",
+      "source": "结构模板，需按研究材料确认"
+    },
+    {
+      "id": "e4",
+      "from": "screened",
+      "to": "screen_excluded",
+      "relation": "exclusion",
+      "source": "结构模板，需按研究材料确认",
+      "branch_from": "e3"
+    },
+    {
+      "id": "e5",
+      "from": "sought",
+      "to": "assessed",
+      "relation": "flow",
+      "source": "结构模板，需按研究材料确认"
+    },
+    {
+      "id": "e6",
+      "from": "sought",
+      "to": "not_retrieved",
+      "relation": "exclusion",
+      "source": "结构模板，需按研究材料确认",
+      "branch_from": "e5"
+    },
+    {
+      "id": "e7",
+      "from": "assessed",
+      "to": "included",
+      "relation": "flow",
+      "source": "结构模板，需按研究材料确认"
+    },
+    {
+      "id": "e8",
+      "from": "assessed",
+      "to": "reports_excluded",
+      "relation": "exclusion",
+      "source": "结构模板，需按研究材料确认",
+      "branch_from": "e7"
+    }
+  ],
+  "equations": [
+    {
+      "total": "identified",
+      "parts": [
+        "screened",
+        "removed"
+      ],
+      "disjoint": true,
+      "exhaustive": true,
+      "source": "模板分割关系，需核对是否适用于当前研究"
+    },
+    {
+      "total": "sought",
+      "parts": [
+        "assessed",
+        "not_retrieved"
+      ],
+      "disjoint": true,
+      "exhaustive": true,
+      "source": "模板分割关系，需核对是否适用于当前研究"
+    }
+  ]
+}

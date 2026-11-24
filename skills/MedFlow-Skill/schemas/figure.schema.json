@@ -1,0 +1,624 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "2.4"
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "enum": [
+            "01-rct-flow",
+            "02-observational-selection",
+            "03-review-selection",
+            "04-diagnostic-flow",
+            "05-biospecimen-flow",
+            "06-study-timeline",
+            "07-analysis-model-workflow",
+            "08-conceptual-logic-model",
+            "custom"
+          ]
+        },
+        "panel_types": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "01-rct-flow",
+              "02-observational-selection",
+              "03-review-selection",
+              "04-diagnostic-flow",
+              "05-biospecimen-flow",
+              "06-study-timeline",
+              "07-analysis-model-workflow",
+              "08-conceptual-logic-model",
+              "custom"
+            ]
+          }
+        },
+        "purpose": {
+          "type": "string",
+          "minLength": 1
+        },
+        "study_design": {
+          "type": "string",
+          "minLength": 1
+        },
+        "journal": {
+          "enum": [
+            "general",
+            "nejm",
+            "lancet",
+            "jama",
+            "bmj"
+          ]
+        },
+        "proposal_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "guidance": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "version": {
+                "type": "string",
+                "minLength": 1
+              },
+              "url": {
+                "type": "string",
+                "minLength": 1
+              },
+              "checked_on": {
+                "type": "string",
+                "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+              },
+              "status": {
+                "enum": [
+                  "verified",
+                  "unverified",
+                  "not_applicable"
+                ]
+              },
+              "applies_to": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "name",
+              "version",
+              "url",
+              "checked_on",
+              "status",
+              "applies_to"
+            ]
+          }
+        },
+        "unresolved": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "trial_subtypes": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "parallel",
+              "multi_arm",
+              "factorial",
+              "cluster",
+              "crossover",
+              "platform",
+              "adaptive"
+            ]
+          }
+        },
+        "custom_design": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "name",
+            "positioning",
+            "content_organisation",
+            "logical_structure",
+            "layout",
+            "graphical_encoding",
+            "visual_style",
+            "reference_basis",
+            "validation_delivery"
+          ],
+          "properties": {
+            "name": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "\\S"
+            },
+            "positioning": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "\\S"
+            },
+            "content_organisation": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "\\S"
+            },
+            "logical_structure": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "\\S"
+            },
+            "layout": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "\\S"
+            },
+            "graphical_encoding": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "\\S"
+            },
+            "visual_style": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "\\S"
+            },
+            "reference_basis": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "\\S"
+            },
+            "validation_delivery": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "\\S"
+            }
+          }
+        }
+      },
+      "required": [
+        "type",
+        "purpose",
+        "study_design",
+        "journal",
+        "proposal_version",
+        "guidance"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "anyOf": [
+              {
+                "properties": {
+                  "type": {
+                    "const": "custom"
+                  }
+                },
+                "required": [
+                  "type"
+                ]
+              },
+              {
+                "properties": {
+                  "panel_types": {
+                    "contains": {
+                      "const": "custom"
+                    }
+                  }
+                },
+                "required": [
+                  "panel_types"
+                ]
+              }
+            ]
+          },
+          "then": {
+            "required": [
+              "custom_design"
+            ]
+          }
+        }
+      ]
+    },
+    "style": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "font_file": {
+          "type": "string",
+          "minLength": 1
+        },
+        "cjk_font_file": {
+          "type": "string",
+          "minLength": 1
+        },
+        "font_size": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "line_width": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "padding": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "margin": {
+          "type": "number",
+          "minimum": 0
+        },
+        "stage_gap": {
+          "type": "number",
+          "minimum": 0
+        },
+        "column_gap": {
+          "type": "number",
+          "minimum": 0
+        },
+        "branch_gap": {
+          "type": "number",
+          "minimum": 0
+        }
+      },
+      "required": []
+    },
+    "approval": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "status": {
+          "enum": [
+            "draft",
+            "confirmed"
+          ]
+        },
+        "user_confirmation": {
+          "type": "string"
+        },
+        "proposal_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "spec_sha256": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "status",
+        "proposal_version"
+      ]
+    },
+    "nodes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[A-Za-z][A-Za-z0-9_:-]*$"
+          },
+          "label": {
+            "type": "string",
+            "minLength": 1
+          },
+          "source": {
+            "type": "string",
+            "minLength": 1
+          },
+          "shape": {
+            "enum": [
+              "rect",
+              "diamond",
+              "ellipse",
+              "text"
+            ]
+          },
+          "x": {
+            "type": "number"
+          },
+          "y": {
+            "type": "number"
+          },
+          "w": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          },
+          "h": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          },
+          "rank": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "lane": {
+            "type": "number"
+          },
+          "font_size": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          },
+          "align": {
+            "enum": [
+              "left",
+              "center"
+            ]
+          },
+          "count": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 0
+          },
+          "unit": {
+            "type": "string",
+            "minLength": 1
+          },
+          "fill": {
+            "type": "string",
+            "pattern": "^#[0-9a-fA-F]{6}$"
+          },
+          "stroke": {
+            "type": "string",
+            "pattern": "^#[0-9a-fA-F]{6}$"
+          },
+          "parent": {
+            "type": "string",
+            "minLength": 1
+          },
+          "container": {
+            "type": "boolean"
+          },
+          "fit_width": {
+            "type": "boolean"
+          },
+          "count_position": {
+            "enum": [
+              "prefix",
+              "separate"
+            ]
+          },
+          "width_group": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "id",
+          "label",
+          "source"
+        ],
+        "anyOf": [
+          {
+            "required": [
+              "x",
+              "y"
+            ]
+          },
+          {
+            "required": [
+              "rank",
+              "lane"
+            ]
+          }
+        ]
+      }
+    },
+    "edges": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[A-Za-z][A-Za-z0-9_:-]*$"
+          },
+          "from": {
+            "type": "string",
+            "minLength": 1
+          },
+          "to": {
+            "type": "string",
+            "minLength": 1
+          },
+          "relation": {
+            "enum": [
+              "flow",
+              "exclusion",
+              "assignment",
+              "data",
+              "temporal",
+              "causal",
+              "hypothesis",
+              "decision",
+              "service",
+              "information",
+              "feedback",
+              "association",
+              "dependency"
+            ]
+          },
+          "label": {
+            "type": "string",
+            "minLength": 1
+          },
+          "label_at": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 2,
+            "maxItems": 2
+          },
+          "points": {
+            "type": "array",
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              },
+              "minItems": 2,
+              "maxItems": 2
+            },
+            "minItems": 2
+          },
+          "from_port": {
+            "enum": [
+              "top",
+              "bottom",
+              "left",
+              "right"
+            ]
+          },
+          "to_port": {
+            "enum": [
+              "top",
+              "bottom",
+              "left",
+              "right"
+            ]
+          },
+          "arrow": {
+            "type": "boolean"
+          },
+          "dashed": {
+            "type": "boolean"
+          },
+          "stroke": {
+            "type": "string",
+            "pattern": "^#[0-9a-fA-F]{6}$"
+          },
+          "source": {
+            "type": "string",
+            "minLength": 1
+          },
+          "branch_from": {
+            "type": "string",
+            "minLength": 1
+          },
+          "branch_segment": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "branch_fraction": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "exclusiveMaximum": 1
+          },
+          "align_branch": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "id",
+          "from",
+          "to",
+          "relation",
+          "source"
+        ]
+      }
+    },
+    "equations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "total": {
+            "type": "string",
+            "minLength": 1
+          },
+          "parts": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "disjoint": {
+            "type": "boolean"
+          },
+          "exhaustive": {
+            "type": "boolean"
+          },
+          "source": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "total",
+          "parts",
+          "disjoint",
+          "exhaustive",
+          "source"
+        ]
+      }
+    },
+    "time_windows": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "start": {
+            "type": "number"
+          },
+          "end": {
+            "type": "number"
+          },
+          "unit": {
+            "type": "string",
+            "minLength": 1
+          },
+          "zero_definition": {
+            "type": "string",
+            "minLength": 1
+          },
+          "source": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "id",
+          "start",
+          "end",
+          "unit",
+          "zero_definition",
+          "source"
+        ]
+      }
+    }
+  },
+  "required": [
+    "schema_version",
+    "metadata",
+    "nodes",
+    "edges"
+  ],
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

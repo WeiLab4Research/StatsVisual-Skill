@@ -1,0 +1,313 @@
+{
+  "schema_version": "2.4",
+  "metadata": {
+    "type": "04-diagnostic-flow",
+    "purpose": "Diagnostic study participant disposition — draft",
+    "study_design": "Diagnostic accuracy",
+    "journal": "general",
+    "proposal_version": "v1",
+    "guidance": [],
+    "unresolved": [
+      "替换所有未知计数、研究标签和占位原因；核验实际规范和来源后更新方案"
+    ]
+  },
+  "nodes": [
+    {
+      "id": "potential",
+      "label": "Potentially eligible participants",
+      "count": null,
+      "unit": "participants",
+      "source": "待用户研究材料替换：此为结构模板",
+      "x": 0.0,
+      "y": 0.0,
+      "w": 185,
+      "align": "center",
+      "count_position": "prefix",
+      "width_group": "main-column-0.0"
+    },
+    {
+      "id": "eligible",
+      "label": "Eligible participants",
+      "count": null,
+      "unit": "participants",
+      "source": "待用户研究材料替换：此为结构模板",
+      "x": 0.0,
+      "y": 110.0,
+      "w": 185,
+      "align": "center",
+      "count_position": "prefix",
+      "width_group": "main-column-0.0"
+    },
+    {
+      "id": "excluded",
+      "label": "Excluded before testing\nReasons and counts: not reported",
+      "count": null,
+      "unit": "participants",
+      "source": "待用户研究材料替换：此为结构模板",
+      "x": 210.0,
+      "y": 110.0,
+      "w": 185,
+      "align": "left",
+      "count_position": "prefix"
+    },
+    {
+      "id": "index",
+      "label": "Index test performed",
+      "count": null,
+      "unit": "participants",
+      "source": "待用户研究材料替换：此为结构模板",
+      "x": 0.0,
+      "y": 220.0,
+      "w": 185,
+      "align": "center",
+      "count_position": "prefix",
+      "width_group": "main-column-0.0"
+    },
+    {
+      "id": "no_index",
+      "label": "Index test not performed\nReasons and counts: not reported",
+      "count": null,
+      "unit": "participants",
+      "source": "待用户研究材料替换：此为结构模板",
+      "x": 210.0,
+      "y": 220.0,
+      "w": 185,
+      "align": "left",
+      "count_position": "prefix"
+    },
+    {
+      "id": "negative",
+      "label": "Index test negative",
+      "count": null,
+      "unit": "participants",
+      "source": "待用户研究材料替换：此为结构模板",
+      "x": -210.0,
+      "y": 330.0,
+      "w": 185,
+      "align": "center",
+      "count_position": "prefix",
+      "width_group": "main-column--210.0"
+    },
+    {
+      "id": "positive",
+      "label": "Index test positive",
+      "count": null,
+      "unit": "participants",
+      "source": "待用户研究材料替换：此为结构模板",
+      "x": 210.0,
+      "y": 330.0,
+      "w": 185,
+      "align": "center",
+      "count_position": "prefix",
+      "width_group": "main-column-210.0"
+    },
+    {
+      "id": "ref_neg",
+      "label": "Reference standard completed",
+      "count": null,
+      "unit": "participants",
+      "source": "待用户研究材料替换：此为结构模板",
+      "x": -210.0,
+      "y": 440.0,
+      "w": 185,
+      "align": "center",
+      "count_position": "prefix",
+      "width_group": "main-column--210.0"
+    },
+    {
+      "id": "missing_neg",
+      "label": "Reference standard not completed\nReasons and counts: not reported",
+      "count": null,
+      "unit": "participants",
+      "source": "待用户研究材料替换：此为结构模板",
+      "x": -420.0,
+      "y": 440.0,
+      "w": 185,
+      "align": "left",
+      "count_position": "prefix"
+    },
+    {
+      "id": "ref_pos",
+      "label": "Reference standard completed",
+      "count": null,
+      "unit": "participants",
+      "source": "待用户研究材料替换：此为结构模板",
+      "x": 210.0,
+      "y": 440.0,
+      "w": 185,
+      "align": "center",
+      "count_position": "prefix",
+      "width_group": "main-column-210.0"
+    },
+    {
+      "id": "missing_pos",
+      "label": "Reference standard not completed\nReasons and counts: not reported",
+      "count": null,
+      "unit": "participants",
+      "source": "待用户研究材料替换：此为结构模板",
+      "x": 420.0,
+      "y": 440.0,
+      "w": 185,
+      "align": "left",
+      "count_position": "prefix"
+    },
+    {
+      "id": "final_neg",
+      "label": "Final diagnosis: index-negative branch\nTarget condition present: not reported\nTarget condition absent: not reported\nIndeterminate: not reported",
+      "count": null,
+      "unit": "participants",
+      "source": "待用户研究材料替换：此为结构模板",
+      "x": -210.0,
+      "y": 550.0,
+      "w": 185,
+      "align": "center",
+      "count_position": "prefix",
+      "width_group": "main-column--210.0"
+    },
+    {
+      "id": "final_pos",
+      "label": "Final diagnosis: index-positive branch\nTarget condition present: not reported\nTarget condition absent: not reported\nIndeterminate: not reported",
+      "count": null,
+      "unit": "participants",
+      "source": "待用户研究材料替换：此为结构模板",
+      "x": 210.0,
+      "y": 550.0,
+      "w": 185,
+      "align": "center",
+      "count_position": "prefix",
+      "width_group": "main-column-210.0"
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "from": "potential",
+      "to": "eligible",
+      "relation": "flow",
+      "source": "结构模板，需按研究材料确认"
+    },
+    {
+      "id": "e2",
+      "from": "potential",
+      "to": "excluded",
+      "relation": "exclusion",
+      "source": "结构模板，需按研究材料确认",
+      "branch_from": "e1"
+    },
+    {
+      "id": "e3",
+      "from": "eligible",
+      "to": "index",
+      "relation": "flow",
+      "source": "结构模板，需按研究材料确认"
+    },
+    {
+      "id": "e4",
+      "from": "eligible",
+      "to": "no_index",
+      "relation": "exclusion",
+      "source": "结构模板，需按研究材料确认",
+      "branch_from": "e3"
+    },
+    {
+      "id": "e5",
+      "from": "index",
+      "to": "negative",
+      "relation": "flow",
+      "source": "结构模板，需按研究材料确认"
+    },
+    {
+      "id": "e6",
+      "from": "index",
+      "to": "positive",
+      "relation": "flow",
+      "source": "结构模板，需按研究材料确认"
+    },
+    {
+      "id": "e7",
+      "from": "negative",
+      "to": "ref_neg",
+      "relation": "flow",
+      "source": "结构模板，需按研究材料确认"
+    },
+    {
+      "id": "e8",
+      "from": "negative",
+      "to": "missing_neg",
+      "relation": "exclusion",
+      "source": "结构模板，需按研究材料确认",
+      "branch_from": "e7"
+    },
+    {
+      "id": "e9",
+      "from": "positive",
+      "to": "ref_pos",
+      "relation": "flow",
+      "source": "结构模板，需按研究材料确认"
+    },
+    {
+      "id": "e10",
+      "from": "positive",
+      "to": "missing_pos",
+      "relation": "exclusion",
+      "source": "结构模板，需按研究材料确认",
+      "branch_from": "e9"
+    },
+    {
+      "id": "e11",
+      "from": "ref_neg",
+      "to": "final_neg",
+      "relation": "flow",
+      "source": "结构模板，需按研究材料确认"
+    },
+    {
+      "id": "e12",
+      "from": "ref_pos",
+      "to": "final_pos",
+      "relation": "flow",
+      "source": "结构模板，需按研究材料确认"
+    }
+  ],
+  "equations": [
+    {
+      "total": "potential",
+      "parts": [
+        "eligible",
+        "excluded"
+      ],
+      "disjoint": true,
+      "exhaustive": true,
+      "source": "模板分割关系，需核对是否适用于当前研究"
+    },
+    {
+      "total": "eligible",
+      "parts": [
+        "index",
+        "no_index"
+      ],
+      "disjoint": true,
+      "exhaustive": true,
+      "source": "模板分割关系，需核对是否适用于当前研究"
+    },
+    {
+      "total": "negative",
+      "parts": [
+        "ref_neg",
+        "missing_neg"
+      ],
+      "disjoint": true,
+      "exhaustive": true,
+      "source": "模板分割关系，需核对是否适用于当前研究"
+    },
+    {
+      "total": "positive",
+      "parts": [
+        "ref_pos",
+        "missing_pos"
+      ],
+      "disjoint": true,
+      "exhaustive": true,
+      "source": "模板分割关系，需核对是否适用于当前研究"
+    }
+  ]
+}

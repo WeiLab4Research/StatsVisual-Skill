@@ -1,0 +1,65 @@
+{
+  "schema_version": "2.4",
+  "metadata": {
+    "type": "01-rct-flow",
+    "purpose": "复杂试验受试者流程图：仅示范结构",
+    "study_design": "synthetic layout example, replace with actual design",
+    "journal": "general",
+    "proposal_version": "v1",
+    "guidance": [],
+    "unresolved": [
+      "此为合成布局示例，不是已确认研究或期刊范例；按研究材料重建"
+    ],
+    "trial_subtypes": [
+      "multi_arm"
+    ]
+  },
+  "nodes": [
+    {
+      "id": "n1",
+      "label": "Clusters randomized",
+      "source": "合成结构示例；不是研究事实",
+      "x": 185,
+      "y": 0,
+      "w": 150,
+      "shape": "rect",
+      "count_position": "prefix"
+    },
+    {
+      "id": "n2",
+      "label": "Arm A clusters",
+      "source": "合成结构示例；不是研究事实",
+      "x": 0,
+      "y": 110,
+      "w": 150,
+      "shape": "rect",
+      "count_position": "prefix"
+    },
+    {
+      "id": "n3",
+      "label": "Arm B clusters",
+      "source": "合成结构示例；不是研究事实",
+      "x": 370,
+      "y": 110,
+      "w": 150,
+      "shape": "rect",
+      "count_position": "prefix"
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "from": "n1",
+      "to": "n2",
+      "relation": "assignment",
+      "source": "合成分配结构示例"
+    },
+    {
+      "id": "e2",
+      "from": "n1",
+      "to": "n3",
+      "relation": "assignment",
+      "source": "合成分配结构示例"
+    }
+  ]
+}

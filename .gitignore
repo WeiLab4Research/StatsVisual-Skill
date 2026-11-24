@@ -57,3 +57,14 @@ Guidelines/
 !skills/StatsVisual-Skill/references/styles/examples/*.png
 !skills/StatsVisual-Skill/assets/gallery/
 !skills/StatsVisual-Skill/assets/gallery/**/*.png
+# Python bytecode is generated locally.
+__pycache__/
+*.py[cod]
+
+# Keep intentional MedFlow reference images with the skill.
+!skills/MedFlow-Skill/assets/exemplars/**/*.[pP][nN][gG]
+!skills/MedFlow-Skill/assets/exemplars/**/*.[jJ][pP][gG]
+!skills/MedFlow-Skill/assets/exemplars/**/*.[jJ][pP][eE][gG]
+!skills/MedFlow-Skill/assets/style-references/**/*.[pP][nN][gG]
+!skills/MedFlow-Skill/assets/style-references/**/*.[jJ][pP][gG]
+!skills/MedFlow-Skill/assets/style-references/**/*.[jJ][pP][eE][gG]

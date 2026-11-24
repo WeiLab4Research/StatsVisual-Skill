@@ -48,6 +48,7 @@ StatsVisual-Skill 是一组面向医学统计绘图的 AI skills，旨在帮助 
 
 - `StatsVisual-Skill`：以数据画像为起点，创建医学统计图和生物统计图。
 - `StatsVisual-Skill-Extension`：为 `StatsVisual-Skill` 补充尚无的图种（绘图规范与代码模板），并在有更优绘图风格时改进已有图形。
+- [`MedFlow-Skill`](skills/MedFlow-Skill/SKILL.md)（调用名：`$medflow-skill`）：绘制学术流程图、研究设计图与架构图。以随机试验受试者流转、人群筛选、文献筛选、诊断流程、标本流转、时间轴、分析与模型验证、概念框架与逻辑模型等8类作为优先参考入口，同时支持自定义图形。先给方案、确认后绘制，交付可编辑 SVG、可编辑 PPTX 和矢量 PDF；General、NEJM、Lancet、JAMA、BMJ 风格仅约束视觉表现，不限制研究内容。
 
 ## 核心能力
 
@@ -76,6 +77,14 @@ skills/
   StatsVisual-Skill-Extension/
     SKILL.md
     references/
+  MedFlow-Skill/
+    SKILL.md
+    agents/
+    assets/
+    references/
+    schemas/
+    scripts/
+    tests/
 LICENSE
 README.md
 README.zh-CN.md
@@ -83,16 +92,18 @@ README.zh-CN.md
 
 ## 安装
 
-克隆仓库，然后把两个 skill 文件夹复制到目标客户端的 skills 目录。后续如需更新，进入已克隆的仓库目录执行 `git pull`，然后重新运行对应的复制命令即可。
+克隆仓库，然后把所需的 skill 文件夹复制到目标客户端的 skills 目录；以下命令会安装全部三个 skill。后续如需更新，进入已克隆的仓库目录执行 `git pull`，然后重新运行对应的复制命令即可。
 
 ### Codex
 
 ```powershell
-git clone https://github.com/HaotianJiang056/R-plot-skill.git StatsVisual-Skill
+git clone https://github.com/WeiLab4Research/StatsVisual-Skill.git StatsVisual-Skill
 New-Item -ItemType Directory -Force "$env:USERPROFILE\.codex\skills\StatsVisual-Skill" | Out-Null
 Copy-Item ".\StatsVisual-Skill\skills\StatsVisual-Skill\*" "$env:USERPROFILE\.codex\skills\StatsVisual-Skill" -Recurse -Force
 New-Item -ItemType Directory -Force "$env:USERPROFILE\.codex\skills\StatsVisual-Skill-Extension" | Out-Null
 Copy-Item ".\StatsVisual-Skill\skills\StatsVisual-Skill-Extension\*" "$env:USERPROFILE\.codex\skills\StatsVisual-Skill-Extension" -Recurse -Force
+New-Item -ItemType Directory -Force "$env:USERPROFILE\.codex\skills\medflow-skill" | Out-Null
+Copy-Item ".\StatsVisual-Skill\skills\MedFlow-Skill\*" "$env:USERPROFILE\.codex\skills\medflow-skill" -Recurse -Force
 ```
 
 如果设置了 `CODEX_HOME`，请把 `$env:USERPROFILE\.codex` 替换为 `$env:CODEX_HOME`。
@@ -102,12 +113,24 @@ Copy-Item ".\StatsVisual-Skill\skills\StatsVisual-Skill-Extension\*" "$env:USERP
 CodeBuddy 体验版每月提供 500 credits 基础积分，供大家免费使用。
 
 ```powershell
-git clone https://github.com/HaotianJiang056/R-plot-skill.git StatsVisual-Skill
+git clone https://github.com/WeiLab4Research/StatsVisual-Skill.git StatsVisual-Skill
 New-Item -ItemType Directory -Force "$env:USERPROFILE\.codebuddy\skills\StatsVisual-Skill" | Out-Null
 Copy-Item ".\StatsVisual-Skill\skills\StatsVisual-Skill\*" "$env:USERPROFILE\.codebuddy\skills\StatsVisual-Skill" -Recurse -Force
 New-Item -ItemType Directory -Force "$env:USERPROFILE\.codebuddy\skills\StatsVisual-Skill-Extension" | Out-Null
 Copy-Item ".\StatsVisual-Skill\skills\StatsVisual-Skill-Extension\*" "$env:USERPROFILE\.codebuddy\skills\StatsVisual-Skill-Extension" -Recurse -Force
+New-Item -ItemType Directory -Force "$env:USERPROFILE\.codebuddy\skills\medflow-skill" | Out-Null
+Copy-Item ".\StatsVisual-Skill\skills\MedFlow-Skill\*" "$env:USERPROFILE\.codebuddy\skills\medflow-skill" -Recurse -Force
 ```
+
+### MedFlow-Skill 依赖
+
+MedFlow 使用 Python，无需安装统计绘图所用的 R 环境。进入已克隆的仓库根目录，安装其 Python 依赖：
+
+```powershell
+python -m pip install -r skills/MedFlow-Skill/scripts/requirements.txt
+```
+
+源码目录为 `skills/MedFlow-Skill`，调用名为 `$medflow-skill`；上述命令将其安装到 `medflow-skill` 目录。请保留包括参考文档和素材在内的完整文件夹。使用覆盖所需字符的本机字体，PPTX 接收方也需安装相应字体。下方 Windows R 环境配置用于统计绘图，不是 MedFlow 的依赖。
 
 ## Windows R 环境
 
@@ -162,7 +185,11 @@ Rscript skills/StatsVisual-Skill/scripts/validate_r_plot.R demo/figures
 请使用 $StatsVisual-Skill-Extension 为 StatsVisual-Skill 新增一种图表类型，例如地理地图。
 ```
 
-即使用户直接提出绘图请求，第一次回复也应先检查数据，确认请求图形是否合适，推荐最佳单图和可选组图，然后等待用户确认再生成 R 代码。
+```text
+请使用 $medflow-skill，根据这段研究方法或原图设计流程图。先提出图形类型、内容、布局和视觉风格方案，保留完整研究路径，等待我确认后再导出 SVG、PPTX 和 PDF。
+```
+
+对于统计图请求，即使用户直接提出绘图要求，第一次回复也应先检查数据，确认请求图形是否合适，推荐最佳单图和可选组图，然后等待用户确认再生成 R 代码。
 
 ## 共建共享声明
 

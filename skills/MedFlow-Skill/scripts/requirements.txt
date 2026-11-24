@@ -1,0 +1,4 @@
+PyMuPDF>=1.24
+python-pptx>=1.0
+jsonschema>=4.18
+fonttools>=4.40

@@ -48,6 +48,7 @@ This skill covers **16 statistical chart families**. All figure examples are fro
 
 - `StatsVisual-Skill`: creates data-profile-first medical statistics figures and biostatistical graphics with R.
 - `StatsVisual-Skill-Extension`: adds plotting references and code templates for chart types `StatsVisual-Skill` does not yet support, and refines existing charts when a better style is available.
+- [`MedFlow-Skill`](skills/MedFlow-Skill/SKILL.md) (`$medflow-skill`): designs academic flow, study-design, and architecture diagrams. Its eight priority reference types cover trial participant flow, observational selection, review selection, diagnostic flow, biospecimen flow, timelines, analysis/model validation, and conceptual/logic frameworks; custom diagrams are also supported. It proposes a plan for confirmation before drawing and delivers editable SVG, editable PPTX, and vector PDF. General, NEJM, Lancet, JAMA, and BMJ references guide visual presentation without restricting research content.
 
 ## What It Does
 
@@ -77,6 +78,14 @@ skills/
   StatsVisual-Skill-Extension/
     SKILL.md
     references/
+  MedFlow-Skill/
+    SKILL.md
+    agents/
+    assets/
+    references/
+    schemas/
+    scripts/
+    tests/
 LICENSE
 README.md
 README.zh-CN.md
@@ -84,16 +93,18 @@ README.zh-CN.md
 
 ## Installation
 
-Clone the repository and copy both skill folders into the skills directory for your target client. To update later, enter the cloned repository, run `git pull`, then re-run the corresponding copy commands.
+Clone the repository and copy the skill folders you need into the skills directory for your target client. The commands below install all three skills. To update later, enter the cloned repository, run `git pull`, then re-run the corresponding copy commands.
 
 ### Codex
 
 ```powershell
-git clone https://github.com/HaotianJiang056/R-plot-skill.git StatsVisual-Skill
+git clone https://github.com/WeiLab4Research/StatsVisual-Skill.git StatsVisual-Skill
 New-Item -ItemType Directory -Force "$env:USERPROFILE\.codex\skills\StatsVisual-Skill" | Out-Null
 Copy-Item ".\StatsVisual-Skill\skills\StatsVisual-Skill\*" "$env:USERPROFILE\.codex\skills\StatsVisual-Skill" -Recurse -Force
 New-Item -ItemType Directory -Force "$env:USERPROFILE\.codex\skills\StatsVisual-Skill-Extension" | Out-Null
 Copy-Item ".\StatsVisual-Skill\skills\StatsVisual-Skill-Extension\*" "$env:USERPROFILE\.codex\skills\StatsVisual-Skill-Extension" -Recurse -Force
+New-Item -ItemType Directory -Force "$env:USERPROFILE\.codex\skills\medflow-skill" | Out-Null
+Copy-Item ".\StatsVisual-Skill\skills\MedFlow-Skill\*" "$env:USERPROFILE\.codex\skills\medflow-skill" -Recurse -Force
 ```
 
 If `CODEX_HOME` is set, replace `$env:USERPROFILE\.codex` with `$env:CODEX_HOME`.
@@ -103,12 +114,24 @@ If `CODEX_HOME` is set, replace `$env:USERPROFILE\.codex` with `$env:CODEX_HOME`
 The CodeBuddy trial provides 500 base credits each month for free use.
 
 ```powershell
-git clone https://github.com/HaotianJiang056/R-plot-skill.git StatsVisual-Skill
+git clone https://github.com/WeiLab4Research/StatsVisual-Skill.git StatsVisual-Skill
 New-Item -ItemType Directory -Force "$env:USERPROFILE\.codebuddy\skills\StatsVisual-Skill" | Out-Null
 Copy-Item ".\StatsVisual-Skill\skills\StatsVisual-Skill\*" "$env:USERPROFILE\.codebuddy\skills\StatsVisual-Skill" -Recurse -Force
 New-Item -ItemType Directory -Force "$env:USERPROFILE\.codebuddy\skills\StatsVisual-Skill-Extension" | Out-Null
 Copy-Item ".\StatsVisual-Skill\skills\StatsVisual-Skill-Extension\*" "$env:USERPROFILE\.codebuddy\skills\StatsVisual-Skill-Extension" -Recurse -Force
+New-Item -ItemType Directory -Force "$env:USERPROFILE\.codebuddy\skills\medflow-skill" | Out-Null
+Copy-Item ".\StatsVisual-Skill\skills\MedFlow-Skill\*" "$env:USERPROFILE\.codebuddy\skills\medflow-skill" -Recurse -Force
 ```
+
+### MedFlow-Skill dependencies
+
+MedFlow uses Python rather than the R plotting environment. From the cloned repository root, install its Python dependencies:
+
+```powershell
+python -m pip install -r skills/MedFlow-Skill/scripts/requirements.txt
+```
+
+The source folder is `skills/MedFlow-Skill`; its skill invocation name is `$medflow-skill`. The commands above install it as `medflow-skill`. Keep the full folder, including references and assets. Use an installed font with the required characters; PPTX recipients need the corresponding font. The Windows R setup below applies to statistical plotting, not MedFlow.
 
 ## Windows R Setup
 
@@ -163,7 +186,11 @@ Use $StatsVisual-Skill to draw a publication-ready Kaplan-Meier curve with risk 
 Use $StatsVisual-Skill-Extension to add a new chart type to StatsVisual-Skill, for example a geographic map.
 ```
 
-Even for direct drawing requests, the first response should inspect the data, confirm whether the requested chart is suitable, recommend the best single figure and any optional multi-panel figure, then ask for confirmation before generating R code.
+```text
+Use $medflow-skill to turn these study methods or an existing figure into a flow diagram. Propose the type, content, layout, and visual style first, preserve all research paths, and wait for my confirmation before exporting SVG, PPTX, and PDF.
+```
+
+For statistical-chart requests, even when a chart is directly requested, the first response should inspect the data, confirm whether the requested chart is suitable, recommend the best single figure and any optional multi-panel figure, then ask for confirmation before generating R code.
 
 ## Co-creation And Sharing Statement
 

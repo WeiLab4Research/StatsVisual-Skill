@@ -1,0 +1,206 @@
+{
+  "schema_version": "2.4",
+  "metadata": {
+    "type": "01-rct-flow",
+    "purpose": "Participant flow through a parallel randomized trial",
+    "study_design": "Parallel-group randomized clinical trial",
+    "journal": "general",
+    "proposal_version": "v1",
+    "guidance": [],
+    "unresolved": [
+      "替换所有未知计数、研究标签和占位原因；核验实际规范和来源后更新方案"
+    ],
+    "trial_subtypes": [
+      "parallel"
+    ]
+  },
+  "nodes": [
+    {
+      "id": "assessed",
+      "label": "Assessed for eligibility",
+      "count": null,
+      "unit": "participants",
+      "source": "待用户研究材料替换：此为结构模板",
+      "x": 0.0,
+      "y": 0.0,
+      "w": 185,
+      "align": "center",
+      "count_position": "prefix",
+      "width_group": "main-column-0.0"
+    },
+    {
+      "id": "excluded",
+      "label": "Excluded before randomization\n[Reasons and counts]",
+      "count": null,
+      "unit": "participants",
+      "source": "待用户研究材料替换：此为结构模板",
+      "x": 210.0,
+      "y": 110.0,
+      "w": 185,
+      "align": "left",
+      "count_position": "prefix"
+    },
+    {
+      "id": "randomized",
+      "label": "Randomized",
+      "count": null,
+      "unit": "participants",
+      "source": "待用户研究材料替换：此为结构模板",
+      "x": 0.0,
+      "y": 110.0,
+      "w": 185,
+      "align": "center",
+      "count_position": "prefix",
+      "width_group": "main-column-0.0"
+    },
+    {
+      "id": "allocated_a",
+      "label": "Allocated to intervention A\nReceived intervention: n =\nDid not receive: n = [reason]",
+      "count": null,
+      "unit": "participants",
+      "source": "待用户研究材料替换：此为结构模板",
+      "x": -210.0,
+      "y": 220.0,
+      "w": 185,
+      "align": "center",
+      "count_position": "prefix",
+      "width_group": "main-column--210.0"
+    },
+    {
+      "id": "allocated_b",
+      "label": "Allocated to intervention B\nReceived intervention: n =\nDid not receive: n = [reason]",
+      "count": null,
+      "unit": "participants",
+      "source": "待用户研究材料替换：此为结构模板",
+      "x": 210.0,
+      "y": 220.0,
+      "w": 185,
+      "align": "center",
+      "count_position": "prefix",
+      "width_group": "main-column-210.0"
+    },
+    {
+      "id": "follow_a",
+      "label": "Follow-up: intervention A\nLost to follow-up: n = [reason]\nDiscontinued: n = [reason]",
+      "count": null,
+      "unit": "participants",
+      "source": "待用户研究材料替换：此为结构模板",
+      "x": -210.0,
+      "y": 330.0,
+      "w": 185,
+      "align": "center",
+      "count_position": "prefix",
+      "width_group": "main-column--210.0"
+    },
+    {
+      "id": "follow_b",
+      "label": "Follow-up: intervention B\nLost to follow-up: n = [reason]\nDiscontinued: n = [reason]",
+      "count": null,
+      "unit": "participants",
+      "source": "待用户研究材料替换：此为结构模板",
+      "x": 210.0,
+      "y": 330.0,
+      "w": 185,
+      "align": "center",
+      "count_position": "prefix",
+      "width_group": "main-column-210.0"
+    },
+    {
+      "id": "analyzed_a",
+      "label": "Analyzed: intervention A\nAnalysis population: [specify]\nExcluded from analysis: n = [reason]",
+      "count": null,
+      "unit": "participants",
+      "source": "待用户研究材料替换：此为结构模板",
+      "x": -210.0,
+      "y": 440.0,
+      "w": 185,
+      "align": "center",
+      "count_position": "prefix",
+      "width_group": "main-column--210.0"
+    },
+    {
+      "id": "analyzed_b",
+      "label": "Analyzed: intervention B\nAnalysis population: [specify]\nExcluded from analysis: n = [reason]",
+      "count": null,
+      "unit": "participants",
+      "source": "待用户研究材料替换：此为结构模板",
+      "x": 210.0,
+      "y": 440.0,
+      "w": 185,
+      "align": "center",
+      "count_position": "prefix",
+      "width_group": "main-column-210.0"
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "from": "assessed",
+      "to": "randomized",
+      "relation": "flow",
+      "source": "结构模板，需按研究材料确认"
+    },
+    {
+      "id": "e2",
+      "from": "assessed",
+      "to": "excluded",
+      "relation": "exclusion",
+      "source": "结构模板，需按研究材料确认",
+      "branch_from": "e1"
+    },
+    {
+      "id": "e3",
+      "from": "randomized",
+      "to": "allocated_a",
+      "relation": "flow",
+      "source": "结构模板，需按研究材料确认"
+    },
+    {
+      "id": "e4",
+      "from": "randomized",
+      "to": "allocated_b",
+      "relation": "flow",
+      "source": "结构模板，需按研究材料确认"
+    },
+    {
+      "id": "e5",
+      "from": "allocated_a",
+      "to": "follow_a",
+      "relation": "flow",
+      "source": "结构模板，需按研究材料确认"
+    },
+    {
+      "id": "e6",
+      "from": "allocated_b",
+      "to": "follow_b",
+      "relation": "flow",
+      "source": "结构模板，需按研究材料确认"
+    },
+    {
+      "id": "e7",
+      "from": "follow_a",
+      "to": "analyzed_a",
+      "relation": "flow",
+      "source": "结构模板，需按研究材料确认"
+    },
+    {
+      "id": "e8",
+      "from": "follow_b",
+      "to": "analyzed_b",
+      "relation": "flow",
+      "source": "结构模板，需按研究材料确认"
+    }
+  ],
+  "equations": [
+    {
+      "total": "randomized",
+      "parts": [
+        "allocated_a",
+        "allocated_b"
+      ],
+      "disjoint": true,
+      "exhaustive": true,
+      "source": "模板分割关系，需核对是否适用于当前研究"
+    }
+  ]
+}

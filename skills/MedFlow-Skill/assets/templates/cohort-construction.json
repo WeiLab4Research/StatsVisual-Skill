@@ -1,0 +1,183 @@
+{
+  "schema_version": "2.4",
+  "metadata": {
+    "type": "02-observational-selection",
+    "purpose": "Cohort construction and analysis",
+    "study_design": "Observational cohort study",
+    "journal": "general",
+    "proposal_version": "v1",
+    "guidance": [],
+    "unresolved": [
+      "替换所有未知计数、研究标签和占位原因；核验实际规范和来源后更新方案"
+    ]
+  },
+  "nodes": [
+    {
+      "id": "source",
+      "label": "Source population or records\n[Setting and date range]",
+      "count": null,
+      "unit": "participants",
+      "source": "待用户研究材料替换：此为结构模板",
+      "x": 0.0,
+      "y": 0.0,
+      "w": 185,
+      "align": "center",
+      "count_position": "prefix",
+      "width_group": "main-column-0.0"
+    },
+    {
+      "id": "eligible",
+      "label": "Met eligibility criteria",
+      "count": null,
+      "unit": "participants",
+      "source": "待用户研究材料替换：此为结构模板",
+      "x": 0.0,
+      "y": 110.0,
+      "w": 185,
+      "align": "center",
+      "count_position": "prefix",
+      "width_group": "main-column-0.0"
+    },
+    {
+      "id": "excluded",
+      "label": "Excluded\n[Reasons and counts]",
+      "count": null,
+      "unit": "participants",
+      "source": "待用户研究材料替换：此为结构模板",
+      "x": 210.0,
+      "y": 110.0,
+      "w": 185,
+      "align": "left",
+      "count_position": "prefix"
+    },
+    {
+      "id": "cohort",
+      "label": "Final study cohort",
+      "count": null,
+      "unit": "participants",
+      "source": "待用户研究材料替换：此为结构模板",
+      "x": 0.0,
+      "y": 220.0,
+      "w": 185,
+      "align": "center",
+      "count_position": "prefix",
+      "width_group": "main-column-0.0"
+    },
+    {
+      "id": "group_a",
+      "label": "Exposure or group A",
+      "count": null,
+      "unit": "participants",
+      "source": "待用户研究材料替换：此为结构模板",
+      "x": -210.0,
+      "y": 330.0,
+      "w": 185,
+      "align": "center",
+      "count_position": "prefix",
+      "width_group": "main-column--210.0"
+    },
+    {
+      "id": "group_b",
+      "label": "Exposure or group B",
+      "count": null,
+      "unit": "participants",
+      "source": "待用户研究材料替换：此为结构模板",
+      "x": 210.0,
+      "y": 330.0,
+      "w": 185,
+      "align": "center",
+      "count_position": "prefix",
+      "width_group": "main-column-210.0"
+    },
+    {
+      "id": "analysis_a",
+      "label": "Group A included in analysis\n[Missing-data handling]",
+      "count": null,
+      "unit": "participants",
+      "source": "待用户研究材料替换：此为结构模板",
+      "x": -210.0,
+      "y": 440.0,
+      "w": 185,
+      "align": "center",
+      "count_position": "prefix",
+      "width_group": "main-column--210.0"
+    },
+    {
+      "id": "analysis_b",
+      "label": "Group B included in analysis\n[Missing-data handling]",
+      "count": null,
+      "unit": "participants",
+      "source": "待用户研究材料替换：此为结构模板",
+      "x": 210.0,
+      "y": 440.0,
+      "w": 185,
+      "align": "center",
+      "count_position": "prefix",
+      "width_group": "main-column-210.0"
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "from": "source",
+      "to": "eligible",
+      "relation": "flow",
+      "source": "结构模板，需按研究材料确认"
+    },
+    {
+      "id": "e2",
+      "from": "source",
+      "to": "excluded",
+      "relation": "exclusion",
+      "source": "结构模板，需按研究材料确认",
+      "branch_from": "e1"
+    },
+    {
+      "id": "e3",
+      "from": "eligible",
+      "to": "cohort",
+      "relation": "flow",
+      "source": "结构模板，需按研究材料确认"
+    },
+    {
+      "id": "e4",
+      "from": "cohort",
+      "to": "group_a",
+      "relation": "flow",
+      "source": "结构模板，需按研究材料确认"
+    },
+    {
+      "id": "e5",
+      "from": "cohort",
+      "to": "group_b",
+      "relation": "flow",
+      "source": "结构模板，需按研究材料确认"
+    },
+    {
+      "id": "e6",
+      "from": "group_a",
+      "to": "analysis_a",
+      "relation": "flow",
+      "source": "结构模板，需按研究材料确认"
+    },
+    {
+      "id": "e7",
+      "from": "group_b",
+      "to": "analysis_b",
+      "relation": "flow",
+      "source": "结构模板，需按研究材料确认"
+    }
+  ],
+  "equations": [
+    {
+      "total": "cohort",
+      "parts": [
+        "group_a",
+        "group_b"
+      ],
+      "disjoint": true,
+      "exhaustive": true,
+      "source": "模板分割关系，需核对是否适用于当前研究"
+    }
+  ]
+}

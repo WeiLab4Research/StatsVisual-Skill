@@ -1,0 +1,65 @@
+{
+  "schema_version": "2.4",
+  "metadata": {
+    "type": "05-biospecimen-flow",
+    "purpose": "生物样本采集、处理与分析流转图：仅示范结构",
+    "study_design": "synthetic layout example, replace with actual design",
+    "journal": "general",
+    "proposal_version": "v1",
+    "guidance": [],
+    "unresolved": [
+      "此为合成布局示例，不是已确认研究或期刊范例；按研究材料重建"
+    ]
+  },
+  "nodes": [
+    {
+      "id": "n1",
+      "label": "Participants",
+      "source": "合成结构示例；不是研究事实",
+      "x": 0,
+      "y": 0,
+      "w": 150,
+      "shape": "rect",
+      "count_position": "prefix",
+      "width_group": "main-column-0"
+    },
+    {
+      "id": "n2",
+      "label": "Specimens collected",
+      "source": "合成结构示例；不是研究事实",
+      "x": 0,
+      "y": 90,
+      "w": 150,
+      "shape": "rect",
+      "count_position": "prefix",
+      "width_group": "main-column-0"
+    },
+    {
+      "id": "n3",
+      "label": "Quality-controlled assays",
+      "source": "合成结构示例；不是研究事实",
+      "x": 0,
+      "y": 180,
+      "w": 150,
+      "shape": "rect",
+      "count_position": "prefix",
+      "width_group": "main-column-0"
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "from": "n1",
+      "to": "n2",
+      "relation": "flow",
+      "source": "合成结构示例"
+    },
+    {
+      "id": "e2",
+      "from": "n2",
+      "to": "n3",
+      "relation": "flow",
+      "source": "合成结构示例"
+    }
+  ]
+}

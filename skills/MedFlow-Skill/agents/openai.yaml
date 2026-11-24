@@ -1,0 +1,4 @@
+interface:
+  display_name: "MedFlow Academic Diagrams"
+  short_description: "Priority reference types plus confirmed custom diagram design"
+  default_prompt: "Use $medflow-skill to select a priority type or design a custom academic diagram, propose the eight design dimensions, wait for my confirmation, then export SVG, PPTX and PDF."
