@@ -84,7 +84,6 @@ skills/
     references/
     schemas/
     scripts/
-    tests/
 LICENSE
 README.md
 README.zh-CN.md

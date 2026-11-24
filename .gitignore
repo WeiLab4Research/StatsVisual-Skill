@@ -68,3 +68,6 @@ __pycache__/
 !skills/MedFlow-Skill/assets/style-references/**/*.[pP][nN][gG]
 !skills/MedFlow-Skill/assets/style-references/**/*.[jJ][pP][gG]
 !skills/MedFlow-Skill/assets/style-references/**/*.[jJ][pP][eE][gG]
+
+# Keep developer test directories local.
+tests/
