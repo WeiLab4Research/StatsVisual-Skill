@@ -46,9 +46,9 @@ This skill covers **16 statistical chart families**. All figure examples are fro
 
 ## Included Skills
 
-- `StatsVisual-Skill`: creates data-profile-first medical statistics figures and biostatistical graphics with R.
-- `StatsVisual-Skill-Extension`: adds plotting references and code templates for chart types `StatsVisual-Skill` does not yet support, and refines existing charts when a better style is available.
-- [`MedFlow-Skill`](skills/MedFlow-Skill/SKILL.md) (`$medflow-skill`): designs academic flow, study-design, and architecture diagrams. Its eight priority reference types cover trial participant flow, observational selection, review selection, diagnostic flow, biospecimen flow, timelines, analysis/model validation, and conceptual/logic frameworks; custom diagrams are also supported. It proposes a plan for confirmation before drawing and delivers editable SVG, editable PPTX, and vector PDF. General, NEJM, Lancet, JAMA, and BMJ references guide visual presentation without restricting research content.
+- [`StatsVisual-Skill`](skills/StatsVisual-Skill/SKILL.md): creates data-profile-first medical statistics figures and biostatistical graphics with R.
+- [`StatsVisual-Skill-Extension`](skills/StatsVisual-Skill-Extension/SKILL.md): adds plotting references and code templates for chart types `StatsVisual-Skill` does not yet support, and refines existing charts when a better style is available.
+- [`MedFlow-Skill`](skills/MedFlow-Skill/SKILL.md): designs academic flow, study-design, and architecture diagrams. Its eight priority reference types cover trial participant flow, observational selection, review selection, diagnostic flow, biospecimen flow, timelines, analysis/model validation, and conceptual/logic frameworks; custom diagrams are also supported. It proposes a plan for confirmation before drawing and delivers editable SVG, editable PPTX, and vector PDF. General, NEJM, Lancet, JAMA, and BMJ references guide visual presentation without restricting research content.
 
 ## What It Does
 

@@ -46,9 +46,9 @@ StatsVisual-Skill 是一组面向医学统计绘图的 AI skills，旨在帮助 
 
 ## 包含的 Skills
 
-- `StatsVisual-Skill`：以数据画像为起点，创建医学统计图和生物统计图。
-- `StatsVisual-Skill-Extension`：为 `StatsVisual-Skill` 补充尚无的图种（绘图规范与代码模板），并在有更优绘图风格时改进已有图形。
-- [`MedFlow-Skill`](skills/MedFlow-Skill/SKILL.md)（调用名：`$medflow-skill`）：绘制学术流程图、研究设计图与架构图。以随机试验受试者流转、人群筛选、文献筛选、诊断流程、标本流转、时间轴、分析与模型验证、概念框架与逻辑模型等8类作为优先参考入口，同时支持自定义图形。先给方案、确认后绘制，交付可编辑 SVG、可编辑 PPTX 和矢量 PDF；General、NEJM、Lancet、JAMA、BMJ 风格仅约束视觉表现，不限制研究内容。
+- [`StatsVisual-Skill`](skills/StatsVisual-Skill/SKILL.md)：以数据画像为起点，创建医学统计图和生物统计图。
+- [`StatsVisual-Skill-Extension`](skills/StatsVisual-Skill-Extension/SKILL.md)：为 `StatsVisual-Skill` 补充尚无的图种（绘图规范与代码模板），并在有更优绘图风格时改进已有图形。
+- [`MedFlow-Skill`](skills/MedFlow-Skill/SKILL.md)：绘制学术流程图、研究设计图与架构图。以随机试验受试者流转、人群筛选、文献筛选、诊断流程、标本流转、时间轴、分析与模型验证、概念框架与逻辑模型等8类作为优先参考入口，同时支持自定义图形。先给方案、确认后绘制，交付可编辑 SVG、可编辑 PPTX 和矢量 PDF；General、NEJM、Lancet、JAMA、BMJ 风格仅约束视觉表现，不限制研究内容。
 
 ## 核心能力
 
