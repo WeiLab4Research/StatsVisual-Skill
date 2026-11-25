@@ -17,6 +17,22 @@ Use `cma` when the user requests the **Chinese Medical Association journal serie
 - Use light major grid lines only when they help readers compare values. Keep error bars, confidence bands, labels, and legends visible without overlap or clipping.
 - Do not depend on color alone: add line types, point shapes, or direct labels when grayscale reproduction or multiple groups make the colors hard to distinguish.
 
+## Supplemental Figure-Design Checklist
+
+The following checklist translates the user-provided reference table. It describes **recommended design conventions**, not official requirements shared by every Chinese Medical Association journal. The named target journal's current author instructions take precedence.
+
+| Design item | Recommended practice |
+| --- | --- |
+| Language | Prefer concise, standardized Chinese medical terminology for axis titles, group names, legends, and annotations in a Chinese-language article. Internationally recognized medical abbreviations, statistical symbols, gene and protein names, and measurement units may remain in English. Avoid unnecessary switching between Chinese and English. |
+| Font and type size | Use SimSun for Chinese text. Times New Roman may be used for English text and numerals when the target journal and export workflow support it; the reusable `cma` theme continues to default to SimSun for all text. Keep the size of like elements consistent, use a clear type hierarchy, and treat approximately 8-11 pt at final size as a starting range rather than a fixed rule. Check mixed-font labels after export. |
+| Axes and labels | Use readable, appropriately spaced ticks and labels. Keep decimal precision consistent for the same measure, distinguish proportions from percentages, and choose axis limits that represent the data faithfully without hiding relevant values. |
+| Color | Use a single-color family for simple one-series figures when appropriate and clearly contrasting colors for multiple groups. Use a sequential gradient for continuous values and discrete colors for categories. Avoid meaningless gradients, excessive saturation, and too many colors. |
+| Background and borders | Prefer a white background without decorative borders, shadows, textures, or 3D effects. Ordinary Cartesian charts may keep only the left and bottom axes. Heatmaps, contour plots, and radar charts may retain a complete frame or guides when needed to interpret the data. |
+| Legend | Explain every meaningful color, point shape, line type, and fill. Place the legend in available whitespace or adjacent to the figure as permitted by the target journal; never cover data marks or labels. |
+| Statistical notation and units | Use standard statistical symbols, with symbols such as *P*, *t*, *F*, *r*, and *n* in italics when required by the target journal. Keep abbreviations such as HR, OR, RR, and CI consistent. Use legal SI-compatible unit names and symbols, for example kg, mmol/L, µg/L, and kg/m²; avoid inconsistent mixtures of Chinese unit names and international symbols. |
+| Aspect ratio and overall layout | Ratios such as 3:2, 4:3, 5:7, and 16:9 are possible starting points, not universal targets. Adjust to the data: Kaplan-Meier plots may need more vertical space, while longitudinal time-series plots may need more width. Control whitespace, element spacing, and the share of the canvas used by data; prevent overlap, clipping, and crowding. |
+| Multipanel figures | Order panels by the study's logic and label them consistently as A, B, C, D, and so on. Coordinate fonts, line widths, colors, symbols, and backgrounds. Use consistent axes for the same variable when comparison is intended; combine shared legends and avoid repeated labels where possible. |
+
 ## Palette
 
 This is a suggested StatsVisual palette, **not an official Chinese Medical Association palette**. For two groups, use deep blue and rust orange. Use the remaining colors in order as needed; prefer dark blue or dark gray for a single group.
