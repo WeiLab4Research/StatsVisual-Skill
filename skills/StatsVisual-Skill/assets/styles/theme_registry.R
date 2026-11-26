@@ -81,7 +81,7 @@ rmg_style_base_size <- function(style = "general") {
     nejm     = 11,
     jama     = 11,
     bmj      = 11,
-    cma      = 9.5
+    cma      = 7
   )
 }
 
@@ -234,7 +234,7 @@ rmg_line_defaults <- function(style = "general") {
 rmg_bar_defaults <- function(style = "general") {
   style <- rmg_normalize_style(style)
   list(
-    width             = 0.75,
+    width             = if (style == "cma") 2 / 3 else 0.75,
     linewidth         = 0.1,
     zero_line_width   = 0.5,
     legend_position   = "right",
@@ -303,14 +303,16 @@ rmg_theme <- function(style = "general", base_size = NULL, base_family = NULL) {
         ggplot2::theme(
           plot.background = ggplot2::element_rect(fill = "white", colour = NA),
           panel.background = ggplot2::element_rect(fill = "white", colour = NA),
-          plot.title = ggplot2::element_text(face = "plain", size = ggplot2::rel(1.05)),
-          axis.title = ggplot2::element_text(face = "plain", colour = "#222222"),
-          axis.title.x = ggplot2::element_text(margin = ggplot2::margin(t = 5)),
-          axis.title.y = ggplot2::element_text(margin = ggplot2::margin(r = 5)),
-          axis.text = ggplot2::element_text(size = ggplot2::rel(0.90), colour = "#222222"),
-          axis.line = ggplot2::element_line(linewidth = 0.40, colour = "#222222"),
+          plot.title = ggplot2::element_text(face = "plain", size = 7),
+          axis.title = ggplot2::element_text(face = "plain", size = 7, colour = "#222222"),
+          axis.title.x = ggplot2::element_text(margin = ggplot2::margin(t = 2, unit = "mm")),
+          axis.title.y = ggplot2::element_text(margin = ggplot2::margin(r = 2, unit = "mm")),
+          axis.text = ggplot2::element_text(size = 7, colour = "#222222"),
+          axis.text.x = ggplot2::element_text(margin = ggplot2::margin(t = 1, unit = "mm")),
+          axis.text.y = ggplot2::element_text(margin = ggplot2::margin(r = 1, unit = "mm")),
+          axis.line = ggplot2::element_line(linewidth = 0.35, colour = "#222222"),
           axis.ticks = ggplot2::element_line(linewidth = 0.30, colour = "#222222"),
-          axis.ticks.length = grid::unit(1.5, "mm"),
+          axis.ticks.length = grid::unit(-1, "mm"),
           panel.grid.major = ggplot2::element_blank(),
           panel.grid.minor = ggplot2::element_blank(),
           legend.title = ggplot2::element_blank(),
